@@ -1,0 +1,238 @@
+
+\section{The trace of the infinite $\lambda$-terms}
+%19:34 27/03/2024
+We define a notion of trace for possibly infinite $\lambda$-terms, 
+describing how an input of type $\N$ is used when computing the output.
+The first step toward a trace is defining a notion of \emph{connection} between arguments
+of type $\N$ in the proof that $t$ is well-typed. 
+To this aim, we need the notions of \emph{list of argument
+ types} and of \emph{index of atomic types} for a term.
+
+%We sketch the notion of connection through an example.
+%Assume 
+%\[
+%  {x_1}^{A_1}:A_1,{x_2}^{A_2}:A_2 \vdash t[x_1,x_2]:B_3 \rightarrow \N
+%\]
+%Then the list of argument types of $t$
+%is $A_1, A_2, B_3$. $A_1,A_2$ are arguments with names $x_1, x_2$, while $B_3$ is an unnamed
+%argument (it will be denoted by some bound variable in $t$). 
+%The index of an $\N$-argument of $t$ is any $j \in \{1,2,3\}$ such that $A_j=\N$
+%or $B_j=\N$ respectively: in this case all integers $1,2,3$ are indexes of some $\N$-argument,
+%in general we can have argument with type different from $\N$.
+%
+%Remark that for an open term $ t[x_1,x_2]$ we list among the ``argument types'' also the
+%types $A_1, A_2$ of the free variables. We motivate this terminology:
+%in a sense, $t$ is an abbreviation of the closed term $t' = \lambda  
+%{x_1}^{A_1},{x_2}^{A_2}.t: (  A_1,A_2,B_3 \rightarrow \N )$, and the argument types of $t'$ are
+%$A_1, A_2, B_3$ and they include $A_1, A_2$. 
+%
+%Below is the formal definition of argument types for a term.
+
+
+\begin{definition}[List of argument types of a term]
+Assume that $\vec{A} = A_1, \ldots, A_n$, $\vec{B}=B_{n+1}, \ldots, B_{n+m}$, 
+$\Gamma = \{\vec{x}:\vec{A}\}$,
+and $\Gamma \vdash t: \vec{B} \rightarrow \N$.
+
+\begin{enumerate}
+\item
+The \emph{list of argument types} of $t$ is $\vec{C} = \vec{A},\vec{B}$. 
+
+\item
+$A_1, \ldots, A_n$ are the \emph{named arguments}, with names $x_1, \ldots, x_n$.
+
+\item
+$B_{n+1}, \ldots, B_{n+m}$ are the \emph{unnamed arguments}.
+
+\item
+An \emph{index of an $\N$-argument} 
+of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
+
+\end{enumerate}
+\end{definition}
+
+%We now define the connection between $\N$-arguments of subterms of $t$
+%in a proof $\Pi: t:\Gamma \vdash A$ of  $\LAMBDA$. The connection describes
+%how an input  moves through the infinite unfolding of the term.
+%The definition of  atom connection for a syntax including the binder $\lambda$ 
+%is the main contribution of this paper. 
+%%Two $\N$-argument are in
+%%connection if and only if they receive the same global input: local input are ignored.
+%%In many cases two corresponding argument types have the same index, but if we insert or remove
+%%free variables or arguments the index may change.
+%Before providing the general definition, we discuss the notion of connection through examples. 
+%We draw in the same color two $\N$-argument which are in connection. 
+%
+%\begin{Eg}\label{eg:0}\rm
+%An example of  atom connection for some instance of the $\weak$-rule.
+%\[
+%\infer[(\weak)]{
+%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3:\bfColor{oldgold}{\N}
+%  \prove t : \bfColor{orange}{\N} \rightarrow \N
+%}{
+%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} 
+%  \prove t : \bfColor{orange}{\N} \rightarrow \N
+%}
+%\]
+%\end{Eg}
+%Remark that the type $\N$ of the variable $x_3$, colored in \bfColor{oldgold}{old gold} and 
+%introduced by weakening, is in connection with no type in the rule $\weak$.
+%
+%%20:13 15/04/2024
+%\begin{Eg}\label{eg:1}%\rm
+%An example of  atom connection for some instance of the $\apnotvar$-rule.
+%We assume that $a$ is \emph{not} a variable.
+%\[
+%\infer[(\apnotvar)]{
+%  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
+%  \prove f(a) : \bfColor{orange}{\N} \rightarrow \N
+%}{
+%  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
+%  \prove f : \bfColor{oldgold}{\N}, \bfColor{orange}{\N} \rightarrow \N
+%  &
+%  x_1 : \bfColor{red}{\N}, x_2: \bfColor{blue}{\N} \prove a : \N
+%}
+%\]
+%\end{Eg}
+%Remark that the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
+%is in connection with no argument in the rule $\apnotvar$.
+%The reason is that in the term $f(a)$,
+%the first argument of $f$ receives a value from the value $a$ which is local to the term $f(a)$,
+%does not receive a value from outside the term.
+%However, the first argument of $f$ can be in connection with some argument higher in the typing proof. 
+%%13:21 15/04/2024
+%
+%We postpone examples with the rule $\apvar$.
+%
+%\begin{Eg}\label{eg:2}%\rm
+%An example of  atom connection for the rule $\cond$.
+%\[
+%\infer[(\cond)]{
+%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
+%  \prove \cond(f,g) : \bfColor{oldgold}{\N} \rightarrow \N
+%}{
+%  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} \prove f : \N
+%  &
+%  x_1:\bfColor{red}{\N}, x_2:\bfColor{blue}{\N} \prove g:\bfColor{oldgold}{\N} \rightarrow \N
+%}
+%\]
+%\end{Eg}
+%Remark that the first unnamed argument of $\cond(f,g)$ (colored in \bfColor{oldgold}{old gold}) 
+%is in connection the type of the first unnamed one of $g$ in the second premise,
+%but it has no connection with the first premise. 
+%
+%
+%\subsection{A formal definition of connection}
+
+%15:19 24/03/2025
+
+The definition of connection requires to define an injection 
+\[
+\ins:\N,\N \rightarrow\N
+\]
+We set $\ins(p,x)=x+1$ if $x \ge p+1$, and $\ins(p,x)=x$ if $x\le p$.
+The role of $\ins$ is inserting one fresh index $p+1$ for a new argument type higher in the proof
+connected to no argument in the conclusion.
+
+\begin{definition}[Connection in a proof of  $\LAMBDA$]
+Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{B}=B_1, \ldots, B_m$, $\Gamma = \vec{x}:\vec{A}$,
+and $\Gamma \vdash t:\vec{B} \rightarrow \N$.
+
+For each $\N$-argument $k$ in $t$, for $t'=t$ or $t'$  immediate subterm of $t$ 
+each $\N$-argument $k'$ in $t'$ we define the relation: ``$k',t'$ the successor of $k,t$". We require:
+\begin{enumerate}
+\item
+if $t$ is obtained by a rule $\weak$ from $t'=t$, described by a map $\phi:\Gamma \rightarrow \Delta$,  
+then $k = \phi(k')$.
+\item
+if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
+then $k' = \ins(n,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
+\item
+if $t=f(x_i^{A_i})$ is obtained by a rule $\apvar$ and $t'=f$ 
+then $k' = \ins(n,k)$or $k'=n+1$ and $k=i$.
+\item
+if $t=\cond(f,g)$ and $t'=f$ 
+then $k' = \ins(n,k)$. If $t'=g$ then $k'=k$.
+\end{enumerate}
+We require $k = k'$ in all other cases, 
+which are: $\Succ $, $\lambda$. 
+\\
+No connection is defined for the rules $\var$, $0$.
+\end{definition}
+
+Below we include some examples. 
+We draw in the same color two $\N$-argument which are in connection. 
+In the case of the rule $\apvar$, an argument can be connected to two arguments above it.
+
+
+\begin{Eg}\label{eg:3}%\rm
+Atom connection for $\apvar$.
+We assume that $x$ is a variable.
+\[
+\infer[(\apvar)]{
+  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \bfColor{oldgold}{\N}
+  \prove f(x_3) : \bfColor{orange}{\N} \rightarrow \N
+}{
+  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \bfColor{oldgold}{\N}
+  \prove f : \bfColor{oldgold}{\N}, \bfColor{orange}{\N} \rightarrow \N
+}
+\]
+\end{Eg}
+
+Remark that the last variable in the conclusion of the rule
+is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
+in the premise, and with the variable with the same name in the premise: there are
+two connections.
+
+\begin{Eg}\label{eg:4}%\rm
+Atom connection for  $\lambda$-rule.
+We assume that $x$ is  a variable.
+\[
+\infer[(\ap)]{
+  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}
+  \prove \lambda x.b : \bfColor{oldgold}{\N} \rightarrow \N
+}{
+  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}, x:\bfColor{oldgold}{\N} \prove b : \N
+}
+\]
+\end{Eg}
+Remark that the first unnamed argument of $\lambda x.b$ (colored in \bfColor{oldgold}{old gold}) 
+in the conclusion is in connection with the last variable type in the premise of the rule.
+\\
+
+Summing up, when
+we move up in a $\apvar$-rule, the type of last free variable corresponds to the type of the first
+unnamend argument.
+When  we move up in a $\lambda$-rule it is the other way round. 
+
+The connection on $\N$-arguments in a proof $\Pi:\Gamma\vdash t:A$ defines a graph $\Graph(\Pi)$ 
+whose nodes are all pairs $(k,u)$, with $u$ subterm of $t$ and $k$ index of some $\N$-argument of  $u$.
+$\Graph(\Pi)$ is finite when $t$ is regular.
+A trace represents the movement of an input information through the infinite unfolding of a tree.
+Formally, we define a trace as a (finite or infinite) path in the graph $\Graph(\Pi)$.
+
+\begin{definition}[Trace for well-typed terms in $\LAMBDA$]
+Assume $\Pi$ is any typing proof of $t \in \WTyped$.
+\begin{enumerate}
+\item
+A path of $\Pi$ is any finite or infinite branch $\pi =(i_0, \ldots, i_n, \ldots)$ of $\Pi$.
+
+\item
+Assume $\pi =(t_0, \ldots, t_n, \ldots)$ is a path of $\Pi$, finite or infinite. 
+A finite or infinite \emph{trace} $\tau$ of $\pi$ in $\Pi$ is a list 
+$\tau =( (k_m,t_m), \ldots, (k_n,t_n), \ldots)$ such that for all $i=m,\ldots, n,\ldots$:
+\begin{enumerate}
+\item
+$k_i$ is an index of some $\N$-argument of $t_i$
+\item
+if $i+1$ is an index of $\tau$ then $(k_{i+1},t_{i+1})$ is connected with $(k_i, t_i)$ in $\Pi$.
+\end{enumerate}
+
+\end{enumerate}
+\end{definition}
+
+The starting point of a trace could be different from the starting point of the path to which the trace belongs.
+
+%20:50 15/04/2024
+%10:35 24/04/2024
+%12:28 30/04/2024

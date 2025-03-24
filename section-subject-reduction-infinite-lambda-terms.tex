@@ -1,0 +1,570 @@
+
+\newcommand{\xx}{\boldsymbol{x}}
+
+\section{Subject Reduction for Well-Typed Infinite Lambda Terms}
+\label{section-subject-reduction}
+
+We show the subject reduction for well-typed terms of $\LAMBDA$,
+and also show the global trace condition is preserved by reductions. 
+We first introduce some auxiliary notations for proofs of them.
+
+Let $X$ be a set of variables of the form $x^T$.
+We write $\Gamma_X$ for the sublist of $\Gamma$ consisting of all $x^T:T$ such that $x^T\in X$. 
+Let $\Gamma$ and $\Delta$ be contexts of $\LAMBDA$.
+The merged context $\mergeCtx{\Gamma}{\Delta}$
+is defined by $\Gamma\conc(\Delta_{\FV(\Delta)\setminus\FV(\Gamma)})$. 
+
+Let $\theta$ be a renaming, and 
+$S_1 = \Gamma_1\vdash t_1:\vec{B_1}\rightarrow N$
+and $S_2 = \Gamma_2[\theta]\vdash t_2[\theta]:\vec{B_2}\rightarrow N$ be sequents. 
+Let $k_1$ and $k_2$ be indexes of $N$-arguments of $t_1$ and $t_2$, respectively. 
+Then we write $(k_1,S_1) \simIndex{\theta} (k_2,S_2)$ (or $(k_1,t_1) \simIndex{\theta} (k_2,t_2)$ for short)
+if they are respectively indexes of named arguments for some $y$ and $\theta(y)$, or
+are respectively those of unnamed arguments at the same position $i$ in $\vec{B_1}$ and $\vec{B_2}$,
+namely $k_1=|\Gamma_1|+i$ and $k_2=|\Gamma_2|+i$,
+where $|\Gamma_1|$ and $|\Gamma_2|$ are the sizes of $\Gamma_1$ and $\Gamma_2$. 
+Note that the index equivalent to $k_1$ is unique (if it exists), namely 
+$(k_1,t_1) \simIndex{\theta} (k_2,t_2)$ and $(k_1,t_1) \simIndex{\theta} (k'_2,t_2)$ implies $k_2=k'_2$.
+We write $(k_1,t_1) \simIndex{} (k_2,t_2)$ if $\theta$ is the identity renaming. 
+
+In this paper we do not implicitly identify $\alpha$-equivalent terms,
+in order to make simpler to state the global trace condition.
+For this reason, proofs of this section requires some delicate treatment of variables.
+
+We consider the following restricted $\lambda$ rule (called $\lambda'$) as follows:
+\begin{itemize}
+\item
+  $\lambda'$-rule.
+  If $\Gamma, x^A:A \vdash b: B$ and $\FV(\Gamma) = \FV(\lambda x.b)$, 
+  then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
+\end{itemize}
+
+The next lemma says that if $\Gamma\vdash t:A$ is provable,
+then $t:A$ can be shown in a restricted context $\Gamma_{\FV(t)}$
+even if the rule $\lambda$ is restricted to $\lambda'$. 
+
+\begin{lemma}\label{lem:thinning}
+  Assume $\Pi:\Gamma\vdash t:A$.
+  Then $\Pi':\Gamma_{\FV(t)}\vdash t:A$ for some $\Pi'$ that may have instances of the rule $\lambda'$
+  and not have those of the rule $\lambda$.
+  Moreover if the global trace condition holds for $\Pi$, then it also holds for $\Pi'$. 
+\end{lemma}
+
+%\begin{proof}
+%  First we call the following admissible rule $\lambda'\weak$:
+%  \begin{itemize}
+%  \item
+%    $\lambda'\weak$-rule.
+%    If $\Gamma, x^A:A \vdash b: B$, $\FV(\Gamma) = \FV(\lambda x.b)$ and $\Gamma\subseteqsim \Gamma'$, 
+%    then $ \Gamma' \vdash \lambda x^A.b :A \rightarrow B$.
+%  \end{itemize}
+%  We write $\Rule'$ as the set of rule instances obtained by removing
+%  those of $\lambda$ from $\Rule$ and adding those of $\lambda'\weak$. 
+%  Note that if we have a proof of a sequent with $\lambda'\weak$,
+%  then we also have a proof of the same sequent not with $\lambda'\weak$
+%  by a proof transformation that splits each $\lambda'\weak$ by $\lambda'$ and $\weak$. 
+%  Also note that this proof transformation preserves the global trace condition.
+%
+%  Let $\Pi$ be $(T,\phi)$.
+%  For each $l \in T$, we write $\Gamma_l\vdash t_l:A_l$
+%  for the conclusion of $\phi(l) \in \Rule$. 
+%  To show the lemma, from a given proof $\Pi$, 
+%  it is enough to construct a proof $\Pi'$ of $\Restrict{\Gamma}{\FV(t)}\vdash t:A$ with $\Rule'$.
+%  
+%  We define the set of nodes of $\Pi'$ is $T$, which is the same one of $\Pi$. 
+%  For each $l\in T$, we define $\phi'(l)$ and $\Gamma'_l$ that satisfies
+%  the following requirements:
+%  \begin{itemize}
+%  \item[(a)]
+%    $\Gamma'_l\vdash t_l:A_l$ is the conclusion of $\phi'(l) \in \Rule'$,
+%  \item[(b)]
+%    $\Restrict{(\Gamma_l)}{\FV(t_l)} \subseteqsim \Gamma'_l \subseteqsim \Gamma_l$
+%    and $\Gamma'_{\nil} = \Restrict{\Gamma}{\FV(t)}$, 
+%  \item[(c)]
+%    if $\tilde{k},t_{l\conc(i)}$ is the successor of $k,t_l$ in $\Pi$
+%    and $k$ is an index of some unname argument
+%    or a named argument of some name $z\in\FV(t_l)$, 
+%    then there are $\tilde{k'}$ and $k'$ such that
+%    $\tilde{k'},t_{l\conc(i)}$ is the successor of $k',t_l$ in $\Pi'$, 
+%    $(k,t_l) \simIndex{} (k',t_l)$,
+%    and $(\tilde{k},t_{l\conc(i)}) \simIndex{} (\tilde{k'},t_{l\conc(i)})$.
+%    Moreover, if $k$ is an index of a progressing argument, then so is $k'$.
+%  \end{itemize}
+%  Note that the proof is done if we construct $\Pi'$ that satisfies these requirements. 
+%  
+%  We define $\Gamma'_{\nil} = \Restrict{\Gamma}{\FV(t)}$.
+%  Then it satisfies (b) since $t_\nil = t$. 
+%  Next, assuming the induction hypothesis that $\Gamma'_l$ which satisfies (b)
+%  is already defined, 
+%  we define $\phi'(l)$ and $\Gamma_{l\conc(i)}$, 
+%  for each $i$ such that $l\conc(i)\in T$, 
+%  that satisfies (a), (b), and (c). 
+%  It is done by the case analysis of $\phi(l)$.
+%
+%  The case of $\phi(l) = \Gamma_l\vdash x:A_l$,
+%  which is an instance of the rule $\var$ with $x:A_l\in\Gamma_l$. 
+%  Then define $\phi'(l) = \Gamma'_l\vdash x:A_l$. This is an instance of $\var$
+%  because $x:A_l \in \Restrict{(\Gamma_l)}{\FV(x)} \subseteqsim \Gamma'_l$ by (b).
+%
+%  The case of $\phi(l) = (\Gamma_{l\conc(1)}\vdash t_l:A_l,\Gamma_{l}\vdash t_l:A_l)$,
+%  which is an instance of the rule $\weak$ with
+%  $t_{l\conc(1)} = t_l$, $A_{l\conc(1)} = A_{l}$, and
+%  $\Gamma_{l\conc(1)}\subseteqsim \Gamma_l$.
+%  Let $\psi$ be the unique map that determines $\Gamma_{l\conc(1)}\subseteqsim \Gamma_l$.
+%  Then define $\Gamma'_{l\conc(1)}$ such that
+%  $\Gamma'_{l\conc(1)}\subseteqsim \Gamma'_l$ determined by
+%  the induced map from $\psi$ restricting the range to $\FV(\Gamma'_l)$.
+%  Note that $\FV(\Gamma'_{l\conc(1)}) = \FV(\Gamma'_l)\cap\FV(\Gamma_{l\conc(1)})$. 
+%  Then it satisfies (b) since $\FV(t_l)\subseteq \FV(\Gamma'_l) \cap \FV(\Gamma_{l\conc(1)}) = \FV(\Gamma'_{l\conc(1)}) \subseteq \FV(\Gamma_{l\conc(1)})$ by (b) for $\Gamma'_l$.
+%  Define $\phi'(l) = (\Gamma'_{l\conc(1)}\vdash t_l:A_l,\Gamma'_{l}\vdash t_l:A_l)$
+%  as an instance of the rule $\weak$. 
+%  Hence the requirement (a) holds.
+%  We can also show (c): if $k$ is an index in $\Gamma_l\vdash t_l:A_l$ for a name
+%  $z\in\FV(t_{l\conc(1)}) = \FV(t_l)$, then we can take an index $k'$
+%  in $\Gamma'_l\vdash t_l:A_l$ for $z$ by $\FV(t_l)\subseteq\FV(\Gamma'_l)$ by (b). 
+%  An index $\tilde{k'}$ for the name $z$ can be taken
+%  from $\Gamma'_{l\conc(1)}\vdash t_l:A_l$
+%  since $z \in \FV(t_l) \subseteq \FV(\Gamma'_{l\conc(1)})$. 
+%  
+%  The case of $\phi(l) = (\Gamma_l,z:C\vdash b:\vec{B}\to N, \Gamma_l\vdash\lambda z^C.b:C,\vec{B}\to N)$
+%  that is an instance of the rule $\lambda$. 
+%  Define $\Gamma'_{l\conc(1)} = \Restrict{(\Gamma_l)}{\FV(\lambda z.b)},z:C$ and 
+%  $\phi'(l) = (\Restrict{(\Gamma_l)}{\FV(\lambda z.b)},z:C\vdash b:\vec{B}\to N, \Gamma'_l\vdash \lambda z.b:C,\vec{B}\to N)$. 
+%  This is an instance of the rule $\lambda'\weak$, since $\Restrict{(\Gamma_l)}{\FV(\lambda z.b)}\subseteqsim \Gamma'_l$ by the induction hypothesis.
+%  Trivially we have (a). 
+%  We also have (b) by $\Restrict{(\Gamma_l,z:C)}{\FV(b)} \subseteqsim (\Restrict{(\Gamma_l)}{\FV(\lambda z.b)},z:C) \subseteqsim (\Gamma_l,z:C)$.   
+%  The requirement (c) holds: 
+%  if $k$ is an index of some named argument $y\in\FV(\lambda z.b)$ in $\Gamma_l$,
+%  then $k'$ can be taken as the index of $y$ in $\Gamma'_l$ by (b) for $\Gamma_l$.
+%  If $k$ is an index of some unnamed argument in $C,\vec{B}$,
+%  then $k'$ can be taken as the index of some unnamed argument. 
+%  In both cases, their successors $\tilde{k}$ and $\tilde{k'}$ are uniquely
+%  determined by $k$ and $k'$, respectively. 
+%  
+%  The case that $\phi(l)$ is an instance of the rule $\apvar$
+%  whose conclusion is $\Gamma_l\vdash f(x^B):\vec{C}\to N$ with $x:B\in \Gamma_l$.  
+%  Define $\Gamma'_{l\conc(1)} = \Gamma'_l$.
+%  This satisfies (b) by the induction hypothesis. 
+%  Then define
+%  $\phi'(l) = (\Gamma'_{l\conc(1)}\vdash f:B,\vec{C}\to N, \Gamma'_l\vdash f(x^B):\vec{C}\to N)$
+%  as an instance of the rule $\apvar$. This satisfies (a). 
+%  In order to show (c), 
+%  take an index $k$ for $\Gamma_l\vdash f(x^B):\vec{C}\to N$, which is the one for
+%  a named argument $y \in \FV(f(x^B))$ in $\Gamma_l$
+%  or for some unnamed argument of $\vec{C}$. 
+%  For the latter case, the indexes $\tilde{k}$, $k'$ and $\tilde{k'}$ can be taken
+%  as those of the unnamed argument in $\vec{C}$ at the same position as $k$.
+%  For the former case, we take $k'$ as the index for $y$ in $\Gamma'_l$.
+%  In order to take $\tilde{k'}$,
+%  we further have two subcases according to $\tilde{k}$: 
+%  The first one is $\tilde{k}$ is the index for the same named argument as $k$, 
+%  and the second one is $\tilde{k}$ is the index for the unnamed argument, namely $B=N$.
+%  In both subcases, we can take the equivalent $\tilde{k'}$ to $\tilde{k}$ as we wished.
+%    
+%  The case that $\phi(l)$ is an instance of the rule $\apnotvar$
+%  whose conclusion is $\Gamma_l\vdash f(b^B):A_l$. 
+%  Define $\Gamma'_{l\conc(1)} = \Gamma'_{l\conc(2)} = \Gamma'_l$.
+%  This satisfies (b) by the induction hypothesis.
+%  Then define $\phi'(l) = (S_1, S_2, \Gamma'_l\vdash f(b^B):\vec{C}\to N)$,
+%  where $S_1$ is $\Gamma'_{l}\vdash f:B,\vec{C}\to N$
+%  and $S_2$ is $\Gamma'_{l}\vdash b:B$, as an instance of $\apnotvar$.
+%  This satisfies (a).
+%  In order to show (c), 
+%  take an index $k$ for $\Gamma_l\vdash f(x^B):\vec{C}\to N$, which is the one for
+%  a named argument $y \in \FV(f(x^B))$ in $\Gamma_l$
+%  or for some unnamed argument of $\vec{C}$.
+%  For the former case, the successor $\tilde{k}$ of $k$ is uniquely taken.
+%  By $\FV(f(b)) \subseteq \FV(\Gamma'_l)$, the index $k'$ equivalent to $k$ is uniquely taken. 
+%  Then the successor $\tilde{k'}$ of $k'$ is also taken as we wished. 
+%  For the latter case, the successor $\tilde{k}$ of $k$ is uniquely taken
+%  as the one for unnamed argument at the same position as $k$. 
+%  Then $k'$ equivalent to $k$ is uniquely taken, and 
+%  its successor $\tilde{k'}$ is also taken as we wished. 
+%
+%  The case that $\phi(l)$ is an instance of the rule $0$
+%  whose conclusion is $\Gamma_l\vdash 0:N$. 
+%  Define $\phi'(l) = \Gamma'_l\vdash 0:N$ as an instance of the rule $0$.
+%  This satisfies the requirements (a), (b), and (c). 
+%
+%  The case that $\phi(l)$ is an instance of the rule $\Succ$
+%  whose conclusion is $\Gamma_l\vdash \Succ(t_{l\conc(1)}):N$ with $A_l=N$.
+%  Define $\Gamma'_{l\conc(1)} = \Gamma'_l$, and 
+%  $\phi'(l) = (\Gamma'_l\vdash t_{l\conc(1)}:N, \Gamma'_l\vdash \Succ(t_{l\conc(1)}):N)$
+%  as an instance of $\Succ$. They satisfy (a) and (b). 
+%  The requirement (c) is also satisfied:
+%  Take an index $k$ for $\Gamma_l\vdash \Succ(t_{l\conc(1)}): N$,
+%  which is the one for a named argument $y \in \FV(\Succ(t_{l\conc(1)})$ in $\Gamma_l$.
+%  Then the successor $\tilde{k}$ of $k$ is uniquely taken.  
+%  By $\FV(t_{l\conc(1)}) \subseteq \FV(\Gamma'_l)$, the index $k'$ equivalent to $k$ is uniquely taken. 
+%  Then the successor $\tilde{k'}$ of $k'$ is also taken as we wished. 
+%  
+%  The case that $\phi(l)$ is an instance of the rule $\cond$
+%  whose conclusion is $\Gamma_l\vdash \cond(f,g):N,\vec{C}\to N$. 
+%  Define $\Gamma'_{l\conc(1)} = \Gamma'_{l\conc(2)} = \Gamma'_l$, and 
+%  $\phi'(l) = (S_1,S_2, \Gamma'_l\vdash \cond(f,g):N,\vec{C}\to N)$,
+%  where $S_1$ is $\Gamma'_l\vdash f:\vec{C}\to N$ and $S_2$ is $\Gamma'_l \vdash g:N,\vec{C}\to N$, 
+%  as an instance of $\cond$. They satisfy (a) and (b). 
+%  To show (c), take an index $k$ for $\Gamma_l\vdash \cond(f,g): N,\vec{C}\to N$ as required. 
+%  We need to consider three cases:
+%  $k$ is the index for a named argument $y \in \FV(\cond(f,g))$ in $\Gamma_l$,
+%  is the one for an unnamed argument in $\vec{C}$, or
+%  is the one for an unnamed argument in $N$ (the first one of $N,\vec{C}\to N$). 
+%  For the first and second cases, we can take $\tilde{k}$, $k'$, and $\tilde{k'}$
+%  similar to the other cases.
+%  For the last case, the successor $\tilde{k}$ of $k$ should be taken
+%  as the index of the unnamed $N$-argument of $\Gamma'_l \vdash g:N,\vec{C}\to N$
+%  at the same position as $k$. 
+%  Then $k'$ and $\tilde{k'}$ are taken as those equivalent to $k$ and $\tilde{k}$, respectively.
+%  Note that this $k$ is an index of a progressing argument $N$, and so is $k'$. 
+%\end{proof}
+%
+%
+
+\begin{lemma}[Substitution lemma]
+  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
+  Then there exists $\Pi^\circ$ such that $\Pi^\circ:\mergeCtx{\Delta}{\Gamma} \vdash t[u/x]:B$. 
+  Moreover, if both $\Pi_u$ and $\Pi_t$ satisfy the global trace condition,
+  then $\Pi^\circ$ also satisfies it. 
+\end{lemma}
+
+
+%\begin{proof}
+%  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
+%  By Lemma~\ref{lem:thinning}, without loss of generality,
+%  we can assume $\FV(\Delta) = \FV(u)$ and $\Pi_t$ is a proof with the restricted $\lambda$ rule (the $\lambda'$ rule). 
+%  Let $\Pi_u=(T_u,\phi_u)$ and $\Pi_t=(T_t,\phi_t)$.
+%  For each $l\in T_t$, we write $\Gamma_l\vdash t_l:C_l$
+%  for the conclusion of $\phi_t(l)$.
+%  We use $\xx$ to mark occurences of $x$ in $\Pi_t$ that connects
+%  with the explicit $\xx$ of $\Gamma,\xx:A\vdash t:B$. 
+%  In the following, we construct a proof $\Pi^\circ = (T^\circ,\phi^\circ)$ of
+%  $\mergeCtx{\Delta}{\Gamma}\vdash t[u/x]:B$ such that 
+%  \begin{itemize}
+%  \item[(a1)]
+%    $T^\circ = T_t \cup T_{\var} \cup T_{\apvar}$, where
+%    $T_{\var} = \{l\conc(1)\conc l' \mid \text{$l\in T_t$, $\phi(l)=\var$ of $\xx$, and $l'\in T_u$} \}$
+%    and
+%    $T_{\apvar} = \{l\conc(2)\conc l' \mid \text{$u$ is not a variable, $l\in T_t$, $\phi(l)=\apvar$ of $f(\xx)$ for some $f$, and $l'\in T_u$}\}$.
+%    The explicit $1$ of $l\conc(1)\conc l' \in T_\var$ is called the switching point of $l\conc(1)\conc l'$.
+%    The explicit $2$ of $l\conc(2)\conc l' \in T_\apvar$ is also called the switching point of $l\conc(2)\conc l'$.     \item[(a2)]
+%    For each $l\conc(i)\conc l' \in T_\var \cup T_\apvar$ with switching point $i$,
+%    we have $\phi^\circ(l\conc(i)\conc l') = \phi_u(l')$. 
+%  \end{itemize}
+%  Moreover, for all $l \in T_t$,
+%  the rule instance $\phi^\circ(l)$ satisfies the following requirements
+%  with an auxiliary function $\sigma^\circ:T_t \to \Seq$ and a substitution $\theta_l$: 
+%  \begin{itemize}
+%  \item[(b1)]
+%    The sequent $\sigma^\circ(l)$ has the form $\Gamma^\circ_l\vdash t_l[\theta_l]:C_l$.
+%    The substitution $\theta_l$ is $\{u/\xx\}\cup\theta_{{\rm ren}}$
+%    if $\xx:A \in \Gamma_l$, and is $\theta_{{\rm ren}}$ otherwise, 
+%    where $\theta_{{\rm ren}}$ is some renaming.
+%    $\Gamma^\circ_l \sim \Delta_l\sharp\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]$ holds,
+%    where $\Delta_l$ is $\Delta$ if $\xx:A\in\Gamma_l$, and is $\emptyset$ otherwise. 
+%  \item[(b2)]
+%    $\sigma^\circ(l)$ is the conclusion of $\phi^\circ(l)$,
+%    and $\sigma^\circ(l\conc(i))$ is the $i$-th assumption of $\phi^\circ(l)$ if $l\conc(i) \in T_t$.
+%  \item[(b3)]
+%    Assume $\tilde{k},t_{l\conc(i)}$ is a successor of $k,t_l$ and $k$ is not a named index for $\xx$. 
+%    Then there exist $\tilde{k^\circ}$ and $k^\circ$ such that
+%    $\tilde{k^\circ},t_{l\conc(i)}[\theta_{l\conc(i)}]$ is a successor of $k^\circ,t_l[\theta_l]$ and 
+%    $(k,t_l) \simIndex{\Restrict{(\theta_l)}{\overline{\xx}}} (k^\circ,t_l[\theta_l])$.
+%    If $k$ is an index of a progressing argument, then so is $k^\circ$.    
+%  \end{itemize}
+%  
+%  Note that if we have $\Pi^\circ$ that satisfies the requirements, its possibly infinite path
+%  is a path of $\Pi_t$ or a path of $\Pi_u$ or a path $l\conc(i)\conc l'$,
+%  where $l$ is a path of $T_t$, $i$ is a switching point, and $l'$ is a path of $T_u$.
+%  Hence $\Pi^\circ$ is Almost-left-finite, since $\Pi_t$ and $\Pi_u$ are Almost-left-finite.
+%  In addition, if $\Pi_t$ and $\Pi_u$ satisfies the global trace condition,
+%  so is $\Pi^\circ$ by (b3). 
+%  Therefore, to complete the proof, it is enough to construct $\Pi^\circ$. 
+%
+%  First, for each $l\conc(j)\conc l'\in T_\var\cup T_\apvar$ with a switching point $j$, 
+%  we define $\phi^\circ(l\conc(j)\conc l') = \phi_u(l')$. 
+%
+%  In the following, for each $l\in T_t$, we inductively define $\Gamma^\circ_l$, $\phi^\circ(l)$, and $\sigma(l)$
+%  that satisty (b1), (b2), and (b3).
+%  The case of $l=\nil$, define $\Gamma^\circ_\nil = \Delta\sharp\Gamma$ and $\theta_\nil=\{u/\xx\}$,
+%  and define $\sigma^\circ(\nil)$ as $\mergeCtx{\Delta}{\Gamma}\vdash t[u/\xx]:A$. 
+%  Hence we have (b1) since
+%  $\Gamma^\circ_\nil = \mergeCtx{\Delta}{\Gamma} \sim \mergeCtx{\Delta}{\Restrict{(\Gamma,\xx:A)}{\overline{\xx}}[\theta_\nil]}$. 
+%
+%  For each $l\in T_t$,
+%  with the induction hypothesis that $\sigma^\circ(l)$ and $\theta_l$ that satisfy (b1) are already defined, 
+%  we define $\phi^\circ(l)$, and define $\theta_{l\conc(i)}$ and $\sigma^\circ(l\conc(i))$ when $l\conc(i)\in T_t$, 
+%  such that they satisfy (b1), (b2), and (b3). 
+%  We perform this by the case analysis of $\phi(l)$.
+%
+%  The case $\phi(l)= (\Gamma_l\vdash \xx:A)$ that is an instance of $\var$.
+%  We can define $\phi^\circ(l) = (\Delta\vdash u:A, \Gamma^\circ_l\vdash u:A)$ as $\weak$,
+%  since $\Delta\subseteqsim \mergeCtx{\Delta}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$
+%  holds by (b1). 
+%  As $l\conc(i)\not\in T_t$, (b1), (b2), and (b3) trivially hold.
+%  
+%  The case $\phi(l) = (\Gamma_l\vdash y:B)$ that is an instance of $\var$ with $y \neq \xx$. 
+%  We can define $\phi^\circ(l) = (\Gamma^\circ_l\vdash \theta_l(y):B)$ as $\var$,
+%  since $\theta_l(y):B \in \Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l] \subseteqsim \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$ holds by (b1).
+%  As $l\conc(i)\not\in T_t$, (b1), (b2), and (b3) trivially hold.
+%
+%  The case $\phi(l) = (S_1,S_2,\Gamma_l\vdash f(b):C)$ that is an instance of $\apnotvar$,
+%  where $S_1 = \Gamma_l\vdash f:B\to C$, $S_2 = \Gamma_l\vdash b:B$, and $b$ is not a variable. 
+%  Define $\phi^\circ(l) = (S'_1, S'_2,\Gamma^\circ_l\vdash f[\theta_l](b[\theta_l]):C)$ as $\apnotvar$, 
+%  where $S'_1 = \Gamma^\circ_l\vdash f[\theta_l]:B\to C$ and $S'_2 = \Gamma^\circ_l\vdash b[\theta_l]:B$,
+%  since $b[\theta_l]$ is not a variable.
+%  Also define $\sigma^\circ(l\conc(1)) = S'_1$, $\sigma^\circ(l\conc(2)) = S'_2$,
+%  and $\theta_{l\conc(1)} = \theta_{l\conc(2)} = \theta_l$. 
+%  Then (b1) and (b2) trivially hold.
+%  To check (b3),
+%  assume that $\tilde{k},t$ is a successor of $k,f(b)$, where $t$ is $f$ or $b$,
+%  and $k$ is not a named index for $\xx$.
+%  Then (i) both $k$ and $\tilde{k}$ are named indexes for some variable $y^D\in\Dom(\Gamma_l)$,
+%  (ii) both $k$ and $\tilde{k}$ are unnamed indexes in $C$. 
+%  For the case (ii), take $k'$ and $\tilde{k'}$ as the same indexes as $k$ and $\tilde{k}$, respectively.
+%  For the case (i), we have
+%  $\theta_l(y):D \in \Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l] \subseteqsim \Gamma^\circ_l \subseteqsim \Gamma^\circ_{l\conc(1)}$ 
+%  by $y \neq \xx$. Then take $k'$ and $\tilde{k'}$ as named indexes for $\theta_l(y)$.
+%  In each case, $k'$ and $\tilde{k'}$ satisfy (b3) as expected. 
+%  
+%  The case $\phi(l) = (S_1,\Gamma_l\vdash f(\xx):C)$ that is an instance of $\apvar$, 
+%  where $S_1 = \Gamma_l \vdash f:A\to C$ and $\xx:A\in\Gamma_l$. 
+%  We need to consider the two subcases whether $u$ is a variable or not.
+%  \begin{itemize}
+%  \item
+%    If $u$ is a variable $y^B$, 
+%    we can define $\phi^\circ(l) = (S'_1, \Gamma^\circ_l\vdash f[\theta_l](y):C)$,
+%    where $S'_1 = \Gamma^\circ_l\vdash f[\theta_l]:A\to C$ as $\apvar$,
+%    since
+%    $y:B \in \Delta \subseteqsim \mergeCtx{\Delta}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$
+%    holds by (b1). 
+%    Also define $\sigma^\circ(l\conc(1)) = S'_1$ and $\theta_{l\conc(1)} = \theta_l$. 
+%    Then (b1) and (b2) trivially hold. (b3) is checked in a similar way to the case $\apnotvar$.
+%  \item
+%    If $u$ is not a variable, 
+%    define $\phi^\circ(l) = (S'_1, S'_2, \Gamma^\circ_l\vdash f[\theta_l](u):C)$,
+%    where
+%    $S'_1 = \Gamma^\circ_l\vdash f[\theta_l]:A\to C$ and
+%    $S'_2 = \Gamma^\circ_l\vdash u:A$ as $\apnotvar$. 
+%    Also define $\sigma^\circ(l\conc(1)) = S'_1$, $\sigma^\circ(l\conc(2)) = S'_2$,
+%    and $\theta_{l\conc(1)} = \theta_{l\conc(2)} = \theta_l$. 
+%    Then (b1) and (b2) trivially hold. (b3) is checked in a similar way to the case of $\apnotvar$. 
+%  \end{itemize}
+%
+%  The case $\phi(l) = (S_1,\Gamma_l\vdash f(y):C)$
+%  that is an instance of $\apvar$, where $S_1 = \Gamma_l \vdash f:B \to C$, $y:B\in\Gamma_l$ and $y\neq \xx$. 
+%  We can define $\phi^\circ(l) = (S'_1, \Gamma^\circ_l\vdash f[\theta_l](\theta_l(y)):C)$ as $\apvar$,
+%  where $S'_1 = \Gamma^\circ_l\vdash f[\theta_l]:B\to C$, 
+%  since
+%  $\theta_l(y):B \in \Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l] \subseteqsim \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$
+%  holds by (b1). 
+%  Also define $\sigma^\circ(l\conc(1)) = S'_1$ and $\theta_{l\conc(1)} = \theta_l$. 
+%  Then (b1) and (b2) trivially hold. (b3) is checked in a similar way to the case $\apnotvar$.
+%  
+%  The case $\phi(l) = (\Gamma_l, z:C\vdash b:B,\Gamma_l\vdash \lambda z.b:C\to B)$
+%  that is an instance of $\lambda'$. 
+%  By the assumption, we have $\theta_l$
+%  and $\sigma^\circ(l)=\Gamma^\circ\vdash (\lambda z.b)[\theta_l]:C\to B$ that satisfy (b1).
+%  Let $\theta_l=\{\vec{u}/\vec{x}\}$. 
+%  We consider two subcases.
+%  \begin{itemize}
+%  \item
+%    The first subcase is when $z\not\in\FV(\vec{u})$.
+%    We have $(\lambda z.b)[\theta_l] = \lambda z.(b[\Restrict{(\theta_l)}{\overline{z}}])$.
+%    Then define $\phi^\circ(l) = (\Gamma^\circ_l, z:C\vdash b[\Restrict{(\theta_l)}{\overline{z}}]:B,\Gamma^\circ_l\vdash \lambda z.(b[\Restrict{(\theta_l)}{\overline{z}}]):C\to B)$ as $\lambda$. 
+%    Note that $\Gamma^\circ_l,z:C$ is a context 
+%    because $z:C \not\in \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$
+%    holds by (b1), $z\not\in \FV(\Gamma_l)$ and $z \not\in\FV(\vec{u}) \supseteq \FV(\Delta_l)$
+%    (recall that $\Delta_l$ is $\Delta$ when $\xx:A\in\Gamma_l$, and is $\emptyset$ otherwise).
+%    Define $\sigma^\circ(l\conc(1)) = \Gamma^\circ_l,z:C\vdash b[\Restrict{(\theta_l)}{\overline{z}}]:B$
+%    and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}}$.
+%    We have (b2) by the definition. 
+%    We also have (b1) by $(\Gamma^\circ_l,z:C) \sim (\mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}}[\theta_l],z:C) = \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l,z:C)}{\overline{\xx}}}[\theta_{l\conc(1)}]$.
+%    To check (b3),
+%    assume that $\tilde{k},b$ is a successor of $k,\lambda z.b$ and $k$ is not a named index for $\xx$.
+%    Then (i) both $k$ and $\tilde{k}$ are named indexes for some variable $y^D\in\Dom(\Gamma_l)$,
+%    (ii) both $k$ and $\tilde{k}$ are unnamed indexes (not for $C$), or
+%    (iii) $k$ is an unnamed indexes for $C$ and $\tilde{k}$ is a named index for $z$.
+%    The cases (i) and (ii) can be checked in a similar way to the case of $\apnotvar$.
+%    The case (iii) is checked by taking $k'$ and $\tilde{k'}$ as the same indexes as $k$ and $\tilde{k}$,
+%    respectively.
+%  \item
+%    The second subcase is when $z\in\FV(\vec{u})$.
+%    We have $(\lambda z.b)[\theta_l] = \lambda z'.(b[\Restrict{(\theta_l)}{\overline{z}},z'/z])$, 
+%    where $z' \not\in\FV(b,\vec{u})$. 
+%    Then define $\phi^\circ(l) = (\Gamma^\circ_l, z':C\vdash b[\Restrict{(\theta_l)}{\overline{z}},z'/z]:B,\Gamma^\circ_l\vdash \lambda z'.(b[\Restrict{(\theta_l)}{\overline{z}},z'/z]):C\to B)$ as $\lambda$. 
+%    We need to check that $\Gamma^\circ_l,z':C$ is a context.
+%    It is shown by
+%    $z':C \not\in \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}[\theta_l]} \sim \Gamma^\circ_l$
+%    using (b1), 
+%    $z'\not\in \FV(\lambda z.b) = \FV(\Gamma_l)$ and $z' \not\in\FV(\vec{u}) \supseteq \FV(\Delta_l)$. 
+%    Define $\sigma^\circ(l\conc(1)) = \Gamma^\circ_l,z':C\vdash b[\Restrict{(\theta_l)}{\overline{z}},z'/z]:B$
+%    and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}}\cup\{z'/z\}$.
+%    We have (b2) by the definition. 
+%    We also have (b1) by $(\Gamma^\circ_l,z':C) \sim (\mergeCtx{\Delta_l}{\Restrict{(\Gamma_l)}{\overline{\xx}}}[\theta_l],z':C) = \mergeCtx{\Delta_l}{\Restrict{(\Gamma_l,z:C)}{\overline{\xx}}}[\theta_{l\conc(1)}]$.
+%    Checking (b3) is done in a similar way to that of the first subcase.
+%  \end{itemize}
+%
+%  The case $\phi(l) = (S_1,S_2,\Gamma_l\vdash \cond(f,g):\N\to C)$, where
+%  $S_1 = \Gamma_l\vdash f:C$, $S_2 = \Gamma_l\vdash g:\N\to C$, as an instance of $\cond$. 
+%  Define $\phi^\circ(l) = (S'_1,S'_2,\Gamma^\circ_l\vdash \cond(f[\theta_l],g[\theta_l]):\N\to C)$ as $\cond$,
+%  where $S'_1 = \Gamma^\circ_l \vdash f[\theta_l]:C$ and $S'_2 = \Gamma^\circ_l \vdash g[\theta_l]:\N\to C$.
+%  Also define $\sigma^\circ(l\conc(1)) = S'_1$, $\sigma^\circ(l\conc(2))  = S'_2$,
+%  and $\theta_{l\conc(1)} = \theta_{l\conc(2)} = \theta_l$. 
+%  Then (b1) and (b2) trivially hold.
+%  (b3) is checked in a similar way to the case of $\apnotvar$.
+%
+%  The case $\phi(l) = (\Gamma_l\vdash 0:\N)$, as an instance of $0$. 
+%  Define $\phi^\circ(l) = (\Gamma^\circ_l\vdash 0:\N)$ as $0$. 
+%  Since $l\conc(i)\not\in T_t$, (b1), (b2), and (b3) trivially hold.
+%  
+%  The case $\phi(l) = (\Gamma_l\vdash t:\N, \Gamma_l\vdash \Succ(t):\N)$, as an instance of $\Succ$. 
+%  Define
+%  $\phi^\circ(l) = (\Gamma^\circ_l\vdash t[\theta_l]:\N, \Gamma^\circ_l\vdash \Succ(t[\theta_l]):\N)$ as $\Succ$. 
+%  Also define $\sigma^\circ(l\conc(1)) = \Gamma^\circ_l\vdash t:\N$
+%  and $\theta_{l\conc(1)} = \theta_l$.
+%  Then (b1) and (b2) trivially hold.
+%  (b3) is checked in a similar way to the case of $\apnotvar$.
+%
+%  Therefore our construction of $\Pi^\circ$ is completed.
+%\end{proof}
+%
+%
+
+
+\begin{lemma}\label{lem:inversion}
+  \begin{enumerate}
+  \item\label{lem:inversion1}
+    If $\Pi:\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
+    there exist $\Pi_1$, $\Pi_2$ and $B$ such that
+    $\Pi_1:\Gamma\vdash f:B\to A$, $\Pi_2:\Gamma\vdash a:B$,
+    and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
+  \item\label{lem:inversion2}
+    If $\Pi:\Gamma\vdash \lambda x^T.b:A$, where $x\not\in\FV(\Gamma)$,
+    and $\Pi$ satisfies the global trace condition, then
+    there exist $\Pi_1$ and $B$ such that
+    $\Pi_1:\Gamma,x:T\vdash b:B$ and $A = T\to B$,
+    and $\Pi_1$ satisfies the global trace condition. 
+  \item\label{lem:inversion3}
+    If $\Pi:\Gamma\vdash \cond(f,g):A$ and $\Pi$ satisfies the global trace condition, then
+    there exist $\Pi_1$, $\Pi_2$ and $B$ such that
+    $\Pi_1:\Gamma \vdash f:B$, $\Pi_2:\Gamma \vdash g:N\to B$, $A = N\to B$,
+    and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
+  \item\label{lem:inversion4}
+    If $\Pi:\Gamma\vdash \Succ(t):A$ and $\Succ(t) \in \GTC$, then    
+    there exists $\Pi_1$ such that $\Pi_1:\Gamma \vdash t:N$, $A=N$, 
+    and $\Pi_1$ satisfies the global trace condition. 
+  \end{enumerate}
+\end{lemma}
+
+%
+%\begin{proof}
+%  We first claim that if $t\in\GTC$ and $\Pi:\Gamma\vdash t:A$ with $\Pi=(T,\phi)$, 
+%  then there exists $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
+%  Because, if not, the only infinite path in $\Pi$ is the consective use of $\weak$,
+%  which does not contain progressing trace, this contradicts with $t\in\GTC$.
+%
+%  We show the point \ref{lem:inversion1}.
+%  Assume that $\Pi:\Gamma\vdash f(a):A$ with $\Pi=(T,\phi)$ and $f(a) \in \GTC$.
+%  By the claim, take $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
+%  Let $\Gamma' \vdash f(a):A$ be the conclusion of $\phi(l)$. Then $\Gamma'\subseteqsim \Gamma$ holds
+%  by the transitivity of $\subseteqsim$.
+%  Now $\phi(l)$ is $\apvar$ or $\apnotvar$.
+%  In the former case $\phi(l) = \apvar$, we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ for some $B$,
+%  and $a = x^B \in \Gamma'$. Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ by $\weak$. 
+%  We also obtain $\Pi_2:\Gamma\vdash a:B$ by $a = x^B \in \Gamma'$ and $\weak$. 
+%  In the latter case $\phi(l) = \apnotvar$,
+%  we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ and $\Pi\restr l\conc(2):\Gamma'\vdash a:B$ for some $B$. 
+%  Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ and $\Pi_2:\Gamma\vdash a:B$ by $\weak$.
+%  In both cases, if $t\in\GTC$, we have $f\in\GTC$ and $a\in\GTC$ by the construction of $\Pi_1$ and $\Pi_2$. 
+%  
+%  The points \ref{lem:inversion2}, \ref{lem:inversion3}, and \ref{lem:inversion4} are shown similarly. 
+%\end{proof}
+%
+
+\begin{theorem}[Subject reduction]
+  Assume that $\Pi_t:\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
+  Then there exists $\Pi_u$ such that $\Pi_u:\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
+\end{theorem}
+
+
+%\begin{proof}
+%  By the definition of $t\reduces u$, there is a context $\hat{t}[-]$ such that
+%  $t=\hat{t}[t_0]$, $u=\hat{t}[u_0]$, and $t_0\reduces_\Box u_0$, where $\Box\in\{\beta,\cond\}$. 
+%  Since $t_0$ is a subterm of $t$, there is $l$ such that $\Pi_t\restr l: \Gamma_0\vdash t_0:A_0$.
+%  Note that $\Pi_t\restr l$ satisfies the global trace condition,
+%  since it is a subtree of $\Pi_t$, which satisfies the global trace condition. 
+%  Then, if we have $\Pi'_u:\Gamma_0\vdash u_0:A_0$ that satisfies the global trace condition,
+%  the tree obtained from $\Pi_t$ by replacing the subtree $\Pi_t\restr l$ by $\Pi'_u$ is also
+%  a proof of $\Gamma\vdash \hat{t}[u_0]:A$ that satisfies the global trace condition. 
+%  Hence it is enough to show the following:
+%  \begin{itemize}
+%  \item[(a)]
+%    If $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$ and it satisfies the global trace condition,
+%    then $\Pi':\Gamma \vdash b[a/x]: B$ for some $\Pi'$ that satisfies the global trace condition.
+%  \item[(b)]
+%    If $\Pi:\Gamma \vdash \cond(f,g)(0): B$ and it satisfies the global trace condition,
+%    then $\Pi':\Gamma \vdash f: B$ for some $\Pi'$ that satisfies the global trace condition. 
+%  \item[(c)]
+%    If $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$ and it satisfies the global trace condition,
+%    then $\Pi':\Gamma \vdash g(t): B$ for some $\Pi'$ that satisfies the global trace condition. 
+%  \end{itemize}
+%  (b) is shown immediately by Lemma~\ref{lem:inversion}~\ref{lem:inversion3}.
+%  We show (c).
+%  Assume $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$.
+%  Then by \ref{lem:inversion1}, \ref{lem:inversion3}, and \ref{lem:inversion4} of Lemma~\ref{lem:inversion},
+%  we have
+%  $\Pi_1:\Gamma \vdash g:N\to B$ and $\Pi_2:\Gamma \vdash t:N$,
+%  where $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
+%  Hence, by applying $\apnotvar$ or $\apvar$ to $\Pi_1$ and $\Pi_2$, 
+%  we have a proof $\Pi':\Gamma\vdash g(t):B$ that satisfies the global trace condition. 
+%  In order to show (a), assume $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$.
+%  Then by Lemma~\ref{lem:inversion}~\ref{lem:inversion1},
+%  we have $\Pi_1:\Gamma \vdash \lambda x^A.b:A\to B$ and $\Pi_2:\Gamma \vdash a:A$,
+%  where $\Pi_1$ and $\Pi_2$ satisty the global trace condition. 
+%  Then, by Lemma~\ref{lem:thinning},
+%  we have $\Pi'_1:\Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x^A.b:A\to B$,
+%  where $\Pi'$ satisfies the global trace condition. 
+%  By Lemma~\ref{lem:inversion}~\ref{lem:inversion2},
+%  we have a proof $\Pi''_1:\Restrict{\Gamma}{\FV(\lambda x.b)},x:A \vdash b:B$
+%  that satisfies the global trace condition. 
+%  Hence, by the substitution lemma, we have a proof $\Pi':\Gamma\vdash b[a/x]:B$
+%  that satisfies the global trace condition, as we wished. 
+%\end{proof}
+
+Using the subject reduction theorem, variable renaming is shown to be admissible in our system. 
+
+\begin{proposition}\label{prop:renaming}
+  \begin{enumerate}
+  \item\label{prop:renaming1}
+    Let $\theta$ be a renaming.
+    If $\Pi:\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
+    then $\Pi':\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+  \item\label{prop:renaming2}
+    If $\Pi:\Gamma\vdash t:A$ and $t'$ is an $\alpha$-equivalent term of $t$,
+    then $\Pi':\Gamma\vdash t':A$ for some $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+  \end{enumerate}
+\end{proposition}
+
+
+%
+%\begin{proof}
+%  We show the point \ref{prop:renaming1}. 
+%  It is enough to show the claim for a single renaming $\theta = \{y'/y\}$.
+%  Then, by the assumption, we have a proof $\Pi_1$ of $\Gamma[y'/y] \vdash (\lambda y^B.t)y':A$
+%  such that $\Pi_1$ satisfies the global trace condition if $\Pi$ satisfies it.  
+%  Hence we have $\Pi': \Gamma[y'/y] \vdash t[y'/y]:A$ by the subject reduction theorem
+%  such that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it.
+%
+%  Next we show the point \ref{prop:renaming2}.
+%  It is enough to show when $t = \lambda x.b$ and $t' = \lambda x'.(b[x'/x])$, where $x'\not\in\FV(\lambda x.b)$. 
+%  Let $\Pi$ be a proof of $\Gamma\vdash \lambda x.b:A\to B$.
+%  Then we have $\Pi_1: \Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x.b:A\to B$
+%  by Lemma~\ref{lem:thinning}, and
+%  also have $\Pi_2: \Restrict{\Gamma}{\FV(\lambda x.b)},x':B \vdash b[x'/x]:B$
+%  by the subject reduction theorem. 
+%  Hence we have $\Pi': \Gamma \vdash \lambda x'.b[x'/x]:A\to B$ by the rules $\lambda$ and $\weak$. 
+%  Note that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it. 
+%\end{proof}
+

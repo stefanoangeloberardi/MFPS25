@@ -1,0 +1,71 @@
+%	My Style for LaTeX
+%		Use this with mymath.sty
+%
+%		on 1992.2.27, 2000.6.1, 2001.5.24, 2007.11.10, 2008.2.2
+%		by Makoto Tatsuta
+%
+
+%	General Remarks for spaces in TeX macros:
+%		(1) Blank lines should not be used because \par cannot appear
+%		    in math mode or arguments of no-long macros.
+%		(2) Spaces can be placed after control sequences and numbers
+%		(3) Spaces cannot be placed in all places except (2),
+%		    Especially, after }.
+%		    You had better always use }\relax instead of } itself.
+%		(4) Remark \global\@ignoretrue in \end part of \newenvironment
+%		    definition.
+
+%	Page Size
+%
+
+\def\A4page{
+% A4 (29.5 x 21 cm)
+\textwidth=16cm 
+\hoffset = -3cm %1cm
+\textheight=23.6cm 
+\voffset = -2cm %0.7cm
+}
+
+\def\LNCSpage{
+% LNCS
+\setlength{\textwidth}{12.2cm}
+\setlength{\textheight}{19.3cm}
+\hoffset = -1.3in
+\voffset = -1.5in
+}
+
+%	Break
+
+\def\Break{\hfil\break\hbox{}}
+\def\Breakindent{\hfil\break\hbox{}\qquad}
+
+%	Break Lines in List Environment
+
+\def\LineBreakInList{\leavevmode \par \nobreak}
+
+% \def\LineBreakInList{\ \par}
+%	This is primitive.
+% \def\LineBreakInList{\leavevmode \hskip 0pt plus 1filll\break \indent}
+%	This cannot avoid page breaking.
+
+%	\Indent	:	breaking a line and proper math indent for
+%			math formulae.
+
+\def\Indent{\hskip 0pt plus 1filll\relax \break
+	\indent \hskip \mathindent\relax}
+	
+%	Insert Paragraphs into Array
+
+\def\InsertArray#1{\noalign{\hbox{\kern\leftmargin \parbox{\linewidth}{#1}}}}
+
+%	Single space
+
+\def\SingleSpace{\relax
+	\def\baselinestretch{1}\relax
+	\ifx\@currsize\normalsize\@normalsize\else\@currsize\fi
+}
+
+%	generate roman number
+
+\def\romanNumber#1{\@roman{#1}}
+\def\RomanNumber#1{\@Roman{#1}}

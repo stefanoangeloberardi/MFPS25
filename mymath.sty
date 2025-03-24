@@ -1,0 +1,142 @@
+%	My Math Style for LaTeX
+%
+%		on 2008.1.21
+%		by Makoto Tatsuta
+%
+
+%	General Remarks for spaces in TeX macros:
+%		(1) Blank lines should not be used because \par cannot appear
+%		    in math mode or arguments of no-long macros.
+%		(2) Spaces can be placed after control sequences and numbers
+%		(3) Spaces cannot be placed in all places except (2),
+%		    Especially, after }.
+%		    You had better always use }\relax instead of } itself.
+%		(4) Remark \global\@ignoretrue in \end part of \newenvironment
+%		    definition.
+
+\sloppy 
+\hbadness=10000
+
+%	Change of \newtheorem
+%
+
+% old ones
+%
+%\def\@begintheorem#1#2{\sl \trivlist \item[\hskip \labelsep{\bf #1\ #2}]}
+%\def\@opargbegintheorem#1#2#3{\sl \trivlist
+%      \item[\hskip \labelsep{\bf #1\ #2\ (#3)}]}
+
+% for LICS
+
+%\def\@begintheorem#1#2{\rm \trivlist \item[\hskip \labelsep{\bf #1\ #2.}]}
+%\def\@opargbegintheorem#1#2#3{\rm \trivlist
+%      \item[\hskip \labelsep{\bf #1\ #2\ (#3).}]}
+
+% Fbox
+
+\newdimen\Fboxwidth
+\Fboxwidth = \textwidth
+\advance \Fboxwidth by -3ex
+\long\def\Fbox#1{{\fboxrule = 2\fboxrule \fbox{\parbox{\Fboxwidth}{#1}}}}
+
+%	Structure Definitions
+%		using 'new' \newtheorem.
+
+\newtheorem{Th}{Theorem}[section]
+\newtheorem{Prop}[Th]{Proposition}
+\newtheorem{Cor}[Th]{Corollary}
+\newtheorem{Lemma}[Th]{Lemma}
+\newtheorem{Def}[Th]{Definition}
+\newtheorem{Notation}[Th]{Notation}
+%\newtheorem{Proof}[Th]{Proof}
+\newtheorem{Eg}[Th]{Example}
+\newtheorem{Remark}[Th]{Remark}
+\newtheorem{Problem}[Th]{Problem}
+
+%	TheoremCounter
+%		Redefine \newtheorem counters.
+%		Remark these counters are defined globally.
+
+\def\TheoremCounter#1{\relax
+	\@addtoreset{Th}{#1}%
+	\expandafter\xdef\csname theTh\endcsname{\expandafter\noexpand
+	\csname the#1\endcsname \@thmcountersep \@thmcounter{Th}}}
+
+% \[, \]
+% 	cannot be used with amsmath
+%
+
+\let\TmpA=\[
+\let\TmpB=\]
+\def\[{\TmpA\begin{array}{l}}
+\def\]{\end{array}\TmpB}
+
+\def\Splitmath{\]\[}
+\def\prooflineskip{\def\arraystretch{2.5}}
+
+%	Mathmatical Macros
+
+\def\<{\langle}
+\def\>{\rangle}
+\def\Val#1{{[\kern -2.2pt | {#1} |\kern -2.2pt]}}
+\def\Vec{\overrightarrow}
+
+%       equation
+
+\newenvironment{eq}[1]{\begin{equation}\label{eq:#1}}{\end{equation}}
+\def\eqref#1{(\ref{eq:#1})}
+
+%	Logical Macros
+
+\def\imp{\mathbin \to}
+\def\impd{\mathbin \leftarrow}
+\def\prove{\mathrel \vdash}
+\def\bottom{{\mathord \bot}}
+%\def\land{\mathbin \&}
+\def\Land{\displaystyle \mathop \bigwedge}
+\def\Lor{\displaystyle \mathop \bigvee}
+\def\EndOfProof{\quad \hbox{$\mathstrut$} \vrule width 4pt}
+\def\lequiv{\mathrel \leftrightarrow}
+
+	%	Realizability
+	%		\realize q
+	%		\realize q+{_P [F,G]}
+
+\def\realize#1{\@ifnextchar+{\realizeAUXsub{#1}}{\realizeAUX{#1}}}
+\def\realizeAUX#1{\mathbin{\;\; {\bf #1} \;\;}}
+\def\realizeAUXsub#1+#2{\mathbin{\;\; {\bf #1}{#2} \;\;}}
+
+%	 Emphasize using SLANTED instead of ITALIC
+
+\def\em{\sl}
+
+%	{enumerate} number style
+
+\def\labelenumi{\arabic{enumi}.}
+\def\theenumi{\arabic{enumi}.}
+
+\def\labelenumii{(\arabic{enumii})}
+\def\theenumii{\arabic{enumii}}
+
+\def\labelenumiii{(\roman{enumiii})}
+\def\theenumiii{(\roman{enumiii})} 
+
+\def\labelenumiv{(\alph{enumiv})} 
+\def\theenumiv{(\alph{enumiv})} 
+
+%	List Environment
+%		Resetting \parsep and \itemsep
+
+\def\list#1#2{\ifnum \@listdepth >5\relax \@toodeep 
+     \else \global\advance\@listdepth\@ne \fi
+  \rightmargin \z@ \listparindent\z@ \itemindent\z@
+  \csname @list\romannumeral\the\@listdepth\endcsname 
+	%	\parsep and \itemsep are changed to smaller.
+	\parsep=0pt plus 2pt \itemsep=2pt plus 1pt minus 1pt
+  \def\@itemlabel{#1}\let\makelabel\@mklab \@nmbrlistfalse #2\relax
+  \@trivlist
+  \parskip\parsep \parindent\listparindent
+  \advance\linewidth -\rightmargin \advance\linewidth -\leftmargin
+  \advance\@totalleftmargin \leftmargin
+  \parshape \@ne \@totalleftmargin \linewidth 
+  \ignorespaces}

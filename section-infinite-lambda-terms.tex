@@ -1,0 +1,899 @@
+\section{The set of infinite $\lambda$-terms}
+We define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
+of well-typed terms and a reduction relation for them. Infinite terms are labeled binary trees, therefore we
+have to define binary trees first, and before them the lists on $\{1,2\}$ and more related notions.
+
+\subsection{Lists and Binary Trees}
+
+\begin{definition}[Lists on $\{1,2\}$]
+\begin{enumerate}
+\item
+We denote with $\List(\{1,2\})$ the set of all lists of elements of $\{1,2\}$: $(),(1),(1),(1,1),(1,2),\ldots$. 
+We call the elements of $\List(\{1,2\})$ just lists for short.
+\item
+If $i_1, \ldots, i_n \in \{1,2\}$, we write $(i_1, \ldots, i_n)$
+for the list with elements $i_1, \ldots, i_n$. 
+\item
+We write $\nil$ for the empty list, or $()$. 
+\item
+If $l=(i_1, \ldots, i_n)$, $m=(j_1, \ldots, j_m)$ and $l, m \in \List(\{1,2\})$ we define
+$$
+l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)\in \List(\{1,2\})
+$$
+%If $I \subseteq \List(\{1,2\})$
+%we write $l \conc I = \{l \conc m | m \in I\}$. 
+\item
+The prefix order $\le$ on lists
+is defined by $l \le m$ if and only if $m = l \conc m'$ for some $m' \in  \List(\{1,2\})$.
+\end{enumerate}
+\end{definition}
+
+Binary trees are represented by set of lists.
+
+\begin{definition}[Binary trees]
+\begin{enumerate}
+\item 
+A binary tree, just a tree for short, is any set $T\subseteq \List(\{1,2\})$ 
+of lists including the empty list and closed by prefix: $\nil \in T$ and for all $l, m \in \List(\{1,2\})$
+if $m \in T$ and $l \le m$ then $l \in T$. 
+\item
+$\nil$ is called the root of $T$, any $l \in T$ is called a node of
+$T$ and if $l \in T$, then any $l \conc (i) \in T$ is called a child of $l$ in $T$.
+\item
+A node $l$ of $T$ is a leaf of $T$ if $l$ is an maximal element of $T$ w.r.t. the prefix order (i.e.,
+if $l$ has no children). 
+\item
+If $T$ is a tree and $l \in T$ we define $T \restr l = \{m \in \List(\{1,2\}) | l \conc m \in T\}$.
+$T \restr l$ is a tree and we say that $T \restr l$ is a subtree of $T$ in the node $l$,
+and for each $m \in T \restr l$ we say that $l \conc m$ is the corresponding node in $T$.
+\item
+If $l=(i)$ we say that $T_l$ is an immediate sub-tree of $T$.
+\item
+A binary tree labeled on a set $L$ is any pair $\setT = (T, \phi)$ with 
+$\phi:T \rightarrow L$. We call $\universe{\setT}=T$ the set of nodes of $\setT$.
+For all $l \in T$ we call $\Label(\setT,l) = \phi(l)$ the label of $l$ in $\setT$.
+\item
+We define $\setT \restr l = (T \restr l, \phi_l)$ and $\phi_l(m) = l \conc m$. 
+We call any $\setT \restr l$ a labeled subtree of $\setT$
+in the node $l$, an immediate sub-tree if $l=(i)$. 
+\end{enumerate}
+\end{definition}
+
+The labeling of a node $m \in \universe{( \setT \restr l )}$ 
+is the same label of the corresponding node $l \conc m$ of $\universe{\setT}$.
+ 
+Let $n = 0, 1, 2$. Assume $\setT_1, \ldots,\setT_n$ are trees labeled on $L$ and $l \in L$.
+Then we define $$\setT = l(\setT_1, \ldots, \setT_n)$$ as the unique tree labeled on $L$
+with the root labeled $l$ and with:
+$\setT \restr (i) = \setT_i$ for all $1 \le i \le n$.
+
+
+\subsection{Types, Terms and Contexts}
+Now we define the types of $\LAMBDA$, then the terms and the contexts of $\LAMBDA$.
+
+\begin{definition}[Types of $\LAMBDA$]
+\mbox{}
+\begin{enumerate}
+
+\item
+The types of $\LAMBDA$ are: the type $\N$ of natural numbers, an infinite list 
+$\alpha,\beta,\ldots$ of type variables, and with $A,B$ also  $A \rightarrow B$.
+We call them simple types, just \emph{types} for short. 
+
+\item 
+$\Type$ is the set of simples types.
+
+\item
+We suppose be given a set $\var$, consisting of all pairs $x^T=(x,T)$ 
+of a variable name $x$ and a type $T \in \Type$.
+\end{enumerate}
+\end{definition}
+
+Terms of $\LAMBDA$ are labeled binary trees.
+
+
+\begin{definition}[Terms of $\LAMBDA$]
+The terms of $\LAMBDA$ 
+are all binary trees $t$ with set of labels $L=\{x^T, \lambda x^T., \ap, 0, \Succ, \cond\}$
+such that:
+\begin{enumerate}
+\item 
+a node $l$ labeled $x^T$ or $0$ is a leaf of $t$ (no children). 
+\item
+a node $l$ labeled $\lambda x^T.$ or $\Succ$ has a unique child $l \conc (1)$. 
+\item
+a node labeled $\ap$, $\cond$ has two children $l \conc (1)$, $l \conc (2)$.
+\end{enumerate}
+We say that $t$ is a sub-term of $u$ if $t$ is a labeled sub-tree of $u$,
+an immediate subterm if it is an immediate sub-tree.
+\end{definition}
+ 
+Assume  $l \in L = \{x^T, \lambda x^T., \ap, 0, \Succ, \cond\}$.
+We  use the operation $l( \setT_1 \ldots \setT_n )$ on labeled trees to define new terms in $\LAMBDA$.
+If $t, u \in \LAMBDA$ then $x^T, 0, \lambda x^T.t,\ap(t,u),\Succ(t),\cond(t,u) \in \LAMBDA$ 
+are terms with the root labeled $l$, and with immediate subterms among $t$, $u$. 
+Conversely, each $v \in \LAMBDA$ is in one of the forms:
+$x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
+
+Now we define the regular terms $\LAMBDA$.
+
+%11:55 22/04/2024
+
+\begin{definition}[Regular terms of $\LAMBDA$]
+\mbox{}
+\begin{enumerate}
+
+\item
+We write $\SubTerm(t)$ for the (finite or infinite) set of subterms of $t$. 
+Subterms are coded by the nodes of $t$, different nodes can code the same subterm. 
+
+\item
+$\Reg$ is the set of terms $t \in \LAMBDA$ such that $\SubTerm(t)$ is finite.
+We call the terms of $\Reg$ the \emph{regular terms}.
+
+%\item
+%We write $\Tree(t)$ for the tree of all chains
+%$(t_1, \ldots, t_n)$ with $t_1=t$ and weakly increasing by $\sqsubset_1$: 
+% for all $(i+1) \le n$ we have $t_{i+1}=t_i$ or $t_{i+1} \sqsubset_1 t_i$.
+
+\item
+As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
+
+\item
+When $t = \Succ ^n(0)$ for some natural number $n \in \Nat$
+we say that $t$ is a numeral. We write $\Num$ for the set of numeral in $\LAMBDA$.
+
+\item
+A variable $x^T$ is free in $t$ if there is some $l \in t$ labeled $x^T$ in $T$, 
+and \emph{no $m < l$ labeled $\lambda x^T.$} in $t$. 
+$\FV(t)$ is the set of free variables of $t$.
+\end{enumerate}
+ 
+\end{definition}
+
+%We use two different names for the operation $\ap(t,u)$: 
+%we call it $\ap$ when $u$ is not a variable and $\apvar$ when $u$ is a variable. 
+
+$\Num$ is the representation inside $\LAMBDA$ of the set $\Nat$ of natural numbers.
+All numerals are finite trees of $\Lambda$. 
+All finite well-typed typed $\lambda$-terms 
+we can define with the rules above are finite terms of $\LAMBDA$.
+Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
+this relation defines a graph with possibly cicles. Even if $\SubTerm(t)$ is finite, $t$ can be an infinite tree. 
+
+We do not assume implicit renaming of bound variables, namely $\alpha$-equivalence
+because the typing system (given later) does not have renaming rule as a primitive rule. 
+
+\begin{Eg}
+\label{example-regular-infinite}
+An example of regular term which is an infinite tree: the term $t = \cond(0,t) \in \LAMBDA$. 
+The set $\SubTerm(t)=\{t,0\}$ of subterms  of $t$ is finite, therefore $t$ is a regular term.
+However, $t$ is an infinite tree (it includes itself as a subtree). 
+The immediate sub-term chains of $t$ are all $(t,t,t,\ldots,t)$ and $(t,t,t,\ldots,0)$.
+There is a unique infinite sub-term chain, which is $(t,t,t,\ldots)$. 
+\end{Eg}
+
+In order to define the type of an infinite term, we first 
+define contexts and sequences for any term of $\LAMBDA$.
+A context is a list of type assignments to variables: our variables already have a type superscript,
+so in fact a type assignment $x^T:T$ is \emph{redundant} for our variables (not for our terms).
+Yet, we add an assignment relation $x^T:T$ for uniformity with the notation $x:T$ 
+in use in Type Theory.
+
+%13:32 22/04/2024
+%11:17 29/04/2024
+
+\begin{definition}[Contexts of $\LAMBDA$]
+\mbox{}
+\begin{enumerate}
+
+\item
+A  context of $\LAMBDA$ is any finite list $\Gamma = ({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ 
+of \emph{pairwise distinct variables}, each assigned to its type superscript $A_1, \ldots, A_n \in \Type$. 
+
+\item
+We denote the empty context with $\nil$. We write $\Ctxt$ for the set of all contexts.
+
+\item
+A sequent is the pair of a context $\Gamma$ and a type $A$, which we write as $\Gamma \vdash A$.
+We write $\Seq = \Ctxt \times \Type$ for the set of all sequents.
+
+\item 
+A typing judgement is the list of a context  $\Gamma$, a term $t$ and a type $A$, 
+which we write as $\Gamma \vdash t:A$.
+We write $\Stat = \Ctxt \times \LAMBDA \times \Type$ for the set of all typing judgements.
+
+\item
+We write $\FV(\Gamma) = \{ {x_1}^{A_1}, \ldots, {x_n}^{A_n} \}$.
+We say that $\Gamma$ is a context for $t \in \LAMBDA$ and we write $\Gamma \vdash t$ 
+if $\FV(t) \subseteq \FV(\Gamma)$.
+
+\item
+If $\Gamma = ({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ ,
+$\Gamma' = (x'_1:A'_1, \ldots, x'_n:A'_{n'})$ are context of $\LAMBDA$, then we
+write 
+\begin{enumerate}
+\item
+$\Gamma \ \subseteqsim \ \Gamma'$ \ if for all $(x^A:A)$:  \ 
+$(x^A:A) \in \Gamma  \ \Rightarrow  \  (x^A:A)\in\Gamma'$
+\item
+$\Gamma \sim \Gamma'$  \  if for all $(x^A:A)$:  \ 
+$(x^A:A) \in \Gamma  \ \Leftrightarrow  \  (x^A:A)\in\Gamma'$
+\end{enumerate}
+
+
+\item
+If $\Gamma$ is a context of $\LAMBDA$, then $\Gamma\setminus\{x^T:T\}$ is the context obtained
+by removing $x_i^{A_i}:A_i$ from $\Gamma$ for all $x_i^{A_i}=x^T$. 
+If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
+
+\end{enumerate}
+\end{definition}
+
+We have $\Gamma \subseteqsim \Gamma'$ if and only if
+if there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
+such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$.
+We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
+and  $\Gamma \supseteqsim \Gamma'$ if and only if $\Gamma$, $\Gamma'$ are permutation
+each other if and only if the map $\phi$ above is a bijection. We do not identify two contexts
+which are one a permutation of the other, therefore we will need a rule to move from one to the other.
+
+
+%12:38 17/04/2024
+%15:37 17/04/2024
+
+%From the context for a term we can define a context for each subterm of the term.
+
+
+%21:26 19/04/2024
+
+%\begin{definition}[Inherited Contexts of $\LAMBDA$]
+%
+%Given any context $\Gamma$, any $t \in \Lambda$ and any subterm chain 
+%$\pi = (t_1, \ldots, t_n) \in \Tree(t)$, we define a unique inherited context for $t_n$ in $\pi$.
+%The inherited context is obtained by repeatedly adding $x^T:T$ to the context whenever we
+%cross a term $t_i = \lambda x^T.u_i$, while simultaneously removing $x^T:T$ from the previous
+%context, if it was there.
+%%08:00 20/04/024
+%
+%\begin{enumerate}
+%
+%\item
+%$t$ has inherited context $\Gamma$.
+%
+%\item
+%Any binder on $x$ subtracts the variable $x$ from the context of its \emph{last} argument:
+%if $t = \lambda x^T.u, \cond(f,g)$ has inherited context $\Delta$, 
+%then $u$ and $g$ have context $\Delta \setminus \{x^T:T\}, x^T$, 
+%while $f$ has  inherited context $\Delta$.
+%
+%\item
+%In any other case the context of a term and of the immediate subterm are the same:
+%ff $t=\Succ(u), f(a)$ have inherited context $\Delta$,
+% then $u,f,a$ have  inherited context $\Delta$.
+%\end{enumerate}
+%We abbreviate \emph{`` inherited context from $\Gamma$''} with \emph{context}
+%when $\Gamma$ is fixed.
+%\end{definition}
+
+
+
+%The scope of the binder $\lambda x^T.t$ is $t$.
+%The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
+
+We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the free variable $x$ in $t$ 
+avoiding variable captures.
+In order to define the capture avoiding substitution
+under the assumption of not having implicit $\alpha$-equivalence, 
+we implicitly fix a well-order on variables
+and define the simultaneous substitution,
+written $t[u_1/x_1,\ldots,u_n/x_n]$ or $t[\vec{u}/{\vec{x}}]$,
+namely it satisfies the following:
+\begin{itemize}
+\item
+  $x_i[u_1/x_1,\ldots,u_n/x_n] = u_i$ and $y[\vec{u}/\vec{x}] = y$, where $y\not\in\vec{x}$. 
+\item
+  $(f(a))[\vec{u}/\vec{x}] = f[\vec{u}/\vec{x}](a[\vec{u}/\vec{x}])$.
+\item
+  $(\lambda z^T.b)[\vec{u}/\vec{x}] =
+  \left\{
+  \begin{array}{ll}
+    \lambda z^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}}]),
+    &
+    \text{if $z \not\in \FV(\vec{u})$},
+    \\
+    \lambda z'^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}},z'/z]),
+    &
+    \text{otherwise},
+  \end{array}
+  \right.$
+  \\
+  where
+  $\Restrict{(\vec{u}/\vec{x})}{\overline{z}}$ is the one obtained by removing $u/z$ (for some $u$) from $\vec{u}/\vec{x}$,
+  and 
+  $z'$ is the least variable (with respect to the well-order)
+  such that $z' \not\in \FV(b,\vec{u})$.
+\item
+  $0[\vec{u}/\vec{x}] = 0$.
+\item
+  $\Succ(t)[\vec{u}/\vec{x}] = \Succ(t[\vec{u}/\vec{x}])$.
+\item
+  $\cond(f,g)[\vec{u}/\vec{x}] = \cond(f[\vec{u}/\vec{x}],g[\vec{u}/\vec{x}])$.
+\end{itemize}
+
+Formally we define the substitution as follows.
+\begin{definition}[Substitution for terms of $\LAMBDA$]
+  A set $\theta=\{u_1/x_1,\ldots,u_n/x_n\}$ is called a {\em substitution}
+  if $x_1,\ldots,x_n$ are pairwise distinct variables.
+  It is called {\em renaming} if $u_1,\ldots,u_n$ are pairwise distinct variables. 
+  We define $\theta(y)$ by $u_i$ if $y=x_i$, and by $y$ otherwise.
+  We write $\theta,\theta'$ if $\theta\cup\theta'$ is a substitution.   
+  The substitution $\Restrict{\theta}{\overline{x}}$ is defined 
+  as the one obtained by removing $u/x$ (for some $u$) from $\theta$. 
+  
+  Let $t$ be a term of $\LAMBDA$, which is the labeled tree $(T_t,\phi_t)$,
+  and $\theta$ be $\{u_1/x_1,\ldots,u_n/x_n\}$, where each $u_i$ is $(T_{u_i},\phi_{u_i})$. 
+  Then the term $t[\theta]$ is $(T,\phi)$, where 
+  $T = T_t \cup \{l\conc m \mid \text{$\phi_t(l) = x_i \in \FV(t)$ and $m\in T_{u_i} $}\}$.
+  For each $l\conc m$ in the latter part, $\phi(l\conc m) = \phi_{u_i}(m)$.  
+  For $l\in T_t$, we inductively define $\phi(l)$ and
+  $\theta_l$ (such that $\theta_l = \theta',\theta_{ren}$, where $\theta'\subseteq \theta$ and $\theta_{ren}$ is a renaming) as follows. 
+  \begin{itemize}
+  \item
+    $\theta_{\nil} = \theta$.
+  \item
+    If $\phi_t(l) = y^T \not\in\FV(t)$, then $\phi(l) = \theta_l(y^T)$.
+  \item
+    If $\phi_t(l) = 0$, then $\phi(l) = 0$. 
+  \item    
+    If $\phi_t(l) = \Succ$, then $\phi(l) = \Succ$ and $\theta_{l\conc (1)} = \theta_l$. 
+  \item    
+    If $\phi_t(l) \in \{\ap,\cond\}$, then $\phi(l) = \phi_t(l)$
+    and $\theta_{l\conc (1)} = \theta_{l\conc(2)} = \theta_l$.
+  \item
+    If $\phi_t(l) = \lambda z^T.$ and $z\not\in\FV(\vec{u})$,
+    then $\phi(l) = \lambda z^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}}$. 
+  \item
+    If $\phi_t(l) = \lambda z^T.$ and $z\in\FV(\vec{u})$,
+    then $\phi(l) = \lambda z'^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}},z'/z$, where $z'$ is the least variable such that $z' \not\in \FV(t\restr l\conc(1),\vec{u})$.
+  \end{itemize}
+  We often abbreviate $t[\{u_1/x_1,\ldots,u_n/x_n\}]$ by $t[u_1/x_1,\ldots,u_n/x_n]$.
+  For a context $\Gamma = (x_1:A_1,\ldots,x_n:A_n)$ and a renaming $\theta$,
+  we write $\Gamma[\theta]$ for $(\theta(x_1):A_1,\ldots,\theta(x_n):A_n)$ if it is a context. 
+\end{definition}
+
+We have the following substitution lemma. 
+\begin{lemma}[Substitution lemma]\label{lem:subst}
+  $t[u/x][v/y] = t[t/y][u[v/y]/x]$ if $x\not\in\FV(v)$. 
+\end{lemma}
+
+%\begin{proof}
+%  (FILL THIS)
+%\end{proof}
+
+
+\subsection{Typing Rules}
+We define typing rules for terms of $\LAMBDA$ and the subset $\WTyped$ of well-typed terms.
+We consider a term well-typed if typing exists and it is unique for the term and for all its subterms.
+
+The typing rules are the usual ones but for %the conditional binder $\cond$, and for 
+the \emph{typing rule $\ap$ for an application} $t(u)$, which we split in two sub-rules, $\apvar$
+and $\apnotvar$, according if $u$ is a variable or is not a variable.
+%$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
+%for the first argument of $t$. 
+%As we said, 
+We need to insert this extra information $t$ in typing because it is important for checking termination
+of the computation of $t(u)$, as we will explain later.
+
+Remark that we introduced a unique \emph{term notation}
+for application: we write $\ap(t,u)$ no matter if $u$ is a variable or not, but we we split 
+the typing rule for $\ap$ into two sub-cases, $\apvar$ and $\apnotvar$.
+
+%We have a single structural rule  $\struct_f$, which can be used for:
+% weakening, variable permutation and variable renaming. 
+We have a a single structural rule $\weak$ for extending a context $\Gamma$ to a context 
+$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
+$\Gamma'$, $\Gamma$ are permutation each other), 
+the rule $\weak$ can be used for variable permutation.
+Variable renaming for a term $t[\vec{x}]$ can be obtained by writing 
+$(\lambda \vec{x}.t[\vec{x}])(\vec{x'})$. 
+Therefore we do not assume having a primitive rule for renaming. 
+The lack of a renaming rule is a 
+\emph{difference with the circular syntax for inductive \underline{proofs}}.
+
+The reason of not having implicit $\alpha$-conversion mentioned in the previous section 
+comes from this assumption. 
+For example, if we identify the $\alpha$-equivalent terms $\lambda x^A.x$ and $\lambda z^A.z$,
+the left derivation is a correct proof, but the right one is not ($(z:A,z:A)$ is not a context).
+That is, the proof structure does not closed under identity of the $\alpha$-equivalence. 
+\begin{center}
+  $\infer{
+    z:A \vdash \lambda x^A.x:A\to A
+  }{
+    \infer{
+      z:A, x:A \vdash x:A
+    }{}
+  }$
+  \qquad
+  $\infer{
+    z:A \vdash \lambda z^A.z:A\to A
+  }{
+    \infer{
+      z:A, z:A \vdash z:A
+    }{}
+  }$  
+\end{center}
+The provability of sequents is closed under the variable renaming and the $\alpha$-equivalence.
+We will discuss this point later. 
+
+%11:56 29/04/2024
+
+\begin{definition}[Typing rules of $\LAMBDA$]
+Assume $\Gamma = {x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_1$ is a context. 
+Let $p=0,1,2$.
+%$\Delta = y_1:B_1, \ldots, y_n:B_m$ are sequents of length $n$, $m$ respectively. Suppose
+%$f:\{1, \ldots, n\} \rightarrow \{1, \ldots, m\}$ is any injection, compatible with types
+%in $\Gamma$, $\Delta$: we assume $A_i = B_{f(i)}$ for all $1 \le i \le n$.
+
+\begin{enumerate}
+%\item
+%$\struct_f$-rule.
+%If $t: \Gamma \vdash T$ then $t[ y_{f(1)}/x_1, \ldots,  y_{f(p)}/x_p]:\Delta \vdash T$
+\item
+A rule is a list of $p+1$ typing judgements: 
+$\Gamma \vdash t_1:A_1, \ldots, \Gamma \vdash t_p:A_p, \Gamma \vdash t : A$.
+The first $p$ sequents are the premises of the rule (at most two in our case), 
+the last sequent is the conclusion of the rule.
+\item
+We read the rule above: \emph{``if $\Gamma \vdash t_1:A_1, \ldots, \Gamma \vdash t_p:A_p$
+then $\Gamma \vdash t : A$"}.
+\end{enumerate}
+
+We list the typing rules of $\LAMBDA$: 
+the rules $\apvar$ and $\apnotvar$ are restricted.
+
+\begin{enumerate}
+
+\item
+$\weak$-rule (Weakening + Exchange).
+If $\Gamma \vdash t:T$ and $\Gamma \subseteqsim \Gamma'$
+then $\Gamma' \vdash t : T$
+
+\item
+$\var$-rule.
+If $x^A \in \Gamma$ then $\Gamma \vdash x^A:A$.
+
+
+
+\item
+$\lambda$-rule.
+If $\Gamma, x^A:A \vdash b: B$
+then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
+
+\item
+$\apvar$-rule.
+If $\Gamma \vdash f: A \rightarrow B$ then $\Gamma \vdash f(x^A) :  B$,
+provided  $(x^A:A)\in  \Gamma$.
+
+\item
+$\apnotvar$-rule.
+If $\Gamma \vdash f:A \rightarrow B$ and $\Gamma \vdash a:A$
+then $\Gamma \vdash f(a) : B$, provided $a$ is \emph{not} a variable 
+
+\item
+$0$-rule.
+$\Gamma \vdash 0: \N$
+
+\item
+$\Succ$-rule.
+If $\Gamma \vdash t:\N$ then $\Gamma \vdash \Succ (t):\N$.
+
+\item
+$\cond$-rule.
+If $\Gamma \vdash  f :T$ and  $\Gamma \vdash g : \N \rightarrow T$ 
+then $\Gamma \vdash \cond(f,g) : \N \rightarrow T$.
+\end{enumerate}
+We abbreviate $\nil \vdash  t:A$ ($t:A$ in the empty context) with $\vdash t:A$. 
+We write the set of rules of $\LAMBDA$ as
+\[
+\Rule = 
+\{r \in \Seq \cup \Seq^2 \cup \Seq^3 | r \mbox{ instance of some rule of }\LAMBDA\}
+\]
+\end{definition}
+
+A rule is uniquely determined from its conclusion, provided we know whether the rule is a weakening or not.
+Two rules are equal if they have the same assumptions and the same conclusion.
+
+\begin{proposition}[Rules and subterms]
+\label{proposition-rules-subterms}
+Assume $r, r' \in \Rule$ have conclusion $\Gamma \vdash t:A$, $\Gamma' \vdash t':A'$
+respectively.
+\begin{enumerate}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% NO THIS IS WRONG ASSUMPTIONS OF weak ARE NOT UNIQUE. 
+% Anyway we do not need this point.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\item
+%If $r, r'$ are weakening rules and $\Gamma \vdash t:A = \Gamma' \vdash t':A'$ then $r = r'$.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\item
+If $r, r'$ are non-weakening rules and $\Gamma \vdash t:A = \Gamma' \vdash' t':A'$ then $r = r'$.
+\item
+If $r$ is not a weakening and the premises of $r$ are some 
+$\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
+then the list of immediate subterms of $t$ is exactly $t_1, \ldots, t_p$.
+\end{enumerate}
+\end{proposition}
+
+From the typing rules we define the proofs that a term is well-typed. 
+Proofs are binary trees on the set $\Rule$, each node is associated to a typing judgement which is
+a consequence of the typing judgements associated to the children node under some rule $r \in \Rule$
+of $\LAMBDA$.
+
+%12:55 29/04/2024
+
+%The next definition is the formal definition of proof.
+%
+%We mention that we will introduce a restriction we call \emph{Almost-left-finite} on proof trees. 
+%The restriction Almost-left-finite is used to prevent trivial proofs. 
+%For instance, we want to forbid a proof cyclically switching the variables $x$ and $y$ in the context of a term,
+%by an infinite nesting of $\weak$-rule (Weakening + Exchange  rule):
+% \[
+%  \infer[\weak]{
+%    (x^T:T, y^U:U) \prove t : A
+%  }{
+%    \infer[\weak]{
+%    (y^U:U,  x^T:T) \prove t : A
+%  }{\infer*{}{}}
+%  }
+%  \]
+%Another example: we want to forbid an infinite left nesting of applications, as in a proof of 
+%$t_{n}:A^n \rightarrow A$ where $t_{n} = t_{n+1}(t_0)$:
+% \[
+%  \infer[\apnotvar]{
+%   \prove t_n : A^n \rightarrow A
+%  }{
+%    \infer[]{
+%   \prove t_{n+1} : A^{n+1} \rightarrow A
+%  }{\ldots}
+%   &
+%   \infer[]{
+%   \prove t_{0} : A
+%  }{\ldots}
+%  }
+%  \]
+%These proof trees are meaningless and should be ruled out. 
+
+The Almost-Left-Finite condition will ask
+that all leftmost branches in any sub-proof are finite, say, that no infinite leftmost branch made of
+$\weak$-rules or of $\apnotvar$ exists. 
+The idea is that when the main operation in a programming language is application, 
+then the leftmost branch uniquely  determines the type of the term and therefore it should be finite.
+%12:54 03/06/2024
+
+
+\begin{definition}[Well-typed term of $\LAMBDA$]
+Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Rule$.
+Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) and $A \in \Type$ 
+
+Then we write $\Pi: \Gamma \vdash t:A$, and we say that $\Pi$ is a proof of $\Gamma \vdash t:A$ if:
+
+\begin{enumerate}
+\item 
+  $\phi(\nil) = \Gamma \vdash t:A$.
+\item
+  Assume that
+  \begin{enumerate}
+  \item
+    $l \in T$ is labeled with $\phi(l) = \Delta \vdash u: B$.
+  \item
+    The children of $l$ in $T$ are labeled 
+$
+\phi(l \conc (1)) = \Delta_1 \vdash u_1: B_1, 
+\ldots, 
+\phi(l \conc (p)) = \Delta_p \vdash u_p: B_p
+$
+  \end{enumerate}
+  Then for some rule $r \in \Rule$ of $\LAMBDA$ we have
+  \[
+  \infer[r]{
+    \Delta \prove u : B
+  }{
+    \Delta_1  \prove u_1:B_1
+    &
+    \cdots
+    &
+    \Delta_p  \prove u_p:B_p
+  }
+  \]
+\item
+A path $\pi$ in a proof tree $\Pi$ is \emph{almost-leftmost} if there are only finitely many rules with two
+ premises in $\pi$ such that $\pi$ does \emph{not} choose the leftmost premise.
+\item
+A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ are finite
+\end{enumerate}
+
+\end{definition}
+
+%
+%We can check that a proof is almost-left-finite if and only if all leftmost paths of all sub-proofs are finite.
+%
+%In the case of a regular proof, we can decide in polynomial time in the number of sub-proofs whether a
+%proof is almost-left-finite. Here is the algorithm. Suppose a possibly infinite proof has $n$ subproofs.
+%For each sub-proof we follow the leftmost path, after $n$ steps either we reach some rule without
+%premises (either a $\var$-rule or a $0$-rule), or we loop. Then:
+%\begin{enumerate}
+%\item
+%If for all sub-proofs we stop then the proof is almost-left-finite
+%\item
+%If for some sub-proof we loop, then there is infinite leftmost path and the proof is \emph{not} almost-left-finite.
+%\end{enumerate}
+%We estimate the computation time to $O(n)$ for each of the $n$ sub-proofs, 
+%and the total computation time to $O(n^2)$.
+%\\
+
+Eventually we define the well-typed terms of $\LAMBDA$ using almost-left-finite proofs.
+
+\begin{definition}[Well-typed term of $\LAMBDA$]
+\mbox{}
+\begin{enumerate}
+\item
+$\Gamma \vdash t:A$ is true if and only if $\Pi:\Gamma \vdash t:A$ for some $\Pi$.
+\item
+$t \in \LAMBDA$ is well-typed if and only if 
+$\Pi:\Gamma \vdash t:A$ for some \emph{almost-left-finite} proof $\Pi$,
+for some $A$ and some context $\Gamma \supseteqsim \FV(t)$.
+\item
+$\WTyped$ is the set of well-typed $t \in \LAMBDA$.
+\end{enumerate}
+%A proof $\Pi:\Gamma \vdash  t :T$ is canonical if all $\weak$-rules
+%\begin{enumerate}
+%\item
+% either follow some $\lambda$-rule for a term $\lambda x^T.b$, and they introduce $x^T$ in the context,
+%\item
+%or follow some $\cond$-rule for a term $\cond(f,g)$, and and they introduce $x^\N$ in the context,
+%\end{enumerate}
+\end{definition}
+
+Well-typed terms are closed by substitution.
+
+We prove that the type assigned to a term by an Almost-Left-Finite proof is \emph{unique}: 
+if two Almost-Left-Finite proofs assign two types $T$, $T'$ to the same possibly infinite term $t$,
+then $T = T'$.
+
+\begin{proposition}[Uniqueness of almost-left-finite type]
+If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are two almost-left-finite
+proofs then $A = A'$.
+\end{proposition}
+
+%
+%%08:56 19/06/2024
+%\begin{proof}
+%By induction on the sum of the length of the leftmost branch in $\Pi$ and $\Pi'$. These lengths are finite
+%because $\Pi$ and $\Pi'$ are assumed to be almost-left-finite. Let $r$ be the last rule of $\Pi$ and $r'$ be the
+%last rule of $\Pi'$.
+%\begin{enumerate}
+%\item
+%Assume $r = \weak$. Then $\Pi$ is obtained from a proof $\Pi_1:\Gamma_1 \vdash t:A$. 
+%By induction hypothesis on $\Pi_1$ and $\Pi'$ we conclude that $A = A'$.
+%
+%\item
+%Assume $r \not = \weak$ and $r' = \weak$. 
+%Then $\Pi'$ is obtained from a proof $\Pi'_1:\Gamma_1 \vdash t:A$. 
+%By induction hypothesis on $\Pi$ and $\Pi'_1$ we conclude that $A = A'$.
+%
+%\item
+%Assume  $r \not = \weak$ and $r' \not = \weak$. Then both $r$ and $r'$ are the typing rule for
+%the outermost constructor of $t$ and for some
+%$h=0,1,2$ the proof $\Pi$ has premises $\Pi_1, \ldots, \Pi_h$
+%and the proof $\Pi'$ has premises $\Pi'_1, \ldots, \Pi'_h$ (for the same $h$). 
+%We distinguish one case for each constructor.
+%
+%\begin{enumerate}
+%\item
+%Assume $t = x^T$. Then $r=r'=\var$-rule and $A = A' = T$.
+%
+%\item
+%Assume $t =0^\N$. Then $r=r'=0$-rule and $A = A' = \N$.
+%
+%\item
+%Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1:\Gamma \vdash u: \N$
+%and $\Pi_2:\Gamma' \vdash u:\N$ and $A = A' = \N$.
+%
+%\item
+%Assume $t = f(u)$. Then $r=r'=\ap$-rule and $\Pi_1:\Gamma \vdash f:U \rightarrow A$
+%and $\Pi_2:\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on $\Pi_1$ and
+%$\Pi'_1$ we deduce that $(U \rightarrow A) = (U' \rightarrow A')$, in particular that $A = A'$.
+%
+%\item
+%Assume $t = \lambda x^T.b$. Then $r=r'=\lambda$-rule and 
+%$\Pi_1:\Gamma \vdash b:B$
+%and $\Pi_2:\Gamma' \vdash b:B'$. By induction hypothesis on $\Pi_1$ and
+%$\Pi'_1$ we deduce that $B=B'$, in particular that $A = T \rightarrow B = T \rightarrow B' = A'$.
+%
+%\item
+%Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1:\Gamma \vdash f:A$
+%and $\Pi_2:\Gamma' \vdash f:A'$. By induction hypothesis on $\Pi_1$ and
+%$\Pi'_1$ we deduce that $A = A'$.
+%
+%\end{enumerate}
+%\end{enumerate}
+%\end{proof}
+
+%
+%We provide some examples of well-typed and not well-typed terms.
+%%23:30 23/04/2024
+%Some term in $\LAMBDA$ has no type, like the application $0(0)$ of the non-function $0$. 
+%
+%\begin{Eg}
+%We provide a term in $\LAMBDA$ having more than one type.
+%Let $t=u(0)$ and $u=\cond(t,u)$. $t$ has an infinite lefmost branch $t,u,t,u, \ldots$, therefore
+%$t$ is not almost-left-finite and it has no \emph{almost-left-finite typing proof}.
+%Unicity fails and we can prove $\vdash t:A$ for all types $A \in \Type$. 
+%The subterms of $t$ are $\{t, u, 0\}$ and a proof $\Pi: \emptyset \vdash t:A$ is
+%\[
+%\infer[\apnotvar]{
+%  \prove t : A
+%}{
+%  \infer[\cond]{
+%    \prove u:\N \rightarrow A
+%  }{
+%    \infer*{
+%      \prove t : A
+%    }{}
+%    &
+%    \quad
+%    &
+%    \infer*{
+%      \prove u : \N \rightarrow A
+%    }{} 
+%  }
+%  &
+%  \quad
+%  &
+%  \infer[0]{
+%    \prove 0:\N
+%  }{}
+%}
+%\]
+%Formally, the typing proof $\Pi=(T,\phi):\vdash t:A$ 
+%is defined by $\universe{\Pi}=\universe{t}$ and:
+%\begin{enumerate}
+%\item
+%$\Label(\Pi,l)=(\vdash A)$ \ \ \ \ \ \ \ for all $l \in \universe{t}$ such that  $t \restr l = t$,
+%\item
+%$\Label(\Pi,l) = (\vdash \N \rightarrow A)$  for all $l \in \universe{t}$ such that $t \restr l = u$,
+%\item
+% $\Label(\Pi,l)=(\vdash\N)$ \ \ \ \ \ \ \  for all $l \in \universe{t}$ such that $t \restr l = 0$. 
+%\end{enumerate}
+%%09:06 24/04/2024
+%\end{Eg}
+%
+%
+%A term with at least two types has the leftmost branch infinite, as it is the case for $t$ above.
+%We proved that if \emph{all} subterms of a term have the leftmost branch finite, then the term 
+%has at most one type.
+%
+%
+%\emph{Claim (existence of a polynomial-time typing algorithm)}.
+%We claim without proof that if a term $t$ is regular then we can decide if an almost-left-finite proof 
+%$\Pi:\Gamma \vdash A$ exists. If an almost-left-finite proof $\Pi$ exists 
+%then at least one of almost-left-finite proofs is regular and we can compute it. 
+%We first check whether the term is almost-left-finite in time $O(n^2)$. If it is not we reject the term.
+%Otherwise we start the standard recursive typing algorithm, until a type has been inferred consistently
+%for each of the finitely many subterms, or some type inconsistency has been found.
+%In the first case we accept the term and we return the time, in the second case we reject the term
+%and we return no type.
+%The computation requires quadratic time in the size of the graph representing the term.
+
+
+%10:26 20/04/2024
+%13:49 29/04/2024
+
+
+\subsection{Reduction Rules}
+Our goal is to provide a set of well-formed term for $\LAMBDA$ and interpret them as partial functionals.
+Some terms, those satisfying the global trace condition (to be introduced later) will be total functionals.
+Our first step is to provide reduction rules for $\LAMBDA$.
+
+%18:14 27/03/2024
+
+\begin{definition}[reduction rules for $\LAMBDA$]
+\mbox{}
+\begin{enumerate}
+
+\item
+$\reduces_\beta$: $(\lambda x^A.b)(a) \reduces_\beta b[a/x]$
+
+\item 
+$\reduces_\cond$: $\cond(f,g)(0) \reduces_\cond f$ and
+$\cond(f,g)(\Succ (t)) \reduces_\cond g(t)$.
+
+\item
+$\reduces$ is the contraction of one $\beta$ or $\cond$ redex: 
+the context closure of $\reduces_\beta$ and $\reduces_\cond$.
+
+\item
+$\reduces^*$ is the reflexive and 
+transitive closure of $\reduces$ (zero or more reductions).
+
+\item
+$\reduces^{+}$ is the 
+transitive closure of $\reduces$ (one or more reductions).
+
+
+\item
+The $\cond$-depth of a node $l=(i_1, \ldots, i_n) \in t$ 
+is the number of $1 \le h < n$ such that $(i_1, \ldots, i_h)$ has label $\cond$
+and $i_{h+1} = 2$
+(the number of $\cond$ such that $l$ occurs in the right-hand-side of such $\cond$).
+
+\item
+The $n$-safe level of $t$ is the set of nodes of $t$ of depth $\le n$.
+
+\item
+We say that $t \nsafeReduces{n} u$, or that $t$ $n$-safely reduces to $u$,  
+if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $t$ 
+(i.e. of $\cond$-depth $\le n$).
+%We call \emph{unsafe} a reduction inside any $\cond(f,g)$.
+
+\item
+A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
+
+We abbreviate \quotationMarks{$0$-safe normal} with just \quotationMarks{safe normal}.
+\end{enumerate}
+\end{definition}
+
+%09:19 24/04/2024
+%14:00 29/04/2024
+
+\begin{Eg}
+Let $u = \cond. (0, (\lambda z.u)(z) )$, where we omitted the type superscript
+of $z$ because it is irrelevant. Then $u$ is $0$-safe-normal (safe normal for short), because
+all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-hand-side of a $\cond$. 
+However $u$ has infinitely many nodes which are $\beta$-redexes. 
+Indeed, the tree form of $u$ has the following branch:
+\begin{center}
+  $u$, 
+  \quad
+  $(\lambda z.u)(z)$, 
+  \quad
+  $\lambda z.u$, 
+ \quad
+  $u$, 
+ \quad $\ldots$
+\end{center}
+This branch is cyclic, infinite,
+and it includes infinitely many $\beta$-redexes, all equal to the same term $(\lambda z.u)(z)$.
+\end{Eg}
+
+Through branches crossing the right-hand-side
+of some $\cond$ we will-express fixed-point equations.
+Reductions on fixed-point equations can easily loop.
+However, in order to produre the output of a computation we only need 
+to reduce closed terms of type $\N$ to a numeral. We will prove that for this taks we only
+need $0$-safe reductions, those in the the right-hand-side
+of \emph{no} $\cond$, and that $0$-safe reductions strongly normalize. 
+
+\begin{Eg}
+This is an example of safe $\cond$-reductions from a term $v(n)$ to a normal form. 
+Assume $n \in \Num$ is any numeral and $v = \cond(1, v)$. There are only finitely many reductions
+from $v(n)$, and they are all $0$-safe. $v(n)$ $\cond$-reduces to $v(n-1)$, 
+then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
+After $n$ $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we get $1$ and we stop. 
+Thus, the term $v(n)$ strongly normalizes to $1$ in $(n+1)$-steps, in fact $v(n)$ has a unique reduction path,
+having length $(n+1)$ and terminating in $1$.
+\end{Eg}
+
+There are meaningful 
+terms without a normal form, but we can get as close as we want to a normal form
+In fact, we will prove that for all $n$, 
+all terms have some $n$-safe normal form, that is, 
+with no redexes of $\cond$-depth $\le n$. 
+%The $n$-safe normal form of a term is unique up $n$-safe equality: 
+%any two $n$-safe normal forms have the same $n$-safe level, 
+%though they may be different in some level of $\cond$-depth $>n$.
+
+We will also prove that terms have a limit normal form, 
+obtained by taking the limit of the $n$-safe normal forms of the term.
+%, and that this limit normal form is unique.

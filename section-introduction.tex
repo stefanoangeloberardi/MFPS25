@@ -1,0 +1,67 @@
+% !TEX root = main.tex
+
+\section{Introduction} 
+We will introduce $\LAMBDA$, a set of infinite $\lambda$-terms with a circular syntax.
+The types of $\LAMBDA$ are: the atomic type $\N$, 
+possibly type variables $\alpha, \beta, \ldots$, and all types $A \rightarrow B$ for any types $A$, $B$. 
+Type variables are only used to provide examples of terms and play a minor role in our paper.
+
+The terms of $\LAMBDA$  are all possibly infinite trees representing expressions defined with 
+$0$,$\Succ $,$\ap$ (application), 
+variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining maps), 
+and $\cond$, the arithmetic conditional (i.e., the test on zero). 
+If we have no term variables and no type variables, 
+then the trees in $\LAMBDA$ represent partial functionals on $\N$, 
+provided we add reduction rules transforming closed terms of type $\N$ in notations for natural numbers.
+
+%19:42 19/04/2024
+
+In this paper will consider two sets of terms: 
+\begin{enumerate}
+\item
+the set $\CTlambda$ of well-typed terms in
+a circular syntax, which are equivalent to the set of terms in G\"{o}del system $\systemT$.  
+\item
+The set of terms $\GTC$, satisfying a condition called global trace condition, which are possibly non-recursive
+terms used to provide semantics for  $\CTlambda$ (and  $\systemT$, of course)
+\end{enumerate}
+We introduce more sets of terms only used 
+as intermediate steps in the definition of the semantic $\GTC$ and the syntax $\CTlambda$.
+
+\begin{enumerate}
+\item
+ $\WTyped \subseteq \LAMBDA$, the set of well-typed terms, is the
+of set terms having a unique type
+\item
+$\Reg$ is the set of terms of $\LAMBDA$ which are regular trees (i.e., having finitely
+many subtrees). They are possibly infinite terms which are finitely presented 
+by a finite graph possibly having cycles.
+\item 
+$\GTC \subseteq \WTyped$ will be defined as the set of well-typed circular 
+$\lambda$-terms satisfying the global trace condition (and possibly non-recursive, as we said). %and regular. 
+Terms of $\GTC$ denote total functionals. 
+\end{enumerate}
+
+We will prove that $\CTlambda$ is a decidable subset of $\Reg$.
+$\CTlambda$ is a new variant of the existing circular version of G\"{o}del system $\systemT$. 
+Differently from all previous circular versions of $\systemT$, our system $\CTlambda$
+uses binders instead of combinators. 
+As we anticipated, 
+ circular syntax has the advange of writing much shorter terms while preserving decidability of termination.
+Besides, by introducing a circular syntax with binders, we hope to provide 
+a circular syntax more familiar to researchers working in the field of Type Theory.
+\\
+
+We will prove the expected results for the circular syntax $\CTlambda$:
+strong normalization for reductions not in the right-hand side of any $\cond$ and Church-Rosser. 
+We will prove normalization in the limit if we use reductions which are ``fair'':
+fair reductions can reduce \emph{inside} the right-hand side of some $\cond$, but they never forget entirely 
+the task of reducing \emph{outside} all such subterms.
+
+Eventually, we will prove that the closed terms $\CTlambda$ (those without free variables)
+represent exactly the total computable functionals definable in G\"{o}del system $\systemT$.
+
+
+%14:57 17/04/2024
+%21:08 19/04/2024
+

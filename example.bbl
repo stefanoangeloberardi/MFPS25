@@ -1,0 +1,41 @@
+\begin{thebibliography}{1}
+\providecommand{\url}[1]{\texttt{#1}}
+\providecommand{\urlprefix}{ }
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem{Civin-Yood}
+Civin, P. and B.~Yood, \emph{Involutions on {B}anach algebras}, Pac. J. Math
+  \textbf{9}, pages 219--226 (1959).
+\newline\urlprefix\url{https://doi.org/10.2140/pjm.1959.9.415}
+
+\bibitem{Clifford-Preston}
+Clifford, A.~H. and G.~B. Preston, \emph{The Algebraic Theory of Semigroups},
+  volume~7 of \emph{Math. Surveys}, AMS (1961).
+\newline\urlprefix\url{https://www.ams.org/books/surv/007.1/surv007.1-endmatter.pdf}
+
+\bibitem{Easdown-Munn}
+Easdown, D. and W.~D. Munn, \emph{Trace functions on inverse semigroup
+  algebras}, Bulletin of the Australian Mathematical Society \textbf{52}, pages
+  359--372 (1995).
+\newline\urlprefix\url{https://doi.org/10.1017/S0004972700014854}
+
+\bibitem{Freyd}
+Freyd, P., P.~O'Hearn, J.~Power, R.~Tennent and M.~Takeyama,
+  \emph{Bireflectivity}, Electronic Notes in Theoretical Computer Science
+  \textbf{1} (1995).
+\newline\urlprefix\url{https://doi.org/10.1017/S0004972700014854}
+
+\bibitem{Roscoe}
+Roscoe, A.~W., \emph{The Theory and Practice of Concurrency}, Series in
+  Computer Science, Prentice Hall (1987), ISBN 0136744095.
+
+\bibitem{Shehadah}
+Shehadah, A.~A., \emph{Embedding theorems for semigroups with involution},
+  Ph.D. thesis, Purdue University, Indiana (1992). PhD thesis.
+\newline\urlprefix\url{https://docs.lib.purdue.edu/dissertations/AAI8300958/}
+
+\bibitem{Weyl}
+Weyl, H., \emph{The Classical Groups}, Princeton University Press (1946), ISBN
+  9780691057569.
+
+\end{thebibliography}
