@@ -177,15 +177,17 @@ even if $\SubTerm(t)$ is finite, $t$ can be an infinite tree.
 An example of regular term which is an infinite tree: the term $t = \cond(0,\lambda^N.t(x)) \in \LAMBDA$. 
 The set $\SubTerm(t)=\{t,0,\lambda x.t(x), x\}$ of subterms  of $t$ is finite, therefore $t$ is a regular term.
 However, $t$ is an infinite tree (it includes itself as a subtree). 
-There is a unique infinite sub-term chain, which is $(t,\lambda x.t(x),t(x),t,\ldots)$. 
+There is a unique infinite sub-term chain, which is cyclic:
+$(t,\lambda x.t(x),t(x),t,\ldots)$. 
 \end{Eg}
 
 Regular terms have finitely many distinct free variable and finitely many 
 distinct bound variables, even if each variable can occur infinitely many times,
 like $x$ in $t$ above. Through renaming of bound variable a regular term 
-can be $\alpha$-equivalent to an infinite term 
+can be $\alpha$-equivalent to a non-regular infinite term 
 with infinitely many distinct bound variables: in the example above we can
-rename $\lambda x.t(x)$ to $\lambda x'.t(x')$, $\lambda x''.t(x'')$, \ldots.
+rename each occurrence of $\lambda x.t(x)$ in the infinite tree 
+to $\lambda x'.t(x')$, $\lambda x''.t(x'')$, \ldots. 
 
 
 In order to define the type of an infinite term, we first 
@@ -231,16 +233,16 @@ write
 \item
 $\Gamma \ \subseteqsim \ \Gamma'$ \ if for all $(x^A:A)$:  \ 
 $(x^A:A) \in \Gamma  \ \Rightarrow  \  (x^A:A)\in\Gamma'$
+
 \item
 $\Gamma \sim \Gamma'$  \  if for all $(x^A:A)$:  \ 
 $(x^A:A) \in \Gamma  \ \Leftrightarrow  \  (x^A:A)\in\Gamma'$
 \end{enumerate}
 
-
-\item
-If $\Gamma$ is a context of $\LAMBDA$, then $\Gamma\setminus\{x^T:T\}$ is the context obtained
-by removing $x_i^{A_i}:A_i$ from $\Gamma$ for all $x_i^{A_i}=x^T$. 
-If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
+%\item
+%If $\Gamma$ is a context of $\LAMBDA$, then $\Gamma\setminus\{x^T:T\}$ is the context obtained
+%by removing $x_i^{A_i}:A_i$ from $\Gamma$ for all $x_i^{A_i}=x^T$. 
+%If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
 
 \end{enumerate}
 \end{definition}
@@ -296,11 +298,14 @@ If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the free variable $x$ in $t$ avoiding variable captures. In the case of regular
+We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
+free variable $x$ in $t$ avoiding variable captures. We can deduce the
+usual equations for substitution, which we skip in this paper. In the case of regular
 terms, we can renaming while preserving the finiteness of the graph.
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %IN THE CONGRESS VERSION I WOULD NOT INCLUDE THE
-% EQUATION FOR SUBSTITUTION
+% EQUATIONS FOR SUBSTITUTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %In order to define the capture avoiding substitution
 %under the assumption of not having implicit $\alpha$-equivalence, 
@@ -388,11 +393,13 @@ We have the following Substitution Lemma.
   $t[u/x][v/y]$,$ t[t/y][u[v/y]/x]$ are $\alpha$-equivalent if $x\not\in\FV(v)$. 
 \end{lemma}
 
+
 \subsection{Typing Rules}
 We define typing rules for terms of $\LAMBDA$ and the subset $\WTyped$ of well-typed terms.
 We consider a term well-typed if typing exists and it is unique for the term and for all its subterms.
 
-The typing rules are the usual ones but for %the conditional binder $\cond$, and for 
+The typing rules are the usual ones but for 
+%the conditional binder $\cond$, and for 
 the \emph{typing rule $\ap$ for an application} $t(u)$, which we split in two sub-rules, $\apvar$
 and $\apnotvar$, according if $u$ is a variable or is not a variable.
 %$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
@@ -401,46 +408,51 @@ and $\apnotvar$, according if $u$ is a variable or is not a variable.
 We need to insert this extra information $t$ in typing because it is important for checking termination
 of the computation of $t(u)$, as we will explain later.
 
-Remark that we introduced a unique \emph{term notation}
-for application: we write $\ap(t,u)$ no matter if $u$ is a variable or not, but we we split 
-the typing rule for $\ap$ into two sub-cases, $\apvar$ and $\apnotvar$.
+Remark that we introduced a unique \emph{term notation} for application: 
+we write $\ap(t,u)$ no matter if $u$ is a variable or not, but we we split 
+the typing rule for $\ap$ into two sub-cases, $\apvar$ for $u =$ some variable
+$x$, and $\apnotvar$ for $u$ not a variable. 
+If, say, we replace $x^N$ with $\Succ(x^N)$ then we also replace the rule
+$\apvar$ with $\apnotvar$. 
 
 %We have a single structural rule  $\struct_f$, which can be used for:
 % weakening, variable permutation and variable renaming. 
-We have a a single structural rule $\weak$ for extending a context $\Gamma$ to a context 
-$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
-$\Gamma'$, $\Gamma$ are permutation each other), 
-the rule $\weak$ can be used for variable permutation.
+%We have a a single structural rule $\weak$ for extending a context 
+%$\Gamma$ to a context 
+%$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
+%$\Gamma'$, $\Gamma$ are permutation each other), 
+%the rule $\weak$ can be used for variable permutation.
 Variable renaming for a term $t[\vec{x}]$ can be obtained by writing 
 $(\lambda \vec{x}.t[\vec{x}])(\vec{x'})$. 
-Therefore we do not assume having a primitive rule for renaming. 
-The lack of a renaming rule is a 
-\emph{difference with the circular syntax for inductive \underline{proofs}}.
 
-The reason of not having implicit $\alpha$-conversion mentioned in the previous section 
-comes from this assumption. 
-For example, if we identify the $\alpha$-equivalent terms $\lambda x^A.x$ and $\lambda z^A.z$,
-the left derivation is a correct proof, but the right one is not ($(z:A,z:A)$ is not a context).
-That is, the proof structure does not closed under identity of the $\alpha$-equivalence. 
-\begin{center}
-  $\infer{
-    z:A \vdash \lambda x^A.x:A\to A
-  }{
-    \infer{
-      z:A, x:A \vdash x:A
-    }{}
-  }$
-  \qquad
-  $\infer{
-    z:A \vdash \lambda z^A.z:A\to A
-  }{
-    \infer{
-      z:A, z:A \vdash z:A
-    }{}
-  }$  
-\end{center}
-The provability of sequents is closed under the variable renaming and the $\alpha$-equivalence.
-We will discuss this point later. 
+%Therefore we do not assume having a primitive rule for renaming. 
+%The lack of a renaming rule is a 
+%\emph{difference with the circular syntax for inductive \underline{proofs}}.
+%
+%The reason of not having implicit $\alpha$-conversion mentioned in the previous section 
+%comes from this assumption. 
+%For example, if we identify the $\alpha$-equivalent terms $\lambda x^A.x$ and $\lambda z^A.z$,
+%the left derivation is a correct proof, but the right one is not ($(z:A,z:A)$ is not a context).
+%That is, the proof structure does not closed under identity of the $\alpha$-equivalence. 
+%\begin{center}
+%  $\infer{
+%    z:A \vdash \lambda x^A.x:A\to A
+%  }{
+%    \infer{
+%      z:A, x:A \vdash x:A
+%    }{}
+%  }$
+%  \qquad
+%  $\infer{
+%    z:A \vdash \lambda z^A.z:A\to A
+%  }{
+%    \infer{
+%      z:A, z:A \vdash z:A
+%    }{}
+%  }$  
+%\end{center}
+%The provability of sequents is closed under the variable renaming and the $\alpha$-equivalence.
+%We will discuss this point later. 
 
 %11:56 29/04/2024
 
@@ -469,11 +481,6 @@ We list the typing rules of $\LAMBDA$:
 the rules $\apvar$ and $\apnotvar$ are restricted.
 
 \begin{enumerate}
-
-\item
-$\weak$-rule (Weakening + Exchange).
-If $\Gamma \vdash t:T$ and $\Gamma \subseteqsim \Gamma'$
-then $\Gamma' \vdash t : T$
 
 \item
 $\var$-rule.
@@ -517,34 +524,35 @@ We write the set of rules of $\LAMBDA$ as
 \]
 \end{definition}
 
-A rule is uniquely determined from its conclusion, provided we know whether the rule is a weakening or not.
-Two rules are equal if they have the same assumptions and the same conclusion.
+A rule is uniquely determined from its conclusion. We have the following 
+derived rule $\weak$-rule for Weakening + Exchange:
+if $\Gamma \vdash t:T$ and $\Gamma \subseteqsim \Gamma'$
+then $\Gamma' \vdash t : T$. If we derive $\Gamma \vdash t:T$, 
+then all contexts in the proof have prefix $\Gamma$, and the
+rule $\weak$ can be derived by replacing everywhere $\Gamma$
+by $\Gamma'$. This replacement preserves the correctness of the
+$\var$-rules because we assumed $\Gamma \subseteqsim \Gamma'$.
+
+We say that two rules are equal if they have the same assumptions and the same 
+conclusion.
 
 \begin{proposition}[Rules and subterms]
 \label{proposition-rules-subterms}
-Assume $r, r' \in \Rule$ have conclusion $\Gamma \vdash t:A$, $\Gamma' \vdash t':A'$
-respectively.
-\begin{enumerate}
+Assume $r, r' \in \Rule$ have conclusion 
+$\Gamma \vdash t:A$, $\Gamma' \vdash t':A'$ respectively.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% NO THIS IS WRONG ASSUMPTIONS OF weak ARE NOT UNIQUE. 
-% Anyway we do not need this point.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\item
-%If $r, r'$ are weakening rules and $\Gamma \vdash t:A = \Gamma' \vdash t':A'$ then $r = r'$.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\item
-If $r, r'$ are non-weakening rules and $\Gamma \vdash t:A = \Gamma' \vdash' t':A'$ then $r = r'$.
-\item
-If $r$ is not a weakening and the premises of $r$ are some 
+% WE CANNO INCLUDE THE weak RULE
+% THE ASSUMPTIONS OF weak ARE NOT UNIQUE. 
+% This is why weak is taken as a derived rule
+Then $r = r'$, and if the premises of $r$ are some 
 $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
 then the list of immediate subterms of $t$ is exactly $t_1, \ldots, t_p$.
-\end{enumerate}
 \end{proposition}
 
 From the typing rules we define the proofs that a term is well-typed. 
-Proofs are binary trees on the set $\Rule$, each node is associated to a typing judgement which is
-a consequence of the typing judgements associated to the children node under some rule $r \in \Rule$
-of $\LAMBDA$.
+Proofs are binary trees on the set $\Rule$, each node is associated to a typing 
+judgement which is a consequence of the typing judgements associated to the 
+children node under some rule $r \in \Rule$ of $\LAMBDA$.
 
 %12:55 29/04/2024
 
@@ -581,16 +589,17 @@ of $\LAMBDA$.
 %These proof trees are meaningless and should be ruled out. 
 
 The Almost-Left-Finite condition will ask
-that all leftmost branches in any sub-proof are finite, say, that no infinite leftmost branch made of
-$\weak$-rules or of $\apnotvar$ exists. 
+that all leftmost branches in any sub-proof are finite, say, that no infinite leftmost 
+branch made of $\weak$-rules or of $\apnotvar$ exists. 
 The idea is that when the main operation in a programming language is application, 
 then the leftmost branch uniquely  determines the type of the term and therefore it should be finite.
 %12:54 03/06/2024
 
 
+
 \begin{definition}[Well-typed term of $\LAMBDA$]
 Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Rule$.
-Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) and $A \in \Type$ 
+Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) and $A \in \Type$.
 
 Then we write $\Pi: \Gamma \vdash t:A$, and we say that $\Pi$ is a proof of $\Gamma \vdash t:A$ if:
 
@@ -648,13 +657,15 @@ A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ a
 %and the total computation time to $O(n^2)$.
 %\\
 
-Eventually we define the well-typed terms of $\LAMBDA$ using almost-left-finite proofs.
+Eventually we define the well-typed terms of $\LAMBDA$ 
+using almost-left-finite proofs.
 
 \begin{definition}[Well-typed term of $\LAMBDA$]
 \mbox{}
 \begin{enumerate}
 \item
-$\Gamma \vdash t:A$ is true if and only if $\Pi:\Gamma \vdash t:A$ for some $\Pi$.
+$\Gamma \vdash t:A$ is true if and only if 
+$\Pi:\Gamma \vdash t:A$ for some proof $\Pi$.
 \item
 $t \in \LAMBDA$ is well-typed if and only if 
 $\Pi:\Gamma \vdash t:A$ for some \emph{almost-left-finite} proof $\Pi$,
@@ -673,13 +684,13 @@ $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
 
 Well-typed terms are closed by substitution.
 
-We prove that the type assigned to a term by an Almost-Left-Finite proof is \emph{unique}: 
-if two Almost-Left-Finite proofs assign two types $T$, $T'$ to the same possibly infinite term $t$,
-then $T = T'$.
+We prove that the type assigned to a term by an Almost-Left-Finite proof is 
+\emph{unique}: if two Almost-Left-Finite proofs $\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same possibly infinite term $t$, then $\Pi = \Pi'$ and 
+$A = A'$.
 
-\begin{proposition}[Uniqueness of almost-left-finite type]
-If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are two almost-left-finite
-proofs then $A = A'$.
+\begin{proposition}[Uniqueness of almost-left-finite proofs and types]
+If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are 
+two almost-left-finite proofs then $A = A'$.
 \end{proposition}
 
 %
@@ -809,10 +820,12 @@ proofs then $A = A'$.
 
 \subsection{Reduction Rules}
 Our goal is to provide a set of well-formed term for $\LAMBDA$ and interpret them as partial functionals.
-Some terms, those satisfying the global trace condition (to be introduced later) will be total functionals.
+Some terms, those satisfying the global trace condition (to be introduced later) 
+will denote a simple and broad subset of the total functionals.
 Our first step is to provide reduction rules for $\LAMBDA$.
 
 %18:14 27/03/2024
+%13:55 25/03/2025
 
 \begin{definition}[reduction rules for $\LAMBDA$]
 \mbox{}
