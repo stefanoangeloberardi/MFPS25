@@ -1,6 +1,7 @@
 \section{The set of infinite $\lambda$-terms}
 We define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
-of well-typed terms and a reduction relation for them. Infinite terms are labeled binary trees, therefore we
+of well-typed terms and a reduction relation for them. 
+Infinite terms are labeled binary trees, therefore we
 have to define binary trees first, and before them the lists on $\{1,2\}$ and more related notions.
 
 \subsection{Lists and Binary Trees}
@@ -8,18 +9,18 @@ have to define binary trees first, and before them the lists on $\{1,2\}$ and mo
 \begin{definition}[Lists on $\{1,2\}$]
 \begin{enumerate}
 \item
-We denote with $\List(\{1,2\})$ the set of all lists of elements of $\{1,2\}$: $(),(1),(1),(1,1),(1,2),\ldots$. 
-We call the elements of $\List(\{1,2\})$ just lists for short.
+We denote with $\List(\{1,2\})$ the set of all lists on $\{1,2\}$, just lists for short.
 \item
 If $i_1, \ldots, i_n \in \{1,2\}$, we write $(i_1, \ldots, i_n)$
 for the list with elements $i_1, \ldots, i_n$. 
 \item
 We write $\nil$ for the empty list, or $()$. 
 \item
-If $l=(i_1, \ldots, i_n)$, $m=(j_1, \ldots, j_m)$ and $l, m \in \List(\{1,2\})$ we define
-$$
-l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)\in \List(\{1,2\})
-$$
+If $l=(i_1, \ldots, i_n), m=(j_1, \ldots, j_m) $ are lists
+we define
+$
+l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)
+$
 %If $I \subseteq \List(\{1,2\})$
 %we write $l \conc I = \{l \conc m | m \in I\}$. 
 \item
@@ -28,7 +29,7 @@ is defined by $l \le m$ if and only if $m = l \conc m'$ for some $m' \in  \List(
 \end{enumerate}
 \end{definition}
 
-Binary trees are represented by set of lists.
+Binary trees are represented by set of lists on $\{1,2\}$.
 
 \begin{definition}[Binary trees]
 \begin{enumerate}
@@ -38,7 +39,8 @@ of lists including the empty list and closed by prefix: $\nil \in T$ and for all
 if $m \in T$ and $l \le m$ then $l \in T$. 
 \item
 $\nil$ is called the root of $T$, any $l \in T$ is called a node of
-$T$ and if $l \in T$, then any $l \conc (i) \in T$ is called a child of $l$ in $T$.
+$T$ and if $l \in T$, then any $l \conc (i) \in T$ is called a child of $l$ in $T$
+of index $i$.
 \item
 A node $l$ of $T$ is a leaf of $T$ if $l$ is an maximal element of $T$ w.r.t. the prefix order (i.e.,
 if $l$ has no children). 
@@ -59,17 +61,19 @@ in the node $l$, an immediate sub-tree if $l=(i)$.
 \end{enumerate}
 \end{definition}
 
-The labeling of a node $m \in \universe{( \setT \restr l )}$ 
+Remark that the labeling of a node $m \in \universe{( \setT \restr l )}$ 
 is the same label of the corresponding node $l \conc m$ of $\universe{\setT}$.
  
-Let $n = 0, 1, 2$. Assume $\setT_1, \ldots,\setT_n$ are trees labeled on $L$ and $l \in L$.
-Then we define $$\setT = l(\setT_1, \ldots, \setT_n)$$ as the unique tree labeled on $L$
-with the root labeled $l$ and with:
+Let $n = 0, 1, 2$. We define an operation $l(\setT_1, \ldots, \setT_n)$
+combining labeled trees which we will use to produce tree notation. 
+Assume $\setT_1, \ldots,\setT_n$ are trees labeled on $L$ and $l \in L$.
+Then we define $$\setT = l(\setT_1, \ldots, \setT_n)$$ 
+as the unique tree $\setT$ labeled on $L$ with the root labeled $l$ and with:
 $\setT \restr (i) = \setT_i$ for all $1 \le i \le n$.
 
 
 \subsection{Types, Terms and Contexts}
-Now we define the types of $\LAMBDA$, then the terms and the contexts of $\LAMBDA$.
+Now we define a set $\LAMBDA$ of infinite tree notations: first the types of $\LAMBDA$, then the terms and the contexts of $\LAMBDA$.
 
 \begin{definition}[Types of $\LAMBDA$]
 \mbox{}
@@ -89,7 +93,8 @@ of a variable name $x$ and a type $T \in \Type$.
 \end{enumerate}
 \end{definition}
 
-Terms of $\LAMBDA$ are labeled binary trees.
+Terms of $\LAMBDA$ are binary trees, with each node labeled by some operation
+on $\lambda$-terms of arity $0,1,2$.
 
 
 \begin{definition}[Terms of $\LAMBDA$]
@@ -144,9 +149,9 @@ When $t = \Succ ^n(0)$ for some natural number $n \in \Nat$
 we say that $t$ is a numeral. We write $\Num$ for the set of numeral in $\LAMBDA$.
 
 \item
-A variable $x^T$ is free in $t$ if there is some $l \in t$ labeled $x^T$ in $T$, 
-and \emph{no $m < l$ labeled $\lambda x^T.$} in $t$. 
-$\FV(t)$ is the set of free variables of $t$.
+A variable $x^T$ occurs free in $t$ if there is some $l \in t$ labeled $x^T$ in $T$, 
+and \emph{no proper prefix $m < l$ labeled $\lambda x^T.$} in $t$. 
+$\FV(t)$ is the (finite or infinite) set of free variables of $t$.
 \end{enumerate}
  
 \end{definition}
@@ -159,19 +164,29 @@ All numerals are finite trees of $\Lambda$.
 All finite well-typed typed $\lambda$-terms 
 we can define with the rules above are finite terms of $\LAMBDA$.
 Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
-this relation defines a graph with possibly cicles. Even if $\SubTerm(t)$ is finite, $t$ can be an infinite tree. 
+this relation defines a \emph{finite} graph with possibly cicles. Remark that 
+even if $\SubTerm(t)$ is finite, $t$ can be an infinite tree. 
 
-We do not assume implicit renaming of bound variables, namely $\alpha$-equivalence
-because the typing system (given later) does not have renaming rule as a primitive rule. 
+
+
+%We do not assume implicit renaming of bound variables, namely $\alpha$-equivalence
+%because the typing system (given later) does not have renaming rule as a primitive rule. 
 
 \begin{Eg}
 \label{example-regular-infinite}
-An example of regular term which is an infinite tree: the term $t = \cond(0,t) \in \LAMBDA$. 
-The set $\SubTerm(t)=\{t,0\}$ of subterms  of $t$ is finite, therefore $t$ is a regular term.
+An example of regular term which is an infinite tree: the term $t = \cond(0,\lambda^N.t(x)) \in \LAMBDA$. 
+The set $\SubTerm(t)=\{t,0,\lambda x.t(x), x\}$ of subterms  of $t$ is finite, therefore $t$ is a regular term.
 However, $t$ is an infinite tree (it includes itself as a subtree). 
-The immediate sub-term chains of $t$ are all $(t,t,t,\ldots,t)$ and $(t,t,t,\ldots,0)$.
-There is a unique infinite sub-term chain, which is $(t,t,t,\ldots)$. 
+There is a unique infinite sub-term chain, which is $(t,\lambda x.t(x),t(x),t,\ldots)$. 
 \end{Eg}
+
+Regular terms have finitely many distinct free variable and finitely many 
+distinct bound variables, even if each variable can occur infinitely many times,
+like $x$ in $t$ above. Through renaming of bound variable a regular term 
+can be $\alpha$-equivalent to an infinite term 
+with infinitely many distinct bound variables: in the example above we can
+rename $\lambda x.t(x)$ to $\lambda x'.t(x')$, $\lambda x''.t(x'')$, \ldots.
+
 
 In order to define the type of an infinite term, we first 
 define contexts and sequences for any term of $\LAMBDA$.
@@ -230,13 +245,13 @@ If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
 \end{enumerate}
 \end{definition}
 
-We have $\Gamma \subseteqsim \Gamma'$ if and only if
-if there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
-such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$.
-We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
-and  $\Gamma \supseteqsim \Gamma'$ if and only if $\Gamma$, $\Gamma'$ are permutation
-each other if and only if the map $\phi$ above is a bijection. We do not identify two contexts
-which are one a permutation of the other, therefore we will need a rule to move from one to the other.
+%We have $\Gamma \subseteqsim \Gamma'$ if and only if
+%if there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
+%such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$.
+%We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
+%and  $\Gamma \supseteqsim \Gamma'$ if and only if $\Gamma$, $\Gamma'$ are permutation
+%each other if and only if the map $\phi$ above is a bijection. We do not identify two contexts
+%which are one a permutation of the other, therefore we will need a rule to move from one to the other.
 
 
 %12:38 17/04/2024
@@ -281,96 +296,97 @@ which are one a permutation of the other, therefore we will need a rule to move 
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the free variable $x$ in $t$ 
-avoiding variable captures.
-In order to define the capture avoiding substitution
-under the assumption of not having implicit $\alpha$-equivalence, 
-we implicitly fix a well-order on variables
-and define the simultaneous substitution,
-written $t[u_1/x_1,\ldots,u_n/x_n]$ or $t[\vec{u}/{\vec{x}}]$,
-namely it satisfies the following:
-\begin{itemize}
-\item
-  $x_i[u_1/x_1,\ldots,u_n/x_n] = u_i$ and $y[\vec{u}/\vec{x}] = y$, where $y\not\in\vec{x}$. 
-\item
-  $(f(a))[\vec{u}/\vec{x}] = f[\vec{u}/\vec{x}](a[\vec{u}/\vec{x}])$.
-\item
-  $(\lambda z^T.b)[\vec{u}/\vec{x}] =
-  \left\{
-  \begin{array}{ll}
-    \lambda z^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}}]),
-    &
-    \text{if $z \not\in \FV(\vec{u})$},
-    \\
-    \lambda z'^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}},z'/z]),
-    &
-    \text{otherwise},
-  \end{array}
-  \right.$
-  \\
-  where
-  $\Restrict{(\vec{u}/\vec{x})}{\overline{z}}$ is the one obtained by removing $u/z$ (for some $u$) from $\vec{u}/\vec{x}$,
-  and 
-  $z'$ is the least variable (with respect to the well-order)
-  such that $z' \not\in \FV(b,\vec{u})$.
-\item
-  $0[\vec{u}/\vec{x}] = 0$.
-\item
-  $\Succ(t)[\vec{u}/\vec{x}] = \Succ(t[\vec{u}/\vec{x}])$.
-\item
-  $\cond(f,g)[\vec{u}/\vec{x}] = \cond(f[\vec{u}/\vec{x}],g[\vec{u}/\vec{x}])$.
-\end{itemize}
+We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the free variable $x$ in $t$ avoiding variable captures. In the case of regular
+terms, we can renaming while preserving the finiteness of the graph.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%IN THE CONGRESS VERSION I WOULD NOT INCLUDE THE
+% EQUATION FOR SUBSTITUTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%In order to define the capture avoiding substitution
+%under the assumption of not having implicit $\alpha$-equivalence, 
+%we implicitly fix a well-order on variables
+%and define the simultaneous substitution,
+%written $t[u_1/x_1,\ldots,u_n/x_n]$ or $t[\vec{u}/{\vec{x}}]$,
+%namely it satisfies the following:
+%\begin{itemize}
+%\item
+%  $x_i[u_1/x_1,\ldots,u_n/x_n] = u_i$ and $y[\vec{u}/\vec{x}] = y$, where $y\not\in\vec{x}$. 
+%\item
+%  $(f(a))[\vec{u}/\vec{x}] = f[\vec{u}/\vec{x}](a[\vec{u}/\vec{x}])$.
+%\item
+%  $(\lambda z^T.b)[\vec{u}/\vec{x}] =
+%  \left\{
+%  \begin{array}{ll}
+%    \lambda z^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}}]),
+%    &
+%    \text{if $z \not\in \FV(\vec{u})$},
+%    \\
+%    \lambda z'^T.(b[\Restrict{(\vec{u}/\vec{x})}{\overline{z}},z'/z]),
+%    &
+%    \text{otherwise},
+%  \end{array}
+%  \right.$
+%  \\
+%  where
+%  $\Restrict{(\vec{u}/\vec{x})}{\overline{z}}$ is the one obtained by removing $u/z$ (for some $u$) from $\vec{u}/\vec{x}$,
+%  and 
+%  $z'$ is the least variable (with respect to the well-order)
+%  such that $z' \not\in \FV(b,\vec{u})$.
+%\item
+%  $0[\vec{u}/\vec{x}] = 0$.
+%\item
+%  $\Succ(t)[\vec{u}/\vec{x}] = \Succ(t[\vec{u}/\vec{x}])$.
+%\item
+%  $\cond(f,g)[\vec{u}/\vec{x}] = \cond(f[\vec{u}/\vec{x}],g[\vec{u}/\vec{x}])$.
+%\end{itemize}
+%
+%Formally we define the substitution as follows.
+%\begin{definition}[Substitution for terms of $\LAMBDA$]
+%  A set $\theta=\{u_1/x_1,\ldots,u_n/x_n\}$ is called a {\em substitution}
+%  if $x_1,\ldots,x_n$ are pairwise distinct variables.
+%  It is called {\em renaming} if $u_1,\ldots,u_n$ are pairwise distinct variables. 
+%  We define $\theta(y)$ by $u_i$ if $y=x_i$, and by $y$ otherwise.
+%  We write $\theta,\theta'$ if $\theta\cup\theta'$ is a substitution.   
+%  The substitution $\Restrict{\theta}{\overline{x}}$ is defined 
+%  as the one obtained by removing $u/x$ (for some $u$) from $\theta$. 
+%  
+%  Let $t$ be a term of $\LAMBDA$, which is the labeled tree $(T_t,\phi_t)$,
+%  and $\theta$ be $\{u_1/x_1,\ldots,u_n/x_n\}$, where each $u_i$ is $(T_{u_i},\phi_{u_i})$. 
+%  Then the term $t[\theta]$ is $(T,\phi)$, where 
+%  $T = T_t \cup \{l\conc m \mid \text{$\phi_t(l) = x_i \in \FV(t)$ and $m\in T_{u_i} $}\}$.
+%  For each $l\conc m$ in the latter part, $\phi(l\conc m) = \phi_{u_i}(m)$.  
+%  For $l\in T_t$, we inductively define $\phi(l)$ and
+%  $\theta_l$ (such that $\theta_l = \theta',\theta_{ren}$, where $\theta'\subseteq \theta$ and $\theta_{ren}$ is a renaming) as follows. 
+%  \begin{itemize}
+%  \item
+%    $\theta_{\nil} = \theta$.
+%  \item
+%    If $\phi_t(l) = y^T \not\in\FV(t)$, then $\phi(l) = \theta_l(y^T)$.
+%  \item
+%    If $\phi_t(l) = 0$, then $\phi(l) = 0$. 
+%  \item    
+%    If $\phi_t(l) = \Succ$, then $\phi(l) = \Succ$ and $\theta_{l\conc (1)} = \theta_l$. 
+%  \item    
+%    If $\phi_t(l) \in \{\ap,\cond\}$, then $\phi(l) = \phi_t(l)$
+%    and $\theta_{l\conc (1)} = \theta_{l\conc(2)} = \theta_l$.
+%  \item
+%    If $\phi_t(l) = \lambda z^T.$ and $z\not\in\FV(\vec{u})$,
+%    then $\phi(l) = \lambda z^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}}$. 
+%  \item
+%    If $\phi_t(l) = \lambda z^T.$ and $z\in\FV(\vec{u})$,
+%    then $\phi(l) = \lambda z'^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}},z'/z$, where $z'$ is the least variable such that $z' \not\in \FV(t\restr l\conc(1),\vec{u})$.
+%  \end{itemize}
+%  We often abbreviate $t[\{u_1/x_1,\ldots,u_n/x_n\}]$ by $t[u_1/x_1,\ldots,u_n/x_n]$.
+%  For a context $\Gamma = (x_1:A_1,\ldots,x_n:A_n)$ and a renaming $\theta$,
+%  we write $\Gamma[\theta]$ for $(\theta(x_1):A_1,\ldots,\theta(x_n):A_n)$ if it is a context. 
+%\end{definition}
+%%%%%%%%%%%%%%%
 
-Formally we define the substitution as follows.
-\begin{definition}[Substitution for terms of $\LAMBDA$]
-  A set $\theta=\{u_1/x_1,\ldots,u_n/x_n\}$ is called a {\em substitution}
-  if $x_1,\ldots,x_n$ are pairwise distinct variables.
-  It is called {\em renaming} if $u_1,\ldots,u_n$ are pairwise distinct variables. 
-  We define $\theta(y)$ by $u_i$ if $y=x_i$, and by $y$ otherwise.
-  We write $\theta,\theta'$ if $\theta\cup\theta'$ is a substitution.   
-  The substitution $\Restrict{\theta}{\overline{x}}$ is defined 
-  as the one obtained by removing $u/x$ (for some $u$) from $\theta$. 
-  
-  Let $t$ be a term of $\LAMBDA$, which is the labeled tree $(T_t,\phi_t)$,
-  and $\theta$ be $\{u_1/x_1,\ldots,u_n/x_n\}$, where each $u_i$ is $(T_{u_i},\phi_{u_i})$. 
-  Then the term $t[\theta]$ is $(T,\phi)$, where 
-  $T = T_t \cup \{l\conc m \mid \text{$\phi_t(l) = x_i \in \FV(t)$ and $m\in T_{u_i} $}\}$.
-  For each $l\conc m$ in the latter part, $\phi(l\conc m) = \phi_{u_i}(m)$.  
-  For $l\in T_t$, we inductively define $\phi(l)$ and
-  $\theta_l$ (such that $\theta_l = \theta',\theta_{ren}$, where $\theta'\subseteq \theta$ and $\theta_{ren}$ is a renaming) as follows. 
-  \begin{itemize}
-  \item
-    $\theta_{\nil} = \theta$.
-  \item
-    If $\phi_t(l) = y^T \not\in\FV(t)$, then $\phi(l) = \theta_l(y^T)$.
-  \item
-    If $\phi_t(l) = 0$, then $\phi(l) = 0$. 
-  \item    
-    If $\phi_t(l) = \Succ$, then $\phi(l) = \Succ$ and $\theta_{l\conc (1)} = \theta_l$. 
-  \item    
-    If $\phi_t(l) \in \{\ap,\cond\}$, then $\phi(l) = \phi_t(l)$
-    and $\theta_{l\conc (1)} = \theta_{l\conc(2)} = \theta_l$.
-  \item
-    If $\phi_t(l) = \lambda z^T.$ and $z\not\in\FV(\vec{u})$,
-    then $\phi(l) = \lambda z^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}}$. 
-  \item
-    If $\phi_t(l) = \lambda z^T.$ and $z\in\FV(\vec{u})$,
-    then $\phi(l) = \lambda z'^T.$ and $\theta_{l\conc(1)} = \Restrict{(\theta_l)}{\overline{z}},z'/z$, where $z'$ is the least variable such that $z' \not\in \FV(t\restr l\conc(1),\vec{u})$.
-  \end{itemize}
-  We often abbreviate $t[\{u_1/x_1,\ldots,u_n/x_n\}]$ by $t[u_1/x_1,\ldots,u_n/x_n]$.
-  For a context $\Gamma = (x_1:A_1,\ldots,x_n:A_n)$ and a renaming $\theta$,
-  we write $\Gamma[\theta]$ for $(\theta(x_1):A_1,\ldots,\theta(x_n):A_n)$ if it is a context. 
-\end{definition}
+We have the following Substitution Lemma. 
 
-We have the following substitution lemma. 
 \begin{lemma}[Substitution lemma]\label{lem:subst}
-  $t[u/x][v/y] = t[t/y][u[v/y]/x]$ if $x\not\in\FV(v)$. 
+  $t[u/x][v/y]$,$ t[t/y][u[v/y]/x]$ are $\alpha$-equivalent if $x\not\in\FV(v)$. 
 \end{lemma}
-
-%\begin{proof}
-%  (FILL THIS)
-%\end{proof}
-
 
 \subsection{Typing Rules}
 We define typing rules for terms of $\LAMBDA$ and the subset $\WTyped$ of well-typed terms.

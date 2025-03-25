@@ -10,7 +10,7 @@ The terms of $\LAMBDA$  are all possibly infinite trees representing expressions
 $0$,$\Succ $,$\ap$ (application), 
 variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining maps), 
 and $\cond$, the arithmetic conditional (i.e., the test on zero). 
-If we have no term variables and no type variables, 
+If we have no free term variables and no type variables, 
 then the trees in $\LAMBDA$ represent partial functionals on $\N$, 
 provided we add reduction rules transforming closed terms of type $\N$ in notations for natural numbers.
 
@@ -19,11 +19,13 @@ provided we add reduction rules transforming closed terms of type $\N$ in notati
 In this paper will consider two sets of terms: 
 \begin{enumerate}
 \item
-the set $\CTlambda$ of well-typed terms in
-a circular syntax, which are equivalent to the set of terms in G\"{o}del system $\systemT$.  
+the set $\CTlambda$ of well-typed terms having a finite notation in
+a circular syntax. We claim that they are equivalent to the set of terms in G\"{o}del system $\systemT$.  
 \item
 The set of terms $\GTC$, satisfying a condition called global trace condition, which are possibly non-recursive
-terms used to provide semantics for  $\CTlambda$ (and  $\systemT$, of course)
+terms used to provide semantics to the finite notations in  $\CTlambda$ 
+(and  $\systemT$, of course). They provide a sufficient and quite broad condition 
+for the totality of a functional.
 \end{enumerate}
 We introduce more sets of terms only used 
 as intermediate steps in the definition of the semantic $\GTC$ and the syntax $\CTlambda$.
@@ -35,11 +37,11 @@ of set terms having a unique type
 \item
 $\Reg$ is the set of terms of $\LAMBDA$ which are regular trees (i.e., having finitely
 many subtrees). They are possibly infinite terms which are finitely presented 
-by a finite graph possibly having cycles.
+by a \emph{finite graph} possibly having cycles.
 \item 
 $\GTC \subseteq \WTyped$ will be defined as the set of well-typed circular 
 $\lambda$-terms satisfying the global trace condition (and possibly non-recursive, as we said). %and regular. 
-Terms of $\GTC$ denote total functionals. 
+Terms of $\GTC$ denote a subset of the total functionals. 
 \end{enumerate}
 
 We will prove that $\CTlambda$ is a decidable subset of $\Reg$.
@@ -47,19 +49,24 @@ $\CTlambda$ is a new variant of the existing circular version of G\"{o}del syste
 Differently from all previous circular versions of $\systemT$, our system $\CTlambda$
 uses binders instead of combinators. 
 As we anticipated, 
- circular syntax has the advange of writing much shorter terms while preserving decidability of termination.
+ circular syntax has the advange of writing terms in fixed point style
+ and therefore much shorter, while preserving decidability of termination.
 Besides, by introducing a circular syntax with binders, we hope to provide 
 a circular syntax more familiar to researchers working in the field of Type Theory.
 \\
 
 We will prove the expected results for the circular syntax $\CTlambda$:
-strong normalization for reductions not in the right-hand side of any $\cond$ and Church-Rosser. 
-We will prove normalization in the limit if we use reductions which are ``fair'':
+strong normalization for reductions not in the right-hand side of any $\cond$.
+In a future paper we plan to stress the relation with co-inductive definitions
+and to prove Church-Rosser, and to prove \emph{strong} 
+normalization in the limit if we use reductions which are ``fair'':
 fair reductions can reduce \emph{inside} the right-hand side of some $\cond$, but they never forget entirely 
 the task of reducing \emph{outside} all such subterms.
 
-Eventually, we will prove that the closed terms $\CTlambda$ (those without free variables)
-represent exactly the total computable functionals definable in G\"{o}del system $\systemT$.
+In a future work, we also plan to prove that the closed terms $\CTlambda$ 
+(those without free variables)
+represent exactly the total computable functionals definable in G\"{o}del system $\systemT$, using the techniques developed by Anupam for his version of cyclic
+terms.
 
 
 %14:57 17/04/2024

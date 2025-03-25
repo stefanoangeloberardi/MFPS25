@@ -68,14 +68,14 @@
 \begin{frontmatter}
 \input{macro}
   \title{$\CTlambda$, a cyclic simply typed $\lambda$-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
- \thanks[ALL]{General thanks to everyone who should be thanked.}   %%Text of \thanks[ALL} here..
+ \thanks[ALL]{We thank Prof. D. Anupam for a valuable scientific correspondence about cyclic terms.}   %%Text of \thanks[ALL} here..
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
   %%%%Now the author(s) names(s)%%%%%
-  \author{Stefano Berardi}	%%Note NO SPACE between 
-   \author{Ugo de' Liguoro}		%last name and \thanksref{...} 
-    \author{Daisure Kimura}
-      \author{Koji Nakazawa}
-       \author{Makoto Tatsuta}
+  \author{Stefano Berardi$^{\tt a}$}	%%Note NO SPACE between 
+   \author{Ugo de' Liguoro$^{\tt a}$}		%last name and \thanksref{...} 
+    \author{Daisure Kimura$^{\tt b}$}
+      \author{Koji Nakazawa$^{\tt c}$}
+       \author{Makoto Tatsuta$^{\tt d}$}
     %%%Next come the addresses%%%%
    \address[a]{C.S. Dept., Turin University, Torino, Italy}  							
    \address[b]{Department of Information Science, Toho University, Japan} 
@@ -90,7 +90,7 @@
 
 \begin{abstract} 
 A motivation for having a circular syntax for G\"{o}del System $\systemT$ 
-is that terms in a circular syntax are much shorter than the equivalent terms written in $\systemT$, yet they can be checked mechanically. Several circular syntax for $\systemT$ (that is, infinite regular terms with the global trace condition)
+is that terms in a circular syntax are written in fixed point-style, therefore are more natural and shorter than the equivalent terms written in $\systemT$, yet their totality can be checked mechanically. Several circular syntax for $\systemT$ (that is, infinite regular terms with the global trace condition)
 have been proposed, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, page 20), but without an explicit use of $\lambda$-abstraction.
 In this paper we explore the possibility of defining a circular syntax 
 directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
@@ -105,7 +105,7 @@ directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
 We introduce our circular syntax as a fixed point operator defined by cases through a test on $0$.
 We prove for $\CTlambda$:
 \emph{(i)}  every closed term of type $\N$ reduces to some numeral;
-\emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator. 
+\emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator; 
 %A consequence of the
 % fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
 %namely Strong Normalization for all reductions and Church Rosser 
