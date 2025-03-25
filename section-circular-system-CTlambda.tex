@@ -3,10 +3,11 @@
 We introduce  a condition call \emph{global trace condition} for all proofs $\Pi$ that the term $t$ is well-typed,
 then the subset $\GTC$ of the set $\WTyped$ of well-typed terms of $\LAMBDA$ 
 satisfying the global trace condition. $\GTC$ is a set of total recursive functionals. We use $\GTC$
-as a semantics for the set $\CTlambda$ of circular $\lambda$-terms we will define.
+as a semantics for the set $\CTlambda$ of circular $\lambda$-terms we will define
+as finite graphs.
 
 $\CTlambda$ will be the regular terms of $\CTlambda$. 
-$\CTlambda$ is a decidable set.
+$\CTlambda$ is a decidable subset of the set of well-typed graph notations.
 For the terms of $\CTlambda$ we will prove
 strong normalization, church-rosser for the \quotationMarks{safe} part of a term, 
 and the fact that every closed normal term of type
@@ -17,12 +18,10 @@ As a consequence, all terms $\CTlambda$ will be interpreted as total functionals
 From the $\N$-argument connection we now define the global trace condition and the set of 
 terms of $\GTC$  and of $\CTlambda$.
 
-
-
-\begin{definition}[Global trace condition and terms of $\CTlambda$]
+\begin{definition}[$\GTC$ and $\CTlambda$]
 \label{definition-global-trace-condition}
-\mbox{}
- \linebreak 
+%\mbox{}
+% \linebreak 
 Assume $\tau =( (k_m,t_m), \ldots, (k_n,t_n), \ldots)$ 
 is a trace of a path $\pi = (t_1, \ldots, t_n, \ldots)$ of $t \in \WTyped$. 
 Assume $i=m,\ldots, n$.
@@ -33,7 +32,8 @@ and $k_i$ is the index of the first \emph{unnamed} argument the $\cond$-rule,
 otherwise $\tau$ is not progressing in $i$.
 
 \item
-$t$ satisfies the global trace condition if for some typing proof $\Pi$,
+$t$ satisfies the global trace condition if $t \in \WTyped$
+and for some typing proof $\Pi$,
 of $t$, for all infinite paths $\pi$ of $t$ in $\Pi$,
 there is some infinitely progressing path $\tau$ in $\pi$ and $\Pi$.
 $\GTC$ is the set of well-typed terms $t \in \LAMBDA$ satisfying the global trace condition.
@@ -46,28 +46,25 @@ and which satisfy the global trace condition.
 \end{enumerate}
 \end{definition}
 
-The notion of global trace condition is defined through a universal quantification on proof 
-$\Pi:\Gamma \vdash t:A$, and proofs $\Pi$ are possibly infinite objects and they form 
-a non-countable sets.
-Therefore we would expect that the global trace condition is not decidable. 
-Surprisingly, global trace is decidable in polynomial space in $t$. The reason is that is some proof satisfies
-the global trace condition then all proofs do, and for regular terms there is a typing proof
-which is a finite graph and for which the global trace condition is decidable.
-
+Global trace is decidable in polynomial space in $t$. 
 We believe that the global trace condition is decidable quite fast
-for realistic $\lambda$-terms. Another nice feature of the global trace condition is that for 
-$t \in \GTC$ we require that there is some proof $\Pi:\Gamma \prove t:A$ whose
-infinite paths all have some infinite progressing trace. This proof is almost-left-finite, because
-all leftmost paths from a sub-proof have no progress point and therefore are finite. 
-We conclude that $t \in \GTC$ implies that $t \in \WTyped$: we can assign a unique type to $t$
-with a \quotationMarks{meaningful proof}, that is, an almost-left-finite finite proof.
+for realistic $\lambda$-terms. Another nice feature of the global trace condition is 
+that for $t \in \GTC$ we require that for any proof $\Pi:\Gamma \prove t:A$ 
+all infinite paths have some infinite progressing trace. This proof is almost-
+left-finite, because all leftmost paths from any subterm of $t$ 
+have no progress point and 
+therefore are finite.  We conclude that if $t \in \GTC \subseteq \WTyped$
+then we can assign a unique type to $t$ with a unique proof, which is almost-left-
+finite.
 
-We include now some examples of cyclic $\lambda$-terms. We recall that they have to satisfy
-$\GTC$, therefore they are almost-left-finite, and by definition they are regular.
+We include now some examples of  terms in $\CTlambda$ (of cyclic $\lambda$-
+terms). We recall that they have to satisfy $\GTC$, therefore they are almost-left-
+finite, and by definition of $\CTlambda$ they are regular.
 
 %18:05 03/06/2024
 
 %\section{Examples of terms of $\CTlambda$}
+%21:25 25/03/2025
 
 \subsection{The sum map}
 

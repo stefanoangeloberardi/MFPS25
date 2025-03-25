@@ -131,25 +131,28 @@ The definition of connection requires to define an injection
 \ins:\N,\N \rightarrow\N
 \]
 We set $\ins(p,x)=x+1$ if $x \ge p+1$, and $\ins(p,x)=x$ if $x\le p$.
-The role of $\ins$ is inserting one fresh index $p+1$ for a new argument type higher in the proof
+The role of $\ins$ is inserting one fresh index $p+1$ for a new argument type higher in the proof that the term is well-typed, and
 connected to no argument in the conclusion.
 
 \begin{definition}[Connection in a proof of  $\LAMBDA$]
-Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{B}=B_1, \ldots, B_m$, $\Gamma = \vec{x}:\vec{A}$,
+Assume $\vec{A} = A_1, \ldots, A_n$, 
+$\vec{B}=B_1, \ldots, B_m$, $\Gamma = \vec{x}:\vec{A}$,
 and $\Gamma \vdash t:\vec{B} \rightarrow \N$.
 
-For each $\N$-argument $k$ in $t$, for $t'=t$ or $t'$  immediate subterm of $t$ 
-each $\N$-argument $k'$ in $t'$ we define the relation: ``$k',t'$ the successor of $k,t$". We require:
+For each $\N$-argument $k$ in $t$, 
+%for $t'=t$ or $t'$  immediate subterm of $t$, 
+for each $\N$-argument $k'$ in $t'$ we define the relation: 
+``$k',t'$ the successor of $k,t$". We require:
 \begin{enumerate}
-\item
-if $t$ is obtained by a rule $\weak$ from $t'=t$, described by a map $\phi:\Gamma \rightarrow \Delta$,  
-then $k = \phi(k')$.
+%\item
+%if $t$ is obtained by a rule $\weak$ from $t'=t$, described by a map $\phi:\Gamma \rightarrow \Delta$,  
+%then $k = \phi(k')$.
 \item
 if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
 then $k' = \ins(n,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
 \item
 if $t=f(x_i^{A_i})$ is obtained by a rule $\apvar$ and $t'=f$ 
-then $k' = \ins(n,k)$or $k'=n+1$ and $k=i$.
+then $k' = \ins(n,k)$ or $k'=n+1$ and $k=i$.
 \item
 if $t=\cond(f,g)$ and $t'=f$ 
 then $k' = \ins(n,k)$. If $t'=g$ then $k'=k$.
@@ -161,7 +164,7 @@ No connection is defined for the rules $\var$, $0$.
 \end{definition}
 
 Below we include some examples. 
-We draw in the same color two $\N$-argument which are in connection. 
+We draw in the same color two $\N$-arguments which are in connection. 
 In the case of the rule $\apvar$, an argument can be connected to two arguments above it.
 
 
@@ -201,9 +204,10 @@ in the conclusion is in connection with the last variable type in the premise of
 \\
 
 Summing up, when
-we move up in a $\apvar$-rule, the type of last free variable corresponds to the type of the first
-unnamend argument.
-When  we move up in a $\lambda$-rule it is the other way round. 
+we move up in a $\apvar$-rule, the type of some free variable corresponds to the 
+type of the first unnamend argument.
+When  we move up in a $\lambda$-rule, the type of the first unnamend argument
+corresponds to the type of the last free variable.
 
 The connection on $\N$-arguments in a proof $\Pi:\Gamma\vdash t:A$ defines a graph $\Graph(\Pi)$ 
 whose nodes are all pairs $(k,u)$, with $u$ subterm of $t$ and $k$ index of some $\N$-argument of  $u$.
