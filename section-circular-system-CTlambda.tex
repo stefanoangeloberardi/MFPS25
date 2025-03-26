@@ -1,22 +1,25 @@
 
 \section{The circular system $\CTlambda$}
-We introduce  a condition call \emph{global trace condition} for all proofs $\Pi$ that the term $t$ is well-typed,
-then the subset $\GTC$ of the set $\WTyped$ of well-typed terms of $\LAMBDA$ 
-satisfying the global trace condition. $\GTC$ is a set of total recursive functionals. We use $\GTC$
-as a semantics for the set $\CTlambda$ of circular $\lambda$-terms we will define
-as finite graphs.
+We introduce  a condition call \emph{global trace condition} for any proof 
+$\Pi$ that the term $t$ is well-typed.
+Then we define $\GTC$ as the set of well-typed terms 
+$t \in \LAMBDA$ satisfying the global trace condition for some proof 
+$\Pi$ that the term $t$ is well-typed. 
+$\GTC$ is a set of total functionals. We use $\GTC$
+as a semantics for the set $\CTlambda$ of circular $\lambda$-terms 
+which in turn we will define as finite graphs.
 
-$\CTlambda$ will be the regular terms of $\CTlambda$. 
+$\CTlambda$ will be the set of regular terms of $\GTC$. 
 $\CTlambda$ is a decidable subset of the set of well-typed graph notations.
-For the terms of $\CTlambda$ we will prove
-strong normalization, church-rosser for the \quotationMarks{safe} part of a term, 
+For the terms of $\CTlambda$ we will prove strong normalization 
+%, church-rosser for the \quotationMarks{safe} part of a term, 
 and the fact that every closed normal term of type
 $\N$ is a numeral. 
 As a consequence, all terms $\CTlambda$ will be interpreted as total functionals. 
 \\
 
-From the $\N$-argument connection we now define the global trace condition and the set of 
-terms of $\GTC$  and of $\CTlambda$.
+From the $\N$-argument connection we now define the global trace condition and 
+the set of terms $\GTC$  and $\CTlambda$.
 
 \begin{definition}[$\GTC$ and $\CTlambda$]
 \label{definition-global-trace-condition}
@@ -35,12 +38,14 @@ otherwise $\tau$ is not progressing in $i$.
 $t$ satisfies the global trace condition if $t \in \WTyped$
 and for some typing proof $\Pi$,
 of $t$, for all infinite paths $\pi$ of $t$ in $\Pi$,
-there is some infinitely progressing path $\tau$ in $\pi$ and $\Pi$.
-$\GTC$ is the set of well-typed terms $t \in \LAMBDA$ satisfying the global trace condition.
+there is some infinitely progressing path $\tau$ in $\pi$.
+$\GTC$ is the set of well-typed terms $t \in \LAMBDA$ 
+satisfying the global trace condition.
 
 \item
 $\CTlambda = \GTC \cap \Reg$: the cyclic $\lambda$-terms of 
-$\CTlambda$ are all well-typed terms which are regular trees (having finitely many subtrees), 
+$\CTlambda$ are all well-typed terms which are regular trees 
+(having finitely many subtrees), 
 and which satisfy the global trace condition.
 
 \end{enumerate}
@@ -48,24 +53,25 @@ and which satisfy the global trace condition.
 
 Global trace is decidable in polynomial space in $t$. 
 We believe that the global trace condition is decidable quite fast
-for realistic $\lambda$-terms. Another nice feature of the global trace condition is 
-that for $t \in \GTC$ we require that for any proof $\Pi:\Gamma \prove t:A$ 
-all infinite paths have some infinite progressing trace. This proof is almost-
-left-finite, because all leftmost paths from any subterm of $t$ 
-have no progress point and 
-therefore are finite.  We conclude that if $t \in \GTC \subseteq \WTyped$
-then we can assign a unique type to $t$ with a unique proof, which is almost-left-
-finite.
+for realistic $\lambda$-terms. 
 
-We include now some examples of  terms in $\CTlambda$ (of cyclic $\lambda$-
-terms). We recall that they have to satisfy $\GTC$, therefore they are almost-left-
-finite, and by definition of $\CTlambda$ they are regular.
+%Another nice feature of the global trace condition is 
+%that for $t \in \GTC$ we require that for any proof $\Pi:\Gamma \prove t:A$ 
+%all infinite paths have some infinite progressing trace. This proof is almost-
+%left-finite, because all leftmost paths from any subterm of $t$ 
+%have no progress point and 
+%therefore are finite.  We conclude that if $t \in \GTC \subseteq \WTyped$
+%then we can assign a unique type to $t$ with a unique proof, which is almost-left-
+%finite.
+
+We include now some examples of  terms in $\CTlambda$, i.e., 
+of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, therefore they are almost-left-finite, and by definition of $\CTlambda$ they also are regular.
 
 %18:05 03/06/2024
 
 %\section{Examples of terms of $\CTlambda$}
 %21:25 25/03/2025
-
+%15:35 26/03/2025
 \subsection{The sum map}
 
 A first example of term of  $\CTlambda$. 
@@ -94,7 +100,10 @@ $\Sum$ is a regular term because it has finitely many subterms:
    z
 \end{center}
 $\Sum$ is well-typed by the following derivation, in which we have a back edge 
-from the  $\golddagger$ above to the $\golddagger$ below.
+from the  $\golddagger$ in the top to the $\golddagger$ in the bottom. 
+\footnote{Remark that without the $\weak$-rule, the context of the top
+$\golddagger$ would be $x^\N, y^\N$ while the context of the 
+bottom $\golddagger$ would be $\emptyset$. Without the $\weak$-rule, the proof would not be correct.}
 \[
 \infer[\lambda]{
   \vdash \Sum:\N, 
@@ -149,7 +158,8 @@ We %colored in \bfColor{oldgold}{old gold} one sequence of atoms $\goldN$:
 outlined one sequence of atoms with $\goldN$. The outlined trace is the unique 
 infinite trace, it is cyclic and it is infinitely progressing.
 We marked $\goldspadesuit$ the only progress point of the only infinite trace.
-The progress point is repeated infinitely many times in the unique infinite trace.
+The progress point is repeated infinitely many times in the unique infinite trace,
+therefore $\Sum \in \CTlambda$. 
 
 
 %
@@ -215,9 +225,9 @@ $\Iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 The proof above includes a type inference from the term $\iter$ to itself.
 We draw the type inference in the picture below and we outline the unique
 infinite trace. We have a back edge from the 
-$\golddagger$ on the top to the $\golddagger$ in the bottom,
-and we marked $\goldspadesuit$ the only progress point, which is cyclically repeated in the unique infinite trace.
-We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+$\golddagger$ on the top to the $\golddagger$ in the bottom.
+We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
+the unique infinite trace. We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \[
 %\infer[\lambda]{ %opening: \infer[\lambda]
 %  \vdash \Iter:(\N \rightarrow \N), \N, \goldN \rightarrow \N
@@ -352,9 +362,9 @@ The proof above includes a type inference from the term $\interval$ to itself.
 We draw the type inference in the figure \ref{figure-term-interval}
 and we outline the unique infinite trace. 
 In this figure, we include a back edge from the 
-$\golddagger$ on the top to the $\golddagger$ in the bottom,
-and we marked $\goldspadesuit$ the only progress point, which is cyclically repeated in the unique infinite trace. 
-We abbreviate 
+$\golddagger$ on the top to the $\golddagger$ in the bottom.
+We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
+the unique infinite trace. We abbreviate 
 $\Sigma = (\nil:\alpha, \cons:\N,\alpha \rightarrow \N)$
 and
 $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
@@ -421,6 +431,7 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
 \end{center}
 
 \end{figure}
+%15:50 26/03/2025
 
 If we carefully examine the term $\Interval$, we can guess several results of this paper.
 We have infinitely many nested $\beta$-reduction $(\lambda x. \ldots)(\Succ (x))$.
