@@ -67,7 +67,7 @@
 %%%Note the beginning and end of the frontmatter section that starts here%%%%%
 \begin{frontmatter}
 \input{macro}
-  \title{$\CTlambda$, a cyclic simply typed $\lambda$-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
+  \title{CT-lambda, a cyclic simply typed lambda-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
  \thanks[ALL]{We thank Prof. D. Anupam for a valuable scientific correspondence about cyclic terms.}   %%Text of \thanks[ALL} here..
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
   %%%%Now the author(s) names(s)%%%%%
@@ -80,7 +80,7 @@
    \address[a]{C.S. Dept., Turin University, Torino, Italy}  							
    \address[b]{Department of Information Science, Toho University, Japan} 
    \address[c]{Graduate School of Informatics, Nagoya University, Japan}
- \address[d]{National Institute of Informatics, Sokendai, Tokyo, Japan}
+ \address[d]{National Institute of Informatics / Sokendai, Tokyo, Japan}
  
    %%%Note: if both authors share same institution, only list the address once, after the second 
    %%%author. 
@@ -89,29 +89,38 @@
  
 
 \begin{abstract} 
-A motivation for having a circular syntax for G\"{o}del System $\systemT$ 
-is that terms in a circular syntax are written in fixed point-style, therefore are more natural and shorter than the equivalent terms written in $\systemT$, yet their totality can be checked mechanically. Several circular syntax for $\systemT$ (that is, infinite regular terms with the global trace condition)
-have been proposed, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, page 20), but without an explicit use of $\lambda$-abstraction.
-In this paper we explore the possibility of defining a circular syntax 
-directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
+
+A motivation for having a circular syntax for G\"{o}del System
+T is that terms in a circular syntax are written in fixed
+point-style, therefore are more natural and shorter than the
+equivalent terms written in T, yet their totality can be
+checked mechanically. Several circular syntax for T (that is,
+infinite regular terms with the global trace condition) have been
+proposed, like CT in the section 4.5 on the page 20
+of the paper by Das in 2021, but without an explicit use of lambda-abstraction.  In this
+paper we explore the possibility of defining a circular syntax
+directly for lambda-abstraction and simple types, which we call
+CT-lambda.  
 %, instead of interpreting
-% $\lambda$-abstraction through combinators first, then inserting a  global trace condition afterwards.
+% lambda-abstraction through combinators first, then inserting aglobal trace condition afterwards.
 %A circular syntax using binders instead of combinators
-%could be more familiar for researchers working in the field of Type Theory.
+%could be more familiar for researchers working in the field of Type Theory.  
 %Again for reason of simplicity of use, we drop the restriction of having finitely many variables in infinite terms, 
 %and finitely many redexes, a restriction considered in previous works on the same topic, 
-%and we explore the consequences of ths choice.
+%and we explore the consequences of ths choice.  
 %\\
-We introduce our circular syntax as a fixed point operator defined by cases through a test on $0$.
-We prove for $\CTlambda$:
-\emph{(i)}  every closed term of type $\N$ reduces to some numeral;
-\emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator; 
-%A consequence of the
-% fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
+ We introduce our circular syntax as a fixed point operator defined by
+cases through a test on $0$.  We prove for CT-lambda:
+ \emph{(i)} every closed term of type $\N$ reduces to some numeral;
+ \emph{(ii)} strong normalization for all reductions sequences without
+reducing inside a fixed point operator; 
+%A consequence of the 
+% fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam, 
 %namely Strong Normalization for all reductions and Church Rosser 
-%(\cite{2021-Anupam-Das}, Theorem 51, page 35), fail. 
-%However, we recover for $\CTlambda$
-\emph{(iii)} the existence of a limit for all infinite reductions.
+%(\cite{2021-Anupam-Das}, Theorem 51, page 35), fail.  
+%However, we recover for CT-lambda
+ \emph{(iii)} the existence of a limit for all infinite reductions.
+
 \end{abstract}
 \begin{keyword}
   Please list keywords from your paper here, separated by commas.
