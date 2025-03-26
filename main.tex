@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 %%%	 Use this file as a template for your submission to your conference, and to prepare
 %%%	the final version of your paper, if accepted, for the conference Proceedings. 
 %%%	You can use it "as is" for your initial submission, but alterations may be required if
@@ -156,3 +157,165 @@ We prove for $\CTlambda$:
 \bibliography{cyclic}
 
 \end{document}
+=======
+%%%	 Use this file as a template for your submission to your conference, and to prepare
+%%%	the final version of your paper, if accepted, for the conference Proceedings. 
+%%%	You can use it "as is" for your initial submission, but alterations may be required if
+%%%	there is a preliminary Proceedings for distribution at the meeting, and additional changes
+%%%	are mandatory for the final version for publication in the official conference Proceedings. 
+%%%. 	If you are preparing your paper in final form for the conference proceedings, 
+%%%. 	add the option "final" to \documentclass{entics} below
+
+\documentclass[twoside,11pt]{entics} 
+\usepackage{enticsmacro}
+\usepackage{graphicx}
+\usepackage[all]{xy}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%MY PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{amssymb,amsmath,graphicx,color}
+\usepackage{mymath,proof,latexsym}
+\usepackage{xcolor}
+\usepackage[pdftex,outline]{contour}
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%
+
+%\usepackage{url}
+\sloppy
+% The following is enclosed to allow easy detection of differences in
+% ascii coding.
+% Upper-case    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
+% Lower-case    a b c d e f g h i j k l m n o p q r s t u v w x y z
+% Digits        0 1 2 3 4 5 6 7 8 9
+% Exclamation   !           Double quote "          Hash (number) #
+% Dollar        $           Percent      %          Ampersand     &
+% Acute accent  '           Left paren   (          Right paren   )
+% Asterisk      *           Plus         +          Comma         ,
+% Minus         -           Point        .          Solidus       /
+% Colon         :           Semicolon    ;          Less than     <
+% Equals        =3D           Greater than >          Question mark ?
+% At            @           Left bracket [          Backslash     \
+% Right bracket ]           Circumflex   ^          Underscore    _
+% Grave accent  `           Left brace   {          Vertical bar  |
+% Right brace   }           Tilde        ~
+
+% A couple of exemplary definitions:
+
+%\newcommand{\Nat}{{\mathbb N}}
+%\newcommand{\Real}{{\mathbb R}}
+
+%%%Fill in the following%%%%
+%%%%%%%%	Your Corresponding Editor will provide the following information:
+\def\conf{MFPS 2025} 	%%Fill in the acronym for your conference (with year)
+\volume{NN}			%Fill in the ENTICS volume number here
+\def\volu{NN}			% and here
+\def\papno{nn}			%Fill in your paper number here
+%%%%%%%%Please fill in the following information:
+\def\lastname{Berardi,  de' Liguoro, Kimura, Nakazawa, Tatsuta} 
+%Lastnames appear in the running header 
+%									on odd pages. If more than three authors, use et al
+\def\runtitle{Cyclic Simply Typed $\lambda$-Calculus} 
+%Short title appears in the running header on even pages. 
+%%
+\def\copynames{S. Berardi,  U. de' Liguoro, D. Kimura, K. Nakazawa, M. Tatsuta}    %% Fill in the first initial and last name of the authors
+%%%%%%%%%%%%%%%%%%%		claiming Creative Commons copyright here. 
+\def\CCB{CC@symbol}		%%%%%%	Also, be sure the correct Creative Commons 
+%%%%%%%%%%%%%					copyright symbol is chosen - see Section 2 of
+%%%%%%%%%%		https://mirrors.concertpass.com/tex-archive/fonts/ccicons/ccicons.pdf
+\begin{document}
+%%%Note the beginning and end of the frontmatter section that starts here%%%%%
+\begin{frontmatter}
+\input{macro}
+  \title{CT-lambda, a cyclic simply typed lambda-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
+ \thanks[ALL]{We thank Prof. D. Anupam for a valuable scientific correspondence about cyclic terms.}   %%Text of \thanks[ALL} here..
+ %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
+  %%%%Now the author(s) names(s)%%%%%
+  \author{Stefano Berardi$^{\tt a}$}	%%Note NO SPACE between 
+   \author{Ugo de' Liguoro$^{\tt a}$}		%last name and \thanksref{...} 
+    \author{Daisure Kimura$^{\tt b}$}
+      \author{Koji Nakazawa$^{\tt c}$}
+       \author{Makoto Tatsuta$^{\tt d}$}
+    %%%Next come the addresses%%%%
+   \address[a]{C.S. Dept., Turin University, Torino, Italy}  							
+   \address[b]{Department of Information Science, Toho University, Japan} 
+   \address[c]{Graduate School of Informatics, Nagoya University, Japan}
+ \address[d]{National Institute of Informatics / Sokendai, Tokyo, Japan}
+ 
+   %%%Note: if both authors share same institution, only list the address once, after the second 
+   %%%author. 
+   %%%There also is a link from the first author to the co-author's address to show how to list 
+   %%%affiliations to more than one institution, when needed. 
+ 
+
+\begin{abstract} 
+
+A motivation for having a circular syntax for G\"{o}del System
+T is that terms in a circular syntax are written in fixed
+point-style, therefore are more natural and shorter than the
+equivalent terms written in T, yet their totality can be
+checked mechanically. Several circular syntax for T (that is,
+infinite regular terms with the global trace condition) have been
+proposed, like CT in the section 4.5 on the page 20
+of the paper by Das in 2021, but without an explicit use of lambda-abstraction.  In this
+paper we explore the possibility of defining a circular syntax
+directly for lambda-abstraction and simple types, which we call
+CT-lambda.  
+%, instead of interpreting
+% lambda-abstraction through combinators first, then inserting aglobal trace condition afterwards.
+%A circular syntax using binders instead of combinators
+%could be more familiar for researchers working in the field of Type Theory.  
+%Again for reason of simplicity of use, we drop the restriction of having finitely many variables in infinite terms, 
+%and finitely many redexes, a restriction considered in previous works on the same topic, 
+%and we explore the consequences of ths choice.  
+%\\
+ We introduce our circular syntax as a fixed point operator defined by
+cases through a test on $0$.  We prove for CT-lambda:
+ \emph{(i)} every closed term of type $\N$ reduces to some numeral;
+ \emph{(ii)} strong normalization for all reductions sequences without
+reducing inside a fixed point operator; 
+%A consequence of the 
+% fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam, 
+%namely Strong Normalization for all reductions and Church Rosser 
+%(\cite{2021-Anupam-Das}, Theorem 51, page 35), fail.  
+%However, we recover for CT-lambda
+ \emph{(iii)} the existence of a limit for all infinite reductions.
+
+\end{abstract}
+\begin{keyword}
+  Please list keywords from your paper here, separated by commas.
+\end{keyword}
+\end{frontmatter}
+
+
+\input{macro}
+
+%\section{Introduction}
+% Section 1
+\input{section-introduction}
+
+%\newpage
+% Section 2
+\input{section-infinite-lambda-terms}
+
+%\newpage
+% Section 3
+\input{section-trace-infinite-lambda-terms}
+
+%\newpage
+% Section 4
+\input{section-circular-system-CTlambda}
+
+%\newpage
+% Section 5
+\input{section-subject-reduction-infinite-lambda-terms}
+
+%\newpage
+% Section 6
+\input{section-finite-safe-reductions}
+
+\bibliographystyle{./entics}
+\bibliography{cyclic}
+
+\end{document}
+>>>>>>> 2ddfd680cbe29d2e2321c3bb5cd82a810ab198e8
