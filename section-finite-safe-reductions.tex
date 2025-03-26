@@ -6,12 +6,14 @@ In this section we prove that for all $n \in \N$,
 every infinite reduction sequence $\pi$ 
 from some term of $\GTC$ includes
 only finitely many \quotationMarks{$0$-safe} (safe) reduction steps:
-from some point on, all reduction steps are unsafe.
+from some point on, all reduction steps are \quotationMarks{unsafe},
+that is, in the right-hand-side of some $\cond$.
     
 From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions from some point on stop,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
-no matter how we reduce within the safe level of a term, 
-eventually no reductions are left, therefore we obtained some safe normal form.
+no matter how we reduce within the $n$-safe level of a term, 
+eventually no reductions are left, therefore we obtained some $n$-safe normal 
+form.
 \\
 
 We introduce the property of being \quotationMarks{finite for $n$-safe reductions}.
@@ -21,12 +23,11 @@ We introduce the property of being \quotationMarks{finite for $n$-safe reduction
 Assume $t \in \WTyped$. 
 We say that $t$ is \emph{finite for $n$-safe reductions} if and only if 
 all infinite reduction paths include only finitely many $n$-safe reductions
-(in all infinite reduction paths, from some point on all reductions
-are \emph{not} $n$-safe).
-
 \end{definition}
 
-In the following, we explicitly write $t[x_1,\ldots,x_n]$,
+to put otherwise: in all infinite reduction paths, from some point on all reductions
+are \emph{not} $n$-safe, they contract redexes occurring in the right-hand-side of
+$n$ $\cond$-terms. In the following, we explicitly write $t[x_1,\ldots,x_n]$,
 when each free variable in a term $t$ is some $x_i$, 
 and, under this notation, we also write $t[a_1,\ldots,a_n]$ for 
 $t[a_1/x_1,\ldots,a_n/x_n]$. 
@@ -41,6 +42,8 @@ For, we define total well-typed terms by induction on the type, as in Tait's nor
 %We recall that $u \in \LAMBDA$ is \emph{finite for safe reduction} 
 %if and only if all infinite reduction sequences from $t$ include only finitely many "safe" reduction steps
 %(Def. \ref{definition-safe-trunk}).
+
+%18:45 26/03/2025
 
 \begin{definition}[Total well-typed terms of $\LAMBDA$]
 \label{definition-total-term}

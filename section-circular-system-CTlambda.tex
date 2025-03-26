@@ -305,8 +305,11 @@ We have to solve the recursive equations
   $\Interval(f,a,n,\Succ (m))  \sim f^n(a) @ \Interval(f,a,\Succ(n),m)$.
 \end{center}
 Assume $\iter = \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N$ is the term
-in the context $(f:\N\rightarrow\N, a:\N)$ defined 
-in the previous sub-section: in particular, $\iter(n) \sim f^n(a)$ for all $n \in \Num$.
+in the context $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$, where
+$\Sigma = (\nil:\alpha, \cons:\N,\alpha \rightarrow \N)$
+and
+$(f:\N\rightarrow\N, a:\N)$ is the context defined 
+in the previous sub-section. In particular, $\iter(n) \sim f^n(a)$ for all $n \in \Num$.
 We solve the recursive equation for $\Interval$ with $\Interval = \lambda f,a.\interval$,
 where 
 \[
@@ -364,10 +367,7 @@ and we outline the unique infinite trace.
 In this figure, we include a back edge from the 
 $\golddagger$ on the top to the $\golddagger$ in the bottom.
 We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
-the unique infinite trace. We abbreviate 
-$\Sigma = (\nil:\alpha, \cons:\N,\alpha \rightarrow \N)$
-and
-$\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
+the unique infinite trace. 
 
 %PROOF SNAPSHOT
 \begin{figure}
@@ -380,7 +380,8 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
 %% THEN THE SNAPSHOT HAS BEEN MODIFIED IN WORD 
 %% THEN A LAST SNAPSHOT
   
-\[
+  \begin{footnotesize}
+%\[
 %\infer[\lambda]
 % {\Sigma\vdash \Interval:(\N \rightarrow \N),\N,\N,\goldN\rightarrow\alpha}
 % {\infer[\lambda]
@@ -418,14 +419,15 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
                                 {\infer[]{\Gamma 
                           \vdash \interval:\N,\goldN \rightarrow\alpha
                            \ \ \ (\golddagger)}
-              {\ldots}}}}}
+              {\ldots} } {\ldots\ldots}  }}}
              }
            }
          }
        }  
     }
 %   }
-\]
+%\]
+  \end{footnotesize}
 
 \mbox{Figure \ref{figure-term-interval}}
 \end{center}
@@ -433,29 +435,28 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
 \end{figure}
 %15:50 26/03/2025
 
-If we carefully examine the term $\Interval$, we can guess several results of this paper.
-We have infinitely many nested $\beta$-reduction $(\lambda x. \ldots)(\Succ (x))$.
-We can remove all of them in a single step. Inside the $\beta$-redex number $k$ we obtain a sub-term
-$\iter[\Succ (x)/x]\ldots[\Succ (x)/x]$ (substitution repeated $k$ times).
-The result is $\iter[\Succ ^k(x)/x] $.
+The term $\Interval$ is an example of how difficult is to completely normalize
+an infinite term. We have infinitely many nested $\beta$-reduction $(\lambda x. 
+\ldots)(\Succ (x))$. Suppose we remove all of them in a single step. Inside the $
+\beta$-redex number $k$ we obtain a sub-term $\iter[\Succ (x)/x]\ldots[\Succ (x)/x]
+$ (substitution repeated $k$ times). The result is $\iter[\Succ ^k(x)/x] $.
 The nested substitution produce infinitely many pairwise different sub-terms 
-$\iter(\Succ ^k(x))$ for all $k \in \N$.
-We need infinitely many steps to normalize all $\iter(\Succ ^k(x))$ to $f^k(I)$, 
-even if we allow to reduce all $\beta,\cond$-redexes at the same time.
-Also the normal form is not regular: it contains all terms $f^k(\iter(x))$ for $k \in \N$, hence
+$\iter(\Succ ^k(x))$ for all $k \in \N$. We need $k$ steps to normalize each $
+\iter(\Succ ^k(x))$ to $f^k(I)$, even if we allow to reduce infinitely many $\beta,
+\cond$-redexes at the same time, because our reduction will consume one $\Succ$ 
+at the time. Thus, the total time is infinite. Besides, the normal form we obtain in 
+this way not regular: it contains all terms $f^k(\iter(x))$ for $k \in \N$, hence 
 infinitely many pairwise different terms. 
 %These infinite sub-terms are of a particulary simple form, though. 
 %They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
 %to the result.
 
-In conclusion, 
-$\Interval$ is some term of $\CTlambda$ which can be safely normalized, but which 
-cannot be fully normalized in finite time, not even if we allow
-infinite parallel reductions without any "safety" restriction. 
-The normal form is produced \emph{only in the limit}
-and it is \emph{not regular}. If we allow to reduce infinitely many nested existing
-$\beta$-redexes in one step, also
-the intermediate steps of the infinite reduction of $\Interval$ are not regular.
+%In conclusion, $\Interval$ is some term of $\CTlambda$ which can be safely 
+%normalized, but which cannot be fully normalized in finite time, not even if we 
+%allow infinite parallel reductions without any "safety" restriction. The normal form 
+%is produced \emph{only in the limit} and it is \emph{not regular}. If we allow to 
+%reduce infinitely many nested existing $\beta$-redexes in one step, also the 
+%intermediate steps of the infinite reduction of $\Interval$ are not regular.
 
 
 %16:32 30/04/2024
