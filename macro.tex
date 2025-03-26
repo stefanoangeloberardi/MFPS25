@@ -304,9 +304,9 @@
 \newcommand{\Succ}             { {\tt S} }
 \newcommand{\nil}                { {\tt nil} }
 \newcommand{\cons}             { {\tt cons} }
-\newcommand{\outline}  [1]   { {\contour{black}{\textcolor{white}{#1}}}  }
-\newcommand{\systemT}       { {\outline{\tt T}} }
-\newcommand{\LAMBDA}       { {\outline{$\Lambda$}} }
+\newcommand{\outline}  [2]   { {\contour{black}{\textcolor{#2}{#1}}}  }
+\newcommand{\systemT}       { {\outline{\tt T}{white} } }
+\newcommand{\LAMBDA}       { {  \outline{$\Lambda$}{white} } }
 \newcommand{\Rec}               { {\tt Rec} }
 \newcommand{\rec}                { {\tt rec} }
 \newcommand{\exch}             { {\tt exch} }
@@ -342,7 +342,7 @@
 \newcommand{\Tree}                      {{\tt Tree}}
 \newcommand{\N}                           {{N}}
 \newcommand{\Num}                      {{\tt Num}}
-\newcommand{\Nat}                        {{\outline{\tt N}}}
+\newcommand{\Nat}                        {{ \outline{\tt N}{white} }}
 \newcommand{\GTC}                       {{\tt GTC}}
 \newcommand{\Reg}                       {{\tt Reg}}
 \newcommand{\Type}                      {{\tt Type}}
@@ -391,8 +391,12 @@
 \newcommand{\ACK}{{\redM Ack}}
 \newcommand{\Cond}[2]{{\tt cond}(#1,#2)}
 \newcommand{\Suc}[1]{{\tt S}(#1)}
-%\newcommand{\N}{N}
-\newcommand{\goldN}{{\bfColor{oldgold}{N}}}
+\newcommand{\goldN}    
+      {{ \bf \contour{black}{\textcolor{oldgold}{\tt N}} }}
+\newcommand{\golddagger} 
+      {{ \bf \contour{black}{\textcolor{oldgold}{$\dagger$}} }}
+\newcommand{\goldspadesuit} 
+      {{ \bf \contour{black}{\textcolor{oldgold}{$\spadesuit$}} }}
 \newcommand{\redN}{{\bfColor{red}{N}}}
 \newcommand{\bluen}{{\bfColor{blue}{n}}}
 \newcommand{\redm}{{\bfColor{red}{m}}}

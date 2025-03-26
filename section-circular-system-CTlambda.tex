@@ -93,45 +93,48 @@ $\Sum$ is a regular term because it has finitely many subterms:
   \quad
    z
 \end{center}
-$\Sum$ is well-typed by the following derivation, in which we have a back edge from the 
-$\bfColor{oldgold}{\dagger}$ above to the $\bfColor{oldgold}{\dagger}$ below.
+$\Sum$ is well-typed by the following derivation, in which we have a back edge 
+from the  $\golddagger$ above to the $\golddagger$ below.
 \[
 \infer[\lambda]{
-  \vdash \Sum:\N, \bfColor{oldgold}{\N} \rightarrow \N 
-   \quad (\bfColor{oldgold}{\dagger})
+  \vdash \Sum:\N, 
+  %\goldN 
+  \goldN
+  \rightarrow \N 
+   \quad (\golddagger)
 }{
   \infer[\cond]{
     x : \N \vdash 
-    \cond(x,\lambda z.\Succ(\Sum(x)(z))): \bfColor{oldgold}{\N} \rightarrow \N
-     \quad (\bfColor{oldgold}{ \spadesuit})
+    \cond(x,\lambda z.\Succ(\Sum(x)(z))): \goldN \rightarrow \N
+     \quad (\goldspadesuit)
   }{
     \infer[\var]{
       x : \N \vdash x : \N
     }{}
     &
     \infer[\lambda]{
-      x:\N \vdash \lambda z.\Succ(\Sum(x)(z)): \bfColor{oldgold}{\N} \rightarrow \N  
-      %\quad (\bfColor{oldgold}{ \spadesuit})
+      x:\N \vdash \lambda z.\Succ(\Sum(x)(z)): \goldN \rightarrow \N  
+      %\quad (\goldspadesuit)
     }{
       \infer[\Succ]{
-        x:\N, z : \bfColor{oldgold}{\N} 
+        x:\N, z : \goldN 
         \vdash \Succ(\Sum(x)(z)): \N  
-        % \quad (\bfColor{oldgold}{ \spadesuit})
+        % \quad (\goldspadesuit)
       }{
         \infer[\apvar]{
-          x:\N, z : \bfColor{oldgold}{\N} 
+          x:\N, z : \goldN 
           \vdash \Sum(x)(z): \N
         }{
           \infer[\apvar]{
-            x:\N,  z : \bfColor{oldgold}{\N}
-            \vdash \Sum(x): \bfColor{oldgold}{\N} \rightarrow \N
+            x:\N,  z : \N
+            \vdash \Sum(x): \goldN \rightarrow \N
           }{
             \infer[\weak]{
-              x:\N,  z : \bfColor{oldgold}{\N}
-              \vdash \Sum: \N, \bfColor{oldgold}{\N} \rightarrow  \N
+              x:\N,  z : \N
+              \vdash \Sum: \N, \goldN \rightarrow  \N
             }{
-              \infer*{\vdash \Sum: \N, \bfColor{oldgold}{\N} \rightarrow \N 
-                \quad (\bfColor{oldgold}{\dagger})}{}
+              \infer*{\vdash \Sum: \N, \goldN \rightarrow \N 
+                \quad (\golddagger)}{}
             }
           }
         }
@@ -142,11 +145,11 @@ $\bfColor{oldgold}{\dagger}$ above to the $\bfColor{oldgold}{\dagger}$ below.
 \]
 \end{Eg}
 
-We colored in \bfColor{oldgold}{old gold} one sequence of atoms $\bfColor{oldgold}{\N}$:
-this is one trace of the proof.
-The colored trace is the unique infinite trace, it is cyclic and it is infinitely progressing.
-We marked $\bfColor{oldgold}{ \spadesuit}$ the only progress point of the only infinite trace.
-The progress point is repeated infinitely many times.
+We %colored in \bfColor{oldgold}{old gold} one sequence of atoms $\goldN$:
+outlined one sequence of atoms with $\goldN$. The outlined trace is the unique 
+infinite trace, it is cyclic and it is infinitely progressing.
+We marked $\goldspadesuit$ the only progress point of the only infinite trace.
+The progress point is repeated infinitely many times in the unique infinite trace.
 
 
 %
@@ -210,25 +213,24 @@ $\Iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 %\end{proof}
 
 The proof above includes a type inference from the term $\iter$ to itself.
-We draw the type inference in the picture below. 
-We have a back edge from the 
-$\bfColor{oldgold}{\dagger}$ on the top to the $\bfColor{oldgold}{\dagger}$ in the bottom,
-and we marked $\bfColor{oldgold}{ \spadesuit}$ the only progress point, which is cyclically repeated
-in $\tau$.
+We draw the type inference in the picture below and we outline the unique
+infinite trace. We have a back edge from the 
+$\golddagger$ on the top to the $\golddagger$ in the bottom,
+and we marked $\goldspadesuit$ the only progress point, which is cyclically repeated in the unique infinite trace.
 We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \[
 %\infer[\lambda]{ %opening: \infer[\lambda]
-%  \vdash \Iter:(\N \rightarrow \N), \N, \bfColor{oldgold}{\N} \rightarrow \N
+%  \vdash \Iter:(\N \rightarrow \N), \N, \goldN \rightarrow \N
 % }{
 %  \infer[\lambda]{ %opening: \infer[\lambda]
 %  f:\N \rightarrow \N
-%  \vdash \lambda a.\iter:\N, \bfColor{oldgold}{\N} \rightarrow \N
+%  \vdash \lambda a.\iter:\N, \goldN \rightarrow \N
 %  }
 {
     \infer[\cond]{ %opening: \infer[\cond]
       \Gamma 
-      \vdash \iter: \bfColor{oldgold}{\N} \rightarrow \N 
-        \quad (\bfColor{oldgold}{ \spadesuit}, \bfColor{oldgold}{\dagger})
+      \vdash \iter: \goldN \rightarrow \N 
+        \quad (\goldspadesuit, \golddagger)
      }{ 
          \infer[\var]{
        \Gamma 
@@ -238,10 +240,10 @@ We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
         {\infer[\lambda] %opening: \infer[\lambda]
          {
          \Gamma
-          \vdash \lambda x.f(\iter(x)):\bfColor{oldgold}{\N} \rightarrow \N
+          \vdash \lambda x.f(\iter(x)):\goldN \rightarrow \N
          }{
          \infer[\ap]{ %opening: \infer[\ap]
-           \Gamma, x:\bfColor{oldgold}{\N}
+           \Gamma, x:\goldN
           \vdash f(\iter(x)):\N
            }{
           \infer[\var]{
@@ -249,13 +251,13 @@ We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
       \vdash f:\N \rightarrow \N}{}
            {\ \ \ \ \ \ \ \ \ \ \ \ }
            {\infer[\apvar] %opening: \infer[\apvar]
-            {\Gamma, x:\bfColor{oldgold}{\N}
+            {\Gamma, x:\goldN
         \vdash \iter(x): \N 
              }{
           \infer[\weak]{\Gamma, x:\N
-                                 \vdash \iter: \bfColor{oldgold}{\N} \rightarrow \N}
+                                 \vdash \iter: \goldN \rightarrow \N}
                                 {\infer*{\Gamma
-                                 \vdash \iter: \bfColor{oldgold}{\N} \rightarrow \N
+                                 \vdash \iter: \goldN \rightarrow \N
                                   \ \ \ (\bfColor{oldgold}{ \dagger})}{}
              }
            }
@@ -347,11 +349,11 @@ $\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 %14:27 24/04/2024
 
 The proof above includes a type inference from the term $\interval$ to itself.
-We draw the type inference in the figure \ref{figure-term-interval}. 
+We draw the type inference in the figure \ref{figure-term-interval}
+and we outline the unique infinite trace. 
 In this figure, we include a back edge from the 
-$\bfColor{oldgold}{\dagger}$ on the top to the $\bfColor{oldgold}{\dagger}$ in the bottom,
-and we marked $\bfColor{oldgold}{ \spadesuit}$ the only progress point, which is cyclically repeated
-in $\tau$.
+$\golddagger$ on the top to the $\golddagger$ in the bottom,
+and we marked $\goldspadesuit$ the only progress point, which is cyclically repeated in the unique infinite trace. 
 We abbreviate 
 $\Sigma = (\nil:\alpha, \cons:\N,\alpha \rightarrow \N)$
 and
@@ -370,17 +372,17 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
   
 \[
 %\infer[\lambda]
-% {\Sigma\vdash \Interval:(\N \rightarrow \N),\N,\N,\bfColor{oldgold}{\N}\rightarrow\alpha}
+% {\Sigma\vdash \Interval:(\N \rightarrow \N),\N,\N,\goldN\rightarrow\alpha}
 % {\infer[\lambda]
-%   {\Sigma,f:\N\rightarrow\N \vdash \lambda a.\interval:\N,\N,\bfColor{oldgold}{\N}   
+%   {\Sigma,f:\N\rightarrow\N \vdash \lambda a.\interval:\N,\N,\goldN   
 %      \rightarrow\alpha}
    {\infer[\lambda]  
-     {\Gamma \vdash \interval:\N,\bfColor{oldgold}{\N}\rightarrow\alpha 
-       \ \ \ (\bfColor{oldgold}{\dagger}) }
+     {\Gamma \vdash \interval:\N,\goldN\rightarrow\alpha 
+       \ \ \ (\golddagger) }
        {\infer[\cond]{\Gamma, x:\N 
 	\vdash 
 	\cond (\base,  \inductive )
-	:\bfColor{oldgold}{\N}\rightarrow\alpha \ \ \ (\bfColor{oldgold}{ \spadesuit}) } 
+	:\goldN\rightarrow\alpha \ \ \ (\goldspadesuit) } 
        {\infer[\apvar]{\Gamma, x:\N 
 	           \vdash 
 	           \base:\alpha}
@@ -390,22 +392,22 @@ $\Gamma = \Sigma,(f:\N \rightarrow \N, a:\N)$.
             {\ \ \ \ \ \ }  &
           \infer[\lambda]{\Gamma, x:\N 
 	           \vdash 
-	           \lambda y.\inductive : \bfColor{oldgold}{\N}\rightarrow\alpha}
-             {\infer[\apnotvar]{\Gamma, x:\N, y:\bfColor{oldgold}{\N} \vdash
+	           \lambda y.\inductive : \goldN\rightarrow\alpha}
+             {\infer[\apnotvar]{\Gamma, x:\N, y:\goldN \vdash
                \inductive : \alpha}
             {\infer[]
                      {\Gamma, x:\N, y:\N 
                           \vdash \cons(\iter(x)):\alpha\rightarrow\N}{\ldots}
                {\ \ \ \ \ \ }
-                     {\infer[\apvar]{\Gamma, x:\N, y:\bfColor{oldgold}{\N} 
+                     {\infer[\apvar]{\Gamma, x:\N, y:\goldN 
                           \vdash \interval(\Succ(x))(y):\alpha}
                          {\infer[\apnotvar]{\Gamma, x:\N, y:\N 
-                          \vdash \interval(\Succ(x)):\bfColor{oldgold}{\N} \rightarrow\alpha}
+                          \vdash \interval(\Succ(x)):\goldN \rightarrow\alpha}
                               {\infer[\weak]{\Gamma, x:\N, y:\N 
-                          \vdash \interval:\N,\bfColor{oldgold}{\N} \rightarrow\alpha}
+                          \vdash \interval:\N,\goldN \rightarrow\alpha}
                                 {\infer[]{\Gamma 
-                          \vdash \interval:\N,\bfColor{oldgold}{\N} \rightarrow\alpha
-                           \ \ \ (\bfColor{oldgold}{\dagger})}
+                          \vdash \interval:\N,\goldN \rightarrow\alpha
+                           \ \ \ (\golddagger)}
               {\ldots}}}}}
              }
            }

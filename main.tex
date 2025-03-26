@@ -90,8 +90,12 @@
 
 \begin{abstract} 
 A motivation for having a circular syntax for G\"{o}del System $\systemT$ 
-is that terms in a circular syntax are written in fixed point-style, therefore are more natural and shorter than the equivalent terms written in $\systemT$, yet their totality can be checked mechanically. Several circular syntax for $\systemT$ (that is, infinite regular terms with the global trace condition)
-have been proposed, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, page 20), but without an explicit use of $\lambda$-abstraction.
+is that terms in a circular syntax are written in fixed point-style, therefore are more 
+familiar and shorter than the equivalent terms written in $\systemT$, yet their 
+totality can be checked mechanically. Several circular syntax for $\systemT$ (that 
+is, infinite regular terms with the global trace condition)
+have been proposed, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, 
+page 20), but without an explicit use of $\lambda$-abstraction.
 In this paper we explore the possibility of defining a circular syntax 
 directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
 %, instead of interpreting
@@ -100,9 +104,12 @@ directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
 %could be more familiar for researchers working in the field of Type Theory.
 %Again for reason of simplicity of use, we drop the restriction of having finitely many variables in infinite terms, 
 %and finitely many redexes, a restriction considered in previous works on the same topic, 
-%and we explore the consequences of ths choice.
+%and we explore the consequences of this choice.
 %\\
-We introduce our circular syntax as a fixed point operator defined by cases through a test on $0$.
+In $\CTlambda$ we can define by simultaneous recursion 
+finitely many terms using the terms themselves as proper subterms. Each time we
+unfold the recursive definition we automatically 
+remove all variables no more in use, to prevent an infinite proliferation of names.
 We prove for $\CTlambda$:
 \emph{(i)}  every closed term of type $\N$ reduces to some numeral;
 \emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator; 

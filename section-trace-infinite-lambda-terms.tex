@@ -2,9 +2,11 @@
 \section{The trace of the infinite $\lambda$-terms}
 %19:34 27/03/2024
 We define a notion of trace for possibly infinite $\lambda$-terms, 
-describing how an input of type $\N$ is used when computing the output.
-The first step toward a trace is defining a notion of \emph{connection} between arguments
-of type $\N$ in the proof that $t$ is well-typed. 
+describing how an input of type $\N$ is used when computing the output
+and when its value decreases. A notion of trace is useful to analyse termination.
+If in all infinite computations of a term we are able to find some infinitelydecreasing value, then no infinite computation can exists for this term. 
+The first step toward a notion of  trace is defining a notion of \emph{connection} 
+between arguments of type $\N$ in the proof that $t$ is well-typed. 
 To this aim, we need the notions of \emph{list of argument
  types} and of \emph{index of atomic types} for a term.
 
@@ -67,7 +69,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %An example of  atom connection for some instance of the $\weak$-rule.
 %\[
 %\infer[(\weak)]{
-%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3:\bfColor{oldgold}{\N}
+%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3:\goldN
 %  \prove t : \bfColor{orange}{\N} \rightarrow \N
 %}{
 %  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} 
@@ -88,7 +90,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %  \prove f(a) : \bfColor{orange}{\N} \rightarrow \N
 %}{
 %  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
-%  \prove f : \bfColor{oldgold}{\N}, \bfColor{orange}{\N} \rightarrow \N
+%  \prove f : \goldN, \bfColor{orange}{\N} \rightarrow \N
 %  &
 %  x_1 : \bfColor{red}{\N}, x_2: \bfColor{blue}{\N} \prove a : \N
 %}
@@ -109,11 +111,11 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %\[
 %\infer[(\cond)]{
 %  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
-%  \prove \cond(f,g) : \bfColor{oldgold}{\N} \rightarrow \N
+%  \prove \cond(f,g) : \goldN \rightarrow \N
 %}{
 %  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} \prove f : \N
 %  &
-%  x_1:\bfColor{red}{\N}, x_2:\bfColor{blue}{\N} \prove g:\bfColor{oldgold}{\N} \rightarrow \N
+%  x_1:\bfColor{red}{\N}, x_2:\bfColor{blue}{\N} \prove g:\goldN \rightarrow \N
 %}
 %\]
 %\end{Eg}
@@ -126,46 +128,91 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 
 %15:19 24/03/2025
 
-The definition of connection requires to define an injection 
+We define a connection between the arguments of $\Gamma \vdash t:\vec{B} 
+\rightarrow \N$ and the argument of its premise $\Gamma' \vdash t':\vec{B'} 
+\rightarrow \N$. We first list the cases requiring special care.
+\begin{enumerate}
+\item
+The free variable $x$ in the term $f(x)$ and in 
+$\Gamma$ is connected to the free variable $x$ in $\Gamma'$, but also to the first 
+argument of $f$ to which $x$ is sent.
+\item
+The first argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected to no argument type of $t(u)$.
+In this case the connection must skip the index of the first argument of $t$,
+and the argument number $k$ of $t(u)$ corresponds to the argument number 
+$k+1$ of $t$. 
+\item
+An opposite remark applies to the first immediate subterm $f$ of the
+term $\cond(f,g)$:  the first argument $\N$ of $\cond(f,g):\N \rightarrow A$
+correspond to no argument of $f$, and the argument number $k+1$ of 
+$\cond(f,g)$ corresponds to the argument number $k$ of $f$. 
+\end{enumerate}
+In order to define connection in these case, we have first to define an injection 
 \[
 \ins:\N,\N \rightarrow\N
 \]
-We set $\ins(p,x)=x+1$ if $x \ge p+1$, and $\ins(p,x)=x$ if $x\le p$.
-The role of $\ins$ is inserting one fresh index $p+1$ for a new argument type higher in the proof that the term is well-typed, and
-connected to no argument in the conclusion.
+such that $k+1 \not \in \ins(k,\N)$. We set $\ins(k,x)=x+1$ if $x \ge k+1$, and 
+$\ins(k,x)=x$ if $x\le k$. 
+
+In the remaining cases an argument is connected to its corresponding in the 
+premise. We need some care in the case of a $\weak$-rule: the premise can
+have less free variable taken in a different order. We use the map $\phi:\Gamma 
+\rightarrow \Gamma'$ between contexts (Def.\ref{definition-context-lambda}.
+\ref{definition-context-lambda-08}) in order to relate the indexes of a a free 
+variable in the premise with its index in the conclusion. 
+
+Now we sum up the notion of connection with a formal definition.
+
+
+%The role of $\ins$ is describing the fact that
+%the the first argument $A$ of $t:A \rightarrow B$ 
+%in the proof that $t(u):B$ is well-typed is
+%connected to no argument type of $t(u)$.
 
 \begin{definition}[Connection in a proof of  $\LAMBDA$]
-Assume $\vec{A} = A_1, \ldots, A_n$, 
+Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{A'} = A'_1, \ldots, A'_{n'}$,
 $\vec{B}=B_1, \ldots, B_m$, $\Gamma = \vec{x}:\vec{A}$,
-and $\Gamma \vdash t:\vec{B} \rightarrow \N$.
+$\Gamma' = \vec{x'}:\vec{A'}$
+and $\Gamma \vdash t:\vec{B} \rightarrow \N$
+has premise $\Gamma' \vdash t':\vec{B'} \rightarrow \N$.
 
-For each $\N$-argument $k$ in $t$, 
-%for $t'=t$ or $t'$  immediate subterm of $t$, 
-for each $\N$-argument $k'$ in $t'$ we define the relation: 
-``$k',t'$ the successor of $k,t$". We require:
+
+For each $\N$-argument $k$ in $t$, for each $\N$-argument $k'$ in $t'$ we define 
+the relation: ``$k',t'$ the successor of $k,t$". We require:
 \begin{enumerate}
-%\item
-%if $t$ is obtained by a rule $\weak$ from $t'=t$, described by a map $\phi:\Gamma \rightarrow \Delta$,  
-%then $k = \phi(k')$.
-\item
-if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
-then $k' = \ins(n,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
+
 \item
 if $t=f(x_i^{A_i})$ is obtained by a rule $\apvar$ and $t'=f$ 
 then $k' = \ins(n,k)$ or $k'=n+1$ and $k=i$.
+
+\item
+if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
+then $k' = \ins(n,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
+
 \item
 if $t=\cond(f,g)$ and $t'=f$ 
-then $k' = \ins(n,k)$. If $t'=g$ then $k'=k$.
+then %$k' = \ins(n,k)$. 
+$k = \ins(n,k')$. 
+If $t'=g$ then $k'=k$.
+
+\item
+We require $k = k'$ if $t = \Succ(u)$, $\lambda x.v$. 
+
+\item
+if $t$ is obtained by a rule $\weak$ from $t'=t$, and 
+$\phi:\Gamma \rightarrow \Gamma'$ then $k = \phi(k')$ if $k \le n$
+and $k' = k - n + n'$ if $k \ge n+1$.
+
 \end{enumerate}
-We require $k = k'$ in all other cases, 
-which are: $\Succ $, $\lambda$. 
-\\
 No connection is defined for the rules $\var$, $0$.
 \end{definition}
 
+
+
 Below we include some examples. 
 We draw in the same color two $\N$-arguments which are in connection. 
-In the case of the rule $\apvar$, an argument can be connected to two arguments above it.
+In the case of the rule $\apvar$, the argument we outline is 
+connected to two arguments above it.
 
 
 \begin{Eg}\label{eg:3}%\rm
@@ -173,19 +220,23 @@ Atom connection for $\apvar$.
 We assume that $x$ is a variable.
 \[
 \infer[(\apvar)]{
-  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \bfColor{oldgold}{\N}
+  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \goldN
   \prove f(x_3) : \bfColor{orange}{\N} \rightarrow \N
 }{
-  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \bfColor{oldgold}{\N}
-  \prove f : \bfColor{oldgold}{\N}, \bfColor{orange}{\N} \rightarrow \N
+  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \goldN
+  \prove f : \goldN, \bfColor{orange}{\N} \rightarrow \N
 }
 \]
 \end{Eg}
 
-Remark that the last variable in the conclusion of the rule
-is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
-in the premise, and with the variable with the same name in the premise: there are
-two connections.
+The first unnamed argument of $\lambda x.b$ (outlined)
+%(colored in \bfColor{oldgold}{old gold}) 
+is connected with the last variable in the premise of the rule.
+
+%Remark that the last variable in the conclusion of the rule
+%is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
+%in the premise, and with the variable with the same name in the premise: there are
+%two connections.
 
 \begin{Eg}\label{eg:4}%\rm
 Atom connection for  $\lambda$-rule.
@@ -193,27 +244,27 @@ We assume that $x$ is  a variable.
 \[
 \infer[(\ap)]{
   x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}
-  \prove \lambda x.b : \bfColor{oldgold}{\N} \rightarrow \N
+  \prove \lambda x.b : \goldN \rightarrow \N
 }{
-  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}, x:\bfColor{oldgold}{\N} \prove b : \N
+  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}, x:\goldN \prove b : \N
 }
 \]
 \end{Eg}
-Remark that the first unnamed argument of $\lambda x.b$ (colored in \bfColor{oldgold}{old gold}) 
-in the conclusion is in connection with the last variable type in the premise of the rule.
-\\
 
-Summing up, when
-we move up in a $\apvar$-rule, the type of some free variable corresponds to the 
-type of the first unnamend argument.
-When  we move up in a $\lambda$-rule, the type of the first unnamend argument
-corresponds to the type of the last free variable.
 
-The connection on $\N$-arguments in a proof $\Pi:\Gamma\vdash t:A$ defines a graph $\Graph(\Pi)$ 
-whose nodes are all pairs $(k,u)$, with $u$ subterm of $t$ and $k$ index of some $\N$-argument of  $u$.
-$\Graph(\Pi)$ is finite when $t$ is regular.
-A trace represents the movement of an input information through the infinite unfolding of a tree.
-Formally, we define a trace as a (finite or infinite) path in the graph $\Graph(\Pi)$.
+
+%Summing up, when
+%we move up in a $\apvar$-rule, the type of some free variable corresponds to the 
+%type of the first unnamend argument.
+%When  we move up in a $\lambda$-rule, the type of the first unnamend argument
+%corresponds to the type of the last free variable.
+
+The connection on $\N$-arguments in a proof $\Pi:\Gamma\vdash t:A$ defines a 
+graph $\Graph(\Pi)$ whose nodes are all pairs $(k,u)$, with $u$ subterm of $t$ and 
+$k$ index of some $\N$-argument of  $u$. $\Graph(\Pi)$ is finite when $t$ is 
+regular. A trace represents the movement of an input information through the 
+infinite unfolding of a tree. Formally, we define a trace as a (finite or infinite) path 
+in the graph $\Graph(\Pi)$.
 
 \begin{definition}[Trace for well-typed terms in $\LAMBDA$]
 Assume $\Pi$ is any typing proof of $t \in \WTyped$.
@@ -235,8 +286,11 @@ if $i+1$ is an index of $\tau$ then $(k_{i+1},t_{i+1})$ is connected with $(k_i,
 \end{enumerate}
 \end{definition}
 
-The starting point of a trace could be different from the starting point of the path to which the trace belongs.
+The starting point of a trace $\tau$ could be $t_m$ for some $m \in \N$, 
+and therefore different from the starting point $t_0$ of the path $\pi$ to which the 
+trace belongs.
 
 %20:50 15/04/2024
 %10:35 24/04/2024
 %12:28 30/04/2024
+%14:39 26/03/2025
