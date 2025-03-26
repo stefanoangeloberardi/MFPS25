@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+%<<<<<<< HEAD
 %%%	 Use this file as a template for your submission to your conference, and to prepare
 %%%	the final version of your paper, if accepted, for the conference Proceedings. 
 %%%	You can use it "as is" for your initial submission, but alterations may be required if
@@ -68,7 +68,8 @@
 %%%Note the beginning and end of the frontmatter section that starts here%%%%%
 \begin{frontmatter}
 \input{macro}
-  \title{$\CTlambda$, a cyclic simply typed $\lambda$-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
+  %\title{$\CTlambda$, a cyclic simply typed $\lambda$-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
+  \title{A Cyclic Simply Typed Lambda-Calculus with Fixed Points\thanksref{ALL}} 
  \thanks[ALL]{We thank Prof. D. Anupam for a valuable scientific correspondence about cyclic terms.}   %%Text of \thanks[ALL} here..
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
   %%%%Now the author(s) names(s)%%%%%
@@ -90,15 +91,16 @@
  
 
 \begin{abstract} 
-A motivation for having a circular syntax for G\"{o}del System $\systemT$ 
-is that terms in a circular syntax are written in fixed point-style, therefore are more 
-familiar and shorter than the equivalent terms written in $\systemT$, yet their 
-totality can be checked mechanically. Several circular syntax for $\systemT$ (that 
+A motivation for having a circular syntax for G\"{o}del System {\em T} 
+is that terms in a circular syntax are written in fixed point style, therefore are more 
+familiar and shorter than the equivalent terms written in {\em T}, yet their 
+totality can be checked mechanically. Several circular syntax for {\em T} (that 
 is, infinite regular terms with the global trace condition)
-have been proposed, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, 
-page 20), but without an explicit use of $\lambda$-abstraction.
-In this paper we explore the possibility of defining a circular syntax 
-directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
+have been proposed,
+%, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, page 20), 
+but without an explicit use of lambda-abstraction.
+In this paper, we explore the possibility of defining a circular syntax 
+directly for lambda-abstraction and simple types. %, which we call $\CTlambda$.
 %, instead of interpreting
 % $\lambda$-abstraction through combinators first, then inserting a  global trace condition afterwards.
 %A circular syntax using binders instead of combinators
@@ -107,12 +109,13 @@ directly for $\lambda$-abstraction and simple types, which we call $\CTlambda$.
 %and finitely many redexes, a restriction considered in previous works on the same topic, 
 %and we explore the consequences of this choice.
 %\\
-In $\CTlambda$ we can define by simultaneous recursion 
+%In $\CTlambda$ 
+We can define by simultaneous recursion 
 finitely many terms using the terms themselves as proper subterms. Each time we
 unfold the recursive definition we automatically 
 remove all variables no more in use, to prevent an infinite proliferation of names.
-We prove for $\CTlambda$:
-\emph{(i)}  every closed term of type $\N$ reduces to some numeral;
+We prove for our calculus:
+\emph{(i)}  every closed term of the type of naturals reduces to some numeral;
 \emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator; 
 %A consequence of the
 % fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
