@@ -97,14 +97,15 @@ program and shorter than the equivalent terms written in {\em T}. Yet, the
 totality of cyclic terms can be checked mechanically. 
 Several circular syntax for {\em T} (which are infinite regular terms with the 
 global trace condition) have been proposed, for instance by D. Anupam,
-but without an explicit use of lambda-abstraction.
+by adapting circular syntax for proofs by Brotherston and Simpson.
+These circular syntax for {\em T} make no explicit use of lambda-abstraction.
 In this paper, we explore the possibility of defining a circular syntax 
 directly for lambda-abstraction and simple types. 
 In our syntax, we can define by simultaneous recursion 
-finitely many terms using the terms themselves as proper subterms. Each time we
-unfold the recursive definition we automatically 
+finitely many terms using the terms themselves as proper subterms. 
+Each time we unfold the recursive definition we automatically 
 remove all variables no more in use, to prevent an infinite proliferation of names.
-We prove for our calculus:
+We prove for our circular syntax:
 \emph{(i)}  every closed term of the type of naturals reduces to some numeral;
 \emph{(ii)}  strong normalization for all reductions sequences never reducing inside a fixed point operator; 
 %A consequence of the
