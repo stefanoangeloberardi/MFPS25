@@ -157,7 +157,7 @@ bottom $\golddagger$ would be $\emptyset$. Without the $\weak$-rule, the proof w
 We %colored in \bfColor{oldgold}{old gold} one sequence of atoms $\goldN$:
 outlined one sequence of atoms with $\goldN$. The outlined trace is the unique 
 infinite trace, it is cyclic and it is infinitely progressing.
-We marked $\goldspadesuit$ the only progress point of the only infinite trace.
+We marked $\goldspadesuit$ the progress point of the unique infinite trace.
 The progress point is repeated infinitely many times in the unique infinite trace,
 therefore $\Sum \in \CTlambda$. 
 
@@ -226,7 +226,7 @@ The proof above includes a type inference from the term $\iter$ to itself.
 We draw the type inference in the picture below and we outline the unique
 infinite trace. We have a back edge from the 
 $\golddagger$ on the top to the $\golddagger$ in the bottom.
-We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
+We mark $\goldspadesuit$ the progress point, which is cyclically repeated in 
 the unique infinite trace. We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \[
 %\infer[\lambda]{ %opening: \infer[\lambda]
@@ -286,17 +286,17 @@ the unique infinite trace. We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \subsection{The Interval Map}
 A third example. We simulate lists with two variables $\nil:\alpha$ and 
 $\cons:\N,\alpha \rightarrow \alpha$. We recursively define a notation for lists by $[]=\nil$,
-$a @ l=\cons(a,l)$ and $[a,\vec{a}] = a @ [\vec{a}]$. We add no elimination rules for lists, though,
-only the variables $\nil$ and $\cons$. Elimination rules are not required in our example.
+$a @ l=\cons(a,l)$ and $[a,\vec{a}] = a @ [\vec{a}]$. We add no elimination rules 
+for lists, though, only the variables $\nil$ and $\cons$. Elimination rules are not 
+required in our example.
 
 \begin{Eg}
-We will define a term $\Interval$ with one argument $f:\N \rightarrow \N$ and three argument
-$a,x,y:\N$ (we skip all type superscripts), such that 
+We will define a term $\Interval$ with one argument $f:\N \rightarrow \N$ and 
+three argument $a,x,y:\N$ (we skip all type superscripts), such that 
 \[
 \Interval(f,a,n,m) \  \sim \ [f^n(a), f^{n+1}(a), \ldots, f^{n+m}(a)] \  : \ \alpha
 \]
-for all numeral $n,m \in \Num$. 
-We have to solve the recursive equations 
+for all numeral $n,m \in \Num$. We have to solve the recursive equations 
 \begin{center}
   $\Interval(f,a,n,0) \sim [f^n(a)]$
   \quad
@@ -310,8 +310,7 @@ $\Sigma = (\nil:\alpha, \cons:\N,\alpha \rightarrow \N)$
 and
 $(f:\N\rightarrow\N, a:\N)$ is the context defined 
 in the previous sub-section. In particular, $\iter(n) \sim f^n(a)$ for all $n \in \Num$.
-We solve the recursive equation for $\Interval$ with $\Interval = \lambda f,a.\interval$,
-where 
+We solve the recursive equation for $\Interval$ with $\Interval = \lambda f,a.\interval$, where 
 \[
 \interval:\N,\N \rightarrow \alpha
 \]
@@ -368,7 +367,7 @@ If we want a graph notion, we add a back edge from the
 top $\golddagger$ to the bottom $\golddagger$. We need the $\weak$-rule
 to remove the variables $x$, $y$ which are no more used in the top $\golddagger$
 and do not occur in the bottom $\golddagger$. 
-We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
+We mark $\goldspadesuit$ the progress point which is cyclically repeated in 
 the unique infinite trace. 
 
 % TYPING PROOF 

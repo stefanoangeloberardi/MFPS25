@@ -156,14 +156,6 @@ term $\cond(f,g)$:  the first argument $\N$ of $\cond(f,g):\N \rightarrow A$
 correspond to no argument of $f$, and the argument number $k+1$ of 
 $\cond(f,g)$ corresponds to the argument number $k$ of $f$. 
 \end{enumerate}
-In order to define connection in these case, we have first to define the unique
-map
-\[
-\ins:\N,\N \rightarrow\N
-\]
-such that for all $k \in \N$, $\ins(k,\cdot)$ is increasing and
-$\ins(k,\N) = \N \setminus \{k\}$. 
-We set $\ins(k,x)=x$ if $x < k$ and $\ins(k,x)=x+1$ if $x \ge k$. 
 
 In the remaining cases an argument is connected to its corresponding in the 
 premise. We need some care in the case of a $\weak$-rule: the premise can
@@ -173,7 +165,19 @@ In this case we use the map $\phi:\Gamma \rightarrow \Gamma'$ between contexts
 in order to relate the indexes of a a free variable in the premise with its index in the 
 conclusion. 
 
-Now we sum up the notion of connection with a formal definition.
+In order to define the connection, we have first to define the following map:
+
+\begin{definition}($\ins:\N,\N \rightarrow \N$)
+For all $k,x \in \N$: $\ins(k,x)=x$ if $x < k$ and $\ins(k,x)=x+1$ if $x \ge k$. 
+\end{definition}
+
+By definition unfolding, for all $k \in \N$, $\ins(k,\cdot)$ is the unique increasing 
+map such that $\ins(k,\N) = \N \setminus \{k\}$. 
+Thus, we can use $\ins(k,\cdot)$ to insert a \quotationMarks{hole} in the 
+connection corresponding to the argument number $k$ of the premise 
+$\Gamma' \vdash t':\vec{B'} \rightarrow \N$. 
+Using the maps $\ins(k,\cdot)$ and $\phi:\Gamma \rightarrow \Gamma'$ we sum 
+up the notion of connection through a formal definition.
 
 
 %The role of $\ins$ is describing the fact that
@@ -196,16 +200,14 @@ the relation: ``$k',t'$ the successor of $k,t$". We require:
 
 \item
 if $t=f(x_i^{A_i})$ is obtained by a rule $\apvar$ and $t'=f$ 
-then $k' = \ins(n,k)$ or $k'=n+1$ and $k=i$.
+then $k' = \ins(n+1,k)$ or $k'=n+1$ and $k=i$.
 
 \item
 if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
-then $k' = \ins(n,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
+then $k' = \ins(n+1,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
 
 \item
-if $t=\cond(f,g)$ and $t'=f$ 
-then %$k' = \ins(n,k)$. 
-$k = \ins(n,k')$. 
+if $t=\cond(f,g)$ and $t'=f$ then $k = \ins(n+1,k')$. 
 If $t'=g$ then $k'=k$.
 
 \item
