@@ -157,11 +157,12 @@ correspond to no argument of $f$, and the argument number $k+1$ of
 $\cond(f,g)$ corresponds to the argument number $k$ of $f$. 
 \end{enumerate}
 In order to define connection in these case, we have first to define the unique
-increasing injection 
+map
 \[
 \ins:\N,\N \rightarrow\N
 \]
-such that $\ins(k,\N) \N \setminus \{k\}$. 
+such that for all $k \in \N$, $\ins(k,\cdot)$ is increasing and
+$\ins(k,\N) = \N \setminus \{k\}$. 
 We set $\ins(k,x)=x$ if $x < k$ and $\ins(k,x)=x+1$ if $x \ge k$. 
 
 In the remaining cases an argument is connected to its corresponding in the 
@@ -182,7 +183,8 @@ Now we sum up the notion of connection with a formal definition.
 
 \begin{definition}[Connection in a proof of  $\LAMBDA$]
 Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{A'} = A'_1, \ldots, A'_{n'}$,
-$\vec{B}=B_1, \ldots, B_m$, $\Gamma = \vec{x}:\vec{A}$,
+$\vec{B}=B_1, \ldots, B_m$, $\vec{B'}=B'_1, \ldots, B'_{m'}$,
+$\Gamma = \vec{x}:\vec{A}$,
 $\Gamma' = \vec{x'}:\vec{A'}$
 and $\Gamma \vdash t:\vec{B} \rightarrow \N$
 has premise $\Gamma' \vdash t':\vec{B'} \rightarrow \N$.
@@ -222,7 +224,7 @@ No connection is defined for the rules $\var$, $0$.
 
 
 Below we include some examples. 
-We draw in the same color two $\N$-arguments which are in connection. 
+We outline two $\N$-arguments which are in connection. 
 In the case of the rule $\apvar$, the argument we outline is 
 connected to two arguments above it.
 
@@ -252,7 +254,7 @@ is connected with the last variable in the premise of the rule.
 
 \begin{Eg}\label{eg:4}%\rm
 Atom connection for  $\lambda$-rule.
-We assume that $x$ is  a variable.
+We assume that $x$ is  a variable distinct from $x_1$, $x_2$.
 \[
 \infer[(\ap)]{
   x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}

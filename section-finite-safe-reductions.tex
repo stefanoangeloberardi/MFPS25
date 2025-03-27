@@ -65,11 +65,12 @@ Then $f$ is total of type $T$ if and only if for all total $a$ of type $A$ we ha
 % A term $t$ is \emph{total by substitution} if and only if:
 % $t[\vec{v}/\vec{x}]$ is total for all total assignments $[\vec{v}/\vec{x}]$
 A term $t[\vec{x}]$ with free variables $\vec{x}:\vec{B}$ is \emph{total by substitution} if and only if:
-$t[\vec{v}]$ is total for all totals $\vec{x}:\vec{B}$. 
+$t[\vec{v}]$ is total for all totals $\vec{v}:\vec{B}$. 
 
 Let $U$ be an atomic type, $t[\vec{x}]:\vec{A}\to U$, and $\vec{x}:\vec{B}$. 
 A \emph{total assignment} of $t[\vec{x}]$ is $(\vec{v},\vec{a})$, where 
-$\vec{v}:\vec{B}$ and $\vec{a}:\vec{A}$ are total terms, and $t[\vec{v}](\vec{a})$ is total. 
+$\vec{v}:\vec{B}$ and $\vec{a}:\vec{A}$ are total terms.
+%, and $t[\vec{v}](\vec{a})$ is total. 
 
 \end{definition}
 
@@ -149,8 +150,9 @@ $\prec$ is well-founded on total terms of type $\N$.
 %\end{proof}
 
 
-We will prove that if $t$ is not total, then we can assign total terms to  the sub-terms of $t$
-in an infinite path of a proof $\Pi : \Gamma \vdash t: A$ in a way compatible with traces.
+We will prove that if $t$ is not total, then we can assign total terms to  the sub-
+terms of $t$ in an infinite path of a proof $\Pi : \Gamma \vdash t: A$ in a way 
+compatible with traces.
 
 
 \begin{definition}[Trace-compatible Assignment]
@@ -158,7 +160,7 @@ in an infinite path of a proof $\Pi : \Gamma \vdash t: A$ in a way compatible wi
 Assume $\pi  = (\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_n \vdash t_n:A_n, \ldots)$ 
 is any finite or infinite branch of a typing proof $\Pi$
 and $\vec{v} = (r_1, \ldots, r_n, \ldots)$ 
-is any sequence of total assignments, where, for each $i$, $r_i=(r_{i,1},\ldots,r_{i,m_i})$ is one for $t_i$. 
+is any sequence of total assignments, where, for each $i$, $r_i=(r_{i,1},\ldots,r_{i,m_i})$ is a total assignment for $t_i$. 
 $\vec{v}$ is \emph{trace-compatible} in an index $i$ of $\pi$  
 if and only if it satisfies the following condition:
 
@@ -1046,9 +1048,10 @@ and for all terms which satisfy the global trace condition.
 \end{corollary}
 
 %{\color{red} Kimura}
-Note that $\CTlambda$ is {\bf \emph{not} closed under infinite reductions}:
+The last point of the Corollary says that 
+$\CTlambda$ is {\bf \emph{not} closed under infinite reductions}:
 the limit of any infinite reduction of any term of $\CTlambda$
-exists and it is unique in $\LAMBDA$, yet it is often not in $\CTlambda$
+exists in $\LAMBDA$, yet it is often not in $\CTlambda$
 because it is often not regular.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -1072,7 +1075,7 @@ $f$ is in $\GTC$ because in this unique infinite branch
 the trace of the second argument crosses the right-hand-side of a $\cond$
 infinitely many times.
 Hence $f\in\CTlambda$.
-From $f(x) \reduces \cond(n,f(\Succ n))$ we deduce that
+From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
  there is a infinite reduction sequence: \ \ 
  $
   f(x)\,\reduces\,\cond(x,f(\Succ(x))) \,
@@ -1090,7 +1093,7 @@ From $f(x) \reduces \cond(n,f(\Succ n))$ we deduce that
   just the unary algorithm for the addition, because 
   
   $$
-  f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(n,\cond(\Succ(n),\cond(\Succ^2(n),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0)
+  f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(\Succ^n(0),\cond(\Succ^{n+1}(0),\cond(\Succ^{n+2}(0),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0)
   $$
   
 This is an unfortunate but common situation for the limit of a sequence
@@ -1126,7 +1129,7 @@ therefore $t$ cannot be reduced. However $t$ is no numeral.
 
 Remark that $t$ is regular: the subterms of $t$ are
 $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
-However, $t$ is not in $\GTC$. 
+However, $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
 Indeed, the rightmost path of $t$ is an infinite path $t,t,t,t,\ldots$, 
 never crossing a $\cond$,
 and therefore never progressing.
