@@ -950,6 +950,7 @@ redexes. Indeed, the tree form of $u$ has the following branch:
 \end{center}
 This branch is cyclic, is infinite,
 and it includes infinitely many $\beta$-redexes, all equal to the same term $(\lambda z.u)(z)$. It takes infinitely many $\beta$-reductions to normalize $t$.
+Strictly speaking, $u$ has no normal form.
 \end{Eg}
 
 Through branches crossing the right-hand-side
@@ -967,19 +968,19 @@ of $\CTlambda$.
 %14:11 25/03/2025
 
 \begin{Eg}
-This is an example of safe $\cond$-reductions from a term $v(n)$ to a normal form. 
-Assume $n \in \Num$ is any numeral and $v = \cond(1, v)$. There are only finitely many reductions
-from $v(n)$, and they are all $0$-safe. $v(n)$ $\cond$-reduces to $v(n-1)$, 
-then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
-After $n$ $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we get $1$ and we stop. 
-Thus, the term $v(n)$ strongly normalizes to $1$ in $(n+1)$-steps, in fact $v(n)$ has a unique reduction path,
+This is an example of $0$-safe-reductions from a term $v(n)$ to a normal form. 
+Assume $n \in \Num$ is any numeral and $v = \cond(1, v)$. There are only finitely 
+many reductions from $v(n)$, and they are all $0$-safe. $v(n)$ $\cond$-reduces to 
+$v(n-1)$, then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
+After $n$ $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
+get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes to $1$ in $(n+1)$steps, in fact $v(n)$ has a unique reduction path,
 having length $(n+1)$ and terminating in $1$. The final output is 
 independent from $n$.
 \end{Eg}
 
 We will exhibit meaningful terms of $\CTlambda$ without a normal form. 
 However, for those terms we can get as close as we want to a normal form.
-For instance, we will prove that for all $n$, 
+For instance, we will prove that for all $n \in \N$, 
 all terms have some $n$-safe normal form, that is, 
 with no redexes of $\cond$-depth $\le n$. 
 %The $n$-safe normal form of a term is unique up $n$-safe equality: 
@@ -988,5 +989,5 @@ with no redexes of $\cond$-depth $\le n$.
 
 We will also prove that terms have a limit normal form, 
 obtained by applying $0$-safe reductions until possible, then 
-$1$-safe normal forms and so forth.
+$1$-safe normal forms until possible and so forth.
 %, and that this limit normal form is unique.
