@@ -42,7 +42,7 @@ The \emph{list of argument types} of $t$ is $\vec{C} = \vec{A},\vec{B}$.
 
 \item
 $A_1, \ldots, A_n$ are the \emph{named arguments}, 
-ith names $x_1, \ldots, x_n$.
+with names $x_1, \ldots, x_n$.
 
 \item
 $B_{n+1}, \ldots, B_{n+m}$ are the \emph{unnamed arguments}.
@@ -134,30 +134,30 @@ We define a connection between the arguments of $\Gamma \vdash t:\vec{B}
 \rightarrow \N$. We first list the cases requiring special care.
 \begin{enumerate}
 \item
-The free variable $x$ in the term $f(x)$ and in 
+The free variable $x:A$ in the term $f(x)$ and in 
 $\Gamma$ is connected to the free variable $x$ in $\Gamma'$, but also to the first 
-argument of $f$ to which $x$ is sent.
+unnamed argument of $f:A \rightarrow B$ to which $x$ is sent.
 \item
-The first argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected 
-to no argument type of $t(u)$.
-In this case the connection must skip the index of the first argument of $t$,
-and the argument number $k$ of $t(u)$ corresponds to the argument number 
-$k+1$ of $t$. 
+The first unnamed argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected to no argument type of $t(u)$.
+In this case the connection must skip the index of the first unnamed argument of 
+$t$, and any argument number $k \ge n+1$ of $t(u)$ corresponds to the argument 
+number $k+1$ of $t$. 
 \item
 If $x^A$ has index $i$ in $\Gamma$, then $x^A$ is connected 
 to no argument type of $\lambda x^A.t$, because the $\lambda$ rule
 has assumption $\Gamma \setminus \{x^A\} \vdash \lambda x^A.t$.
-In this case the connection must skip the index $i$,
-and the argument number $k \ge i $ of $t$ 
+In this case the connection must skip the index $i$ of the premise,
+and any argument number $k \ge i $ of $t$ 
 corresponds to the argument number $k+1$ of $ \lambda x^A.t$. 
 \item
 An opposite remark applies to the first immediate subterm $f$ of the
-term $\cond(f,g)$:  the first argument $\N$ of $\cond(f,g):\N \rightarrow A$
-correspond to no argument of $f$, and the argument number $k+1$ of 
-$\cond(f,g)$ corresponds to the argument number $k$ of $f$. 
+term $\cond(f,g)$:  the first argument $\N$ of the conclusion 
+$\cond(f,g):\N \rightarrow A$ correspond to no argument of the premise for $f$, 
+and the argument number $k+1$ of $\cond(f,g)$ corresponds to the argument 
+number $k$ of the premise for $f$. 
 \end{enumerate}
 
-In the remaining cases an argument is connected to its corresponding in the 
+In the remaining cases an argument is connected to the same argument in the 
 premise. We need some care in the case of a $\weak$-rule: the premise can
 have less free variables and taken in a different order. 
 In this case we use the map $\phi:\Gamma \rightarrow \Gamma'$ between contexts 
@@ -176,8 +176,8 @@ map such that $\ins(k,\N) = \N \setminus \{k\}$.
 Thus, we can use $\ins(k,\cdot)$ to insert a \quotationMarks{hole} in the 
 connection corresponding to the argument number $k$ of the premise 
 $\Gamma' \vdash t':\vec{B'} \rightarrow \N$. 
-Using the maps $\ins(k,\cdot)$ and $\phi:\Gamma \rightarrow \Gamma'$ we sum 
-up the notion of connection through a formal definition.
+Using the maps $\ins(k,\cdot)$ and $\phi:\Gamma \rightarrow \Gamma'$ we 
+express the notion of connection through a formal definition.
 
 
 %The role of $\ins$ is describing the fact that
@@ -233,7 +233,7 @@ connected to two arguments above it.
 
 \begin{Eg}\label{eg:3}%\rm
 Atom connection for $\apvar$.
-We assume that $x$ is a variable.
+We assume that $x_3$ is a variable distinct from $x_1$, $x_3$.
 \[
 \infer[(\apvar)]{
   x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3  : \goldN
