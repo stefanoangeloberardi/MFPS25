@@ -363,22 +363,19 @@ $\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 
 The proof above includes a type inference from the term $\interval$ to itself.
 We draw the type inference in the figure \ref{figure-term-interval}
-and we outline the unique infinite trace. 
-In this figure, we include a back edge from the 
-$\golddagger$ on the top to the $\golddagger$ in the bottom.
+and we outline with $\goldN$ the unique infinite trace. 
+If we want a graph notion, we add a back edge from the 
+top $\golddagger$ to the bottom $\golddagger$. We need the $\weak$-rule
+to remove the variables $x$, $y$ which are no more used in the top $\golddagger$
+and do not occur in the bottom $\golddagger$. 
 We mark $\goldspadesuit$ the only progress point, which is cyclically repeated in 
 the unique infinite trace. 
 
-%PROOF SNAPSHOT
+% TYPING PROOF 
 \begin{figure}
 \label{figure-term-interval}
 
-%\includegraphics[scale=0.6]{type-inference-term-interval.PNG}
-
 \begin{center}
-%% LATEX SOURCE CODE THEN A SNAPSHOT 
-%% THEN THE SNAPSHOT HAS BEEN MODIFIED IN WORD 
-%% THEN A LAST SNAPSHOT
   
   \begin{footnotesize}
 %\[
@@ -442,11 +439,11 @@ an infinite term. We have infinitely many nested $\beta$-reduction $(\lambda x.
 $ (substitution repeated $k$ times). The result is $\iter[\Succ ^k(x)/x] $.
 The nested substitution produce infinitely many pairwise different sub-terms 
 $\iter(\Succ ^k(x))$ for all $k \in \N$. We need $k$ steps to normalize each $
-\iter(\Succ ^k(x))$ to $f^k(I)$, even if we allow to reduce infinitely many $\beta,
-\cond$-redexes at the same time, because our reduction will consume one $\Succ$ 
-at the time. Thus, the total time is infinite. Besides, the normal form we obtain in 
-this way not regular: it contains all terms $f^k(\iter(x))$ for $k \in \N$, hence 
-infinitely many pairwise different terms. 
+\iter(\Succ ^k(x))$ to $f^k(x)$, even if we allow to reduce infinitely many 
+$\beta, \cond$-redexes at the same time, because our reduction will consume one 
+$\Succ$  at the time. Thus, the total time is infinite. Besides, the normal form we 
+obtain in this way not regular: it contains terms $f^k(x)$ for all $k \in \N$, 
+hence infinitely many pairwise different terms. 
 %These infinite sub-terms are of a particulary simple form, though. 
 %They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
 %to the result.

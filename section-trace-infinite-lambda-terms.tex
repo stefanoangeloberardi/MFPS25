@@ -41,7 +41,8 @@ and $\Gamma \vdash t: \vec{B} \rightarrow \N$.
 The \emph{list of argument types} of $t$ is $\vec{C} = \vec{A},\vec{B}$. 
 
 \item
-$A_1, \ldots, A_n$ are the \emph{named arguments}, with names $x_1, \ldots, x_n$.
+$A_1, \ldots, A_n$ are the \emph{named arguments}, 
+ith names $x_1, \ldots, x_n$.
 
 \item
 $B_{n+1}, \ldots, B_{n+m}$ are the \emph{unnamed arguments}.
@@ -137,22 +138,31 @@ The free variable $x$ in the term $f(x)$ and in
 $\Gamma$ is connected to the free variable $x$ in $\Gamma'$, but also to the first 
 argument of $f$ to which $x$ is sent.
 \item
-The first argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected to no argument type of $t(u)$.
+The first argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected 
+to no argument type of $t(u)$.
 In this case the connection must skip the index of the first argument of $t$,
 and the argument number $k$ of $t(u)$ corresponds to the argument number 
 $k+1$ of $t$. 
+\item
+If $x^A$ has index $i$ in $\Gamma$, then $x^A$ is connected 
+to no argument type of $\lambda x^A.t$, because the $\lambda$ rule
+has assumption $\Gamma \setminus \{x^A\} \vdash \lambda x^A.t$.
+In this case the connection must skip the index $i$,
+and the argument number $k \ge i $ of $t$ 
+corresponds to the argument number $k+1$ of $ \lambda x^A.t$. 
 \item
 An opposite remark applies to the first immediate subterm $f$ of the
 term $\cond(f,g)$:  the first argument $\N$ of $\cond(f,g):\N \rightarrow A$
 correspond to no argument of $f$, and the argument number $k+1$ of 
 $\cond(f,g)$ corresponds to the argument number $k$ of $f$. 
 \end{enumerate}
-In order to define connection in these case, we have first to define an injection 
+In order to define connection in these case, we have first to define the unique
+increasing injection 
 \[
 \ins:\N,\N \rightarrow\N
 \]
-such that $k+1 \not \in \ins(k,\N)$. We set $\ins(k,x)=x+1$ if $x \ge k+1$, and 
-$\ins(k,x)=x$ if $x\le k$. 
+such that $\ins(k,\N) \N \setminus \{k\}$. 
+We set $\ins(k,x)=x$ if $x < k$ and $\ins(k,x)=x+1$ if $x \ge k$. 
 
 In the remaining cases an argument is connected to its corresponding in the 
 premise. We need some care in the case of a $\weak$-rule: the premise can
@@ -197,7 +207,8 @@ $k = \ins(n,k')$.
 If $t'=g$ then $k'=k$.
 
 \item
-We require $k = k'$ if $t = \Succ(u)$, $\lambda x.v$. 
+if $t = \Succ(u)$, $\lambda x.v$, we require $k = k'$ if $x \not \in \FV(\Gamma)$,
+and $k' = \ins(i,k)$ if $x$ has index $i$ in $\Gamma$.
 
 \item
 if $t$ is obtained by a rule $\weak$ from $t'=t$, and 
