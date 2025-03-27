@@ -5,11 +5,11 @@ $\Pi$ that the term $t$ is well-typed.
 Then we define $\GTC$ as the set of well-typed terms 
 $t \in \LAMBDA$ satisfying the global trace condition for some proof 
 $\Pi$ that the term $t$ is well-typed. 
-$\GTC$ is a set of total functionals. We use $\GTC$
+We will prove that $\GTC$ defines a set of total functionals. We use $\GTC$
 as a semantics for the set $\CTlambda$ of circular $\lambda$-terms 
 which in turn we will define as finite graphs.
 
-$\CTlambda$ will be the set of regular terms of $\GTC$. 
+$\CTlambda$ will be defined as the set of regular terms of $\GTC$. 
 $\CTlambda$ is a decidable subset of the set of well-typed graph notations.
 For the terms of $\CTlambda$ we will prove strong normalization 
 %, church-rosser for the \quotationMarks{safe} part of a term, 
@@ -21,7 +21,7 @@ As a consequence, all terms $\CTlambda$ will be interpreted as total functionals
 From the $\N$-argument connection we now define the global trace condition and 
 the set of terms $\GTC$  and $\CTlambda$.
 
-\begin{definition}[$\GTC$ and $\CTlambda$]
+\begin{definition}($\GTC$ and $\CTlambda$)
 \label{definition-global-trace-condition}
 %\mbox{}
 % \linebreak 
@@ -30,17 +30,15 @@ is a trace of a path $\pi = (t_1, \ldots, t_n, \ldots)$ of $t \in \WTyped$.
 Assume $i=m,\ldots, n$.
 \begin{enumerate}
 \item
-$\tau$ is progressing in $i$ if $t_i=\cond(f,g)$ for some $f$, $g$,
-and $k_i$ is the index of the first \emph{unnamed} argument the $\cond$-rule, 
+$\tau$ is progressing in $i$ if $t_i=\cond(f,g)$, $t_{i+1}=g$ for some $f$, $g$,
+and $k_i$ is the index of the first \emph{unnamed} argument of $t_i$, 
 otherwise $\tau$ is not progressing in $i$.
 
 \item
 $t$ satisfies the global trace condition if $t \in \WTyped$
-and for some typing proof $\Pi$,
-of $t$, for all infinite paths $\pi$ of $t$ in $\Pi$,
-there is some infinitely progressing path $\tau$ in $\pi$.
-$\GTC$ is the set of well-typed terms $t \in \LAMBDA$ 
-satisfying the global trace condition.
+and for some typing proof $\Pi$ of $t$, for all infinite paths $\pi$ of $t$ in $\Pi$,
+there is some infinitely progressing path $\tau$ in $\pi$. $\GTC$ is the set of well-
+typed terms $t \in \LAMBDA$ satisfying the global trace condition.
 
 \item
 $\CTlambda = \GTC \cap \Reg$: the cyclic $\lambda$-terms of 
@@ -51,7 +49,9 @@ and which satisfy the global trace condition.
 \end{enumerate}
 \end{definition}
 
-Global trace is decidable in polynomial space in $t$. 
+Global Trace Condition is decidable in polynomial space in $t$, 
+because it is a particular case of Neil Jones Size Change algorithm for Program 
+Termination (\cite{SCT}). 
 We believe that the global trace condition is decidable quite fast
 for realistic $\lambda$-terms. 
 
@@ -65,7 +65,7 @@ for realistic $\lambda$-terms.
 %finite.
 
 We include now some examples of  terms in $\CTlambda$, i.e., 
-of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, therefore they are almost-left-finite, and by definition of $\CTlambda$ they also are regular.
+of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, therefore they are almost-left-finite, and by definition of $\CTlambda$ they are regular.
 
 %18:05 03/06/2024
 
@@ -155,7 +155,8 @@ bottom $\golddagger$ would be $\emptyset$. Without the $\weak$-rule, the proof w
 \end{Eg}
 
 We %colored in \bfColor{oldgold}{old gold} one sequence of atoms $\goldN$:
-outlined one sequence of atoms with $\goldN$. The outlined trace is the unique 
+outlined one trace (one sequence of connected $\N$-arguments)
+with $\goldN$. The outlined trace is the unique 
 infinite trace, it is cyclic and it is infinitely progressing.
 We marked $\goldspadesuit$ the progress point of the unique infinite trace.
 The progress point is repeated infinitely many times in the unique infinite trace,
