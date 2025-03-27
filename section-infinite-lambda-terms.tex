@@ -3,36 +3,38 @@ We define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
 of well-typed terms and a reduction relation for them. They will be used to
 give a semantics for finite circular notations for $\lambda$-terms.
 Infinite terms are labeled binary trees, therefore we
-have to define binary trees first, and before them the lists on $\{1,2\}$ and more related notions.
+recall what are binary trees first.
+%, and before them the lists on $\{1,2\}$ and
+%some related notions.
+%
+%\subsection{Lists and Binary Trees}
+%
+%\begin{definition}(Lists on $\{1,2\}$)
+%\begin{enumerate}
+%\item
+%We denote with $\List(\{1,2\})$ the set of all lists on $\{1,2\}$, just lists for short.
+%\item
+%If $i_1, \ldots, i_n \in \{1,2\}$, we write $(i_1, \ldots, i_n)$
+%for the list with elements $i_1, \ldots, i_n$. 
+%\item
+%We write $\nil$ for the empty list, or $()$. 
+%\item
+%If $l=(i_1, \ldots, i_n), m=(j_1, \ldots, j_m) $ are lists
+%we define
+%$
+%l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)
+%$
+%%If $I \subseteq \List(\{1,2\})$
+%%we write $l \conc I = \{l \conc m | m \in I\}$. 
+%\item
+%The prefix order $\le$ on lists
+%is defined by $l \le m$ if and only if $m = l \conc m'$ for some $m' \in  \List(\{1,2\})$.
+%\end{enumerate}
+%\end{definition}
 
-\subsection{Lists and Binary Trees}
+Binary trees are represented by sets of lists on $\{1,2\}$.
 
-\begin{definition}[Lists on $\{1,2\}$]
-\begin{enumerate}
-\item
-We denote with $\List(\{1,2\})$ the set of all lists on $\{1,2\}$, just lists for short.
-\item
-If $i_1, \ldots, i_n \in \{1,2\}$, we write $(i_1, \ldots, i_n)$
-for the list with elements $i_1, \ldots, i_n$. 
-\item
-We write $\nil$ for the empty list, or $()$. 
-\item
-If $l=(i_1, \ldots, i_n), m=(j_1, \ldots, j_m) $ are lists
-we define
-$
-l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)
-$
-%If $I \subseteq \List(\{1,2\})$
-%we write $l \conc I = \{l \conc m | m \in I\}$. 
-\item
-The prefix order $\le$ on lists
-is defined by $l \le m$ if and only if $m = l \conc m'$ for some $m' \in  \List(\{1,2\})$.
-\end{enumerate}
-\end{definition}
-
-Binary trees are represented by set of lists on $\{1,2\}$.
-
-\begin{definition}[Binary trees]
+\begin{definition}(Binary trees)
 \begin{enumerate}
 \item 
 A binary tree, just a tree for short, is any set $T\subseteq \List(\{1,2\})$ 
@@ -78,8 +80,8 @@ Now we define our semantics for circular $\lambda$-terms,
 the set $\LAMBDA$ of infinite tree notations: first the types of $\LAMBDA$, 
 then the terms and the contexts of $\LAMBDA$.
 
-\begin{definition}[Types of $\LAMBDA$]
-\mbox{}
+\begin{definition}(Types and Variables of $\LAMBDA$)
+%\mbox{}
 \begin{enumerate}
 
 \item
@@ -96,14 +98,14 @@ of a variable name $x$ and a type $T \in \Type$.
 \end{enumerate}
 \end{definition}
 
-Terms of $\LAMBDA$ are binary trees, with each node labeled by some operation
-on $\lambda$-terms of arity $0,1,2$.
+Terms of $\LAMBDA$ are possibly infinite binary trees, with each node labeled by 
+some operation on $\lambda$-terms of arity $0,1,2$.
 
 
-\begin{definition}[Terms of $\LAMBDA$]
+\begin{definition}(Terms of $\LAMBDA$)
 The terms of $\LAMBDA$ 
-are all binary trees $t$ with set of labels $L=\{x^T, \lambda x^T., \ap, 0, \Succ, \cond\}$
-such that:
+are all binary trees $t$ with set of labels 
+$L=\{x^T, \ \lambda x^T., \ \ap, 0, \ \Succ, \ \cond\}$ such that:
 \begin{enumerate}
 \item 
 a node $l$ labeled $x^T$ or $0$ is a leaf of $t$ (\emph{no} children). 
@@ -113,23 +115,26 @@ child $l \conc (1)$.
 \item
 a node labeled $\ap$, $\cond$ has \emph{two} children $l \conc (1)$, $l \conc (2)$.
 \end{enumerate}
+As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
+
 We say that $t$ is a sub-term of $u$ if $t$ is a labeled sub-tree of $u$,
 an immediate subterm if it is an immediate sub-tree.
 \end{definition}
  
 Assume  $l \in L = \{x^T, \lambda x^T., \ap, 0, \Succ, \cond\}$.
 We  use the operation $l( \setT_1 \ldots \setT_n )$ on labeled trees to define new 
-possibly infinite terms in $\LAMBDA$. If $t, u \in \LAMBDA$ then 
+terms in $\LAMBDA$. If $t, u \in \LAMBDA$ then 
 $x^T, 0, \lambda x^T.t,\ap(t,u),\Succ(t),\cond(t,u) \in \LAMBDA$ 
-are terms with the root labeled $l$, and with immediate subterms among $t$, $u$. 
-Conversely, each $v \in \LAMBDA$ is in one of the forms:
-$x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
+are terms with the root labeled $l = x^T, \lambda x^T., \ap, 0, \Succ, \cond$, 
+respectively, and with immediate subterms among $t$, $u$. 
+Conversely, each $v \in \LAMBDA$ is in one of the forms: $x^T, 0, \lambda 
+x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
 
 Now we define the regular terms $\LAMBDA$.
 
 %11:55 22/04/2024
 
-\begin{definition}[Regular terms of $\LAMBDA$]
+\begin{definition}(Regular terms of $\LAMBDA$)
 %\mbox{}
 \begin{enumerate}
 
@@ -147,11 +152,8 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 % for all $(i+1) \le n$ we have $t_{i+1}=t_i$ or $t_{i+1} \sqsubset_1 t_i$.
 
 \item
-As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
-
-\item
 When $t = \Succ ^n(0)$ for some natural number $n \in \Nat$
-we say that $t$ is a numeral. We write $\Num$ for the set of numeral in $\LAMBDA$.
+we say that $t$ is a numeral. $\Num$ is the set of numeral.
 
 \item
 A variable $x^T$ occurs free in $t$ if there is some $l \in t$ labeled $x^T$ in $T$, 
@@ -164,15 +166,11 @@ $\FV(t)$ is the (finite or infinite) set of free variables of $t$.
 %We use two different names for the operation $\ap(t,u)$: 
 %we call it $\ap$ when $u$ is not a variable and $\apvar$ when $u$ is a variable. 
 
-$\Num$ is the representation inside $\LAMBDA$ of the set $\Nat$ of natural numbers.
-All numerals are finite trees of $\Lambda$. 
-All finite well-typed typed $\lambda$-terms 
-we can define with the rules above are finite terms of $\LAMBDA$.
-Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
-this relation defines a \emph{finite} graph with possibly cicles. Remark that 
-even if $\SubTerm(t)$ is finite, $t$ can be an infinite tree. 
-
-
+The set $\Num$ of numerals is the representation inside $\LAMBDA$ of the set 
+$\Nat$ of natural numbers. All numerals are finite trees of $\Lambda$. 
+All finite well-typed typed $\lambda$-terms that we can define with the rules above are \emph{finite} terms of $\LAMBDA$. Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
+this relation defines a \emph{finite} graph with possibly cicles. A regular
+term can be an infinite tree. 
 
 %We do not assume implicit renaming of bound variables, namely $\alpha$-equivalence
 %because the typing system (given later) does not have renaming rule as a primitive rule. 
@@ -186,30 +184,30 @@ There is a unique infinite sub-term chain, which is cyclic:
 $(t,\lambda x.t(x),t(x),t,\ldots)$. 
 \end{Eg}
 
-Regular terms have finitely many distinct variables, 
-even if each variable can occur infinitely many times,
+Regular terms have \emph{finitely many} pairwise distinct variables, 
+even if each variable can occur infinitely many times in the tree,
 like $x$ in $t$ above. Through renaming of bound variable a regular term 
 can be $\alpha$-equivalent to a non-regular infinite term 
-with infinitely many distinct bound variables: in the example above we can
+with infinitely many distinct bound variables. In the example above we can
 rename each occurrence of $\lambda x.t(x)$ in the infinite tree 
 to $\lambda x'.t(x')$, $\lambda x''.t(x'')$, \ldots, the infinite term $t'$ we obtain
 in this way has infinitely many sub-terms $x', x'', \ldots$, therefore it is not
-regular, yet is it $\alpha$-equivalent to $t$.
+regular, yet is it $\alpha$-equivalent to the regular term $t$.
 
 
 In order to define the type of an infinite term, we first 
-define contexts and sequences for any term of $\LAMBDA$.
+define contexts and typing judgements for any term of $\LAMBDA$.
 A context is a list of type assignments to parwise distinct
 variables: our variables already have a type superscript,
-so in fact a type assignment $x^T:T$ is \emph{redundant} for our variables 
-(not for our terms).
+so in fact a type assignment $x^T:T$ is a \emph{redundant information} for our 
+variables (not for our terms).
 Yet, we add an assignment relation $x^T:T$ for uniformity with the notation $x:T$ 
 in use in Type Theory, even if it not strictly required in our case.
 
 %13:32 22/04/2024
 %11:17 29/04/2024
 
-\begin{definition}[Contexts of $\LAMBDA$]
+\begin{definition}(Contexts of $\LAMBDA$)
 \label{definition-context-lambda}
 \begin{enumerate}
 
@@ -220,30 +218,32 @@ of \emph{pairwise distinct variables}, each assigned to its type superscript $A_
 
 \item
 \label{definition-context-lambda-02}
-We denote the empty context with $\nil$. We write $\Ctxt$ for the set of all contexts.
+We denote the empty context with $\nil$. 
+%We write $\Ctxt$ for the set of all contexts.
 
-\item
-\label{definition-context-lambda-03}
-A sequent is the pair of a context $\Gamma$ and a type $A$, which we write as $\Gamma \vdash A$.
-We write $\Seq = \Ctxt \times \Type$ for the set of all sequents.
+%\item
+%\label{definition-context-lambda-03}
+%A sequent is the pair of a context $\Gamma$ and a type $A$, which we write as 
+%$\Gamma \vdash A$. We write $\Seq = \Ctxt \times \Type$ for the set of all 
+%sequents.
 
 \item 
 \label{definition-context-lambda-04}
 A typing judgement is the list of a context  $\Gamma$, a term $t$ and a type $A$, 
 which we write as $\Gamma \vdash t:A$.
-%We write $\Stat = \Ctxt \times \LAMBDA \times \Type$ for the set of all typing judgements.
+%We write $\Stat = \Ctxt \times \LAMBDA \times \Type$ 
+%for the set of all typing judgements.
 
 \item
 \label{definition-context-lambda-05}
 We write $\FV(\Gamma) = \{ {x_1}^{A_1}, \ldots, {x_n}^{A_n} \}$.
-We say that $\Gamma$ is a context for $t \in \LAMBDA$ and we write $\Gamma \vdash t$ 
-if $\FV(t) \subseteq \FV(\Gamma)$.
+We say that $\Gamma$ is a context for $t \in \LAMBDA$ and we write $\Gamma 
+\vdash t$ if $\FV(t) \subseteq \FV(\Gamma)$.
 
 \item
 \label{definition-context-lambda-06}
 If $\Gamma = ({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ ,
-$\Gamma' = (x'_1:A'_1, \ldots, x'_n:A'_{n'})$ are context of $\LAMBDA$, then we write 
-$\Gamma \ \subseteqsim \ \Gamma'$ \ if for all $(x^A:A)$:  \ 
+$\Gamma' = (x'_1:A'_1, \ldots, x'_n:A'_{n'})$ are context of $\LAMBDA$, then we write $\Gamma \ \subseteqsim \ \Gamma'$ \ if for all $(x^A:A)$:  \ 
 $(x^A:A) \in \Gamma  \ \Rightarrow  \  (x^A:A)\in\Gamma'$.
 %
 %\begin{enumerate}
@@ -322,10 +322,10 @@ such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldot
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
 We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
-free variable $x$ in $t$ avoiding variable captures. We can deduce the
+free variable $x$ in $t$ while avoiding variable captures. We can deduce the
 usual equations for substitution, which we skip in this paper. In the case of regular
-terms, we can rename while preserving the finiteness of the graph denotation
-for the term.
+terms, we can rename while \emph{preserving the finiteness of the graph 
+denotation} for the term.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %IN THE CONGRESS VERSION I WOULD NOT INCLUDE THE
@@ -414,7 +414,9 @@ for the term.
 We have the following Substitution Lemma. 
 
 \begin{lemma}[Substitution lemma]\label{lem:subst}
-  $t[u/x][v/y]$ and $ t[v/y][u[v/y]/x]$ are $\alpha$-equivalent if $x\not\in\FV(v)$. 
+Assume $t, u \in \LAMBDA$ and $x$, $y$ are variables. 
+If $x\not\in\FV(v)$ then $t[u/x][v/y]$ and $ t[v/y][u[v/y]/x]$ are 
+$\alpha$-equivalent. 
 \end{lemma}
 
 
@@ -430,23 +432,27 @@ and $\apnotvar$, according if $u$ is a variable or is not a variable.
 %for the first argument of $t$. 
 %As we said, 
 We need to consider apart the case $t(x)$ of application of $t$ to a variable
-$x$, because in this case we will also check whether the first
-argument of $t$ is infinitely decreasing in any infinite computation.
-If this is the case, then no infinite computation exists. 
+$x$, because in this case we will also check, using the Global Trace Condition, 
+whether the first argument of $t$ is infinitely decreasing in any infinite 
+computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
+a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
+it helps to automatically discover more terminating functions.
 
-If $u$ is not a variable,
-then we cannot observe whether the argument of an application $t(u)$
-is infinitely decreasing in any infinite computation. However we can write
-this term in the form $(\lambda x.t(x))(u)$ for $x \not \in \FV(t)$. 
-In this case $u$ is assigned to $x$ and we can observe whether
+If $u$ is not a variable, then we cannot directly observe whether the argument of an 
+application $t(u)$ is infinitely decreasing in any infinite computation. However we 
+can write this term in the form $(\lambda x.t(x))(u)$ for $x \not \in \FV(t)$. 
+In this case $u$ is assigned to $x$ and the algorithm checking the
+Global Trace Condition and termination will decide whether
 the value of $x$ is infinitely decreasing in any infinite computation.
+Writing the term in the form $(\lambda x.t(x))(u)$ we provide a hint to the
+algorithm.
 
 Remark that we introduced a unique \emph{term notation $\ap$} for application: 
 we write $\ap(t,u)$ no matter if $u$ is a variable or not, but we we split 
 the typing rule for $\ap$ into two sub-cases, $\apvar$ for $u =$ some variable
-$x$, and $\apnotvar$ for $u$ not a variable. 
-If, say, we replace $x^N$ with $\Succ(x^N)$ then we also replace the rule
-$\apvar$ with $\apnotvar$. 
+$x$, and $\apnotvar$ for $u$ not a variable. The information included in
+$\apvar$ is easily lost: if, say, we replace $x^N$ with $\Succ(x^N)$ then we also 
+replace the rule $\apvar$ with $\apnotvar$. 
 
 %We have a single structural rule  $\struct_f$, which can be used for:
 % weakening, variable permutation and variable renaming. 
@@ -489,7 +495,7 @@ $\apvar$ with $\apnotvar$.
 
 %11:56 29/04/2024
 
-\begin{definition}[Typing rules of $\LAMBDA$]
+\begin{definition}(Typing rules of $\LAMBDA$)
 Assume $\Gamma = {x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_1$ is a context. 
 Let $p=0,1,2$.
 %$\Delta = y_1:B_1, \ldots, y_n:B_m$ are sequents of length $n$, $m$ respectively. Suppose
@@ -511,7 +517,7 @@ then $\Gamma \vdash t : A$"}.
 \end{enumerate}
 
 We list the typing rules of $\LAMBDA$: 
-the rules $\apvar$ and $\apnotvar$ are restricted.
+the rules $\apvar$ and $\apnotvar$ are particular cases of the usual rule for $\ap$.
 
 \begin{enumerate}
 \item
@@ -557,7 +563,7 @@ We abbreviate $\nil \vdash  t:A$ ($t:A$ in the empty context) with $\vdash t:A$.
 We write the set of rules of $\LAMBDA$ as
 \[
 \Rule = 
-\{r \in \Seq \cup \Seq^2 \cup \Seq^3 | r \mbox{ instance of some rule of }\LAMBDA\}
+\{r \in \Seq \cup \Seq^2 \cup \Seq^3 \ | \ r \mbox{ instance of some rule of }\LAMBDA\}
 \]
 \end{definition}
 
@@ -567,15 +573,14 @@ then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
 
 We chosed having $\weak$-rule as a primitive rule, even if $\weak$ could 
 derived from the other rules. The reason is that we use $\weak$ to preserve 
-regularity of the term: the fact that we only have finitely many distinct subterms
-and therefore we have a finite graph notation for the term.
+regularity of the term, namely, the fact that we only have finitely many distinct 
+subterms and therefore we have a finite graph notation for the term.
  
-Indeed, we use $\weak$-rule to
-remove bound variables no more in use when whenever we unfold a fixed point 
-definition. Without $\weak$-rule, we would be forced to introduce more and more
-fresh names for bound variables in order to prevent variable capture.
-Eventually we would add infinitely many fresh variable names, 
-and this would destroy the regularity of the term.
+Indeed, we use $\weak$-rule to remove bound variables no more in use when 
+whenever we unfold a fixed point definition. Without $\weak$-rule, we would be 
+forced to introduce more and more fresh names for bound variables in order to 
+prevent variable capture. Eventually we would add infinitely many fresh variable 
+names, and this would destroy the regularity of the term.
 
 We say that two rules are equal if they have the same assumptions and the same 
 conclusion.
@@ -635,16 +640,18 @@ children node under some rule $r \in \Rule$ of $\LAMBDA$.
 We ask that all leftmost branches in any sub-proof are finite, say, that no infinite 
 leftmost branch made of $\weak$-rules or of $\apnotvar$ exists. 
 The idea is that when the main operation in a programming language is application, 
-then the leftmost branch uniquely  determines the type of the term and therefore it should be finite for the term ot make sense.
+then the leftmost branch uniquely  determines the type of the term and therefore it should be finite for the term to make sense.
 %12:54 03/06/2024
 
 
 
-\begin{definition}[Well-typed term of $\LAMBDA$]
+\begin{definition}(Proofs of $\LAMBDA$)
 Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Rule$.
-Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) and $A \in \Type$.
+Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) 
+and $A \in \Type$.
 
-Then we write $\Pi: \Gamma \vdash t:A$, and we say that $\Pi$ is a proof of $\Gamma \vdash t:A$ if:
+Then we write $\Pi: \Gamma \vdash t:A$, and we say that 
+$\Pi$ is a proof of $\Gamma \vdash t:A$ if:
 
 \begin{enumerate}
 \item 
@@ -675,10 +682,12 @@ $
   }
   \]
 \item
-A path $\pi$ in a proof tree $\Pi$ is \emph{almost-leftmost} if there are only finitely many rules with two
- premises in $\pi$ such that $\pi$ does \emph{not} choose the leftmost premise.
+A path $\pi$ in a proof tree $\Pi$ is \emph{almost-leftmost} if there are only 
+finitely many rules with two premises in $\pi$ such that $\pi$ does \emph{not} 
+choose the leftmost premise.
 \item
-A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ are finite
+A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ are 
+finite
 \end{enumerate}
 
 \end{definition}
@@ -703,7 +712,7 @@ A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ a
 Eventually we define the well-typed terms of $\LAMBDA$ 
 only using almost-left-finite proofs.
 
-\begin{definition}[Well-typed term of $\LAMBDA$]
+\begin{definition}(Well-typed term of $\LAMBDA$)
 %\mbox{}
 \begin{enumerate}
 
@@ -733,8 +742,7 @@ $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
 
 Well-typed terms are closed by substitution.
 
-We prove that the type assigned to a term by an Almost-Left-Finite proof is 
-\emph{unique}: if two Almost-Left-Finite proofs $\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same possibly infinite term $t$, then $A = A'$.
+Proofs not using the $\weak$-rule are unique, because the first symbol of each sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is no more true, but we can prove that the \emph{type} assigned to a term by an Almost-Left-Finite proof is \emph{unique}: if two Almost-Left-Finite proofs $\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same $t \in \LAMBDA$, then $A = A'$.
 
 \begin{proposition}[Uniqueness of almost-left-finite proofs and types]
 If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are 
@@ -864,7 +872,7 @@ two almost-left-finite proofs then $A = A'$.
 
 %10:26 20/04/2024
 %13:49 29/04/2024
-
+%12:20 27/03/2025
 
 \subsection{Reduction Rules}
 Our goal is to provide a set of well-formed term for $\LAMBDA$ and interpret 
@@ -876,7 +884,7 @@ functionals. Our first step is to provide reduction rules for $\LAMBDA$.
 %18:14 27/03/2024
 
 
-\begin{definition}[reduction rules for $\LAMBDA$]
+\begin{definition}(Reduction Rules for $\LAMBDA$)
 Assume $a,b,f,g,t,u \in \LAMBDA$.
 \begin{enumerate}
 

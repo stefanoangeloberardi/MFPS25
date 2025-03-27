@@ -91,26 +91,16 @@
  
 
 \begin{abstract} 
-A motivation for having a circular syntax for G\"{o}del System {\em T} 
-is that terms in a circular syntax are written in fixed point style, therefore are more 
-familiar and shorter than the equivalent terms written in {\em T}, yet their 
-totality can be checked mechanically. Several circular syntax for {\em T} (that 
-is, infinite regular terms with the global trace condition)
-have been proposed,
-%, like $\CT$ by Anupam (\cite{2021-Anupam-Das}, \S 4.5, page 20), 
+Circular syntax for G\"{o}del System {\em T} has the advantage
+that terms are written in fixed point style, therefore are closer to a real
+program and shorter than the equivalent terms written in {\em T}. Yet, the 
+totality of cyclic terms can be checked mechanically. 
+Several circular syntax for {\em T} (which are infinite regular terms with the 
+global trace condition) have been proposed, for instance by D. Anupam,
 but without an explicit use of lambda-abstraction.
 In this paper, we explore the possibility of defining a circular syntax 
-directly for lambda-abstraction and simple types. %, which we call $\CTlambda$.
-%, instead of interpreting
-% $\lambda$-abstraction through combinators first, then inserting a  global trace condition afterwards.
-%A circular syntax using binders instead of combinators
-%could be more familiar for researchers working in the field of Type Theory.
-%Again for reason of simplicity of use, we drop the restriction of having finitely many variables in infinite terms, 
-%and finitely many redexes, a restriction considered in previous works on the same topic, 
-%and we explore the consequences of this choice.
-%\\
-%In $\CTlambda$ 
-We can define by simultaneous recursion 
+directly for lambda-abstraction and simple types. 
+In our syntax, we can define by simultaneous recursion 
 finitely many terms using the terms themselves as proper subterms. Each time we
 unfold the recursive definition we automatically 
 remove all variables no more in use, to prevent an infinite proliferation of names.
@@ -125,7 +115,7 @@ We prove for our calculus:
 \emph{(iii)} the existence of a limit for all infinite reductions.
 \end{abstract}
 \begin{keyword}
-  Please list keywords from your paper here, separated by commas.
+  Cyclic Proofs, Cyclic Terms, Fixed Point Definition, Lambda Calculus
 \end{keyword}
 \end{frontmatter}
 
