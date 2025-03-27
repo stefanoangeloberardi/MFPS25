@@ -31,8 +31,9 @@ To this aim, we need the notions of \emph{list of argument
 %Below is the formal definition of argument types for a term.
 
 
-\begin{definition}[List of argument types of a term]
-Assume that $\vec{A} = A_1, \ldots, A_n$, $\vec{B}=B_{n+1}, \ldots, B_{n+m}$, 
+\begin{definition}(List of argument types of a term)
+Assume that $\vec{A} = A_1, \ldots, A_n$, 
+$\vec{B}=B_{n+1}, \ldots, B_{n+m}$, 
 $\Gamma = \{\vec{x}:\vec{A}\}$,
 and $\Gamma \vdash t: \vec{B} \rightarrow \N$.
 
@@ -185,7 +186,7 @@ express the notion of connection through a formal definition.
 %in the proof that $t(u):B$ is well-typed is
 %connected to no argument type of $t(u)$.
 
-\begin{definition}[Connection in a proof of  $\LAMBDA$]
+\begin{definition}(Connection in a proof of  $\LAMBDA$)
 Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{A'} = A'_1, \ldots, A'_{n'}$,
 $\vec{B}=B_1, \ldots, B_m$, $\vec{B'}=B'_1, \ldots, B'_{m'}$,
 $\Gamma = \vec{x}:\vec{A}$,
@@ -225,10 +226,11 @@ No connection is defined for the rules $\var$, $0$.
 
 
 
-Below we include some examples. 
-We outline two $\N$-arguments which are in connection. 
+Below we include some examples. We draw two connected $\N$-arguments
+with the same color.  If we want to highlight a connection we also outline
+the $\N$-arguments.
 In the case of the rule $\apvar$, the argument we outline is 
-connected to two arguments above it.
+connected to two outlined arguments above it. 
 
 
 \begin{Eg}\label{eg:3}%\rm
@@ -245,9 +247,9 @@ We assume that $x_3$ is a variable distinct from $x_1$, $x_3$.
 \]
 \end{Eg}
 
-The first unnamed argument of $\lambda x.b$ (outlined)
-%(colored in \bfColor{oldgold}{old gold}) 
-is connected with the last variable in the premise of the rule.
+IN a $\lambda$-rule with a fresh variable,
+the first unnamed argument of $\lambda x.b$ (outlined)
+is connected with the last variable in the premise of the rule (outlined).
 
 %Remark that the last variable in the conclusion of the rule
 %is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
@@ -282,7 +284,7 @@ regular. A trace represents the movement of an input information through the
 infinite unfolding of a tree. Formally, we define a trace as a (finite or infinite) path 
 in the graph $\Graph(\Pi)$.
 
-\begin{definition}[Trace for well-typed terms in $\LAMBDA$]
+\begin{definition}(Trace for well-typed terms in $\LAMBDA$)
 Assume $\Pi$ is any typing proof of $t \in \WTyped$.
 \begin{enumerate}
 \item
