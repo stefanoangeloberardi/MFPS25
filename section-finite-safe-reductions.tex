@@ -35,7 +35,7 @@ $t[a_1/x_1,\ldots,a_n/x_n]$.
 It is enough to consider the case of $0$-safe reductions, 
 the general case will follow. 
 As we previously said, 
-we abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
+we often abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
 We have to prove that all terms in $\GTC$ are finite for safe reductions. 
 For, we define total well-typed terms by induction on the type, as in Tait's normalization proof.
 
@@ -53,7 +53,7 @@ We define \quotationMarks{$t$ is total of type $T$} by induction on $T$
 \begin{enumerate}
 \item
 Let $T$ be any atomic type: $T = \N$ or $=\alpha$ for some type variable $\alpha$.
-Then $t$ is total of type $T$ if and only if $t$ is finite for safe reductions. 
+Then $t$ is total of type $T$ if and only if $t$ is finite for $0$-safe reductions. 
 
 \item
 Let $T$ be any arrow type $A \rightarrow B$.
@@ -70,7 +70,7 @@ $t[\vec{v}]$ is total for all totals $\vec{v}:\vec{B}$.
 Let $U$ be an atomic type, $t[\vec{x}]:\vec{A}\to U$, and $\vec{x}:\vec{B}$. 
 A \emph{total assignment} of $t[\vec{x}]$ is $(\vec{v},\vec{a})$, where 
 $\vec{v}:\vec{B}$ and $\vec{a}:\vec{A}$ are total terms.
-%, and $t[\vec{v}](\vec{a})$ is total. 
+The result of the assignment is  $t[\vec{a}](\vec{v})$.
 
 \end{definition}
 
@@ -92,14 +92,13 @@ $
 
 \begin{Eg}
 If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
-If $t = \Succ(t)$ then $t \prec t$ and $\prec$ is \emph{not} well-founded on $t$:
+If $t = \Succ(t)$ then $t \prec t$ and $\prec$ is \emph{not} well-founded on $t$.
 \end{Eg}
 
-We did not prove Church-Rosser yet, 
-therefore we ignore whether all decreasing sequences of $\prec$ have the same %length. 
-However, we can prove that 
-if $t$ is a term finite for safe reductions, 
-then any $\prec$-decreasing sequence from $t$ terminates.
+We did not prove Church-Rosser yet, therefore in principle two maximal
+sequences of $\prec$ from the same term of $\CTlambda$ 
+could have a different length. However, we can prove that if $t$ is a term finite 
+for safe reductions, then any $\prec$-decreasing sequence from $t$ terminates.
 
 
 \begin{lemma}[The $\prec$-order]
@@ -150,17 +149,20 @@ $\prec$ is well-founded on total terms of type $\N$.
 %\end{proof}
 
 
-We will prove that if $t$ is not total, then we can assign total terms to  the sub-
-terms of $t$ in an infinite path of a proof $\Pi : \Gamma \vdash t: A$ in a way 
-compatible with traces.
+We will prove that if $t$ is not total, then we can assign total terms to  the 
+sub-terms of $t$ in any infinite path $\pi$ of a proof $\Pi : \Gamma \vdash t: A$ 
+in a way compatible with traces and progress points. In particular, the 
+total terms associated to any infinitely progressing trace $\tau$
+in $\pi$ will form an infinite decreasing sequence for $\prec$.
+This cannot be, therefore non-total terms cannot exists. 
 
 
-\begin{definition}[Trace-compatible Assignment]
+\begin{definition}(Trace-compatible Assignment)
 \label{definition-trace-compatible}
 Assume $\pi  = (\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_n \vdash t_n:A_n, \ldots)$ 
 is any finite or infinite branch of a typing proof $\Pi$
 and $\vec{v} = (r_1, \ldots, r_n, \ldots)$ 
-is any sequence of total assignments, where, for each $i$, $r_i=(r_{i,1},\ldots,r_{i,m_i})$ is a total assignment for $t_i$. 
+is any sequence of total assignments, where, for each $i$, $r_i=(r_{i,1},\ldots,r_{i,m_i})$ is a sequence of total terms and total assignment for $t_i$. 
 $\vec{v}$ is \emph{trace-compatible} in an index $i$ of $\pi$  
 if and only if it satisfies the following condition:
 
@@ -364,9 +366,10 @@ of integers $l_n=(e_1, \ldots, e_{n-1}) \in \universe{\Pi}$ for some $n \in \N$.
 We write $\Gamma_{n}\vdash t_{n}:A_{n} = \Label(\Pi,l_n)$ for the sequent
  labelling the node $l_n$. We want to prove that all terms of $\GTC$ are total by substitution.
 If we consider the substitution of a variable with itself 
-(a variable is a total term by \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness3}),
-we will deduce that all all terms of $\GTC$ are total, 
-hence finite for safe reductions, hence strongly normalizing for safe reductions.
+(a variable is a total term by 
+\ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}),
+we will deduce that all terms of $\GTC$ are total, 
+hence finite for safe reductions, hence strongly normalizing for $0$-safe reductions.
 \\
 
 One problem in the proof of the theorem 
@@ -1052,18 +1055,18 @@ The last point of the Corollary says that
 $\CTlambda$ is {\bf \emph{not} closed under infinite reductions}:
 the limit of any infinite reduction of any term of $\CTlambda$
 exists in $\LAMBDA$, yet it is often not in $\CTlambda$
-because it is often not regular.
+because it is often not regular. An example is the limit
+normal form of the interval map $\interval$.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %MODIFIED 11/02/2025 to make precise the infinitely progressing trace
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
-As an example, 
-consider a term $f = \lambda x^\N.\cond(x,f(\Succ x))$, which actually 
-implements the addition. $f$ is regular. $f$ has a type 
-$\N,\N\rightarrow\N$ and we trace the second argument 
-$\bfColor{red}{\N}$ of $f$. 
-The unique infinite branch of $f$ is 
+We include a simpler example $f = \lambda x^\N.\cond(x,f(\Succ x))$
+such that the limit normal form of $f(x)$ is not regular. 
+We will prove that $f$ is the unary algorithm for addition. 
+$f$ is regular. $f$ has a type $\N,\N\rightarrow\N$ and we trace the second 
+argument $\bfColor{red}{\N}$ of $f$. The unique infinite branch of $f$ is 
 $$
 f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
 \cond(x,f(\Succ x)) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
@@ -1084,7 +1087,7 @@ From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
   \reduces\cdots
   $
   
-  The limit of $f(x)$
+  The limit normal form of $f(x)$
   is $\cond(x,\cond(\Succ(x),\cond(\Succ^2(x),\cdots)))$, 
   which is \emph{not} regular,
   since it has infinitely many different subterms $x,\Succ(x),\Succ^2(x),\ldots$. 
