@@ -99,8 +99,9 @@ $\Sum$ is a regular term because it has finitely many subterms:
   \quad
    z
 \end{center}
-$\Sum$ is well-typed by the following derivation, in which we have a back edge 
-from the  $\golddagger$ in the top to the $\golddagger$ in the bottom. 
+$\Sum$ is well-typed by the following derivation. If we want a graph notation
+we add a back edge from the  $\golddagger$ in the top to the $\golddagger$ in the 
+bottom. 
 \footnote{Remark that without the $\weak$-rule, the context of the top
 $\golddagger$ would be $x^\N, y^\N$ while the context of the 
 bottom $\golddagger$ would be $\emptyset$. Without the $\weak$-rule, the proof would not be correct.}
@@ -182,7 +183,9 @@ therefore $\Sum \in \CTlambda$.
 We define a term $\Iter$ of  $\CTlambda$ computing the iteration of maps on $\N$.
 The term $\Iter$ is a normal term of type $(\N \rightarrow \N), \N,\N \rightarrow \N$ such that
 $\Iter(f,a,n)=f^n(a)$ for all numeral $n \in \Num$. 
-We have to solve the equations:
+Let $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+We have to solve the following 
+equations up to $\sim$ (existence of a common reduct) in the context $\Gamma$:
 
 \begin{enumerate}
 \item
@@ -197,11 +200,12 @@ where
 $$
 \iter = \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N
 $$ 
-is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+%is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \end{Eg}
 
 \begin{proposition}
-$\Iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
+$\iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$, 
+hence $\Iter \in \CTlambda$.
 \end{proposition}
 
 %\begin{proof}
@@ -223,12 +227,15 @@ $\Iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 %progresses once. We conclude that $\tau$ infinitely progresses.
 %\end{proof}
 
-The proof above includes a type inference from the term $\iter$ to itself.
-We draw the type inference in the picture below and we outline the unique
-infinite trace. We have a back edge from the 
+The proof of $\Gamma \vdash \iter: \N \rightarrow \N$ 
+includes a type inference from the term $\iter$ to itself.
+We draw the type inference in the picture below and we outline
+with $\goldN$ the unique infinitely progressing trace
+(the infinite traces of $f:\N \rightarrow \N$ and $a:\N$ do no progress). 
+If we want a graph notation we add a back edge from the 
 $\golddagger$ on the top to the $\golddagger$ in the bottom.
 We mark $\goldspadesuit$ the progress point, which is cyclically repeated in 
-the unique infinite trace. We abbreviate $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+the outlined infinite trace. 
 \[
 %\infer[\lambda]{ %opening: \infer[\lambda]
 %  \vdash \Iter:(\N \rightarrow \N), \N, \goldN \rightarrow \N
@@ -297,7 +304,7 @@ three argument $a,x,y:\N$ (we skip all type superscripts), such that
 \[
 \Interval(f,a,n,m) \  \sim \ [f^n(a), f^{n+1}(a), \ldots, f^{n+m}(a)] \  : \ \alpha
 \]
-for all numeral $n,m \in \Num$. We have to solve the recursive equations 
+for all numeral $n,m \in \Num$. We have to solve the recursive equations:
 \begin{center}
   $\Interval(f,a,n,0) \sim [f^n(a)]$
   \quad
@@ -363,13 +370,14 @@ $\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 
 The proof above includes a type inference from the term $\interval$ to itself.
 We draw the type inference in the figure \ref{figure-term-interval}
-and we outline with $\goldN$ the unique infinite trace. 
-If we want a graph notion, we add a back edge from the 
+and we outline with $\goldN$ the unique infinitely progressing trace. 
+If we want a graph notation, we add a back edge from the 
 top $\golddagger$ to the bottom $\golddagger$. We need the $\weak$-rule
 to remove the variables $x$, $y$ which are no more used in the top $\golddagger$
 and do not occur in the bottom $\golddagger$. 
 We mark $\goldspadesuit$ the progress point which is cyclically repeated in 
-the unique infinite trace. 
+the outlined infinite trace. 
+\\
 
 % TYPING PROOF 
 \begin{figure}
@@ -432,18 +440,27 @@ the unique infinite trace.
 \end{figure}
 %15:50 26/03/2025
 
-The term $\Interval$ is an example of how difficult is to completely normalize
-an infinite term. We have infinitely many nested $\beta$-reduction $(\lambda x. 
-\ldots)(\Succ (x))$. Suppose we remove all of them in a single step. Inside the $
-\beta$-redex number $k$ we obtain a sub-term $\iter[\Succ (x)/x]\ldots[\Succ (x)/x]
-$ (substitution repeated $k$ times). The result is $\iter[\Succ ^k(x)/x] $.
+The term $\interval$ is an example of how difficult is to completely normalize
+an infinite term. We have infinitely many nested $\beta$-reductions in
+$\interval$, one for each $\interval(\Succ (x)) \equiv (\lambda x.\ldots)(\Succ (x))$. 
+Suppose we remove all of them in a single step, producing a substitution
+$[\Succ (x)/x]$. $\beta$-redexes are nested, therefore 
+inside the $\beta$-redex number $k$ we obtain a sub-term $\iter[\Succ (x)/x]
+\ldots[\Succ (x)/x]$, with the substitution of $x$ nested $k$ times. 
+The result is $\iter[\Succ ^k(x)/x]$.
 The nested substitution produce infinitely many pairwise different sub-terms 
-$\iter(\Succ ^k(x))$ for all $k \in \N$. We need $k$ steps to normalize each $
-\iter(\Succ ^k(x))$ to $f^k(x)$, even if we allow to reduce infinitely many 
+$\iter(\Succ ^k(x))$ for all $k \in \N$. 
+We need $k$ steps to normalize each $\iter(\Succ ^k(x))$ to $f^k(x)$, 
+even if we allow to reduce infinitely many 
 $\beta, \cond$-redexes at the same time, because our reduction will consume one 
-$\Succ$  at the time. Thus, the total time is infinite. Besides, the normal form we 
-obtain in this way not regular: it contains terms $f^k(x)$ for all $k \in \N$, 
-hence infinitely many pairwise different terms. 
+$\Succ$  at the time. Thus, the total time is infinite, a limit process. 
+Besides, the normal form we obtain in this way not regular: it contains terms 
+$f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms. 
+
+For this reason we consider normalization as part of the semantics for
+our cyclic graph-notation, except for closed terms of type $\N$, 
+in this case normalization is the computation of the output.
+
 %These infinite sub-terms are of a particulary simple form, though. 
 %They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
 %to the result.

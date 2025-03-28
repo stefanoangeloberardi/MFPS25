@@ -909,6 +909,10 @@ $\reduces^{+}$ is the
 transitive closure of $\reduces$ (one or more reductions).
 
 \item
+$a \sim b$ is the existence of a common reduct: 
+$\exists c \in \LAMBDA. (a \reduces^* c) \wedge (b \reduces^* c)$.
+
+\item
 The $\cond$-depth of a node $l=(i_1, \ldots, i_n) \in t$ is the number of $1 \le h < 
 n$ such that $(i_1, \ldots, i_h)$ has label $\cond$ and $i_{h+1} = 2$: 
 the number of $\cond$ such that $l$ occurs in the right-hand-side of such $\cond$.
