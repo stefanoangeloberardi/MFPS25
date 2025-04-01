@@ -6,7 +6,7 @@ We include here all proofs for the statements of our paper.
 % introduction 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% no proofs
+% no proofs to be included
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTION 2
@@ -35,11 +35,10 @@ Then $\Pi'$ is obtained from a proof $\Pi'_1:\Gamma_1 \vdash t:A$.
 By induction hypothesis on $\Pi$ and $\Pi'_1$ we conclude that $A = A'$.
 
 \item
-Assume  $r \not = \weak$ and $r' \not = \weak$. Then both $r$ and $r'$ are the typing rule for
-the outermost constructor of $t$ and for some
-$h=0,1,2$ the proof $\Pi$ has premises $\Pi_1, \ldots, \Pi_h$
-and the proof $\Pi'$ has premises $\Pi'_1, \ldots, \Pi'_h$ (for the same $h$). 
-We distinguish one case for each constructor.
+Assume  $r \not = \weak$ and $r' \not = \weak$. Then both $r$ and $r'$ are the typing rule for the label of the root of $t$, for some
+$h=0,1,2$ the proof $\Pi$ has premises $\Pi_1, \ldots, \Pi_h$,
+and the proof $\Pi'$ has premises $\Pi'_1, \ldots, \Pi'_h$ for the same $h$. 
+We distinguish one case for each possible label of the root of $t$.
 
 \begin{enumerate}
 \item
@@ -50,22 +49,25 @@ Assume $t =0^\N$. Then $r=r'=0$-rule and $A = A' = \N$.
 
 \item
 Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1:\Gamma \vdash u: \N$
-and $\Pi_2:\Gamma' \vdash u:\N$ and $A = A' = \N$.
+and $\Pi_1:\Gamma' \vdash u:\N$ and $A = A' = \N$.
 
 \item
-Assume $t = f(u)$. Then $r=r'=\ap$-rule and $\Pi_1:\Gamma \vdash f:U \rightarrow A$
-and $\Pi_2:\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on $\Pi_1$ and
-$\Pi'_1$ we deduce that $(U \rightarrow A) = (U' \rightarrow A')$, in particular that $A = A'$.
+Assume $t = f(u)$. Then $r=r'=\apvar$-rule or $r=r'=\apnotvar$-rule .
+In both cases we have $\Pi_1:\Gamma \vdash f:U \rightarrow A$
+and $\Pi_1:\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on 
+$\Pi_1$ and $\Pi'_1$ we deduce that $(U \rightarrow A) = (U' \rightarrow A')$, 
+in particular that $A = A'$.
 
 \item
 Assume $t = \lambda x^T.b$. Then $r=r'=\lambda$-rule and 
-$\Pi_1:\Gamma \vdash b:B$
-and $\Pi_2:\Gamma' \vdash b:B'$. By induction hypothesis on $\Pi_1$ and
-$\Pi'_1$ we deduce that $B=B'$, in particular that $A = T \rightarrow B = T \rightarrow B' = A'$.
+$\Pi_1:\Gamma\setminus\{x^T\}, x^T \vdash b:B$ and 
+$\Pi'_1:\Gamma'\setminus\{x^T\}, x^T \vdash b:B'$. 
+By induction hypothesis on $\Pi_1$ and $\Pi'_1$ we deduce that $B=B'$, in particular that $A = (T \rightarrow B) = (T \rightarrow B') = A'$.
 
 \item
 Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1:\Gamma \vdash f:A$
-and $\Pi_2:\Gamma' \vdash f:A'$. By induction hypothesis on $\Pi_1$ and
+and $\Pi'_1:\Gamma' \vdash f:A'$ by definition of $\cond$-rule with conclusion
+$A$. By induction hypothesis on $\Pi_1$ and
 $\Pi'_1$ we deduce that $A = A'$.
 
 \end{enumerate}
@@ -91,23 +93,29 @@ $\Pi'_1$ we deduce that $A = A'$.
 %\end{proposition}
 
 \begin{proof}
-(The iterator map $\Iter$ is a term of $\CTlambda$, Prop. \ref{proposition-iterator-in-CT-lambda})
+(The iterator map $\Iter$ is a term of $\CTlambda$, 
+Prop. \ref{proposition-iterator-in-CT-lambda})
 The term $\Iter$ is well-typed and regular by definition. 
 We check the global trace condition. 
-\\
-We follow the unique infinite trace $\tau$ of the last unnamed argument $\N$ of $\Iter$ 
-in the unique infinite path $\pi$ of $\Iter$. 
-The trace $\tau$ moves from  $\Iter = \lambda f. \lambda a.\iter$
- to the first unnamed argument of the sub-term $\lambda a.\iter$, 
-then to $a:\N$ in the context of $\iter = \cond (a, \lambda x.f(\iter(x)))$.
-Then the infinite path $\pi$ and moves in this order to:
- $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$
-In the meanwhile, $\tau$ progresses from $\cond$ to the second argument $\lambda x.f(\iter(x))$
-of $\cond$, then moves to $x$ in the context of $f(\iter(x))$,
-then to $x$ in the context $\iter(x)$, and eventually to $x$ in the context of $\iter$.
-%10:30 24/03/24
-In this moment the infinite path $\pi$ loops from $\iter$ to $\iter$. At each loop the trace $\tau$ 
-progresses once. We conclude that $\tau$ infinitely progresses.
+
+We follow the unique infinite path $\pi$ of $\Iter$, looking for an
+infinitely progressing trace $\tau$. 
+The only way to obtain an infinite path $\pi$ is to loop
+from $\iter$ to $\iter$.
+So, $\pi$ moves from  $\Iter = \lambda f. \lambda a.\iter$
+to $\lambda a.\iter$, then to $\iter = \cond (a, \lambda x.f(\iter(x)))$.
+Then the infinite path $\pi$ moves in this order to:
+ $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$, cyclically.
+ 
+We choose the unique infinite trace $\tau$ of $\pi$ starting from the first unnamed argument of $\iter$. $\tau$, being infinite, must move
+ from $\cond$ to the second argument 
+$\lambda x.f(\iter(x))$ of $\cond$, then moves to $x$ in the context of 
+$f(\iter(x))$, then to $x$ in the context $\iter(x)$. Eventually $x$ is erased
+by a $\weak$-rule, so $\tau$ must move from $x$ 
+to the first unnamed argument of $\iter$ again, looping from $\iter$ to $\iter$. 
+At each loop the trace $\tau$ 
+progresses once. We conclude that $\tau$ is an infinitely progressing 
+trace of $\pi$.
 \end{proof}
 
 
@@ -116,21 +124,29 @@ progresses once. We conclude that $\tau$ infinitely progresses.
 %$\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 %\end{proposition}
 
-\begin{proof}
+\begin{proof}(The interval map $\Interval$ is a term of $\CTlambda$, Prop. \ref{proposition-interval-in-CT-lambda})
 The term $\Interval$ is well-typed and regular by definition. We check the global trace condition.
-Any infinite path $\pi$ either moves to $\iter$, for which we already checked the global trace condition,
-or cyclically moves from $\interval$ to $\interval$.
-We follow the unique infinite 
-trace $\tau$ of the last unnamed argument $\N$ of $\Interval$ inside this infinite path.
+Any infinite path $\pi$ either moves to $\iter$, 
+for which we already checked the global trace condition,
+or cyclically moves from $\interval; \N,\N \rightarrow \alpha$ to $\interval$
+itself. We follow the unique infinite 
+trace $\tau$ from the last unnamed argument $\N$ of $\interval$ 
+inside the infinite path $\pi$ cyclically moving from $\interval$ to $\interval$.
+%19:53 01/04/2025
 The trace $\tau$ moves to the last unnamed argument $\N$ of  
-$\interval:\N,\N \rightarrow \N$, then to the last unnamed argument of
+$\interval:\N,\N \rightarrow \alpha$, then to the last unnamed argument of
 $\cond (\ [\iter(x)],  \  \lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
 In this step $\tau$ progresses, and moves to 
 the first unnamed argument of $\lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$,
-then to $y:\N$ in the context of $\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
-After one $\apvar$ rule, the trace $\tau$ reaches the unique unnamed argument of 
-$(\lambda x.\interval)(\Succ(x))$, then the last unnamed argument $\tau$ of $\interval$. 
-From $\interval$ the trace $\tau$ loops. Each time $\tau$ moves from $\interval$ to $\interval$
+then to $y:\N$ in the context of $\iter(x) @ (\lambda x.\interval)(\Succ(x))(y))$.
+After one $\apnotvar$ rule, the trace $\tau$ reaches $y:\N$ in the context of
+$(\lambda x.\interval)(\Succ(x))(y)$.
+Then after one $\apvar$ rule, 
+the trace $\tau$ moves from $y:\N$ to the unique unnamed argument of 
+$(\lambda x.\interval)(\Succ(x))$, 
+then to the last unnamed argument of $\interval$. 
+From $\interval$ the trace $\tau$ loops. 
+Each time $\tau$ moves from $\interval$ to $\interval$
 then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 \end{proof}
 %14:27 24/04/2024
