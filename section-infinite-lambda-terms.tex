@@ -438,15 +438,6 @@ computation. If this is the case, then no infinite computation exists. $\apvar$ 
 a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
 it helps to automatically discover more terminating functions.
 
-If $u$ is not a variable, then we cannot directly observe whether the argument of an 
-application $t(u)$ is infinitely decreasing in any infinite computation. However we 
-can write this term in the form $(\lambda x.t(x))(u)$ for $x \not \in \FV(t)$. 
-In this case $u$ is assigned to $x$ and the algorithm checking the
-Global Trace Condition and termination will decide whether
-the value of $x$ is infinitely decreasing in any infinite computation.
-Writing the term in the form $(\lambda x.t(x))(u)$ we provide a hint to the
-algorithm.
-
 Remark that we introduced a unique \emph{term notation $\ap$} for application: 
 we write $\ap(t,u)$ no matter if $u$ is a variable or not, but we we split 
 the typing rule for $\ap$ into two sub-cases, $\apvar$ for $u =$ some variable

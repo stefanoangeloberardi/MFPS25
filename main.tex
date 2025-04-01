@@ -92,7 +92,7 @@
 
 \begin{abstract} 
 Circular syntax for G\"{o}del System {\em T} has the advantage
-that terms are written in fixed point style, therefore are closer to a real
+that terms are written in fixed point style, and therefore are closer to a real
 program and shorter than the equivalent terms written in {\em T}. Yet, the 
 totality of cyclic terms can be checked mechanically. 
 Several circular syntax for {\em T} (which are infinite regular terms with the 
@@ -107,7 +107,7 @@ Each time we unfold the recursive definition we automatically
 remove all variables no more in use, to prevent an infinite proliferation of names.
 We prove for our circular syntax:
 \emph{(i)}  every closed term of the type of naturals reduces to some numeral;
-\emph{(ii)}  strong normalization for all reductions sequences without reducing inside a fixed point operator; 
+\emph{(ii)}  strong normalization for all reductions sequences not reducing inside the predecessor clause for the conditional operator; 
 %A consequence of the
 % fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
 %namely Strong Normalization for all reductions and Church Rosser 
@@ -148,6 +148,7 @@ We prove for our circular syntax:
 % Section 6
 \input{section-finite-safe-reductions}
 
+\newpage
 \bibliographystyle{./entics}
 \bibliography{cyclic}
 

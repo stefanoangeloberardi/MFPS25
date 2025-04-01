@@ -475,4 +475,34 @@ in this case normalization is the computation of the output.
 
 %16:32 30/04/2024
 %22:30 03/06/2024
+\subsection{The Ackermann Function (Better Code it is Easier to Analyse)}
+The Global Trace Condition is a \quotationMarks{fragile} property: two
+terms can be trivial variant each other, can compute the function, yet
+one term can satisfy the global trace condition while the other term does not.
+As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
+  \[
+  \AckA = \lambda \redm, \bluen.\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckA(m',1)}{\lambda n'.\AckA(m',\AckA(\mathbf{\Suc{m'}},n'))}(\bluen)}(\redm)
+  \]
+and as 
+  \[
+  \AckB = \lambda \redm, \bluen.
+\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckB(m',1)}{\lambda n'.\AckB(m',\AckB(\redm,n'))}(\bluen)}(\redm)
+  \]
+The only difference between the two terms is that $\Suc{m'}$ in the first
+term becomes $\redm$ in the second term. $\AckA$ and $\AckB$ are 
+extensionally equal, because in all computations $m'$ is the predecessor of $m$. 
+However, by direct computation we find out that 
+$\AckA$ does \emph{not} satisfy the Global Trace condition, while $\AckB$ does
+satisfy it. 
 
+The reason is that the value of the term $u= \Suc{m'}$ is already stored in a 
+variable $\redm$, so we should write $\ldots (\mathbf{\Suc{m'}},n') \ldots$ in the 
+form  $\ldots (\redm,n') \ldots$, for two reasons.
+First, it is a waste of time to recompute the value of $u$ if this value is already
+stored in $x$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
+$\ldots (\Suc{m'},n') \ldots$, then we use a variable as argument,
+we add more connections and more traces
+to our term, and it is more likely that the Global Trace algorithm proves
+the Global Trace condition and therefore that the map we defined is total. 
+Replacing  $\Suc{m'}$ with $\redm$, when this replacing is sound, 
+provides better code which is easier to analyse automatically.
