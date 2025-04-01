@@ -1,5 +1,7 @@
-
-\newcommand{\xx}{\boldsymbol{x}}
+%%%%%%%%%%%%%%%
+% apparently, the next command is never used in the current version of the paper
+%\newcommand{\xx}{\boldsymbol{x}}
+%%%%%%%%%%%%%%%
 
 \section{Subject Reduction for Well-Typed Infinite Lambda Terms}
 \label{section-subject-reduction}
@@ -431,7 +433,7 @@ and also show the global trace condition is preserved by reductions.
 %%
 %
 
-\begin{lemma}\label{lem:inversion}
+\begin{lemma}(Inversion Lemma)\label{lem:inversion}
   \begin{enumerate}
   \item\label{lem:inversion1}
     If $\Pi:\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
@@ -482,6 +484,7 @@ and also show the global trace condition is preserved by reductions.
 %
 
 \begin{theorem}[Subject reduction]
+\label{theorem-subject-reduction}
   Assume that $\Pi_t:\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
   Then there exists $\Pi_u$ such that $\Pi_u:\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
 \end{theorem}
@@ -533,7 +536,8 @@ and also show the global trace condition is preserved by reductions.
 
 Using the subject reduction theorem, variable renaming is shown to be admissible in our system (it can destroy regularity, though).
 
-\begin{proposition}\label{prop:renaming}
+\begin{proposition}(Renaming)
+\label{prop:renaming}
   \begin{enumerate}
   \item\label{prop:renaming1}
     Let $\theta$ be a renaming.
