@@ -411,14 +411,23 @@ denotation} for the term.
 %\end{definition}
 %%%%%%%%%%%%%%%
 
-We have the following Substitution Lemma. 
 
-\begin{lemma}[Substitution lemma]\label{lem:subst}
-Assume $t, u \in \LAMBDA$ and $x$, $y$ are variables. 
-If $x\not\in\FV(v)$ then $t[u/x][v/y]$ and $ t[v/y][u[v/y]/x]$ are 
-$\alpha$-equivalent. 
-\end{lemma}
-
+%%%%%%%%%%%%%%%%
+% 14:47 01/04/2025
+%
+% Apparently, the Substitution Lemma is never used while
+% proving the results of our MFPS 25 paper.
+% So I crossed it out
+%%%%%%%%%%%%%%%%
+%
+%We have the following Substitution Lemma. 
+%
+%\begin{lemma}[Substitution lemma]\label{lem:subst}
+%Assume $t, u \in \LAMBDA$ and $x$, $y$ are variables. 
+%If $x\not\in\FV(v)$ then $t[u/x][v/y]$ and $ t[v/y][u[v/y]/x]$ are 
+%$\alpha$-equivalent. 
+%\end{lemma}
+%%%%%%%%%%%%%%%%
 
 \subsection{Typing Rules}
 We define typing rules for terms of $\LAMBDA$ and the subset $\WTyped$ of well-typed terms.
@@ -733,9 +742,15 @@ $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
 
 Well-typed terms are closed by substitution.
 
-Proofs not using the $\weak$-rule are unique, because the first symbol of each sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is no more true, but we can prove that the \emph{type} assigned to a term by an Almost-Left-Finite proof is \emph{unique}: if two Almost-Left-Finite proofs $\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same $t \in \LAMBDA$, then $A = A'$.
+Proofs not using the $\weak$-rule are unique, because the first symbol of each 
+sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is 
+no more true, but we can prove that the \emph{type} assigned to a term by an 
+Almost-Left-Finite proof is \emph{unique}: if two Almost-Left-Finite proofs 
+$\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same $t \in \LAMBDA$, 
+then $A = A'$.
 
 \begin{proposition}[Uniqueness of almost-left-finite proofs and types]
+\label{proposition-almost-left-finite-unique}
 If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are 
 two almost-left-finite proofs then $A = A'$.
 \end{proposition}

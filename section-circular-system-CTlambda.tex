@@ -498,11 +498,11 @@ satisfy it.
 The reason is that the value of the term $u= \Suc{m'}$ is already stored in a 
 variable $\redm$, so we should write $\ldots (\mathbf{\Suc{m'}},n') \ldots$ in the 
 form  $\ldots (\redm,n') \ldots$, for two reasons.
-First, it is a waste of time to recompute the value of $u$ if this value is already
-stored in $x$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
-$\ldots (\Suc{m'},n') \ldots$, then we use a variable as argument,
-we add more connections and more traces
-to our term, and it is more likely that the Global Trace algorithm proves
-the Global Trace condition and therefore that the map we defined is total. 
-Replacing  $\Suc{m'}$ with $\redm$, when this replacing is sound, 
-provides better code which is easier to analyse automatically.
+First, it is a waste of time to recompute the value $u= \Suc{m'}$ if this value is 
+already stored in $\redm$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
+$\ldots (\Suc{m'},n') \ldots$, then we use the variable $\redm$ as argument of our
+term. When we use a variable as argument, way we add more connections and 
+more traces to our term, and it is more likely that the Global Trace algorithm finds 
+some infinitely increasing trace and therefore proves that the map we defined is 
+total. Replacing  a term $u$ with a variable $\redm$, when this replacing is sound, 
+provides better code which is easier to prove total automatically.
