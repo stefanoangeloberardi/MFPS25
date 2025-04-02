@@ -30,6 +30,8 @@ To this aim, we need the notions of \emph{list of argument
 %
 %Below is the formal definition of argument types for a term.
 
+If $\vec{A} = A_1, \ldots, A_n$ we abbreviate 
+$A_1, \ldots, A_n \rightarrow B$ with $\vec{A} \rightarrow B$.
 
 \begin{definition}(List of argument types of a term)
 Assume that $\vec{A} = A_1, \ldots, A_n$, 
@@ -130,32 +132,45 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 
 %15:19 24/03/2025
 
+Let $\Gamma = \{\vec{x}:\vec{A}\}$.
 We define a connection between the arguments of $\Gamma \vdash t:\vec{B} 
 \rightarrow \N$ and the argument of its premise $\Gamma' \vdash t':\vec{B'} 
 \rightarrow \N$. We first list the cases requiring special care.
+
 \begin{enumerate}
+
 \item
-The free variable $x:A$ in the term $f(x)$ and in 
-$\Gamma$ is connected to the free variable $x$ in $\Gamma'$, but also to the first 
-unnamed argument of $f:A \rightarrow B$ to which $x$ is sent.
+The free variable $x:A$ in $\Gamma \vdash f(x) : B$ and in 
+$\Gamma$ is connected to the free variable $x$ in the premise
+$\Gamma \vdash f:A \rightarrow B$, but also to the argument number $n+1$, the 
+first unnamed argument of the premise, to which $x$ is sent.
+
 \item
-The first unnamed argument $A$ of $t:A \rightarrow B$ in the proof of $t(u):B$ is connected to no argument type of $t(u)$.
-In this case the connection must skip the index of the first unnamed argument of 
-$t$, and any argument number $k \ge n+1$ of $t(u)$ corresponds to the argument 
-number $k+1$ of $t$. 
+The first unnamed argument $A$ of the premise $\Gamma t:A \rightarrow B$ in the proof of $\Gamma \vdash t(u):B$ is connected to no argument type of 
+the conclusion.
+In this case the connection must skip the index $n+1$
+of the first unnamed argument of the premise, and any argument number 
+$k \ge n+1$ of the conclusion 
+corresponds to the argument number $k+1$ of the premise. 
+
 \item
-If $x^A$ has index $i$ in $\Gamma$, then $x^A$ is connected 
-to no argument type of $\lambda x^A.t$, because the $\lambda$ rule
-has assumption $\Gamma \setminus \{x^A:A\} \vdash \lambda x^A.t$.
-In this case the connection must skip the index $i$ of the premise,
-and any argument number $k \ge i $ of $t$ 
-corresponds to the argument number $k+1$ of $ \lambda x^A.t$. 
+If $x^A$ has index $i$ in the conclusion 
+$\Gamma \vdash \lambda x^A.t : A \rightarrow B$, 
+then $x^A$ is connected to no argument type of the premise, because the 
+$\lambda$-rule has premise 
+$\Gamma \setminus \{x^A:A\}, x^A:A \vdash t : B$, 
+with the old name $x^A$ removed.
+In this case the connection must skip the index $i$ of the conclusion,
+and any argument number $k \ge i+1$ of the conclusion
+corresponds to the argument number $k-1$ of the premise. 
+
 \item
-An opposite remark applies to the first immediate subterm $f$ of the
-term $\cond(f,g)$:  the first argument $\N$ of the conclusion 
-$\cond(f,g):\N \rightarrow A$ correspond to no argument of the premise for $f$, 
-and the argument number $k+1$ of $\cond(f,g)$ corresponds to the argument 
-number $k$ of the premise for $f$. 
+The first unnamed argument $\N$ of the conclusion 
+$\Gamma \vdash \cond(f,g):\N \rightarrow A$, having number $n+1$, 
+correspond to no argument of the premise $\Gamma \vdash f:A$, 
+and any argument number $k \ge n+2$ 
+of the conclusion corresponds to the argument 
+number $k-1$ of the premise for $f$. 
 \end{enumerate}
 
 In the remaining cases an argument is connected to the same argument in the 
