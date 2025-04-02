@@ -40,19 +40,23 @@ Binary trees are represented by sets of lists on $\{1,2\}$.
 A binary tree, just a tree for short, is any set $T\subseteq \List(\{1,2\})$ 
 of lists including the empty list and closed by prefix: $\nil \in T$ and for all $l, m \in \List(\{1,2\})$
 if $m \in T$ and $l \le m$ then $l \in T$. 
+
 \item
 $\nil$ is called the root of $T$, any $l \in T$ is called a node of
 $T$ and if $l \in T$, then any $l \conc (i) \in T$ is called a child of $l$ in $T$
 of index $i$.
+
 \item
 A node $l$ of $T$ is a leaf of $T$ if $l$ is an maximal element of $T$ w.r.t. the prefix order (i.e.,
 if $l$ has no children). 
+
 \item
 If $T$ is a tree and $l \in T$ we define $T \restr l = \{m \in \List(\{1,2\}) | l \conc m \in T\}$.
 $T \restr l$ is a tree and we say that $T \restr l$ is a subtree of $T$ in the node $l$,
 and for each $m \in T \restr l$ we say that $l \conc m$ is the corresponding node in $T$.
 \item
-If $l=(i)$ we say that $T_l$ is an immediate sub-tree of $T$.
+
+If $l=(i)$ we say that $T \restr l$ is an immediate sub-tree of $T$.
 \item
 A binary tree labeled on a set $L$ is any pair $\setT = (T, \phi)$ with 
 $\phi:T \rightarrow L$. We call $\universe{\setT}=T$ the set of nodes of $\setT$.
@@ -93,7 +97,7 @@ We call them simple types, just \emph{types} for short.
 $\Type$ is the set of simples types.
 
 \item
-We suppose be given a set $\var$, consisting of all pairs $x^T=(x,T)$ 
+We suppose to be given a set $\var$, consisting of all pairs $x^T=(x,T)$ 
 of a variable name $x$ and a type $T \in \Type$.
 \end{enumerate}
 \end{definition}
@@ -104,7 +108,7 @@ some operation on $\lambda$-terms of arity $0,1,2$.
 
 \begin{definition}(Terms of $\LAMBDA$)
 The terms of $\LAMBDA$ 
-are all binary trees $t$ with set of labels 
+are all labeled binary trees $t$ with set of labels 
 $L=\{x^T, \ \lambda x^T., \ \ap, 0, \ \Succ, \ \cond\}$ such that:
 \begin{enumerate}
 \item 
@@ -118,7 +122,8 @@ a node labeled $\ap$, $\cond$ has \emph{two} children $l \conc (1)$, $l \conc (2
 As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
 
 We say that $t$ is a sub-term of $u$ if $t$ is a labeled sub-tree of $u$,
-an immediate subterm if it is an immediate sub-tree.
+namely if $t =  u\lceil l$ for some $ l \in \universe{u}$.
+An immediate subterm is an immediate sub-tree.
 \end{definition}
  
 Assume  $l \in L = \{x^T, \lambda x^T., \ap, 0, \Succ, \cond\}$.
@@ -139,8 +144,10 @@ Now we define the regular terms $\LAMBDA$.
 \begin{enumerate}
 
 \item
-We write $\SubTerm(t)$ for the (finite or infinite) set of subterms of $t$. 
-Subterms are coded by the nodes of $t$, different nodes can code the same subterm. 
+We write $\SubTerm(t) = \{t \restr l | l \in \universe{t}\}$ 
+for the (finite or infinite) set of subterms of $t$. 
+Subterms are coded by the nodes $l \in \universe{t}$, 
+different nodes can code the same subterm. 
 
 \item
 $\Reg$ is the set of terms $t \in \LAMBDA$ such that $\SubTerm(t)$ is finite.
@@ -153,7 +160,7 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 
 \item
 When $t = \Succ ^n(0)$ for some natural number $n \in \Nat$
-we say that $t$ is a numeral. $\Num$ is the set of numeral.
+we say that $t$ is a numeral. $\Num$ is the set of numerals.
 
 \item
 A variable $x^T$ occurs free in $t$ if there is some $l \in t$ labeled $x^T$ in $T$, 
@@ -168,8 +175,8 @@ $\FV(t)$ is the (finite or infinite) set of free variables of $t$.
 
 The set $\Num$ of numerals is the representation inside $\LAMBDA$ of the set 
 $\Nat$ of natural numbers. All numerals are finite trees of $\Lambda$. 
-All finite well-typed typed $\lambda$-terms that we can define with the rules above are \emph{finite} terms of $\LAMBDA$. Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
-this relation defines a \emph{finite} graph with possibly cicles. A regular
+All finite well-typed $\lambda$-terms that we can define with the rules above are \emph{finite} terms of $\LAMBDA$. Regular terms can be represented by the subterm relation restricted to $\SubTerm(t)$:
+this relation defines a \emph{finite} graph with possibly cycles. A regular
 term can be an infinite tree. 
 
 %We do not assume implicit renaming of bound variables, namely $\alpha$-equivalence
@@ -177,7 +184,7 @@ term can be an infinite tree.
 
 \begin{Eg}
 \label{example-regular-infinite}
-An example of regular term which is an infinite tree: the term $t = \cond(0,\lambda^N.t(x)) \in \LAMBDA$. 
+An example of regular term which is an infinite tree: the term $t = \cond(0,\lambda x^N.t(x)) \in \LAMBDA$. 
 The set $\SubTerm(t)=\{t,0,\lambda x.t(x), x\}$ of subterms  of $t$ is finite, therefore $t$ is a regular term.
 However, $t$ is an infinite tree (it includes itself as a subtree). 
 There is a unique infinite sub-term chain, which is cyclic:
@@ -221,11 +228,11 @@ of \emph{pairwise distinct variables}, each assigned to its type superscript $A_
 We denote the empty context with $\nil$. 
 %We write $\Ctxt$ for the set of all contexts.
 
-%\item
-%\label{definition-context-lambda-03}
-%A sequent is the pair of a context $\Gamma$ and a type $A$, which we write as 
-%$\Gamma \vdash A$. We write $\Seq = \Ctxt \times \Type$ for the set of all 
-%sequents.
+\item
+\label{definition-context-lambda-03}
+A sequent is the pair of a context $\Gamma$ and a type $A$, which we write as 
+$\Gamma \vdash A$. We write $\Seq = \Ctxt \times \Type$ for the set of all 
+sequents.
 
 \item 
 \label{definition-context-lambda-04}
@@ -265,8 +272,8 @@ If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
 
 \item
 \label{definition-context-lambda-08}
-We have $\Gamma \subseteqsim \Gamma'$ if and only if
-if there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
+We define $\Gamma \subseteqsim \Gamma'$ if and only if
+there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
 such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$. We write $\phi:\Gamma \rightarrow \Gamma'$ in this case.
 
 \end{enumerate}
@@ -527,19 +534,19 @@ then $\Gamma' \vdash t : T$.
 
 \item
 $\var$-rule.
-If $x^A \in \Gamma$ then $\Gamma \vdash x^A:A$.
+If $x^A \in \FV(\Gamma)$ then $\Gamma \vdash x^A:A$.
 
 
 
 \item
 $\lambda$-rule.
-If $\Gamma\setminus \{x^A\}, x^A:A \vdash b: B$
+If $\Gamma\setminus \{x^A:A\}, x^A:A \vdash b: B$
 then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
 
 \item
 $\apvar$-rule.
 If $\Gamma \vdash f: A \rightarrow B$ then $\Gamma \vdash f(x^A) :  B$,
-provided  $(x^A:A)\in  \Gamma$.
+provided  $x^A \in \FV(\Gamma)$.
 
 \item
 $\apnotvar$-rule.
@@ -571,7 +578,7 @@ When $x^A \not \in \FV(\Gamma)$, then the $\lambda$-rule becomes:
 if $\Gamma, x^A:A \vdash b: B$
 then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
 
-We chosed having $\weak$-rule as a primitive rule, even if $\weak$ could 
+We chose having $\weak$-rule as a primitive rule, even if $\weak$ could 
 derived from the other rules. The reason is that we use $\weak$ to preserve 
 regularity of the term, namely, the fact that we only have finitely many distinct 
 subterms and therefore we have a finite graph notation for the term.
@@ -646,9 +653,9 @@ then the leftmost branch uniquely  determines the type of the term and therefore
 
 
 \begin{definition}(Proofs of $\LAMBDA$)
-Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Rule$.
-Assume $\Gamma$ is a context of $t$ (i.e, $\FV(t) \subseteq \Gamma$) 
-and $A \in \Type$.
+Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Seq$.
+Assume $\Gamma \in \Ctxt$ is a context 
+and $A \in \Type$ is a type.
 
 Then we write $\Pi: \Gamma \vdash t:A$, and we say that 
 $\Pi$ is a proof of $\Gamma \vdash t:A$ if:
