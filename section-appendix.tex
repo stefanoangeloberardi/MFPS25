@@ -169,47 +169,91 @@ We show the subject reduction for well-typed terms of $\LAMBDA$,
 and also show the global trace condition is preserved by reductions. 
 We first introduce some auxiliary notations for proofs of them.
 
-Let $X$ be a set of variables of the form $x^T$.
-We write $\Gamma_X$ for the sublist of $\Gamma$ consisting of all $x^T:T$ such that $x^T\in X$. 
-Let $\Gamma$ and $\Delta$ be contexts of $\LAMBDA$.
-The merged context $\mergeCtx{\Gamma}{\Delta}$
-is defined by $\Gamma\conc(\Delta_{\FV(\Delta)\setminus\FV(\Gamma)})$. 
+Assume $\Pi:\Gamma \vdash t:A$ is any typing proof, $\alpha$ any node of
+$\Pi$ and $\Delta \vdash u:A$ the sequent of $\alpha$ in $\Pi$. Then a variable
+$x \in \FV(\Delta)$ is local in $\Pi, \alpha$ if and only if there is some ancestor
+$\beta < \alpha$ whose sequent is some $\lambda x.v$. 
+$x$ is global if and only if $x$ is not local. $x$ is locally occurring in 
+$\Pi, \alpha$ if and only $x \in \FV(u)$.
+A substitution on $t$ only act on global variables. A trace is local if and only if all its named arguments are local, if locally occurring if and only if all its named 
+arguments are local occurring.
 
-Let $\theta$ be a renaming, and 
+We can prove that if a trace is progressing, then from the first progress point all 
+named arguments $x$ of the trace are local variables. This means that if we 
+remove all elements of a trace before the first progress point we are left with a 
+local trace, and all infinitely progressing trace have a local suffix with the same 
+progress points. Thus, $\Pi:\Gamma \vdash t:A$ satisfies the global trace 
+condition if and only if all infinite paths of $\Pi$ have some local infinitely 
+progressing trace. In fact we can ask more: all infinite paths of $\Pi$ have some 
+local and locally occurring infinitely progressing trace.
+
+%Let $X$ be a set of variables of the form $x^T$.
+%We write $\Gamma_X$ for the sublist of $\Gamma$ consisting of all $x^T:T$ such that $x^T\in X$. 
+%Let $\Gamma$ and $\Delta$ be contexts of $\LAMBDA$.
+%A merging of $\Gamma$ and $\Delta$ is any enumeration of 
+%$\FV(\Gamma) \cup \FV(\Delta)$.
+%The canonical choice $\mergeCtx{\Gamma}{\Delta}$ for the merged context 
+%is defined by $\Gamma\conc(\Delta_{\FV(\Delta)\setminus\FV(\Gamma)})$. 
+
+Let $\theta$ be any renaming, i.e., an injection $:\Var \rightarrow \Var$ with
+$\Var$ the set of all variables of $\LAMBDA$.
+Given $\theta$, we can define a correspondence between
+$\N$-arguments of  two sequents
 $S_1 = \Gamma_1\vdash t_1:\vec{B_1}\rightarrow N$
-and $S_2 = \Gamma_2[\theta]\vdash t_2[\theta]:\vec{B_2}\rightarrow N$ be sequents. 
-Let $k_1$ and $k_2$ be indexes of $N$-arguments of $t_1$ and $t_2$, respectively. 
-Then we write $(k_1,S_1) \simIndex{\theta} (k_2,S_2)$ (or $(k_1,t_1) \simIndex{\theta} (k_2,t_2)$ for short)
-if they are respectively indexes of named arguments for some $y$ and $\theta(y)$, or
-are respectively those of unnamed arguments at the same position $i$ in $\vec{B_1}$ and $\vec{B_2}$,
-namely $k_1=|\Gamma_1|+i$ and $k_2=|\Gamma_2|+i$,
-where $|\Gamma_1|$ and $|\Gamma_2|$ are the sizes of $\Gamma_1$ and $\Gamma_2$. 
+and $S_2 = \Gamma_2[\theta]\vdash t_2[\theta]:\vec{B_2}\rightarrow N$,
+as follows.
+
+Let $k_1$ and $k_2$ be indexes of $N$-arguments of $S_1$ and $S_2$, 
+respectively. 
+Then we write $(k_1,S_1) \simIndex{\theta} (k_2,S_2)$ (or $(k_1,t_1) 
+\simIndex{\theta} (k_2,t_2)$ for short)
+if $k_1$ and $k_2$ are respectively indexes of named arguments for some 
+$y \in \FV(t_1)$ 
+and $\theta(y) \in \theta(\FV(t_2))$, or
+are respectively those of unnamed arguments at the same position $i$ in $
+\vec{B_1}$ and $\vec{B_2}$,
+namely if $k_1=|\Gamma_1|+i$ and $k_2=|\Gamma_2|+i$,
+where $|\Gamma_1|$ and $|\Gamma_2|$ are the sizes of $\Gamma_1$ 
+and $\Gamma_2$. 
 Note that the index equivalent to $k_1$ is unique (if it exists), namely 
 $(k_1,t_1) \simIndex{\theta} (k_2,t_2)$ and $(k_1,t_1) \simIndex{\theta} (k'_2,t_2)$ implies $k_2=k'_2$.
-We write $(k_1,t_1) \simIndex{} (k_2,t_2)$ if $\theta$ is the identity renaming. 
+%We write $(k_1,t_1) \simIndex{} (k_2,t_2)$ if $\theta$ is the identity renaming. 
+We say that two paths $\pi_1$ and $\pi_2$
+are in correspondence in two proofs $\Pi_1$ and $\Pi_2$ of the two sequents
+$S_1$ and $S_1$ if they are equal after skipping all $\weak$-steps.
+We say that two traces $\tau_1$ in $\pi_1$ and $\tau_2$ in $\pi_2$
+are in correspondence if $\pi_1$ and $\pi_2$ are in correspondence and 
+$\tau_1$ and $\tau_2$ have the same indexes after skipping all $\weak$-steps.
+%In this paper we do not implicitly identify $\alpha$-equivalent terms,
+%in order to make simpler to state the global trace condition.
+%For this reason, 
+Proofs of this section requires some delicate treatment of variables.
 
-In this paper we do not implicitly identify $\alpha$-equivalent terms,
-in order to make simpler to state the global trace condition.
-For this reason, proofs of this section requires some delicate treatment of variables.
-
-We consider the following restricted $\lambda$ rule (called $\lambda'$) as follows:
-\begin{itemize}
-\item
-  $\lambda'$-rule.
-  If $\Gamma, x^A:A \vdash b: B$ and $\FV(\Gamma) = \FV(\lambda x.b)$, 
-  then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
-\end{itemize}
+%We consider the following restricted $\lambda$ rule (called $\lambda'$) in which 
+%the context $\Gamma$ is minimum:
+%\begin{itemize}
+%\item
+%  $\lambda'$-rule.
+%  If $\Gamma, x^A:A \vdash b: B$ and $\FV(\Gamma) = \FV(\lambda x.b)$, 
+%  then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
+%\end{itemize}
 
 The next lemma says that if $\Gamma\vdash t:A$ is provable,
-then $t:A$ can be shown in a restricted context $\Gamma_{\FV(t)}$
-even if the rule $\lambda$ is restricted to $\lambda'$. 
+then $\Delta\vdash t:A$ has a unique $\weak$-free proof whenever 
+$\FV(t) \subseteq \FV(\Delta)$.
 
-\begin{lemma}\label{lem:thinning}
-  Assume $\Pi:\Gamma\vdash t:A$.
-  Then $\Pi':\Gamma_{\FV(t)}\vdash t:A$ for some $\Pi'$ that may have instances of the rule $\lambda'$
-  and not have those of the rule $\lambda$.
-  Moreover if the global trace condition holds for $\Pi$, then it also holds for $\Pi'$. 
+\begin{lemma}[Thinning]
+  \label{lem:thinning}
+  Assume $\Pi:\Gamma\vdash t:A$ and $\FV(t) \subseteq \FV(\Delta)$.
+  Then $\Pi':\Delta \vdash t:A$ for a unique $\weak$-free
+  proof $\Pi'$.
+  
+  Moreover if the global trace condition holds for $\Pi$, 
+  then it also holds for $\Pi'$. 
 \end{lemma}
+
+%07:40 02/04/2025
+
 \begin{proof}
   First we call the following admissible rule $\lambda'\weak$:
   \begin{itemize}
