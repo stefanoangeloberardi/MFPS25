@@ -132,7 +132,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 
 %15:19 24/03/2025
 
-Let $\Gamma = \{\vec{x}:\vec{A}\}$.
+Let $\Gamma$ be a length $n$ context.
 We define a connection between the arguments of $\Gamma \vdash t:\vec{B} 
 \rightarrow \N$ and the argument of its premise $\Gamma' \vdash t':\vec{B'} 
 \rightarrow \N$. We first list the cases requiring special care.
@@ -140,37 +140,38 @@ We define a connection between the arguments of $\Gamma \vdash t:\vec{B}
 \begin{enumerate}
 
 \item
-The free variable $x:A$ in $\Gamma \vdash f(x) : B$ and in 
-$\Gamma$ is connected to the free variable $x$ in the premise
-$\Gamma \vdash f:A \rightarrow B$, but also to the argument number $n+1$, the 
-first unnamed argument of the premise, to which $x$ is sent.
-
-\item
-The first unnamed argument $A$ of the premise $\Gamma t:A \rightarrow B$ in the proof of $\Gamma \vdash t(u):B$ is connected to no argument type of 
-the conclusion.
+The first unnamed argument $A$ of the premise 
+$\Gamma \vdash t:A \rightarrow B$ in 
+the proof of $\Gamma \vdash t(u):B$ is connected to \emph{no} 
+argument type of the conclusion.
 In this case the connection must skip the index $n+1$
 of the first unnamed argument of the premise, and any argument number 
 $k \ge n+1$ of the conclusion 
-corresponds to the argument number $k+1$ of the premise. 
+corresponds to the argument number $k' = k+1$ of the premise. 
+
+\item
+In the case $u=x$, the free variable $x:A$ of index $i$ in the conclusion 
+$\Gamma \vdash f(x) : B$ is also connected to the argument number $n+1$, the 
+first unnamed argument of the premise, to which $x$ is sent.
 
 \item
 If $x^A$ has index $i$ in the conclusion 
 $\Gamma \vdash \lambda x^A.t : A \rightarrow B$, 
-then $x^A$ is connected to no argument type of the premise, because the 
+then $x^A$ is connected to \emph{no} argument type of the premise, because the 
 $\lambda$-rule has premise 
 $\Gamma \setminus \{x^A:A\}, x^A:A \vdash t : B$, 
 with the old name $x^A$ removed.
 In this case the connection must skip the index $i$ of the conclusion,
-and any argument number $k \ge i+1$ of the conclusion
-corresponds to the argument number $k-1$ of the premise. 
+and any argument number $k=k'+1 \ge i+1$ of the conclusion 
+corresponds to the argument number $k' \ge i$ of the premise. 
 
 \item
 The first unnamed argument $\N$ of the conclusion 
 $\Gamma \vdash \cond(f,g):\N \rightarrow A$, having number $n+1$, 
-correspond to no argument of the premise $\Gamma \vdash f:A$, 
-and any argument number $k \ge n+2$ 
+correspond to \emph{no} argument of the premise $\Gamma \vdash f:A$, 
+and any argument number $k = k'+1 \ge n+2$ 
 of the conclusion corresponds to the argument 
-number $k-1$ of the premise for $f$. 
+number $k' \ge n+1$ of the premise for $f$. 
 \end{enumerate}
 
 In the remaining cases an argument is connected to the same argument in the 
@@ -223,27 +224,28 @@ if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and 
 then $k' = \ins(n+1,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
 
 \item
-if $t=\cond(f,g)$ and $t'=f$ then $k = \ins(n+1,k')$. 
+if $t=\cond(f,g)$ is obtained by a rule $\cond$ and $t'=f$ then $k = \ins(n+1,k')$. 
 If $t'=g$ then $k'=k$.
 
 \item
-if $t = \Succ(u)$, $\lambda x.v$, we require $k = k'$ if $x \not \in \FV(\Gamma)$,
-and $k' = \ins(i,k)$ if $x$ has index $i$ in $\Gamma$.
+if $t = \Succ(u)$ is obtained by a rule $\Succ$ then $k = k'$.
 
 \item
-if $t$ is obtained by a rule $\weak$ from $t'=t$, and 
-$\phi:\Gamma \rightarrow \Gamma'$ then $k = \phi(k')$ if $k \le n$
-and $k' = k - n + n'$ if $k \ge n+1$.
+if $\lambda x.v$ is obtained by a rule $\lambda$, then $k = k'$ if 
+$x \not \in \FV(\Gamma)$, and $k = \ins(i,k')$ if $x$ has index $i$ in $\Gamma$.
 
+\item
+If $t$ is obtained by a rule $\weak$ from $t'=t$, and 
+$\phi:\Gamma \rightarrow \Gamma'$ then we require $k = \phi(k')$ if $k \le n$
+and $k' = k - n + n'$ if $k \ge n+1$.
 \end{enumerate}
 No connection is defined for the rules $\var$, $0$.
 \end{definition}
 
-
-
 Below we include some examples. We draw two connected $\N$-arguments
 with the same color.  If we want to highlight a connection we also outline
-the $\N$-arguments.
+the $\N$-arguments. Occurrences of $\N$ in different color or outlined denote
+the same type, colors denote traces.
 In the case of the rule $\apvar$, the argument we outline is 
 connected to two outlined arguments above it. 
 
@@ -313,7 +315,8 @@ $\tau =( (k_m,t_m), \ldots, (k_n,t_n), \ldots)$ such that for all $i=m,\ldots, n
 \item
 $k_i$ is an index of some $\N$-argument of $t_i$
 \item
-if $i+1$ is an index of $\tau$ then $(k_{i+1},t_{i+1})$ is connected with $(k_i, t_i)$ in $\Pi$.
+if $i$ and $i+1$ are indexes of $\tau$ then $(k_{i+1},t_{i+1})$ 
+is connected with $(k_i, t_i)$ in $\Pi$.
 \end{enumerate}
 
 \end{enumerate}

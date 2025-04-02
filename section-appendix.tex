@@ -173,10 +173,11 @@ Assume $\Pi:\Gamma \vdash t:A$ is any typing proof, $\alpha$ any node of
 $\Pi$ and $\Delta \vdash u:A$ the sequent of $\alpha$ in $\Pi$. Then a variable
 $x \in \FV(\Delta)$ is local in $\Pi, \alpha$ if and only if there is some ancestor
 $\beta < \alpha$ whose sequent is some $\lambda x.v$. 
-$x$ is global if and only if $x$ is not local. $x$ is locally occurring in 
+$x$ is global if and only if $x$ is not local. $x$ is effectively occurring in 
 $\Pi, \alpha$ if and only $x \in \FV(u)$.
-A substitution on $t$ only act on global variables. A trace is local if and only if all its named arguments are local, if locally occurring if and only if all its named 
-arguments are local occurring.
+A substitution on $t$ only act on global variables. A trace is local if and only if all 
+its named arguments are local, it is effectively occurring if and only if all its 
+named arguments are effectively occurring.
 
 We can prove that if a trace is progressing, then from the first progress point all 
 named arguments $x$ of the trace are local variables. This means that if we 
@@ -185,7 +186,7 @@ local trace, and all infinitely progressing trace have a local suffix with the s
 progress points. Thus, $\Pi:\Gamma \vdash t:A$ satisfies the global trace 
 condition if and only if all infinite paths of $\Pi$ have some local infinitely 
 progressing trace. In fact we can ask more: all infinite paths of $\Pi$ have some 
-local and locally occurring infinitely progressing trace.
+local and effectively occurring infinitely progressing trace.
 
 %Let $X$ be a set of variables of the form $x^T$.
 %We write $\Gamma_X$ for the sublist of $\Gamma$ consisting of all $x^T:T$ such that $x^T\in X$. 

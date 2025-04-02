@@ -277,6 +277,8 @@ there is a (unique) map $\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
 such that $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$. We write $\phi:\Gamma \rightarrow \Gamma'$ in this case.
 
 \end{enumerate}
+As usual, we informally write a sequent $(\Gamma, A)$ for $t$
+in the form $\Gamma \vdash t:A$.
 \end{definition}
 
 
@@ -653,7 +655,7 @@ then the leftmost branch uniquely  determines the type of the term and therefore
 
 
 \begin{definition}(Proofs of $\LAMBDA$)
-Assume $\Pi=(T,\phi)$ is a binary tree labeled on $\Seq$.
+Assume $\Pi=(T,\phi \times \psi)$ is a binary tree labeled on $\Seq \times \Rule$.
 Assume $\Gamma \in \Ctxt$ is a context 
 and $A \in \Type$ is a type.
 
@@ -676,7 +678,7 @@ $
 \phi(l \conc (p)) = \Delta_p \vdash u_p: B_p
 $
   \end{enumerate}
-  Then for some rule $r \in \Rule$ of $\LAMBDA$ we have
+  Then for some rule $r = \psi(l) \in \Rule$ of $\LAMBDA$ we have
   \[
   \infer[r]{
     \Delta \prove u : B
