@@ -244,11 +244,7 @@ Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
 
   \item
 \label{lem:total_value-finiteness2bis}
-    $x^T:T$ is total.
-
- \item
-\label{lem:total_value-finiteness2ter}
-  If $t$ is total then $t$ is  finite for safe reductions.
+    $x^T:T$ is total. If $t:T$ is total, then $t$ is  finite for safe reductions.
 
   \item
 \label{lem:total_value-finiteness3}
@@ -399,7 +395,7 @@ Define a binary relation $R \subseteq \LAMBDA \times \LAMBDA$ by:
 $t R u$ if and only if there are $v,a,b \in \LAMBDA$ and a variable $x$
 such that:
 \begin{center}
-$(b \reduces^{*} a)$
+$(b \reduces^{+} a)$
   \ \ \  and  \ \ \ 
 $(t = v[a/x])$
   \ \ \  and  \ \ \ 
@@ -1122,7 +1118,7 @@ in a topology: finiteness of a notation (which in our case is expressed by
 \subsection
 {Closed Safe-Normal terms of $\CTlambda$ of type $\N$ are Numeral}
 This property is not straightforward. 
-There are closed normal terms of $\N$ in $\LAMBDA$, 
+There are closed normal terms of $\N$ in $\LAMBDA \setminus \CTlambda$, 
 even regular terms, which are not numerals.
 An example is $t = \cond(0, \lambda x^N.1)(t)$ 
 (\cite{2021-Anupam-Das}, Remark 44, page 33). 
@@ -1134,11 +1130,13 @@ Remark that $t$ is regular: the subterms of $t$ are
 $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
 However, $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
 Indeed, the rightmost path of $t$ is an infinite path $t,t,t,t,\ldots$, 
-never crossing a $\cond$,
+never moving to the right-hand-side of a $\cond$,
 and therefore never progressing.
 
 We check that instead safe-normalization on closed terms of 
-$\GTC$ of type $\N$ produce a numeral. 
+$\GTC$ of type $\N$ produces a numeral. For reason of efficiency,
+we precise that safe-normalization can be done only contracting 
+\emph{closed} redexes: {\bf no renaming is required}.
 As an intermediate step in this proof we need the notion of \quotationMarks{sound} term.
 
 \begin{definition}[Sound terms]
@@ -1147,7 +1145,7 @@ A term $t \in \CTlambda$ is sound if at least one of the following conditions ho
 \item
 $t$ is open
 \item
-$t$ has some $0$-safe redex
+$t$ has some $0$-safe \emph{closed} redex
 \item
 $t=\lambda x.u$ or 
 $t = \cond(f,g)$ for some $u$, $f$, $g$ and $t$ has an arrow type
@@ -1157,6 +1155,7 @@ $t$ is a numeral
 \end{definition}
 
 \begin{proposition}[Closed Safe-Normal terms of Type $\N$]
+\label{proposition-closed-safe-normal-term-N}
 \begin{enumerate}
 \item
 All $t \in \GTC$ are sound

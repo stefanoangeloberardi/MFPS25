@@ -196,6 +196,11 @@ local and effectively occurring infinitely progressing trace.
 %The canonical choice $\mergeCtx{\Gamma}{\Delta}$ for the merged context 
 %is defined by $\Gamma\conc(\Delta_{\FV(\Delta)\setminus\FV(\Gamma)})$. 
 
+Substitution requires renaming in order to avoid variable capture.
+In the case of regular
+terms, we can rename while \emph{preserving the finiteness of the graph 
+denotation} for the term.
+
 Let $\theta$ be any renaming, i.e., an injection $:\Var \rightarrow \Var$ with
 $\Var$ the set of all variables of $\LAMBDA$.
 Given $\theta$, we can define a correspondence between
@@ -794,12 +799,18 @@ Using the subject reduction theorem, variable renaming is shown to be admissible
 %\end{enumerate}
 %\end{lemma}
 
+%%%%%%%%%%%%%%%%%%%
+% checked 10:30 03/04/2025
+%%%%%%%%%%%%%%%%%%%
 
-\begin{proof}(The $\prec$-order, Lemma ref{lemma-prec-order})
+\begin{proof}(The $\prec$-order, Lemma \ref{lemma-prec-order})
+Assume that $t \in \WTyped$ has type $\N$, and $t$ is finite for safe reductions.
 \begin{enumerate}
-\item
+\item 
 %\label{lemma-prec-order-01}
-Assume that there is such $\sigma$ to show a contradiction. Since $t$ is finite for safe-reductions, 
+Assume that there is some infinite sequence 
+$\sigma: t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$ 
+to show a contradiction. Since $t$ is finite for safe-reductions, 
 $\sigma$ only has finitely many safe-reductions. 
 Thus, from some $k\in\N$ there are no more safe reductions from
 $\Succ^k(t_k)$. This implies that for some $\cond$-free term 
@@ -817,10 +828,10 @@ the number of symbols in $u$.
 \item
 %\label{lemma-prec-order-02}
 Assume for contradiction that there is some infinite sequence
-$\ldots t_n \prec \ldots \prec t_2 \prec t_1 \prec t_0$
-from some $t_0:\N$ total. By definition, $t_0$ is finite for safe reductions.
+$\ldots t_n \prec \ldots \prec t_2 \prec t_1 \prec t_0 = t$
+from some $t_0:\N$ total. By assumption, $t_0$ is finite for safe reductions.
 Then there is some infinite sequence 
-$\sigma: t = u_0 \reduces^{*} \Succ(u_1) \reduces^{*} \Succ^2(u_2) \reduces^{*} \ldots$,
+$\sigma: t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$,
 contradicting point \ref{lemma-prec-order-01} above.
 \end{enumerate}
 \end{proof}
@@ -830,7 +841,8 @@ contradicting point \ref{lemma-prec-order-01} above.
 
 %\begin{proposition}[Trace assignment]
 %\label{prop:trace_assign-finiteness}
-%Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ for which we have
+%Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ 
+%for which we have
 %some \emph{total} trace-compatible assignment  $\rho$ to $\pi$. 
 %\begin{enumerate}
 %\item
@@ -846,21 +858,33 @@ contradicting point \ref{lemma-prec-order-01} above.
 
 \begin{proof}(Trace assignment, Prop.
 \ref{prop:trace_assign-finiteness})
+%%%%%%%%%%%%%%%%%%%
+% checked 11:04 03/04/2025
+%%%%%%%%%%%%%%%%%%%
+Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ for which we 
+have some \emph{total} trace-compatible assignment  $\rho(\cdot,\cdot)$ to $\pi$.
 \begin{enumerate}
 \item
 %\label{prop:trace_assign-finiteness1}
-By definition of trace-compatible assignment, if at step $i \in \N$ the trace $\sigma$ progresses, 
-then $\sigma(i+1)\prec \sigma(i)$, and if $\sigma$ does not progress, 
-then $\sigma(i+1) = \sigma(i)$
-The assignment is made of total terms, therefore
- $\prec$ is well-founded by lemma \ref{lemma-prec-order}.\ref{lemma-prec-order-02}.
-Thus, any  trace in $\pi$ progresses only finitely many times, as we wished to show.
+Assume $\sigma$ is any trace of $\pi$ in order to prove
+that $\sigma$ progresses only finitely many times.
+Suppose at step $i \in \N$ the trace $\sigma$ moves from the argument number 
+$\sigma(i)$ to the argument number $\sigma(i+1)$.
+By definition of trace-compatible assignment $\rho$, if $\sigma$ progresses at step $i$
+then $\rho(i+1,\sigma(i+1))\prec \rho(i,\sigma(i))$, and if $\sigma$ 
+does not progress at step $i$,  then  $\rho(i+1,\sigma(i+1)) = \rho(i,\sigma(i))$
+The assignment $\rho$ is made of total terms of type $\N$.
+By definition of total for type $\N$, each $\rho(i,\sigma(i))$ is finite for safe reductions. 
+$\prec$ is well-founded on such terms
+by lemma \ref{lemma-prec-order}.\ref{lemma-prec-order-02}.
+Thus, we have $\rho(i+1,\sigma(i+1))\prec \rho(i,\sigma(i))$ only finitely many times, 
+therefore $\sigma$ progresses only finitely many times, as we wished to show.
 
 \item
 %\label{prop:trace_assign-finiteness2}
 By point \ref{prop:trace_assign-finiteness1} above, no trace $\sigma$ 
-from any argument in any term of the branch $\pi$ of $\Tree(t)$ progresses infinitely many times.
-We assumed that $\pi$ is an infinite path in $\Pi$.
+from any argument in any term of the branch $\pi$ of $\Tree(t)$ progresses infinitely many 
+times. We assumed that $\pi$ is an infinite path in $\Pi$.
 By definition of $\GTC$, we conclude that $t \not \in \GTC$. 
 \end{enumerate}
 \end{proof}
@@ -899,15 +923,18 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 %
 %\end{lemma}
 
-\begin{proof}(Total terms and Finiteness for Safe Reductions, Lemma \label{lem:total_value-finiteness})
+\begin{proof}(Total terms and Finiteness for Safe Reductions, 
+Lemma \ref{lem:total_value-finiteness})
 \begin{enumerate}
-
+%%%%%%%%%%%%%%%%%%%%%
+% checked 11:49 03/04/2025
+%%%%%%%%%%%%%%%%%%%%%
 \item
 %\label{lem:total_value-finiteness1}
-  We show \emph{point \ref{lem:total_value-finiteness1}}  by induction on $A$. 
+  We show \emph{point \ref{lem:total_value-finiteness1}}  by induction on the type $A$ of $t$. 
   We assume that $t:A$ and $t \reduces ^*u$.
-    and $t$ is total, in order to prove that $u$ is total.
- By the subject reduction property, $u$ has type $A$.
+  and $t$ is total, in order to prove that $u$ is total.
+  By the subject reduction property, $u$ has type $A$.
 \begin{enumerate}
 \item
   We show the \emph{base case}, namely when $A =\N,\alpha$ is an atomic type.
@@ -919,13 +946,16 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
   passing through $u$ only include finitely many safe reductions. We conclude that
   all infinite reductions 
   $\sigma': u \reduces u_1 \reduces u_2 \ldots$  from $u$
-  only include finitely many safe reductions. From $u:A =\N,\alpha$ we conclude that  $u$ is total.
+  only include finitely many safe reductions. 
+  From $u:A =\N,\alpha$ we conclude that  $u$ is total.
+  
 \item
   We show the \emph{induction case}, namely when $A = (A_1\rightarrow A_2)$.
   Take any arbitrary total term $a:A_1$ in order to prove that $u(a):A_2$ is total. 
   Then we have $t(a) \reduces^{*} u(a)$ and 
   $t(a):A_2$ is total by the assumption that $t$ is total.
-  Hence $u(a)$ is total by $t(a) \reduces^{*} u(a)$ and the induction hypothesis on $A_2$. 
+  Hence $u(a)$ is total by $t(a) \reduces^{*} u(a)$ and the induction hypothesis on $A_2$,
+  for all total terms $a:A_1$. 
   We conclude that $u:A_1\rightarrow A_2$ is total. 
 \end{enumerate}
 
@@ -935,34 +965,44 @@ If $f:A \rightarrow B$, $a:A$ are total  terms, then $f(a)$  is total by definit
 
 \item
 %\label{lem:total_value-finiteness3}
-We prove that $x^T:T$ is total. 
-We actually prove a little more, 
-that for all total $\vec{a}:\vec{A}$, if $T = \vec{A} \rightarrow U$ then $x(\vec{a}):U$
-is total. The thesis follows if we take $\vec{a} = \nil$. We argue by induction on $U$. 
+We prove that $x^T:T$ is total and that 
+if $t:T$ is total then $t$ is finite for safe reductions.
+We argue by principal induction on $T$.
 
 \begin{enumerate}
 \item
-Assume $U$ is atomic. Then every reduction on $x(\vec{a}):U$
+In order to prove that $x^T:T$ is total we prove a little more, namely
+that for all types $\vec{A} = A_1, \ldots, A_n$, 
+all total $\vec{a}:\vec{A}$, if $T = \vec{A} \rightarrow U$ then $x(\vec{a}):U$
+is total. The thesis will follows by taking $\vec{a} = \nil$. 
+We argue by secondary induction on $U$. 
+
+\begin{enumerate}
+\item
+Assume $U$ is atomic. Every reduction on $x(\vec{a}):U$
 takes place in $\vec{a}$. By definition of total
 for an atomic type we have to prove that in all infinite reduction sequences from $x(\vec{a}):U$ 
-there are only finitely many safe reduction. All reductions on $x(\vec{a})$ take place on $\vec{a}$,
-and since each $a_i$ in $\vec{a}$ is total only finitely many safe reductions are possible, as we wished.
+there are only finitely many safe reduction. 
+Since each $a_i$ in $\vec{a}$ is total, by principal induction hypothesis on $A_i$ 
+only finitely many safe reductions are possible from $a_i$. 
+All reductions on $x(\vec{a})$ take place on $\vec{a}$, therefore
+only finitely many safe reductions are possible. 
 \item
 Assume $U = A_1 \to A_2$. By definition of total
 for an arrow type we have to prove that for all total $a$ we have  $x(\vec{a},a):A_2$ total.
-This follows by induction hypothesis on $A_2$.
+This follows by secondary induction hypothesis on $A_2$.
 \end{enumerate}
 
 \item
 %\label{lem:total_value-finiteness4}
-\emph{We assume that  $t:U$ is total in order to prove that $t$ is finite for safe reductions},
+\emph{We assume that  $t:T$ is total in order to prove that $t$ is finite for safe reductions},
 for all $n \in \N$.
-We argue by induction on $U$.
 \begin{enumerate}
 \item
-If $U$ is atomic then the thesis is true by definition of total.
+If $T$ is atomic then the thesis is true by definition of total.
 \item
-Suppose $U = (A_1 \rightarrow A_2)$. By point \ref{lem:total_value-finiteness3} above, 
+Suppose $T = (A_1 \rightarrow A_2)$. By principal induction hypothesis on $A_1$,
+the variable 
 $x^{A_1}:A_1$ is total, therefore $t(x):A_2$ is total and by induction hypothesis on $A_2$
 any infinite reduction sequence from $t(x)$ only includes finitely many safe reductions. 
 Any infinite reduction sequence 
@@ -972,14 +1012,20 @@ $\tau: t(x) = t_0(x) \reduces_1 t_1(x) \reduces_1 t_2(x) \reduces_1 \ldots$ from
 while preserving the fact that a reduction is safe, because $t$ occurs in no $\cond$ in $t(x)$.
 We conclude that $\sigma$ only includes finitely many safe reductions. 
 \end{enumerate}
+\end{enumerate}
 
 \item  
 %\label{lem:total_value-finiteness5}
-We show that $t[\vec{u}]$ is total by induction on the number $|\vec{A}|$ of
-elements of $\vec{A}$.
+Assume $U=\N, \alpha$ is any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow U$ is a term
+whose all free variables are $\vec{x}:\vec{B}$.
+Assume that for all total $\vec{u}:\vec{B}$, $\vec{a}:\vec{A}$ the term 
+$t[\vec{u}]\vec{a}: U$ is \emph{finite for safe reductions}. We have to prove that
+$t[\vec{x}]$ is \emph{total by substitution}.
+We assume that  $\vec{u}:\vec{B}$ and we have to prove that $t[\vec{u}]$ is total.
+We argue by induction on the number $|\vec{A}|$ of elements of $\vec{A}$.
 \begin{enumerate}
 \item
-  The \emph{base case} $|\vec{A}| = 0$ is immediately shown by the assumption.
+  In the \emph{base case} $|\vec{A}| = 0$, the thesis $t[\vec{u}]$ is equal to the assumption.
 \item
   We show the \emph{induction case}. Let $\vec{A} = A_0,\vec{A'}$.
   Take arbitrary totals $\vec{u}:\vec{B}$, $\vec{a'}:\vec{A'}$, and $a_0:A_0$. 
@@ -990,7 +1036,6 @@ elements of $\vec{A}$.
   By definition of total we deduce that $t[\vec{u}] : A_0,\vec{A'}\rightarrow U$ is total.
 \end{enumerate}
 We conclude that $t[\vec{x}]$ is total by substitution, as we wished to show.
-
 \end{enumerate}
 \end{proof}
 
@@ -1022,7 +1067,9 @@ We conclude that $t[\vec{x}]$ is total by substitution, as we wished to show.
 %\end{enumerate}
 %\end{lemma}
 
-\begin{proof}(Safety-preserving Simulation, Lemma \ref{lemma-safety-preserving-simulation})
+\begin{proof}(Safety-preserving Simulation, 
+Lemma \ref{lemma-safety-preserving-simulation})
+Let $R$ as in Lemma \ref{lemma-safety-preserving-simulation}.
 Assume that $t \in \LAMBDA$, $u \in \LAMBDA$, $t' \in \LAMBDA$
 and $t R u$ and $t \reduces   t'$. 
 We have to prove that for some $u' \in \LAMBDA$ 
@@ -1031,7 +1078,7 @@ if $t \reduces   t'$ is safe then some step in
 $u \reduces^{+} u'$ is safe, too.
 \\
 
-The assumption $t R u$ unfolds to: for some $a, b,w  \subseteq \LAMBDA$,
+The assumption $t R u$ unfolds to: for some $a, b,w  \in \LAMBDA$,
 some variable $y$, 
 we have $(b \reduces^{+} a)$ and $(t = w[a/y])$ and $(u = w[b/y])$.
 By renaming $y$ in $v$ with some variable $x \not \in \FV(w,a,b)$ 
@@ -1041,7 +1088,7 @@ $(t = v[a/x])$ and $(u = v[b/x])$ and
 $x \not \in \FV(a,b)$.
 \\
 
-The assumption $t \reduces   t'$ implies that for some unique redex 
+The assumption $t \reduces t'$ implies that for some unique redex 
 $r \sqsubseteq t$, for some context $C[\cdot]$
 we have $t = C[r]$ and $t' = C[r']$ and $r \reduces r'$. 
 The possible shapes of $r$
@@ -1059,6 +1106,9 @@ Either $\pi$ is some position of $v$ or it is not.
 \begin{enumerate}
 
 \item
+%%%%%%%%%%%%%%%%%%%%%%%
+% checked 12:08 03/04/2025
+%%%%%%%%%%%%%%%%%%%%%%%
 \emph{Assume that $\pi$ is \emph{not} the position of a node of $v$}. 
 Then there is some free occurrence of $x$ in $v$, with position $\theta$, 
 such that $\pi \ge \theta$. Assume $z$ is the term obtained by replacing this
@@ -1603,35 +1653,55 @@ and a trace-compatible assignment, as we wished to show.
 %\end{enumerate}
 %\end{proposition}
 
-\begin{proof}(Closed Safe-Normal terms of Type $\N$, Prop. \ref{proposition-closed-safe-normal-term-N})
+
+\begin{proof}(Closed Safe-Normal terms of Type $\N$, 
+Prop. \ref{proposition-closed-safe-normal-term-N})
+%%%%%%%%%%%%%%%%%%%%%
+% checked 09:56 03/04/2025
+%%%%%%%%%%%%%%%%%%%%%
 \begin{enumerate}
 \item
 We assume that $t \in \GTC$ in order to prove that $t$ is sound.
-We argue by  induction on the size of the $0$-safe level of $t$: this size is finite because $t \in \GTC$. 
+We argue by  induction on the size of the $0$-safe level of $t$ (the set of $0$-safe subterms
+of $t$): this size is finite because $t \in \GTC$. 
 We consider one case for each possible first symbol of $t$.
 
 \begin{enumerate}
 \item
 $t =x$. Then $t$ is open.
+
 \item
 $t=0$. Then $t$ is a numeral.
+
 \item
-$t = \Succ(u)$. Then $u:\N$ and $u$ has a smaller $0$-safe level, therefore $u$ is sound. If $u$ is open then
-$t$ is open, if $u$ has a $0$-safe redex then so does $t$, $u$ cannot have an arrow type, and if $u$
+$t = \Succ(u)$. Then $u:\N$ and $u$ has a smaller $0$-safe level, therefore $u$ is sound. 
+If $u$ is open then $t$ is open. If $u$ has a $0$-safe \emph{closed} 
+redex then so does $t$. $u$ cannot have an arrow type. If $u$
 is a numeral then $t$ is a numeral.
+
 \item
-$t=u(v)$. Then $u:A \rightarrow B$, $u:A$ and $u$, $v$ have a smaller $0$-safe level, therefore $u$,
-$v$ are sound. 
-
+$t=u(v)$. Then $u:A \rightarrow B$, $u:A$ for some types $A, B$, 
+and $u$, $v$ have a smaller $0$-safe level, therefore $u$, $v$ are both sound. 
+We argue by cases on the definition of sound for $u$, $v$.
+\begin{enumerate}
+\item
 If $u$ or $v$ are open then $t$ is open. 
-
-If $u$ or $v$ have a $0$-safe redex then so does $t$.
-
-Suppose $u = \lambda x.v, \cond(f,g)$. If $u = \lambda x.v$ then $t=u(v)$ is a $0$-safe $\beta$-redex.
-If $u = \cond(f,g)$ then $A = \N$ and $v:\N$. $v$ is not open nor has a a $0$-safe redex, and $v$ has no
-arrow type. The only possibility left is that $v$ is a numeral: we conclude that $t=\cond(f,g)(v)$ is a $\cond$-redex, therefore $t$ is sound.
-
-The only possibility left for $u$ is that it is a numeral. But this cannot be, because $u$ has an arrow type.
+Now assume that $u$ and $v$ are both closed, therefore $t$ is closed.
+\item
+If $u$ or $v$ have a $0$-safe \emph{closed} redex, then so does $t$.
+Now assume that $u$ and $v$ have no $0$-safe \emph{closed} redex.
+\item
+Suppose $u = \lambda x.v, \cond(f,g)$. 
+If $u = \lambda x.v$ then $t=u(v)$ is a $0$-safe $\beta$-redex and $t$ is \emph{closed}.
+If $u = \cond(f,g)$ then $A = \N$ and $v:\N$. 
+$v$ is not open nor has a a $0$-safe \emph{closed} redex, and $v$ has no arrow type. 
+The only possibility left is that $v$ is a numeral: 
+we conclude that $t=\cond(f,g)(v)$ is a $\cond$-redex and $t$ is \emph{closed},
+therefore $t$ is sound.
+\item
+The only possibility left is that $u$ is a numeral. 
+But this cannot be, because $u$ has an arrow type.
+\end{enumerate}
 
 \item
 $t = \lambda x.u$. Then $t$ is sound.

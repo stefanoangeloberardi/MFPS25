@@ -331,10 +331,13 @@ in the form $\Gamma \vdash t:A$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
 We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
-free variable $x$ in $t$ while avoiding variable captures. We can deduce the
-usual equations for substitution, which we skip in this paper. In the case of regular
-terms, we can rename while \emph{preserving the finiteness of the graph 
-denotation} for the term.
+free variable $x$ in $t$, with a variable renaming in $t$ 
+to avoid variable captures in $u$. 
+We can deduce the usual equations for substitution, which we skip in this paper. 
+Substitution of a closed term $u$ requires no renaming, and  in order to use 
+infinite $\lambda$-terms as a programming language we only need computations 
+involving substitution of closed terms. Renaming is only relevant for 
+the properties of the semantics.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %IN THE CONGRESS VERSION I WOULD NOT INCLUDE THE
