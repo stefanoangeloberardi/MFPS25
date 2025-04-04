@@ -383,7 +383,9 @@ such that if the first reduction has infinitely many safe reduction steps,
 then the second reduction has infinitely many safe reduction steps, too.
 
 To this aim, we first define a simulation relation from reductions
-from $v[a]$ to reductions from $v[b]$. 
+from $v[a]$ to reductions from $v[b]$, mapping each reduction from $v[a]$ 
+in one or more from $v[b]$, and associating to each safe reduction at least
+one safe reduction.
 
 We recall that  $\reduces$, $\reduces^{*}$, $\reduces^{+}$ denote
 respectively one, zero or more, one or more reduction steps.
@@ -410,7 +412,7 @@ between $\reduces  $ and $\reduces^{+}$, namely:
 whenever $t,u,t' \in \LAMBDA$, $t R u$ and $t \reduces   t'$ 
 then for some $u' \in \LAMBDA$ we have $t' R u'$ and $u \reduces^{+} u'$.
 \item
-Besides, if $t \reduces   t'$ is safe then some step in
+Besides, if $t \reduces   t'$ is safe then the last step in
 $u \reduces^{+} u'$ is safe, too.
 \end{enumerate}
 \end{lemma}
@@ -578,19 +580,19 @@ $u \reduces^{+} u'$ is safe, too.
 %\end{enumerate}
 %\end{proof}
 
-Now we can prove the required property for reductions with infinitely
-many safe reduction steps.
-
-\begin{lemma}[Safe infinite reductions and Substitution]
- \label{lemma-safe-infinite-substitution}
-Let $a \in \LAMBDA$, 
-$b \in \LAMBDA$ 
-and $v \in \LAMBDA$. 
-If $b \reduces^{+} a$ and there is some reduction with 
-\emph{with infinitely many safe steps} from $v[a/x]$, 
-then there is some reduction with
-\emph{with infinitely many safe steps} from $v[b/x]$.
-\end{lemma}
+%Now we can prove the required property for reductions with infinitely
+%many safe reduction steps.
+%
+%\begin{lemma}[Safe infinite reductions and Substitution]
+% \label{lemma-safe-infinite-substitution}
+%Let $a \in \LAMBDA$, 
+%$b \in \LAMBDA$ 
+%and $v \in \LAMBDA$. 
+%If $b \reduces^{+} a$ and there is some reduction with 
+%\emph{with infinitely many safe steps} from $v[a/x]$, 
+%then there is some reduction with
+%\emph{with infinitely many safe steps} from $v[b/x]$.
+%\end{lemma}
 
 %19:18 14/12/2024
 %%%%%%%%%%%%%%%%%%%%%%%%
@@ -649,7 +651,7 @@ then there is some reduction with
 % FIXED 13:10 14/12/2024
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-The Lemma above will be enough to prove our Main Theorem.
+We now have all properties required to prove our Main Theorem.
 
 %08:13 05/09/2024
 

@@ -1159,7 +1159,7 @@ u = D[s][b/x]
 D[s'][vec{b}/x] = u'
 $.
 If $r \reduces r'$ is safe, then 
-$\pi$ crosses no right-hand side of any $\cond$, therefore the reduction
+$\pi$ crosses no right-hand side of any $\cond$, therefore the last reduction
 $s \reduces s'$ is safe in $u$.
 
 
@@ -1227,63 +1227,68 @@ safe, too.
 \end{proof}
 
 
-
-%\begin{lemma}[Safe infinite reductions and Substitution]
-% \label{lemma-safe-infinite-substitution}
-%Let $a \in \LAMBDA$, 
-%$b \in \LAMBDA$ 
-%and $v \in \LAMBDA$. 
-%If $b \reduces^{+} a$ and there is some reduction with 
-%\emph{with infinitely many safe steps} from $v[a/x]$, 
-%then there is some reduction with
-%\emph{with infinitely many safe steps} from $v[b/x]$.
-%\end{lemma}
-
-
-
-\begin{proof}(Safe infinite reductions and Substitution, 
-Lemma \ref{lemma-safe-infinite-substitution})
-We prove that if $v[a'] \reduces w$ then for some $z$ we have $w=z[a']$ and $v[a] \reduces^+ z[a]$,
-and if $v[a'] \reduces z[a']$ is a safe then the last reduction in $v[a] \reduces^+ z[a]$ is safe.
-The proof is by cases on the reduction $v[a'] \reduces w$.  We argue by cases.
-
-\begin{enumerate}
-
-\item
-Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r[a']$, with both the left
-and right hand-side of $r$ not included in any $a'$ obtained by substitution. 
-In this case we have $v[a'] = e[r[a'],a'] \reduces e[s'[a'],a']$, and
-$r[a'] = \cond(f[a'],g[a'])(0) \reduces f[a'] = s[a']$ or 
-$r[a'] = \cond(f[a'],g[a'])(S(t[a'])) \reduces g[a'](t[a']) = s[a']$
-or $r[a'] = (\lambda x.t[a',x])(u[a']) \reduces t[a',u[a']] = s[a']$. 
-We define $z[a'] = e[s'[a'],a']$. 
-In all three sub-cases we have $r[a] \reduces s[a]$ and therefore $v[a] \reduces e[r[a],a] = z[a]$
-if $v[a'] \reduces z[a']$ is safe then $v[a] \reduces z[a]$ is safe.
-
-\item
-%  {\Large\color{red} This proof should be fixed}
-Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r$, with either the left
-or right hand-side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
-obtained by substitution, or the left or right hand side of $r$ is equal to some $a'$ obtained by substitution.
-We cannot have both the left and right hand side equal to $a$, because the two sides of any redex 
-have a different type.
-
-In this case there is a single $a'$ whose value matters, that is, $v[a] = v_0[a][a]$, with the first $a$ denoting
-the single occurrence of $a$ we are speaking about. We choose $v'[.] = v_0[a'][.]$, then we have
-$v'[a']=v_0[a'][a']=v[a']$ by definition, and $v[a] = v_0[a][a] \reduces^{*} v_0[a'][a] = v'[a]$ 
-because $a \reduces^{*} a'$ and there is a single occurrence of $a$ in $v_0[a][.]$. 
-
-The reduction on $v'[a']$ has both the left
-and right hand-side of $r$ not included in any $a'$ obtained by substitution, because this unique
-$a'$ is not part of $v'[.]$. We conclude from the previous case applied to $v'[a]$, $v'[a']$.
-
-\end{enumerate}
-Then by induction on $n' \in \N$ we prove that if $v[a'] \reduces^{n'} w$ ($n'$ steps) 
-then for some $z$, some $n \ge n'$ we have $w=z[a']$ and $v[a] \reduces^{n} z[a]$,
-with the number of safe reductions in  $v[a'] \reduces^{n'} z[a']$ less or equal than the number
-of safe reductions in $v[a] \reduces^{n} z[a]$.
-
-\end{proof}
+%
+%%\begin{lemma}[Safe infinite reductions and Substitution]
+%% \label{lemma-safe-infinite-substitution}
+%%Let $a \in \LAMBDA$, 
+%%$b \in \LAMBDA$ 
+%%and $v \in \LAMBDA$. 
+%%If $b \reduces^{+} a$ and there is some reduction with 
+%%\emph{with infinitely many safe steps} from $v[a/x]$, 
+%%then there is some reduction with
+%%\emph{with infinitely many safe steps} from $v[b/x]$.
+%%\end{lemma}
+%
+%\begin{proof}(Safe infinite reductions and Substitution, 
+%Lemma \ref{lemma-safe-infinite-substitution})
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%% checked 09:17 04/04/2025
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%We prove that if $a \reduces^{*} a'$ then we can move one reduction from
+% $v[a']$ to to one or more from  $v[a]$, while preserving safe reductions. 
+% 
+% We assume that  $a \reduces^{*} a'$ and $v[a'] \reduces w$ in order to prove that:
+%  for some $z$ we have $w=z[a']$ and $v[a] \reduces^+ z[a]$, and
+%if $v[a'] \reduces w$ is a safe then the last reduction in $v[a] \reduces^+ z[a]$ is safe.
+%The proof is by cases on the reduction $v[a'] \reduces w$.  
+%
+%\begin{enumerate}
+%
+%\item
+%Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r[a']$, with both the left
+%and right hand-side of $r$ not included in any $a'$ obtained by substitution. 
+%In this case we have $v[a'] = e[r[a'],a'] \reduces e[s'[a'],a']$, and
+%$r[a'] = \cond(f[a'],g[a'])(0) \reduces f[a'] = s[a']$ or 
+%$r[a'] = \cond(f[a'],g[a'])(S(t[a'])) \reduces g[a'](t[a']) = s[a']$
+%or $r[a'] = (\lambda x.t[a',x])(u[a']) \reduces t[a',u[a']] = s[a']$. 
+%We define $z[a'] = e[s'[a'],a']$. 
+%In all three sub-cases we have $r[a] \reduces s[a]$ and therefore $v[a] \reduces e[r[a],a] = z[a]$
+%if $v[a'] \reduces z[a']$ is safe then $v[a] \reduces z[a]$ is safe.
+%
+%\item
+%%  {\Large\color{red} This proof should be fixed}
+%Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r$, with either the left
+%or right hand-side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
+%obtained by substitution, or the left or right hand side of $r$ is equal to some $a'$ obtained by substitution.
+%We cannot have both the left and right hand side equal to $a$, because the two sides of any redex 
+%have a different type.
+%
+%In this case there is a single $a'$ whose value matters, that is, $v[a] = v_0[a][a]$, with the first $a$ denoting
+%the single occurrence of $a$ we are speaking about. We choose $v'[.] = v_0[a'][.]$, then we have
+%$v'[a']=v_0[a'][a']=v[a']$ by definition, and $v[a] = v_0[a][a] \reduces^{*} v_0[a'][a] = v'[a]$ 
+%because $a \reduces^{*} a'$ and there is a single occurrence of $a$ in $v_0[a][.]$. 
+%
+%The reduction on $v'[a']$ has both the left
+%and right hand-side of $r$ not included in any $a'$ obtained by substitution, because this unique
+%$a'$ is not part of $v'[.]$. We conclude from the previous case applied to $v'[a]$, $v'[a']$.
+%
+%\end{enumerate}
+%Then by induction on $n' \in \N$ we prove that if $v[a'] \reduces^{n'} w$ ($n'$ steps) 
+%then for some $z$, some $n \ge n'$ we have $w=z[a']$ and $v[a] \reduces^{n} z[a]$,
+%with the number of safe reductions in  $v[a'] \reduces^{n'} z[a']$ less or equal than the number
+%of safe reductions in $v[a] \reduces^{n} z[a]$.
+%
+%\end{proof}
 
 %
 %\begin{theorem}[Main Theorem]
@@ -1294,19 +1299,33 @@ of safe reductions in $v[a] \reduces^{n} z[a]$.
 %\end{theorem}
 
 \begin{proof}(Main Theorem \ref{theorem-main-finite-safe-reduction})
-  Assume that $t$ is not total by substitution. 
-  Let $\vec{x}:\vec{D}$ and $\vec{A}\rightarrow U$ for some \emph{atomic} $U$ 
- be $\Gamma$ and $A$, respectively.
-  By Proposition \ref{prop:trace_assign-finiteness}.\ref{prop:trace_assign-finiteness2} it is enough to prove that
+%%%%%%%%%%%%%%%%%%%%%
+% checked 11:38 04/04/2025
+%%%%%%%%%%%%%%%%%%%%%
+  We assume that $\Pi:\Gamma \vdash t: A$ 
+  and $t$ is not total by substitution in order to prove that
+  $t \not \in \GTC$. As a corollary, all terms of $\CTlambda$ will be total by substitution.
+ 
+  Let $\Gamma = \vec{x}:\vec{D} = x_1^{D_1}:D_1, \ldots, x_n^{D_n}:D_n$ 
+  and $A = \vec{A}\rightarrow U = A_1, \ldots, A_m \rightarrow U$, 
+  for some \emph{atomic} type $U$. $U$ is $\N$ or some type variable $\alpha$.
+   
+  By Proposition \ref{prop:trace_assign-finiteness}.\ref{prop:trace_assign-finiteness2} 
+  it is enough to prove that
   $\Pi$ has some infinite branch $\pi=(e_1, e_2, \ldots)$ 
   and some \emph{total} trace-compatible assignment $\rho$ for $\pi$.
+  Now we will define such $\pi$.
+  
   By case \ref{lem:total_value-finiteness3} of Lemma~\ref{lem:total_value-finiteness},
+  if $t[\vec{x}]$ is \emph{not} total by substitution, then 
   there exist total terms $\vec{a}:\vec{A}$ and $\vec{d}:\vec{D}$ for which there is
-  an infinite reduction $\sigma$ from $t[\vec{d}]\vec{a}$ having infinitely many safe reductions.
+  an infinite reduction $\sigma$ from $t[\vec{d}]\vec{a}$ having infinitely many safe  
+  reductions.
   By induction on $i \in \Nat$, for each $i$, we construct a path 
   $l_i = (e_1,\ldots,e_{i-1}) \in \universe{\Pi}$
-  and a total assignment $\vec{v_i} = (\vec{d_i},\vec{a_i})$ such that
-  $(\vec{v_1},\ldots,\vec{v_i})$ is a total trace-compatible assignment for the node $l_i$. 
+  and a total assignment $\rho(l_i) = \vec{v_i} = (\vec{d_i},\vec{a_i})$ such that
+  $(\vec{v_1},\ldots,\vec{v_i})$ is a total trace-compatible assignment for the node $l_i$
+  and $t_{i}[\vec{d_{i}}](\vec{a_{i}})$ is not total.
 
 %  We have to find some $(l_i,\vec{d_i},\vec{a_i})$ such that:
 %  \begin{itemize}
@@ -1327,16 +1346,16 @@ of safe reductions in $v[a] \reduces^{n} z[a]$.
   
  We recall that \quotationMarks{trace compatible in $i$} means: 
  if $i-1$ is a progress point, namely if $t_{i-1}=\cond(f,g)$ and $e_i=2$ 
-    and $t_i=g$,
-    then $\vec{a_{i-1}} = a',\vec{a'}$ 
-    and $a'$, the first unnamed argument of $\cond(f,g):\N \rightarrow A$, reduces to $\Succ(a'')$
-     while $\vec{a_i} = a'',\vec{a'}$.
-  In all other cases two corresponding arguments are equal.
+ (we move to the right subterm) and $t_i=g$, then $\vec{a_{i-1}} = a',\vec{a'}$ 
+ and $a'$, the first unnamed argument of $\cond(f,g) : \N \rightarrow A$, 
+ reduces to $\Succ(a'')$w hile $\vec{a_i} = a'',\vec{a'}$.
+ In all other cases two corresponding arguments of $\rho(i-1)$ and $\rho(i)$ are equal.
 
   We first define $(l_1,\vec{d_1},\vec{a_1})$ for the root node $t$ of $\Pi$.
   In this case $l_1 = \nil$ 
-   and $(\vec{d},\vec{a})$ are total terms such that $t[\vec{d}](\vec{a})$ is not total.
-  Trace compatibility is vacuous because the branch $l_1$ does not contain two nodes.
+   and $(\vec{d},\vec{a})$ are total terms such that $t[\vec{d}](\vec{a})$ is not total
+   (has some infinite reduction with infinitely many safe reduction).
+  Trace compatibility is vacuous because the branch $l_1$ only contains one node.
   %Points (i), (ii), (iii), (iv) are immediate.
 
   Next, assume that $(l_i,\vec{d_i},\vec{a_i})$ is already constructed.
@@ -1353,31 +1372,43 @@ of safe reductions in $v[a] \reduces^{n} z[a]$.
 
 \item
 %WEAK
-  The case of $\weak$, namely
+  The case of $\weak$ happens when
   $\Label(\Pi,l_{i+1}) = \Gamma \vdash t_{i+1}:\vec{A_i}\rightarrow U$
-  is obtained from the induction hypothesis for
-  $\Gamma' \vdash t_{i}:\vec{A_i}\rightarrow U$. We have:
+  is the premise of a $\weak$-rule, with conclusion
+  $\Delta \vdash t_{i}:\vec{A_i}\rightarrow U$. We have:
 
 \begin{enumerate}
 \item
  $t_i = t_{i+1}$. 
 \item
-  $\Gamma = x_1:D_1,\ldots,x_n:D_n$, $\Gamma' = x'_1:D'_1,\ldots,x'_m:D'_m$, and $\Gamma \subseteqsim \Gamma'$
-  with an injection $\phi:\{1,\ldots,n\}\to\{1,\ldots,m\}$ between contexts. 
+  $\Gamma = x_1:D_1,\ldots,x_n:D_n$, $\Delta= x'_1:D'_1,\ldots,x'_{n'}:D'_{n'}$, and 
+  $\Gamma \subseteqsim \Delta$,
+  with an injection $\phi:\{1,\ldots,n\}\to\{1,\ldots,n'\}$ from $\Gamma$ to $\Delta$
 \item
-  $x_i = x'_{\phi(i)}$ and $D_i = D'_{\phi(i)}$ for all $i \in \{1,\ldots,n\}$.
+  $\phi$ maps variables of the premise into variables of the conclusion:
+   $x'_{\phi(j)} = x_j$ and $D'_{\phi(j)} = D_j$ for all $j \in \{1,\ldots,n\}$.
 \end{enumerate}
 
   By the induction hypothesis, 
-  $t_i[d_{i,\phi(1)}/x_1,\ldots,d_{i,\phi(n)}/x_n]\vec{a_i} 
-   = t_i[d_{i,1}/x'_1,\ldots,d_{i,m}/x'_m]\vec{a_i}$ is not total,
-  where $\vec{d_i} = d_{i,1}\ldots d_{i,m}$.
-  Then we define $l_{i+1} = l_i\conc(1)$ taking the unique child node of $l_i$ in $\Pi$, and we
+  $t_i[d_{i,1}/x'_1,\ldots,d_{i,{n'}}/x'_{n'}]\vec{a_i}$ is not total,
+  for some total assignment $\vec{d_i} = d_{i,1}\ldots d_{i,{n'}}$, $\vec{a_i}$.
+  All variables of $\Delta$ which occur free in $t_i$ are of the form 
+  $x_{\phi(j)} \in \FV(\Gamma)$, we deduce that
+  $
+   t_i[d_{i,1}/x'_1,\ldots,d_{i,{n'}}/x'_{n'}]\vec{a_i}
+  $
+  simplifies to
+  $
+   t_i[d_{i,\phi(1)}/x_1,\ldots,d_{i,\phi(n)}/x_n]\vec{a_i} 
+  $.
+  In this case 
+  we define $l_{i+1} = l_i\conc(1)$ taking the unique child node of $l_i$ in $\Pi$, and we
   also define $\vec{d_{i+1}}$ and $\vec{a_{i+1}}$ by $d_{i,\phi(1)}\ldots d_{i,\phi(n)}$
-  and $\vec{a_i}$, respectively. This is an assignment with total terms.
+  and $\vec{a_i}$, respectively. This is an assignment with total terms such that
+  $t_{i+1}[\vec{d_{i+1}}](\vec{a_{i+1}})$ is not total.
   $((\vec{d_i},\vec{a_i}),(\vec{d_{i+1}},\vec{a_{i+1}}))$
-  is trace compatible for $(t_i,t_{i+1})$: if two arguments are connected then they are assigned
-  to the same term. 
+  is trace compatible for $(t_i,t_{i+1})$: if two arguments are connected 
+  by $\phi$ then they are assigned to the same term. 
 
 \item
 %VAR
@@ -1392,10 +1423,11 @@ of safe reductions in $v[a] \reduces^{n} z[a]$.
 
 %12:58 06/06/2024
 
+
 \item 
 %SUCC 
   The case of $\Succ$-rule, 
-namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
+  namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
   for some $u$ is obtained from our assumptions on
   $\Gamma\vdash u: \N$. In this case $\vec{a_i}$ is empty, $t_{i+1}=u$, and
   by the induction hypothesis $\Succ(u)[\vec{d_i}]:\N$ has an infinite reduction with
@@ -1419,29 +1451,31 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
 \item
   The case of the $\apnotvar$-rule, namely 
   $\Label(\Pi,l_i) = \Gamma\vdash t_i: \vec{A}\rightarrow U$, 
-  with $t_i = f[\vec{x}](u[\vec{x}])$ for some $f$ and $u$.
+  with $t_i = f[\vec{x}](u[\vec{x}])$ for some $f$ and $u$, 
+  where $u$ is \underline{not} a variable.
   The premises of the $\apnotvar$-rule
    are $\Gamma\vdash f[\vec{x}]: B \rightarrow \vec{A}\rightarrow U$ 
-  and $\Gamma\vdash u[\vec{x}]: B$, where $u$ is \underline{not} a variable.
+  and $\Gamma\vdash u[\vec{x}]: B$.
   By the induction hypothesis, there is some infinite reduction from
-  $t_i[\vec{d_i}]\vec{a_i} = f[\vec{d_i}](u[\vec{d_i}])\vec{a_i}:U$ with infinitely many safe-reductions.
+  $t_i[\vec{d_i}]\vec{a_i} = f[\vec{d_i}](u[\vec{d_i}])\vec{a_i}:U$ 
+  with infinitely many safe-reductions.
   We argue by cases on the statement: \emph{$u[\vec{d_i}]:B$ is total}.
 
 
 %11:04 05/06/2024
 
 
-
 \begin{enumerate}
 \item
   We first consider the subcase: \emph{$u[\vec{d_i}]:B$ is total}.
-  We define $b = u[\vec{d_i}]$, then $l_{i+1}=l_i\conc(1)$, taking the first premise of the rule,
+  We define $b = u[\vec{d_i}]$, a total term, 
+  then $l_{i+1}=l_i \conc (1)$, taking the first premise of the rule,
   and we define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = b,\vec{a_i}$. 
-  This is an assignment with total values, and providing an infinite reduction with infinitely many safe
-  reductions, as expected. 
+  This is an assignment with total values, 
+  and providing an infinite reduction with infinitely many safe reductions, as expected. 
   The connection from 
-  $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},b,\vec{a_i})$ is
-  trace-compatible: all connected 
+  $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},b,\vec{a_i})$ 
+  is trace-compatible: all connected 
   $\N$-argument of $t_{i}=f(u)[\vec{x}]$ and $t_{i+1}[\vec{x}] = f[\vec{x}]$ are the same,
   because the only fresh argument of $f[\vec{x}]$ 
   is $b$ and no argument of $f(u)[\vec{x}]$ is connected to it.
@@ -1468,11 +1502,12 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
   = 
   \Gamma \vdash f[\vec{x}](x): \vec{A}\rightarrow U$ is obtained from
   $\Gamma \vdash f[\vec{x}]: D,\vec{A} \rightarrow U$,
-  where $\Gamma=x_1:D_1,\ldots,x_m:D_m$ and $x:D\in\Gamma$, therefore
-  $x:D = x_k:D_k$ for some $k \in [1,m]$. 
-  By the induction hypothesis, there is an infinite reduction from $f[\vec{d_i}]d_{i,k}\vec{a_i}: U$
+  where $\Gamma=x_1:D_1,\ldots,x_n:D_n$ and $x:D\in\Gamma$, therefore
+  $x:D = x_k:D_k$ for some $k \in [1,n]$. 
+  By the induction hypothesis, 
+  there is an infinite reduction from $f[\vec{d_i}]d_{i,k}\vec{a_i}: U$
   with infinitely many safe reductions,
-  where $\vec{d_i} = (d_{i,1},\ldots,d_{i,m})$. 
+  where $\vec{d_i} = (d_{i,1},\ldots,d_{i,n})$. 
   Define $l_{i+1}=l_i\conc(1)$ as the unique child of $l_i$ in $\Pi$, and
   also define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = d_{i,k},\vec{a_i}$. 
   This is an assignment with total terms providing an infinite reductions with 
@@ -1484,57 +1519,79 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
   $\vec{d_{i+1}},\vec{a_{i+1}}$ are the same.  
   The only difference between the two assignments
   is that, if $D_k = \N$, the value $d_{i,k}$ of type $\N$ for the variable $x_k$
-  in $t_i[\vec{x}]=f[x_1,\ldots,x_k,\ldots,x_m](x_k)$ is duplicated to the term $d_{i,k}$ 
+  in $t_i[\vec{x}]=f[x_1,\ldots,x_k,\ldots,x_n](x_k)$ is duplicated to the term $d_{i,k}$ 
   assigned to the first unnamed argument of $ f[\vec{x}]$. 
 
 %08:40 05/09/2024
+%11:01 04/04/2025
 
 \item
   The case of $\lambda$-rule, namely when a sequent
-  $\Label(\Pi,l_i) = 
-    \Gamma\vdash t_i : A, \vec{A} \rightarrow U$ with $t_i = \lambda x^A.u[\vec{x},x]$
+  $
+    \Label(\Pi,l_i) 
+    = 
+    \Gamma\vdash t_i : A, \vec{A} \rightarrow U
+  $ 
+  with 
+  $
+    t_i 
+    = 
+    \lambda x^A.u[\vec{x},x]
+  $
   is obtained from
-  $\Gamma,x:A\vdash t_{i+1}[\vec{x},x^A]:\vec{A}\rightarrow U$, 
+  $
+  \Gamma\setminus\{x:A\},x:A
+  \vdash 
+  t_{i+1}[\vec{x},x^A]:\vec{A}\rightarrow U
+  $, 
   where $t_{i+1}[\vec{x},x]=u[\vec{x},x]$.
+  
   By the induction hypothesis we have an infinite reduction sequence $\sigma$ from
-  $t_i[\vec{d_i}]\vec{a_i} = (\lambda x.(u[\vec{d_i},x]))\vec{a_i}: U$ with infinitely many safe
-  reductions,
-  where $\vec{a_i} = a,\vec{b}$. 
+  $t_i[\vec{d_i}]\vec{a_i} = (\lambda x.(u[\vec{d_i},x]))\vec{a_i}: U$ 
+  with infinitely many safe reductions, where $\vec{a_i} = a,\vec{b}$. 
+  Define $\vec{d'_i}$ by skipping from $\vec{d_i}$ all positions $j$ such that $x_j = x$.
   Define $l_{i+1}=l_i\conc(1)$ as the unique child of $l_i$ in $\Pi$,
-  and $\vec{d_{i+1}} = \vec{d_i},a$ and $\vec{a_{i+1}} = \vec{b}$. 
-  This is an assignment with total terms.
-    The connection from 
-  $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},a, \ \vec{b})$ is
+  and $\vec{d_{i+1}} = \vec{d'_i},a$, and $\vec{a_{i+1}} = \vec{b}$. 
+  This is an assignment with total terms. The connection from 
+  $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d'_i},a, \ \vec{b})$ is
   trace compatible: all connected $\N$-argument of 
   $t_{i}=\lambda x^A.u[\vec{x},x]$ and $t_{i+1}=u[\vec{x},x]$ are 
   the same, except for the first unnamend argument $a$ of $\vec{a_i}$ which is moved to
-  the last named argument of $u[\vec{x},x]$, with name $x$.
-  
+  the last named argument of $u[\vec{x},x]$, the argument with name $x$.
+ 
   We have to prove that there is some infinite reduction from 
   $t_{i+1}[\vec{d_{i+1}}](\vec{a_{i+1}})$ with infinitely
-  many safe reductions. We argue by case.
+  many safe reductions. This requires some care because, as we pointed out,
+  reduction and substitution do not commute for infinite $\lambda$-terms.
+  We argue by case.
 
 \begin{enumerate}
 \item
  Suppose all reductions in the infinite reduction $\sigma$ 
   are inside $\lambda x.(u[\vec{d_i},x])$ or $\vec{a_i}$.
- Then there are finitely many safe reductions in $\vec{a_i}$ because $\vec{a_i}$ is total.
+ By Lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis},
+  there are finitely many safe reductions in $\vec{a_i}$ because $\vec{a_i}$ is total.
  Thus, there are infinitely many safe reductions on the part of $\sigma$
   taking place on $\lambda x.(u[\vec{d_i},x])$.
-  We conclude that there is an infinite reduction from $u[\vec{d_i},x]$ with infinitely many safe reduction.
-  This is true for $u[\vec{d_i},a]$, too, because reductions and safe reductions are closed by substitution
-  of $x$ with $a$.
-
-%09:39 05/09/2024
-%non è vero che a-->a' implica v[a] ---> v[a'] ma è vero che se da v[a'] ci sono infinite safe-reductions
+  We conclude that there is an infinite reduction from $u[\vec{d_i},x]$ 
+  with infinitely many safe reduction. This is true for $u[\vec{d_i},a]$, too, 
+  because reductions and safe reductions are closed by substitution of $x$ with $a$.
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 09:39 05/09/2024
+% non è vero che a-->a' implica v[a] ---> v[a'] 
+% ma è vero che se da v[a'] ci sono infinite safe-reductions
 % allora da v[a] ci sono infinite safe-reductions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 \item
  Suppose there is some reduction in $\sigma$ contracting the first $\beta$-redex.
  Then  $(\lambda x.(u[\vec{d_i},x]))a\vec{b}$ reduces first to some
  $ (\lambda x.v[x])a'\vec{b'}$, then to $v[a']\vec{b'}$, with: 
- $u[\vec{d_i},x] \reduces^{*} v[x]$ and $a\reduces^{*} a'$ and $\vec{b} \reduces^{*} \vec{b'}$.
- Then the reduction sequence $\sigma$ continues 
-  with some infinite reduction $\sigma'$ from $v[a']\vec{b'}$, including infinitely many safe reductions. 
+ $u[\vec{d_i},x] \reduces^{*} v[x]$ and 
+ $a\reduces^{*} a'$ and $\vec{b} \reduces^{*} \vec{b'}$.
+ Then the reduction sequence $\sigma$ continues with some infinite reduction $\sigma'$ from 
+  $v[a']\vec{b'}$, including infinitely many safe reductions. 
  From $u[\vec{d_i},x] \reduces^{*} v[x]$ and $\vec{b} \reduces^{*} \vec{b'}$ we deduce that 
  \[
  t_{i+1}[\vec{d_i},a]\vec{b}  
@@ -1546,15 +1603,16 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
  v[a]\vec{b'} 
  \ \ \ \mbox{(1)}
  \]
- We proved that there is a reduction $\sigma'$ including infinitely many safe reductions from  $v[a']\vec{b'}$.
- From $a \reduces^{*} a'$ and Lemma \ref{lemma-safe-infinite-substitution} 
- we deduce that there is a reduction including infinitely many safe reductions from  $v[a]\vec{b'}$.
- From $(1)$ above we conclude that the same holds for
-   $t_{i+1}[\vec{d_i},a]\vec{b}$.
+ We proved that there is a reduction $\sigma'$ 
+ including infinitely many safe reductions from  $v[a']\vec{b'}$.
+ From $a \reduces^{*} a'$ and Lemma \ref{lemma-safety-preserving-simulation}
+ we deduce that there is a reduction including infinitely many safe reductions from  
+ $v[a]\vec{b'}$. From $(1)$ above we conclude that the same holds for
+ $t_{i+1}[\vec{d_i},a]\vec{b}$.
 \end{enumerate}
 
 %13:55 06/06/2024
-
+%11:31 04/04/2025
 
 \item
   The case of $\cond$-rule, namely a sequent
@@ -1573,28 +1631,37 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
 \begin{enumerate}
 \item
   \emph{Suppose the reduction sequence $\sigma$ never contracts the leftmost $\cond$.}
-  $a$ and $\vec{b}$ are total, only finitely many reduction on them are possible.
+  $a$ and $\vec{b}$ are total, 
+  by Lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}
+  only finitely many reduction on them are possible.
   Then infinitely many safe reductions take place on $f[\vec{d_i}]$ or $g[\vec{d_i}]$. 
   All these safe reduction are in $f[\vec{d_i}]$, because
-  a reduction inside $g[\vec{d_i}]$ is in the right-hand-side of some $\cond$, therefore it is not safe.
+  a reduction inside $g[\vec{d_i}]$ is in the right-hand-side of some $\cond$, 
+  therefore it is not safe.
   The safe-infinite reduction from $f[\vec{d_i}]$ can be raised to an infinite reduction from 
-  $f[\vec{d_i}](\vec{b})$, with the same safe reductions, therefore with infinite safe reduction.
+  $f[\vec{d_i}](\vec{b})$, with the same safe reductions, therefore with infinitely
+  many safe reductions.
   In this case we take $f[\vec{x}],\vec{d_i},\vec{b}$ as next step of our path in $\Pi$:
   we choose $l_{i+1} = l_i \conc (1)$, $\vec{d_{i+1}} = \vec{d_i}$, and
   $\vec{a_{i+1}} = \vec{b}$.  This is an assignment with total terms.
 
   We have trace-compatibility because: 
-  each argument of $t_i$ is connected to some equal argument of $t_{i+1}[\vec{x}]=f[\vec{x}]$,
-  the first argument of $t_i[\vec{x}]$ disappears but it is connected to no $\N$-argument in $f[\vec{x}]$.
+  each argument of $t_i$ is connected to some equal argument of 
+  $t_{i+1}[\vec{x}]=f[\vec{x}]$,
+  the first argument of $t_i[\vec{x}]$ disappears 
+  but it is connected to no $\N$-argument in $f[\vec{x}]$.
 
 \item
   \emph{Suppose the reduction sequence contracts the leftmost $\cond$-redex at some step.}
-  Then $t_i[\vec{d_i}]a \vec{b} \reduces^{*} \cond(f',g')a''\vec{b'}$, with $a'' = 0$ or $a'' = \Succ(a')$. 
+  Then $t_i[\vec{d_i}]a \vec{b} \reduces^{*} \cond(f',g')a''\vec{b'}$, 
+  with $a'' = 0$ or $a'' = \Succ(a')$. 
   Then in the first subcase $\cond(f',g')a''\vec{b'} \reduces f'\vec{b'}$, in the second subcase
   $\cond(f',g')a''\vec{b'} \reduces g' a' \vec{b'}$, 
-  with $f[\vec{d_i}] \reduces^{*} f'$, $g[\vec{d_i}] \reduces^{*} g'$, and $\vec{b} \reduces^{*} \vec{b'}$.
-  After this $\cond$-reduction we have a reduction sequence with infinitely many safe reductions.
-  We prove our thesis by the subcases on $a''$.
+  with $f[\vec{d_i}] \reduces^{*} f'$, $g[\vec{d_i}] \reduces^{*} g'$, 
+  and $\vec{b} \reduces^{*} \vec{b'}$.
+  After this $\cond$-reduction we have a reduction sequence 
+  with infinitely many safe reductions.
+  We prove our thesis by subcases, according if $a'' = 0$ or $a'' = \Succ(a')$.
    
 %19:37 05/09/2024
 
@@ -1602,30 +1669,34 @@ namely $\Label(\Pi,l_i) = \Gamma\vdash t_i: \N = \Gamma\vdash \Succ(u): \N$
 \item
   \emph{Suppose $a'' = 0$}.
    In this case we take $f[\vec{x}],\vec{d_i},\vec{b}$ as the next step of our path in $\Pi$:
-  we choose $l_{i+1} = l_i \conc (1)$, $\vec{d_{i+1}} = \vec{d_i}$, and $\vec{a_{i+1}} = \vec{b}$. 
+  we choose $l_{i+1} = l_i \conc (1)$, $\vec{d_{i+1}} = \vec{d_i}$, 
+  and $\vec{a_{i+1}} = \vec{b}$. 
   This is an assignment with total terms.
-  $f[\vec{d_{i+1}}](\vec{b})$ reduces to $f' \vec{b'}$, then we have infinitely many safe reductions.
+  $f[\vec{d_{i+1}}](\vec{b})$ reduces to $f' \vec{b'}$, 
+  then we have infinitely many safe reductions.
 
   We have trace-compatibility because: 
-    each argument of $t_i$ is connected to some equal argument of $t_{i+1}[\vec{x}]=f[\vec{x}]$,
-    the first argument of $t_i[\vec{x}]$ disappears but it is connected to no $\N$-argument in $f[\vec{x}]$.
+  each argument of $t_i$ is connected to some equal argument of
+  $t_{i+1}[\vec{x}]=f[\vec{x}]$,
+  the first argument of $t_i[\vec{x}]$ disappears   
+  but it is connected to no $\N$-argument in $f[\vec{x}]$.
 %12:53 05/06/2024
 
  \item
   \emph{Suppose $a'' = \Succ(a')$}. 
   We choose $l_{i+1} = l_i \conc (2)$, $\vec{d_{i+1}} = \vec{d_i}$, and
   $\vec{a_{i+1}} = a',\vec{b}$. This is an assignment with total terms: $a'$ is total because
-  all reduction sequences from $a'$ can be raised from a reduction sequences from $a'' = \Succ(a')$
-  with the same safe-reduction. From $a \reduces^{*} a''$ we deduce that
+  all reduction sequences from $a'$ can be raised from a reduction sequences from 
+  $a'' = \Succ(a')$ with the same safe-reduction. From $a \reduces^{*} a''$ we deduce that
   there are finitely many safe-reductions from $a''$, therefore finitely many those from $a'$.
  
-  We have trace-compatibility because: 
-  each argument of $t_i[\vec{x}]$ is connected to some equal argument of 
-    $t_{i+1}[\vec{x}]=g[\vec{x}]$,
-    but for the first unnamed argument $a$ of $t_i[\vec{x}]$ 
-    which is connected the first unnamed argument of $g[\vec{x}]$.
-    This is fine because in the second premise of a $\cond$ 
-    the trace progresses and we have $a' \prec a$, because $a \reduces^{*}  a'' = \Succ(a')$.
+  We have trace-compatibility because: each argument of $t_i[\vec{x}]$ is connected 
+  to some equal argument of $t_{i+1}[\vec{x}]=g[\vec{x}]$,
+  but for the first unnamed argument $a$ of $t_i[\vec{x}]$ 
+  which is connected the first unnamed argument of $g[\vec{x}]$.
+  This is fine because in the second premise of a $\cond$ 
+  the trace progresses and, indeed, we have $a' \prec a$, 
+  because $a \reduces^{*}  a'' = \Succ(a')$.
 
   \end{enumerate}
  \end{enumerate}
