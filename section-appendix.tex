@@ -1069,6 +1069,9 @@ We conclude that $t[\vec{x}]$ is total by substitution, as we wished to show.
 
 \begin{proof}(Safety-preserving Simulation, 
 Lemma \ref{lemma-safety-preserving-simulation})
+%%%%%%%%%%%%%%%%%%%%%%%
+% checked 09:00 04/04/2025
+%%%%%%%%%%%%%%%%%%%%%%%
 Let $R$ as in Lemma \ref{lemma-safety-preserving-simulation}.
 Assume that $t \in \LAMBDA$, $u \in \LAMBDA$, $t' \in \LAMBDA$
 and $t R u$ and $t \reduces   t'$. 
@@ -1080,7 +1083,7 @@ $u \reduces^{+} u'$ is safe, too.
 
 The assumption $t R u$ unfolds to: for some $a, b,w  \in \LAMBDA$,
 some variable $y$, 
-we have $(b \reduces^{+} a)$ and $(t = w[a/y])$ and $(u = w[b/y])$.
+we have $(b \reduces^{*} a)$ and $(t = w[a/y])$ and $(u = w[b/y])$.
 By renaming $y$ in $v$ with some variable $x \not \in \FV(w,a,b)$ 
 we have that $(t = w[x/y][a/x])$ and $(u = w[x/y][b/x])$ and
 $x \not \in \FV(w,a,b)$. If we set $v=w[x/y]$ we have
@@ -1106,23 +1109,14 @@ Either $\pi$ is some position of $v$ or it is not.
 \begin{enumerate}
 
 \item
-%%%%%%%%%%%%%%%%%%%%%%%
-% checked 12:08 03/04/2025
-%%%%%%%%%%%%%%%%%%%%%%%
 \emph{Assume that $\pi$ is \emph{not} the position of a node of $v$}. 
 Then there is some free occurrence of $x$ in $v$, with position $\theta$, 
-such that $\pi \ge \theta$. Assume $z$ is the term obtained by replacing this
-occurrence of $x$ with a single variable $x_0 \not \in \FV(v)$.
-Then $v=z[x/x_0]$, therefore $t = z[x/x_0][a/x]$
-and $u = z[x/x_0][a/x]$. We deduce
-$ t  = z[a/x_0,a/x] = $ (by $x \not \in \FV(a,b)$ ) $=z[a/x_0][a/x]$
-and 
-$ u  = z[b/x_0,b/x] = $ (by $x \not \in \FV(a,b)$ ) $=z[b/x_0][b/x]$.
-Let us abbreviate $D[\cdot]=z[\cdot/x_0]$, with $D$ context:
-then $ t  = D[a][a/x]$ and $ut  = D[b][b/x]$.
+such that $\pi \ge \theta$. Assume $D[\cdot]$ is the context with a single hole
+$\cdot$ in the position $\theta$ of $z$.
+From $x \not \in \FV(a) \cup \FV(b)$ we deduce
+that $ t  = D[a][a/x]$ and $u  = D[b][b/x]$.
 For some context $C$ we have $a = C[r] \reduces C[r']$.
-From $x \not \in \FV(a) \cup \FV(b)$ we deduce that there is some context
-$D$ such that: 
+By definition we have
 $ t  = D[a][a/x] = D[C[r]][a/x]$ and 
 $ u = D[b][b/x]$ and
 $ t' = D[C[r']][a/x]$. 
@@ -1148,8 +1142,8 @@ $u \reduces u'$ is safe.
 \emph{Assume that $\pi$ the position of some node $s$ in 
 $v$ and \emph{$s$ is some redex}}.  
 There exists some context $D$ such that $v = D[s]$. Then $r=s[a/x]$
-and $r'=s'[a/x]$ for some redex $s=s_1(s_2)$ of $v$ contracted to $s'$
-with the same reduction used for $r$.
+and $r'=s'[a/x]$ for some redex $s=s_1(s_2)$ of $v$.
+$s$ is contracted to $s'$ with the same reduction used for $r$.
 We deduce that:
 $ t  = v[a/x] = D[s][a/x]$ and 
 $ u = v[b/x] = D[s][b/x]$ and
@@ -1210,7 +1204,8 @@ D[s][b/x] \reduces D[s'][b/x] = u'$.
 We have $r = r_1(r_2) = r_1(a)$ and
 $r_1 = s_1[a/x]$ for some $s_1$ with the same starting symbol as $r_1$.
 We re-define $s_2=a$. Then $s_2=a$ has the same starting symbol as $r_2=a$,
-therefore $ s = s_1(s_2) = s_1(a)$ reduces to some $s'$ such that $r' = s'[a/x]$
+therefore $ s = s_1(s_2) = s_1(a)$ reduces to some $s'$, 
+and by unicity of contractum we have $r' = s'[a/x]$.
 For some context $D$ we have: 
 $ t  = D[s_1(a)][a/x]$ and 
 $ u = D[s_1(b)][b/x]$ and
@@ -1246,7 +1241,8 @@ safe, too.
 
 
 
-\begin{proof}(Safe infinite reductions and Substitution, Lemma \ref{lemma-safe-infinite-substitution})
+\begin{proof}(Safe infinite reductions and Substitution, 
+Lemma \ref{lemma-safe-infinite-substitution})
 We prove that if $v[a'] \reduces w$ then for some $z$ we have $w=z[a']$ and $v[a] \reduces^+ z[a]$,
 and if $v[a'] \reduces z[a']$ is a safe then the last reduction in $v[a] \reduces^+ z[a]$ is safe.
 The proof is by cases on the reduction $v[a'] \reduces w$.  We argue by cases.
