@@ -212,7 +212,7 @@ has premise $\Gamma' \vdash t':\vec{B'} \rightarrow \N$.
 
 
 For each $\N$-argument $k$ in $t$, for each $\N$-argument $k'$ in $t'$ we define 
-the relation: ``$k',t'$ the successor of $k,t$". We require:
+the relation: ``$k',t'$ connected to $k,t$". We require:
 \begin{enumerate}
 
 \item
@@ -221,7 +221,7 @@ then $k' = \ins(n+1,k)$ or $k'=n+1$ and $k=i$.
 
 \item
 if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
-then $k' = \ins(n+1,k)$. If $t'=a$ then $k'=k$ and $k' \le n$.
+then $k' = \ins(n+1,k)$. If $t'=a$ then $k'=k$ for  $k' \le n$.
 
 \item
 if $t=\cond(f,g)$ is obtained by a rule $\cond$ and $t'=f$ then $k = \ins(n+1,k')$. 
