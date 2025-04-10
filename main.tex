@@ -108,13 +108,14 @@ Each time we unfold the recursive definition we automatically
 remove all variables no more in use, to prevent an infinite proliferation of names.
 We prove for our circular syntax:
 \emph{(i)}  every closed term of the type of naturals reduces to some numeral;
-\emph{(ii)}  strong normalization for all reductions sequences not reducing inside the predecessor clause for the conditional operator; 
+\emph{(ii)}  strong normalization, for all reductions sequences not reducing inside the predecessor clause for the conditional operator; 
 %A consequence of the
 % fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
 %namely Strong Normalization for all reductions and Church Rosser 
 %(\cite{2021-Anupam-Das}, Theorem 51, page 35), fail. 
 %However, we recover for $\CTlambda$
-\emph{(iii)} the existence of a limit for all infinite reductions.
+\emph{(iii)} the existence of a limit for all infinite reductions 
+(but reductions can continue forever).
 \end{abstract}
 \begin{keyword}
   Cyclic Proofs, Cyclic Terms, Fixed Point Definition, Lambda Calculus
