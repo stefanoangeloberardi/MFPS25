@@ -41,27 +41,27 @@
 % Grave accent  `           Left brace   {          Vertical bar  |
 % Right brace   }           Tilde        ~
 
-% A couple of exemplary definitions:
-
-%\newcommand{\Nat}{{\mathbb N}}
-%\newcommand{\Real}{{\mathbb R}}
-
-%%%Fill in the following%%%%
-%%%%%%%%	Your Corresponding Editor will provide the following information:
-\def\conf{MFPS 2025} 	%%Fill in the acronym for your conference (with year)
-\volume{NN}			%Fill in the ENTICS volume number here
-\def\volu{NN}			% and here
-\def\papno{nn}			%Fill in your paper number here
+%% A couple of exemplary definitions:
+%
+%%\newcommand{\Nat}{{\mathbb N}}
+%%\newcommand{\Real}{{\mathbb R}}
+%
+%%%%Fill in the following%%%%
+%%%%%%%%%	Your Corresponding Editor will provide the following information:
+%\def\conf{MFPS 2025} 	%%Fill in the acronym for your conference (with year)
+%\volume{NN}			%Fill in the ENTICS volume number here
+%\def\volu{NN}			% and here
+%\def\papno{nn}			%Fill in your paper number here
 %%%%%%%%Please fill in the following information:
 \def\lastname{Berardi,  de' Liguoro, Kimura, Nakazawa, Tatsuta} 
 %Lastnames appear in the running header 
 %									on odd pages. If more than three authors, use et al
-\def\runtitle{Cyclic Simply Typed $\lambda$-Calculus} 
+\def\runtitle{Global Trace Condition for Cyclic Simply Typed $\lambda$-Calculus} 
 %Short title appears in the running header on even pages. 
 %%
 \def\copynames{S. Berardi,  U. de' Liguoro, D. Kimura, K. Nakazawa, M. Tatsuta}    %% Fill in the first initial and last name of the authors
 %%%%%%%%%%%%%%%%%%%		claiming Creative Commons copyright here. 
-\def\CCB{CC@symbol}		%%%%%%	Also, be sure the correct Creative Commons 
+%\def\CCB{CC@symbol}		%%%%%%	Also, be sure the correct Creative Commons 
 %%%%%%%%%%%%%					copyright symbol is chosen - see Section 2 of
 %%%%%%%%%%		https://mirrors.concertpass.com/tex-archive/fonts/ccicons/ccicons.pdf
 \begin{document}
@@ -69,8 +69,11 @@
 \begin{frontmatter}
 \input{macro}
   %\title{$\CTlambda$, a cyclic simply typed $\lambda$-calculus with fixed points\thanksref{ALL}} 						%%Title here and the
-  \title{A Cyclic Simply Typed Lambda-Calculus with Fixed Points\thanksref{ALL}} 
- \thanks[ALL]{We thank Prof. Anupam Das for a valuable scientific correspondence about cyclic terms.}   %%Text of \thanks[ALL} here..
+  \title{Extending to Binders
+  the Global Trace Condition for Cyclic Lambda-Calculus\thanksref{ALL}} 
+  
+ \thanks[ALL]{We thank Prof. Anupam Das for a valuable scientific correspondence about 
+ global trace condition for cyclic terms.}   %%Text of \thanks[ALL} here..
  %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
   %%%%Now the author(s) names(s)%%%%%
   \author{Stefano Berardi$^{\tt a}$}	%%Note NO SPACE between 
@@ -79,7 +82,7 @@
       \author{Koji Nakazawa$^{\tt c}$}
        \author{Makoto Tatsuta$^{\tt d}$}
     %%%Next come the addresses%%%%
-   \address[a]{C.S. Dept., Turin University, Torino, Italy}  							
+   \address[a]{Computer Science Department, Turin University, Torino, Italy}  							
    \address[b]{Department of Information Science, Toho University, Japan} 
    \address[c]{Graduate School of Informatics, Nagoya University, Japan}
    \address[d]{National Institute of Informatics/Sokendai, Tokyo, Japan}
@@ -91,34 +94,48 @@
  
 
 \begin{abstract} 
-Circular syntax for G\"{o}del System {\em T} has the advantage
-that terms are written in fixed point style, and therefore are closer to a real
-program and shorter than the equivalent terms written in {\em T}. 
-Another reason of interest is that all maps defined by a cyclic term are total. 
-Several circular syntax for {\em T} (which are infinite regular terms with the 
-global trace condition) have been proposed, for instance by A. Das,
-D. Kuperberg, L. Pinault, D. Pous,
-by adapting circular syntax for proofs by J. Brotherston and A. Simpson.
-These circular syntax for {\em T} make no explicit use of lambda-abstraction.
-In this paper, we explore the possibility of defining a circular syntax 
-directly for lambda-abstraction and simple types. 
-In our syntax, we can define by simultaneous recursion 
-finitely many terms using the terms themselves as proper subterms. 
-Each time we unfold the recursive definition we automatically 
-remove all variables no more in use, to prevent an infinite proliferation of names.
-We prove for our circular syntax:
-\emph{(i)}  every closed term of the type of naturals reduces to some numeral;
-\emph{(ii)}  strong normalization, for all reductions sequences not reducing inside the predecessor clause for the conditional operator; 
-%A consequence of the
-% fact that we allow infinitely many variables for our infinite terms is that some other results proved by Anupam,
-%namely Strong Normalization for all reductions and Church Rosser 
-%(\cite{2021-Anupam-Das}, Theorem 51, page 35), fail. 
-%However, we recover for $\CTlambda$
-\emph{(iii)} the existence of a limit for all infinite reductions 
-(but reductions can continue forever).
+Circular syntax for infinitary $\lambda$-terms 
+(see for instance Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
+\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}) 
+allows to intepret terms written in fixed point style 
+as recursive definitions of
+infinitary $\lambda$-terms. Circular syntax provides an 
+interpretation for basic constructions of functional programs, 
+like letrec or mu of Clemens Grabmayer, Jan Rochel 
+\cite{Letrec,Letmu,JanRochelPhd2016}).
+A sufficient, decidable and quite broad condition for normalization for such 
+infinitary $\lambda$-terms can be obtained
+by adapting the Global Trace Condition in the case of simply typed 
+circular $\lambda$-terms with conditional operator. 
+Global Trace Condition was
+originally proposed by J. Brotherston and A. Simpson
+(\cite{BrotherstonPhd2006,BrotherstonSimpson2011})
+as a correctness condition for infinitary proofs.
+Several people, including Das, Kuperberg, Pinault, Pous 
+(\cite{2021-Anupam-Das,2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023} ), 
+proved that Global Trace condition (GTC) implies normalization to a numeral 
+for a wide set of reductions
+and for closed circular $\lambda$-terms with the type $\N$ of natural numbers. 
+These papers considered 
+a proper subset of infinitary $\lambda$-terms, those
+obtained from variables and combinators using a possibly infinite number of application.
+Namely, in these papers GTC includes no \emph{explicit} clauses for $\lambda$-abstraction
+(yet, implicitly, $\lambda$-abstraction can be obtained through combinators).
+
+In this paper we add explicit clauses for $\lambda$-abstraction
+and circular $\lambda$-terms to the definition of GTC, and we check for 
+the extended GTC retains the properties of the original GTC. 
+Namely, the extended GTC implies:
+\emph{(i)} normalization to some numeral, 
+for all reductions sequences \emph{not reducing inside the 
+predecessor clause for the conditional operator}, 
+and for all closed terms of type $\N$;
+\emph{(ii)} the existence of a limit $\lambda$-term \emph{with no unsolvable subterms}
+for all possible infinite reductions.
 \end{abstract}
 \begin{keyword}
-  Cyclic Proofs, Cyclic Terms, Fixed Point Definition, Lambda Calculus
+  Cyclic Proofs, Cyclic Terms, Fixed Point Definition, Global Trace Condition,
+  Lambda Calculus, Infinitary Lambda Calculus
 \end{keyword}
 \end{frontmatter}
 
