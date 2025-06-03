@@ -1,0 +1,31 @@
+\section{Conclusion and Future Works}
+In a future paper we plan to stress the relation between infinitary $\lambda$ terms
+and co-inductive definitions, and to extend our results to a $\lambda$-
+calculus including all Martin L\"{o}f finite Inductive Definitions, and not only
+the set $\N$ of natural numbers.
+
+%, and to prove \emph{strong} 
+%normalization in the limit if we use reductions which are ``fair''.
+%``Fair'' reductions can reduce \emph{inside} the right-hand side of some $\cond$, 
+%but they never forget entirely the task of reducing \emph{outside} all such subterms.
+
+We did not consider the confluence problem for $\CTlambda$. As already remarked
+by Ariola and Klop  (\cite{ARIOLA1997154}), confluence in finite time may fail, 
+because in an infinite term 
+a reduction can multiply another redex infinitely many times. Yet, confluence
+can be restored in the limit. We plan to prove confluence in the limit for $\CTlambda$,
+and that  each term of $\CTlambda$ has exactly one limit normal form in $\LAMBDA$. 
+The difference with Ariola and Klop (or with B\"{o}hm trees, for that matter)
+is that our limits, being in $\LAMBDA$, are trees with no \quotationMarks{undefined} node.
+Uniqueness of normal form is proved in the other papers considering terms with GTC
+(\cite{2021-Anupam-Das,2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
+ 
+As a corollary, we plan to prove that each closed term of type $\N$ has exactly one normal form, 
+which is a numeral and which can be obtained in finitely many steps. To put otherwise:
+we plan to prove that all our closed terms define functionals 
+which are \emph{total}, not just partial.
+
+In a future work, we also plan to prove that the closed terms $\CTlambda$ 
+(those without free variables) represent exactly the total computable functionals 
+definable in G\"{o}del system $\systemT$, by adapting  
+Das' proof for the combinator version of cyclic $\systemT$. 

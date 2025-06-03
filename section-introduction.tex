@@ -1,59 +1,69 @@
 % !TEX root = main.tex
 
 \section{Introduction} 
-We will introduce $\LAMBDA$, a set of infinite $\lambda$-terms we use to provide a \emph{semantics} for recursive definitions of simply typed $\lambda$-terms.
+We consider $\LAMBDA$, the set of infinitary simply typed $\lambda$-terms 
+with conditional, in the style for instance of 
+Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
+\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}).
 The types of $\LAMBDA$ are: the atomic type $\N$, 
-possibly type variables $\alpha, \beta, \ldots$, and all types $A \rightarrow B$ for any types $A$, $B$. 
+possibly type variables $\alpha, \beta, \ldots$, and all types 
+$A \rightarrow B$ for any types $A$, $B$. 
 Type variables are only used to provide examples of infinite
 terms and play a minor role in our paper.
 
-The terms of $\LAMBDA$  are all possibly infinite trees representing expressions 
-defined with $0$,$\Succ $,$\ap$ (application), 
+The terms of $\LAMBDA$  are all possibly well-typed infinite trees representing expressions 
+defined with $0$, $\Succ $, $\ap$ (application), 
 variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining 
 maps), and $\cond$, the arithmetic conditional (i.e., the test on zero). 
-We will use infinite terms of $\LAMBDA$ as a semantics for finite 
-circular $\lambda$-terms.
-If we have no free term variables and no type variables, 
-in turn the trees in $\LAMBDA$ represent partial functionals on $\N$, 
-provided we add reduction rules transforming closed terms of type $\N$ 
-in notations for natural numbers.
+We will use infinite terms of $\LAMBDA$ as a simplified functional language
+with fixed point, like in Clemens Grabmayer, Jan Rochel 
+(\cite{Letrec,Letmu,JanRochelPhd2016}).
+As usual, we add reduction rules transforming closed terms of type $\N$ 
+into notations for natural numbers, therefore
+the closed terms of $\LAMBDA$ represent partial functionals on $\N$.
 
 %19:42 19/04/2024
 
 In this paper will consider two sets of terms: 
 \begin{enumerate}
 \item
-the set $\CTlambda$ of well-typed terms having a finite notation in
-a circular syntax. We claim that they are equivalent to the set of terms in G\"{o}del system $\systemT$ (\cite{GoedelSystemT}).  
+the set $\Reg$ of regular well-typed terms, those having a finite notation in
+a circular syntax. This is the frame we work in.
+%We claim that they are equivalent to the set of terms in G\"{o}del system $\systemT$ (\cite{GoedelSystemT}).  
 
 \item
-The set of terms $\GTC$, satisfying a condition called global trace condition .
-$\GTC$ is a subset of $\LAMBDA$ providing a more narrow and perspicuous
-semantics to the finite graph notations in $\CTlambda$. 
+The subset $\CTlambda \subseteq \Reg$ of them, satisfying a 
+condition called Global Trace Condition (GTC),
+for which we prove our termination results.
+The definition of $\CTlambda$ and proving its main properties is our contribution.
+%$\GTC$ is a subset of $\LAMBDA$ providing a more narrow and perspicuous
+%semantics to the finite graph notations in $\CTlambda$. 
 \end{enumerate}
 
-Global trace condition has been introduced by J. Brotherston and A. Simpson
+GTC has been introduced for infinitary proofs 
+by J. Brotherston and A. Simpson
 (\cite{BrotherstonPhd2006}, \cite{BrotherstonSimpson2011}), then adapted
-to algebraic terms of G\"{o}del system $\systemT$ by A. Das 
-(\cite{2021-Anupam-Das}, published in \cite{DBLP:conf/fscd/000221}).
-The descriptive power of the circular system $\systemT$ has been studied in detail.
-A. Das compared the descriptive power of circular terms of $\systemT$ 
-having degree $n$ type with the descriptive power of terms of original system $\systemT$,
-but having degree $n+1$ types. 
-He  proved in (\cite{2021-Anupam-Das}, \cite{DBLP:conf/fscd/000221})
-that the two set of terms define the same type $1$ functions. In the same papers he also proved 
-that the circular terms of $\systemT$ and the terms of original system $\systemT$ 
-define the same functionals at all types.
+to algebraic terms of G\"{o}del system $\systemT$ Das, Kuperberg, Pinault, Pous 
+(\cite{2021-Anupam-Das,2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
 
-G. Curzi and A. Das  also developed a circular version of Bellantoni-Cook system for 
-polynomial-time functions (\cite{DBLP:conf/lics/Curzi022}), 
-then some criterions for identifying polynomial-time functions
-in circular system $\systemT$ (\cite{DBLP:conf/csl/Curzi023}),
-and they extended circular syntax from $\systemT$ to all functions provably total in 
-$\Pi^1_2$-second order arithmetic (\cite{DBLP:conf/lics/Curzi023}).
-D. Kuperberg, L. Pinault and D. Pous (\cite{2021-Kuperberg-Pinault-Pous})
-proved that the contraction-free part of circular system $\systemT$
-captures exactly the primitive recursive functions.
+%The descriptive power of the circular version of system $\systemT$ has been studied in detail.
+%A. Das compared the descriptive power of circular terms of $\systemT$ 
+%having degree $n$ type with the descriptive power of terms of original system $\systemT$,
+%but having degree $n+1$ types. 
+%He  proved in (\cite{2021-Anupam-Das}, \cite{DBLP:conf/fscd/000221})
+%that the two set of terms define the same type $1$ functions. In the same papers he also proved 
+%that the circular terms of $\systemT$ and the terms of original system $\systemT$ 
+%define the same functionals at all types.
+%
+%G. Curzi and A. Das  also developed a circular version of Bellantoni-Cook system for 
+%polynomial-time functions (\cite{DBLP:conf/lics/Curzi022}), 
+%then some criterions for identifying polynomial-time functions
+%in circular system $\systemT$ (\cite{DBLP:conf/csl/Curzi023}),
+%and they extended circular syntax from $\systemT$ to all functions provably total in 
+%$\Pi^1_2$-second order arithmetic (\cite{DBLP:conf/lics/Curzi023}).
+%D. Kuperberg, L. Pinault and D. Pous (\cite{2021-Kuperberg-Pinault-Pous})
+%proved that the contraction-free part of circular system $\systemT$
+%captures exactly the primitive recursive functions.
 
 %Global trace condition provides a sufficient and quite broad condition for the totality 
 %of a functional. We introduce more subsets of $\LAMBDA$ which are only used 
@@ -73,32 +83,22 @@ captures exactly the primitive recursive functions.
 %Terms of $\GTC$ will correspond to subset of the total functionals on $\N$. 
 %\end{enumerate}
 
-We will prove that $\CTlambda$ is a decidable subset of the set of infinite trees 
-having a finite graph notation.
-$\CTlambda$ is a new variant of the existing circular version of 
-G\"{o}del system $\systemT$. Differently from all previous circular versions of 
-$\systemT$, our system $\CTlambda$ uses binders instead of combinators. 
-As we anticipated, circular syntax has the advange of writing terms using
-finite simultaenous recursive definitions, allows for shorter denotation, while preserving decidability of termination. By introducing a circular syntax with binders, 
+%We will prove that $\CTlambda$ is a decidable subset of the set $\Reg$ of infinite trees 
+%having a finite graph notation.
+$\CTlambda$ extends existing circular version of 
+G\"{o}del system $\systemT$ with the binder $\lambda$. 
+By introducing a circular syntax with binders, 
 we hope to provide a circular syntax more familiar to researchers working in the
-field of Type Theory.
+field of Type Theory. 
 \\
 
-We will prove for the circular syntax $\CTlambda$
+We will prove for the extended circular syntax $\CTlambda$ the results already
+known for the algebraic circular syntax for system $\systemT$:
 that reductions not in the right-hand side of any $\cond$ (conditional)
-strongly normalizes, and that they always reduce closed normal terms of type $\N$ to a numeral. In a future paper we plan to stress the relation with co-inductive definitions, to prove Church-Rosser, and to extend our results to a $\lambda$-
-calculus including all Martin L\"{o}f finite Inductive Definitions, and not only
-the set $\N$ of natural numbers.
+strongly normalizes, and that they always reduce closed normal terms of type $\N$ to a numeral.
+We will also prove that all infinite reductions have a limit, even if, as already remarked by 
+Ariola and Klop (\cite{ARIOLA1997154}), not all limits are normal forms.
 
-%, and to prove \emph{strong} 
-%normalization in the limit if we use reductions which are ``fair''.
-%``Fair'' reductions can reduce \emph{inside} the right-hand side of some $\cond$, 
-%but they never forget entirely the task of reducing \emph{outside} all such subterms.
-
-In a future work, we also plan to prove that the closed terms $\CTlambda$ 
-(those without free variables) represent exactly the total computable functionals 
-definable in G\"{o}del system $\systemT$, using the techniques developed by 
-Das for his version of cyclic terms.
 
 
 %14:57 17/04/2024
