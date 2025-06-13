@@ -2,102 +2,71 @@
 
 \section{Introduction} 
 We consider $\LAMBDA$, the set of infinitary simply typed $\lambda$-terms 
-with conditional, in the style for instance of 
+with conditional on zero, in the style for instance of 
 Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
-\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}).
-The types of $\LAMBDA$ are: the atomic type $\N$, 
-possibly type variables $\alpha, \beta, \ldots$, and all types 
-$A \rightarrow B$ for any types $A$, $B$. 
-Type variables are only used to provide examples of infinite
-terms and play a minor role in our paper.
+(\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}).
 
-The terms of $\LAMBDA$  are all possibly well-typed infinite trees representing expressions 
+The types of $\LAMBDA$ are simple types obtained from the atomic type $\N$.
+The terms of $\LAMBDA$  are all well-typed possibly infinite trees representing expressions 
 defined with $0$, $\Succ $, $\ap$ (application), 
 variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining 
-maps), and $\cond$, the arithmetic conditional (i.e., the test on zero). 
-We will use infinite terms of $\LAMBDA$ as a simplified functional language
-with fixed point, like in Clemens Grabmayer, Jan Rochel 
+maps), and $\cond$, the arithmetic conditional (i.e., the test on zero, with predecessor include). 
+We will use infinite terms of $\LAMBDA$ in order to describe
+a simplified functional language
+with fixed point, like the functional language considered by Clemens Grabmayer, Jan Rochel 
 (\cite{Letrec,Letmu,JanRochelPhd2016}).
-As usual, we add reduction rules transforming closed terms of type $\N$ 
-into notations for natural numbers, therefore
-the closed terms of $\LAMBDA$ represent partial functionals on $\N$.
+As usual, we add reduction rules with the goal of transforming closed terms of type $\N$ 
+into notations for natural numbers. Thus, 
+the closed terms of $\LAMBDA$ can be interpreted as partial functionals on $\N$.
+In the general case a reduction on a closed terms of type $\N$ can continue forever,
+this is why without further condition we only obtain partial functionals.
 
 %19:42 19/04/2024
 
-In this paper will consider two sets of terms: 
-\begin{enumerate}
-\item
-the set $\Reg$ of regular well-typed terms, those having a finite notation in
-a circular syntax. This is the frame we work in.
-%We claim that they are equivalent to the set of terms in G\"{o}del system $\systemT$ (\cite{GoedelSystemT}).  
+In this paper will consider regular terms, namely, possibly infinite $\lambda$-terms 
+having a finite number of distinct subterms. This is the frame we work in.
+We introduce a set of terms we call $\CTlambda$, consisting of all 
+regular terms satisfying a condition called Global Trace Condition (GTC).
+The definition of $\CTlambda$ and a termination  result for it is our contribution.
 
-\item
-The subset $\CTlambda \subseteq \Reg$ of them, satisfying a 
-condition called Global Trace Condition (GTC),
-for which we prove our termination results.
-The definition of $\CTlambda$ and proving its main properties is our contribution.
-%$\GTC$ is a subset of $\LAMBDA$ providing a more narrow and perspicuous
-%semantics to the finite graph notations in $\CTlambda$. 
-\end{enumerate}
 
 GTC has been introduced for infinitary proofs 
 by J. Brotherston and A. Simpson
 (\cite{BrotherstonPhd2006}, \cite{BrotherstonSimpson2011}), then adapted
-to algebraic terms of G\"{o}del system $\systemT$ Das, Kuperberg, Pinault, Pous 
-(\cite{2021-Anupam-Das,2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
+to algebraic terms of G\"{o}del system $\systemT$ by Das, Kuperberg, Pinault, Pous 
+(\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
 
-%The descriptive power of the circular version of system $\systemT$ has been studied in detail.
-%A. Das compared the descriptive power of circular terms of $\systemT$ 
-%having degree $n$ type with the descriptive power of terms of original system $\systemT$,
-%but having degree $n+1$ types. 
-%He  proved in (\cite{2021-Anupam-Das}, \cite{DBLP:conf/fscd/000221})
-%that the two set of terms define the same type $1$ functions. In the same papers he also proved 
-%that the circular terms of $\systemT$ and the terms of original system $\systemT$ 
-%define the same functionals at all types.
-%
-%G. Curzi and A. Das  also developed a circular version of Bellantoni-Cook system for 
-%polynomial-time functions (\cite{DBLP:conf/lics/Curzi022}), 
-%then some criterions for identifying polynomial-time functions
-%in circular system $\systemT$ (\cite{DBLP:conf/csl/Curzi023}),
-%and they extended circular syntax from $\systemT$ to all functions provably total in 
-%$\Pi^1_2$-second order arithmetic (\cite{DBLP:conf/lics/Curzi023}).
-%D. Kuperberg, L. Pinault and D. Pous (\cite{2021-Kuperberg-Pinault-Pous})
-%proved that the contraction-free part of circular system $\systemT$
-%captures exactly the primitive recursive functions.
-
-%Global trace condition provides a sufficient and quite broad condition for the totality 
-%of a functional. We introduce more subsets of $\LAMBDA$ which are only used 
-%as intermediate steps in the definition of $\GTC$ and of the syntax 
-%for $\CTlambda$.
-%
-%\begin{enumerate}
-%\item
-% $\WTyped \subseteq \LAMBDA$, the set of well-typed terms, is a
-%set of terms having a unique simple type.  
-%\item
-%$\Reg$ is the set of all terms of $\LAMBDA$ which are possibly infinite
-%regular trees (i.e., having finitely many subtrees), denoted by \emph{finite graphs}.
-%\item 
-%$\GTC \subseteq \WTyped$ will be defined as the set of well-typed circular 
-%$\lambda$-terms satisfying the global trace condition (see later).  
-%Terms of $\GTC$ will correspond to subset of the total functionals on $\N$. 
-%\end{enumerate}
-
-%We will prove that $\CTlambda$ is a decidable subset of the set $\Reg$ of infinite trees 
-%having a finite graph notation.
-$\CTlambda$ extends existing circular version of 
-G\"{o}del system $\systemT$ with the binder $\lambda$. 
-By introducing a circular syntax with binders, 
+Our contribution is to extend these circular versions of 
+G\"{o}del system $\systemT$ by adding an explicit use of the binder $\lambda$. 
+Adding $\lambda$,  
 we hope to provide a circular syntax more familiar to researchers working in the
-field of Type Theory. 
+field of Type Theory. We call $\CTlambda$ our extended circular syntax.
 \\
 
-We will prove for the extended circular syntax $\CTlambda$ the results already
-known for the algebraic circular syntax for system $\systemT$:
+We will prove for $\CTlambda$ (with binders) a result only
+known for the \emph{algebraic} circular syntax for system $\systemT$:
 that reductions not in the right-hand side of any $\cond$ (conditional)
-strongly normalizes, and that they always reduce closed normal terms of type $\N$ to a numeral.
-We will also prove that all infinite reductions have a limit, even if, as already remarked by 
-Ariola and Klop (\cite{ARIOLA1997154}), not all limits are normal forms.
+strongly normalizes, and that they always reduce closed normal terms of type 
+$\N$ to a numeral.
+
+We also quote a second contribution. We extend to the case of binder $\lambda$ the
+characterization of the limit reduction obtained 
+by Das, Kuperberg, Pinault, Pous 
+(\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023})
+for the algebraic circular version of 
+G\"{o}del system $\systemT$. Namely, we prove that all infinite reductions on $\CTlambda$
+have a limit, which informally can be described as follows. 
+In each infinite reduction sequence
+the first symbol of the $\lambda$-term eventually stabilizes, then the
+first symbol of each immediate subterm eventually stabilizes, and so forth, recursively.
+
+The notion of limit reduction in $\CTlambda$
+could be considered similar to the notion of limit reduction for finite $\lambda$-terms obtained
+through B\"{o}hm trees. 
+However, we stress that there is an important difference: 
+in $\CTlambda$ no \quotationMarks{undefined} subterm is required
+in order to represent the limit of a reduction, while B\"{o}hm trees 
+can have undefined subtrees. 
 
 
 

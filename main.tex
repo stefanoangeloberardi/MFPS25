@@ -94,44 +94,35 @@
  
 
 \begin{abstract} 
-Circular syntax for infinitary lambda-terms 
-(see for instance Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
-\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}) 
-allows to intepret terms written in fixed point style 
-as recursive definitions of
-infinitary lambda-terms. Circular syntax provides an 
-interpretation for basic constructions of functional programs, 
-like the letrec or mu of Clemens Grabmayer, Jan Rochel 
-(\cite{Letrec,Letmu,JanRochelPhd2016}).
-A sufficient, decidable and quite broad condition for normalization for such 
-infinitary lambda-terms can be obtained
-by adapting the Global Trace Condition in the case of simply typed 
+Circular syntax for infinitary lambda-terms,
+was considered for instance by Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries.
+Circular syntax allows to intepret lambda-terms written in fixed point style 
+as recursive definitions of infinitary terms. 
+%In this way, circular syntax provides an 
+%interpretation for basic constructions of functional programs, 
+%like the letrec or mu of Clemens Grabmayer, Jan Rochel.
+A sufficient, decidable and quite broad condition for reducing such 
+infinitary lambda-terms to a numeral can be obtained
+by adapting the Global Trace Condition (GTC) to simply typed 
 circular lambda-terms with conditional operator. 
-Global Trace Condition was
-originally proposed by J. Brotherston and A. Simpson
-(\cite{BrotherstonPhd2006,BrotherstonSimpson2011})
+GTC was originally proposed by J. Brotherston and A. Simpson
 as a correctness condition for infinitary proofs.
-Several people, including Das, Kuperberg, Pinault, Pous 
-(\cite{2021-Anupam-Das,2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}), 
-proved that Global Trace condition (GTC) implies normalization to a numeral 
-for a wide set of reductions
-and for closed circular lambda-terms with the type N of natural numbers. 
-These papers considered 
-a proper subset of infinitary lambda-terms, those
-obtained from variables and combinators using a possibly infinite number of application.
-Namely, in these papers GTC includes no \emph{explicit} clauses for binders
-(yet, implicitly, binders can be obtained through combinators).
+Several people, including Das, Kuperberg, Pinault, Pous,
+proved that GTC implies normalization to a numeral:
+this result holds for a wide set of reductions and for closed circular lambda-terms 
+with the type N of natural numbers. 
 
-In this paper we add explicit clauses for lambda-abstraction
-to the definition of GTC, and we check for 
-the extended GTC retains the properties of the original GTC. 
-Namely, the extended GTC implies:
-\emph{(i)} normalization to some numeral, 
-for all reductions sequences \emph{not reducing inside the 
-predecessor clause for the conditional operator}, 
-and for all closed terms of type N;
-\emph{(ii)} the existence of a limit lambda-term \emph{with no undefined subterms}
-for all possible infinite reductions on all terms.
+These papers considered a proper subset of infinitary lambda-terms, those
+obtained from variables and combinators using a possibly infinite number of application.
+Namely, these papers consider no \emph{explicit} clauses for lambda-abstraction,
+which is instead defined through combinators.
+Our contribuition is to add explicit clauses for lambda-abstraction
+to the definition of GTC, and to check that 
+the extended GTC retains the termination properties of the original GTC. 
+%Namely, we prove that the extended GTC implies normalization to some numeral, 
+%for all closed infinitary terms of type N and
+%for all reductions sequences not reducing inside the 
+%predecessor clause for the conditional operator.
 \end{abstract}
 \begin{keyword}
   Cyclic Proofs, Cyclic Terms, Fixed Point Definition, Global Trace Condition,
