@@ -6,8 +6,9 @@
 \section{Subject Reduction for Well-Typed Infinite Lambda Terms}
 \label{section-subject-reduction}
 
-We show the subject reduction for well-typed terms of $\LAMBDA$,
-and also show the global trace condition is preserved by reductions. 
+We quickly quote the subject reduction properties for well-typed terms of $\LAMBDA$,
+and the fact that the global trace condition is preserved by subterms, substitution
+and reductions. We skip proofs for reason of space, but they are just an exercice.
 %We first introduce some auxiliary notations for proofs of them.
 %
 %Let $X$ be a set of variables of the form $x^T$.
@@ -534,7 +535,7 @@ and also show the global trace condition is preserved by reductions.
 %  that satisfies the global trace condition, as we wished. 
 %\end{proof}
 
-Using the subject reduction theorem, variable renaming is shown to be admissible in our system (it can destroy regularity, though).
+Variable renaming preserves GTC. $\alpha$-renaming can destroy regularity, though.
 
 \begin{proposition}(Renaming)
 \label{prop:renaming}
@@ -545,7 +546,7 @@ Using the subject reduction theorem, variable renaming is shown to be admissible
     then $\Pi':\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
     Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
   \item\label{prop:renaming2}
-    If $\Pi:\Gamma\vdash t:A$ and $t'$ is an $\alpha$-equivalent term of $t$,
+    If $\Pi:\Gamma\vdash t:A$ and $t'$ is $\alpha$-equivalent to $t$,
     then $\Pi':\Gamma\vdash t':A$ for some $\Pi'$.
     Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
   \end{enumerate}

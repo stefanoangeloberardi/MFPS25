@@ -9,23 +9,23 @@ only finitely many \quotationMarks{$0$-safe} (safe) reduction steps:
 from some point on, all reduction steps are \quotationMarks{unsafe},
 that is, they occur in the right-hand-side of some $\cond$.
     
-From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions from some point on stop,
+From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on ,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
 no matter how we reduce within the $n$-safe level of a term, 
 eventually no reductions are left, therefore we obtained some $n$-safe normal 
-form.
+form. In the case the term is closed of type $\N$, then any $n$-safe normal form is a numeral.
 \\
 
 We introduce the property of being \quotationMarks{finite for $n$-safe reductions}.
 
 \begin{definition}
 \label{definition-finite-n-safe-reduction}
-Assume $t \in \WTyped$. 
+Assume $t \in \LAMBDA$. 
 We say that $t$ is \emph{finite for $n$-safe reductions} if and only if 
 all infinite reduction paths include only finitely many $n$-safe reductions
 \end{definition}
 
-to put otherwise: in all infinite reduction paths, from some point on all reductions
+To put otherwise: in all infinite reduction paths, from some point on all reductions
 are \emph{not} $n$-safe, they contract redexes occurring in the right-hand-side of
 $n$ $\cond$-terms. In the following, we explicitly write $t[x_1,\ldots,x_n]$,
 when each free variable in a term $t$ is some $x_i$, 
@@ -37,17 +37,19 @@ the general case will follow.
 As we previously said, 
 we often abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
 We have to prove that all terms in $\GTC$ are finite for safe reductions. 
-For, we define total well-typed terms by induction on the type, as in Tait's normalization proof.
+For, we define total well-typed terms by induction on the type, 
+as in Tait's normalization proof.
 
 %We recall that $u \in \LAMBDA$ is \emph{finite for safe reduction} 
 %if and only if all infinite reduction sequences from $t$ include only finitely many "safe" reduction steps
 %(Def. \ref{definition-safe-trunk}).
 
 %18:45 26/03/2025
+%17:47 16/06/2025
 
 \begin{definition}[Total well-typed terms of $\LAMBDA$]
 \label{definition-total-term}
-Let $t \in \WTyped$ and $t : T$.
+Assume $t \in \WTyped$ and $\Pi:\Gamma \vdash t : T$ for some $\Pi,\Gamma$.
 We define \quotationMarks{$t$ is total of type $T$} by induction on $T$
 
 \begin{enumerate}
@@ -74,7 +76,7 @@ The result of the assignment is  $t[\vec{a}](\vec{v})$.
 
 \end{definition}
 
-By definition, any total term is well-typed, in particular it has exactly one type. 
+By definition, any total term is well-typed, and if it satisfies GTC it has exactly one type. 
 
 We define a well-founded relation predecessor relation on terms finite for safe reductions and of type $\N$. We recall that $\reduces$ denotes one reduction
 step (contraction of a single redex which is a subterm), 
@@ -92,18 +94,22 @@ $
 
 \begin{Eg}
 If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
-If $t = \Succ(t)$ then $t \prec t$ and $\prec$ is \emph{not} well-founded on $t$.
+If $t \sim \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
+well-founded from $t$.
 \end{Eg}
 
-We did not prove Church-Rosser yet, therefore in principle two maximal
+We do not include a proof of Church-Rosser in this paper. In principle, 
+a term of $\CTlambda$ could reduce to two distinct numerals, and two maximal
 sequences of $\prec$ from the same term of $\CTlambda$ 
-could have a different length. However, we can prove that if $t$ is a term finite 
-for safe reductions, then any $\prec$-decreasing sequence from $t$ terminates.
+could have a different length. However, 
+we can easily prove a weaker statement: 
+if $t$ is a term finite for safe reductions, 
+then any $\prec$-decreasing sequence from $t$ terminates.
 
 
 \begin{lemma}[The $\prec$-order]
 \label{lemma-prec-order}
-Assume $t \in \WTyped$ has type $\N$, and $t$ is finite for safe reductions.
+Assume $t \in \WTyped$ has type $\N$, and $t$ is \emph{finite for safe reductions}.
 
 \begin{enumerate}
 \item
@@ -148,13 +154,13 @@ $\prec$ is well-founded on total terms of type $\N$.
 %\end{enumerate}
 %\end{proof}
 
-
-We will prove that if $t$ is not total, then we can assign total terms to  the 
-sub-terms of $t$ in any infinite path $\pi$ of a proof $\Pi : \Gamma \vdash t: A$ 
+We will prove that if $t \in \GTC$ is not total, then we can assign total terms to  the 
+sub-terms of $t$ in any infinite path $\pi$ of a proof $\Pi : \Gamma \vdash t : A$ 
 in a way compatible with traces and progress points. In particular, the 
 total terms associated to any infinitely progressing trace $\tau$
-in $\pi$ will form an infinite decreasing sequence for $\prec$.
-This cannot be, therefore non-total terms cannot exists. 
+in $\pi$ will form an infinite decreasing sequence for $\prec$, contradicting
+Lemma \ref{lemma-prec-order}.
+This cannot be: we will deduce that all terms satisfying GTC are total. 
 
 
 \begin{definition}(Trace-compatible Assignment)
@@ -180,14 +186,16 @@ $\vec{v}$ is \emph{trace-compatible} if it is trace-compatible in all $i$.
 
 Now we will prove that if an infinite branch $\pi$ of a proof tree $\Pi:\Gamma \vdash t:A$ 
 has a trace-compatible assignment made of total terms, 
-then all traces $\sigma$ of $\pi$ progress only finitely many times and the term $t$ is not in $\GTC$
+then all traces $\sigma$ of $\pi$ progress only finitely many times and the term 
+$t$ is not in $\GTC$
 ($t$ does not satisfy the global trace condition).
 
 
 
 \begin{proposition}[Trace assignment]
 \label{prop:trace_assign-finiteness}
-Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ for which we have
+Assume $\Pi:\Gamma \vdash t:A$ 
+and there is some infinite path $\pi$ of $\Pi$ for which we have
 some \emph{total} trace-compatible assignment  $\rho$ to $\pi$. 
 \begin{enumerate}
 \item
@@ -357,16 +365,20 @@ Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
 %%10:28 19/04/2024
 %%17:32 24/04/2024
 
-Let $\Pi=(T,\phi)$ be a proof of $\Gamma\vdash t:A$ and $l_n$ be a node of $\Pi$, that is, a list  
-of integers $l_n=(e_1, \ldots, e_{n-1}) \in \universe{\Pi}$ for some $n \in \N$.
-We write $\Gamma_{n}\vdash t_{n}:A_{n} = \Label(\Pi,l_n)$ for the sequent
- labelling the node $l_n$. We want to prove that all terms of $\GTC$ are total by substitution.
+%Let $\Pi=(T,\phi)$ be a proof of $\Gamma\vdash t:A$ and $l_n$ be a node of $\Pi$,
+%whose positioni is described by a list  
+%of integers $l_n=(e_1, \ldots, e_{n-1}) \in \universe{\Pi}$ for some $n \in \N$.
+%We write $\Gamma_{n}\vdash t_{n}:A_{n} = \Label(\Pi,l_n)$ for the sequent
+% labelling the node $l_n$. 
+ We want to prove that all terms of $\GTC$ are total by substitution.
 If we consider the substitution of a variable with itself 
 (a variable is a total term by 
 \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}),
 we will deduce that all terms of $\GTC$ are total, 
 hence finite for safe reductions, hence strongly normalizing for $0$-safe reductions.
 \\
+
+
 
 One problem in the proof of the theorem 
 is that reduction does not commute with the second argument of substitution. 
@@ -1020,6 +1032,8 @@ We now have all properties required to prove our Main Theorem.
 %\end{proof}
 %
 %%14:09 06/06/2024
+
+% 18:27 16/06/2025
 
 \subsection{Strong Normalization for safe reductions in $\CTlambda$
 and Failure of the Closure under Limit for $\CTlambda$}
