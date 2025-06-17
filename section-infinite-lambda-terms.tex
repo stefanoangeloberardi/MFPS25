@@ -204,9 +204,11 @@ However, $t$ is an infinite tree (it includes a proper subtree isomorphic to its
 %in this way has infinitely many sub-terms $x', x'', \ldots$, therefore it is not
 %regular, yet is it $\alpha$-equivalent to the regular term $t$.
 
-The binder relation is defined as for finite $\lambda$-calculus.
+The binder relation is defined as for finite $\lambda$-calculus 
+(\cite{Barendregt1984-BARTLC}, \S 2.1.6 p. 24). 
 
-\begin{definition}[Binders and $\alpha$-conversion]
+\begin{definition}(Binders Relation)
+\label{definition-binder-relation}
 Assume $t,u \in \LAMBDA$.
 \begin{enumerate}
 \item
@@ -219,19 +221,47 @@ $\FV(t)$ is the (finite or infinite) set of variables having at least one free o
 An occurrence of $x^T$ in $t$ is bound if it is not free. If an occurrence is bound, then
 the node labeled $\lambda x^T.$ closest to the occurrence is called the binder of
 the occurrence.
+\end{enumerate}
+\end{definition}
+
+We also introduce an $\alpha$-conversion relation. With respect to the $\alpha$-conversion
+relationfor finite $\lambda$-terms (\cite{Barendregt1984-BARTLC}, \S 2.1.11 p.26) 
+we add some finiteness condition. Our goal is to obtain a relation of $\alpha$-conversion 
+preserving the regularity of a term.
+
+
+\begin{definition}(finite $\alpha$-conversion)
+\label{definition-alpha-conversion}
+Assume $t,u \in \LAMBDA$.
+\begin{enumerate}
 \item
-We say that $t,u$ are $\alpha$-convertible and we write $t \sim_\alpha u$ if and only if there
-is a tree isomorphism $\phi$ between $t$ and $u$ such that:
+We say that $\phi:t \rightarrow u$ is an $\alpha$-conversion map if and only if 
+$\phi$ is a tree isomorphism between $t$ and $u$ such that:
 \begin{enumerate}
 \item
 $\phi$ preserves all labels $\not = \lambda x^T., x^T$
 \item 
-$\phi$ preserves all labels on a free variable occurrence, and the fact that the occurrence is free;
+$\phi$ preserves all labels $x^T$
+on a free variable occurrence, and the fact that the occurrence is free;
 \item
-$\phi$ sends each label $\lambda x^T.$ to some label $\lambda y^T.$, and each label $x^T$
-on a bound variable to some label $z^T$ on a bound variable, in such a way that the
-binder relation is preserved.
+$\phi$ sends each binder label $\lambda x^T.$ to some binder 
+label $\lambda y^T.$, each label $x^T$
+on a bound variable to some label $z^T$ on a bound variable, and preserves the
+binder relation
 \end{enumerate}
+
+\item
+We say that an $\alpha$-conversion map $\phi$ is equality-preserving if $\phi$ maps equal
+labels into equal labels.
+
+\item
+We say that an $\alpha$-conversion map $\phi:t \rightarrow u$ is finite if there are subterms
+$u_1, \ldots, u_n$, including all but finitely many nodes of $t$ and such that $\phi$
+restricted to each $u_i$ is equality-preserving. 
+
+\item
+We write $t \sim_\alpha u$ if there is some \emph{finite} 
+$\alpha$-conversion $\phi:t \rightarrow u$.
 \end{enumerate}
 \end{definition}
 
@@ -364,7 +394,7 @@ $\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
 We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
-free variable $x$ in $t$, by first replacing $t$ with some $\alpha$-convertible term $t'$
+free variable $x$ in $t$, by first replacing $t$ with some $t' \alpha $
 in order to avoid that a free occurrence in $u$ become bound after substitution. 
 The use of $\alpha$-convertibility for substitution is not relevant in this paper. Indeed,
 substitution of a closed term $u$ requires no renaming, and  in order to use 
@@ -638,7 +668,7 @@ We say that two rules are equal if they have the same list of judgements.
 Any rule different from $\weak$ can be uniquely recovered from its last
 judgment, which we call its \quotationMarks{conclusion}.
 
-\begin{proposition}[Rules and subterms]
+\begin{proposition}(Rules and subterms)
 \label{proposition-rules-subterms}
 Assume $r, r' \in \Rule$ are no instances of the $\weak$-rule 
 and have conclusion the same judgment $\Gamma \vdash t:A$.
@@ -809,7 +839,7 @@ then $A = A'$.
 
 %12:25 13/06/2025
 
-\begin{proposition}[Uniqueness of Typing]
+\begin{proposition}(Uniqueness of Typing)
 \label{proposition-left-finite-unique}
 If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  
 $\Pi':\Gamma' \vdash t:A'$ are two left-finite proofs for the
