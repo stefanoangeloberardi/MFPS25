@@ -69,16 +69,16 @@ for infinitary $\lambda$-terms describing realistic programs.
 
 %Another nice feature of the global trace condition is 
 %that for $t \in \GTC$ we require that for any proof $\Pi:\Gamma \prove t:A$ 
-%all infinite paths have some infinite progressing trace. This proof is almost-
+%all infinite paths have some infinite progressing trace. This proof is 
 %left-finite, because all leftmost paths from any subterm of $t$ 
 %have no progress point and 
 %therefore are finite.  We conclude that if $t \in \GTC \subseteq \WTyped$
-%then we can assign a unique type to $t$ with a unique proof, which is almost-left-
+%then we can assign a unique type to $t$ with a unique proof, which is left-
 %finite.
 
 We include now some examples of  terms in $\CTlambda$, i.e., 
 of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, 
-in particular they are almost-left-finite, and by definition of $\CTlambda$ they are regular.
+in particular they are left-finite, and by definition of $\CTlambda$ they are regular.
 
 %18:05 03/06/2024
 
@@ -490,37 +490,3 @@ $f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms.
 %reduce infinitely many nested existing $\beta$-redexes in one step, also the 
 %intermediate steps of the infinite reduction of $\Interval$ are not regular.
 
-
-%16:32 30/04/2024
-%22:30 03/06/2024
-\subsection{The Ackermann Function (Better Code it is Easier to Analyse)}
-The Global Trace Condition is a \quotationMarks{fragile} property: two
-terms can be trivial variant each other, can compute the function, yet
-one term can satisfy the global trace condition while the other term does not.
-As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
-  \[
-  \AckA = \lambda \redm, \bluen.\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckA(m',1)}{\lambda n'.\AckA(m',\AckA(\mathbf{\Suc{m'}},n'))}(\bluen)}(\redm)
-  \]
-and as 
-  \[
-  \AckB = \lambda \redm, \bluen.
-\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckB(m',1)}{\lambda n'.\AckB(m',\AckB(\redm,n'))}(\bluen)}(\redm)
-  \]
-The only difference between the two terms is that $\Suc{m'}$ in the first
-term becomes $\redm$ in the second term. $\AckA$ and $\AckB$ are 
-extensionally equal, because in all computations $m'$ is the predecessor of $m$. 
-However, by direct computation we find out that 
-$\AckA$ does \emph{not} satisfy the Global Trace condition, while $\AckB$ does
-satisfy it. 
-
-The reason is that the value of the term $u= \Suc{m'}$ is already stored in a 
-variable $\redm$, so we should write $\ldots (\mathbf{\Suc{m'}},n') \ldots$ in the 
-form  $\ldots (\redm,n') \ldots$, for two reasons.
-First, it is a waste of time to recompute the value $u= \Suc{m'}$ if this value is 
-already stored in $\redm$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
-$\ldots (\Suc{m'},n') \ldots$, then we use the variable $\redm$ as argument of our
-term. When we use a variable as argument, way we add more connections and 
-more traces to our term, and it is more likely that the Global Trace algorithm finds 
-some infinitely increasing trace and therefore proves that the map we defined is 
-total. Replacing  a term $u$ with a variable $\redm$, when this replacing is sound, 
-provides better code which is easier to prove total automatically.

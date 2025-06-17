@@ -1,4 +1,4 @@
-\section{The set of infinite $\lambda$-terms}
+\section{The set of infinite lambda-terms}
 In this section we define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
 of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
 we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy the
@@ -661,8 +661,8 @@ From the typing rules we define the proofs that a term is well-typed.
 
 %The next definition is the formal definition of proof.
 %
-%We mention that we will introduce a restriction we call \emph{Almost-left-finite} on proof trees. 
-%The restriction Almost-left-finite is used to prevent trivial proofs. 
+%We mention that we will introduce a restriction we call \emph{left-finite} on proof trees. 
+%The restriction left-finite is used to prevent trivial proofs. 
 %For instance, we want to forbid a proof cyclically switching the variables $x$ and $y$ in the context of a term,
 %by an infinite nesting of $\weak$-rule (Weakening + Exchange  rule):
 % \[
@@ -723,24 +723,34 @@ $\Pi$ is a proof of conclusion $\Gamma \vdash t:A$ if:
 \end{definition}
 
 %
-%We can check that a proof is almost-left-finite if and only if all leftmost paths of all sub-proofs are finite.
+%We can check that a proof is left-finite if and only if all leftmost paths of all sub-proofs are finite.
 %
 %In the case of a regular proof, we can decide in polynomial time in the number of sub-proofs whether a
-%proof is almost-left-finite. Here is the algorithm. Suppose a possibly infinite proof has $n$ subproofs.
+%proof is left-finite. Here is the algorithm. Suppose a possibly infinite proof has $n$ subproofs.
 %For each sub-proof we follow the leftmost path, after $n$ steps either we reach some rule without
 %premises (either a $\var$-rule or a $0$-rule), or we loop. Then:
 %\begin{enumerate}
 %\item
-%If for all sub-proofs we stop then the proof is almost-left-finite
+%If for all sub-proofs we stop then the proof is left-finite
 %\item
-%If for some sub-proof we loop, then there is infinite leftmost path and the proof is \emph{not} almost-left-finite.
+%If for some sub-proof we loop, then there is infinite leftmost path and the proof is \emph{not} left-finite.
 %\end{enumerate}
 %We estimate the computation time to $O(n)$ for each of the $n$ sub-proofs, 
 %and the total computation time to $O(n^2)$.
 %\\
 
-We say that a term is well-typed if it has a proof-tree satisfying some extra 
-condition removing some non-sensical proofs.
+There are non-sensical typing proofs. An example. Assume $t_{n+1} = t_n(0^N)$ is a term 
+family indexed on $n \in \N$. Then for all types $A$ we can define a proof family $\Pi_n: 
+\emptyset \vdash t_n : \N^n \rightarrow A$. 
+The assumptions of the conclusion of $\Pi_n$  are proved by $
+\Pi_{n+1} : \emptyset \vdash t_{n+1} : \N^{n+1} \rightarrow A$ 
+and by $\Pi:\emptyset\vdash 0^\N:\N$. 
+There is no obvious interpretation for the term $t_0 \in \LAMBDA$, 
+which can have any possible type.
+
+For this reason, we say that a term $t \in \LAMBDA$
+is well-typed if $\Pi:\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
+condition, \emph{left-finiteness}, used to remove some non-sensical proofs like above.
 
 \begin{definition}(Well-typed term of $\LAMBDA$)
 %\mbox{}
@@ -753,17 +763,16 @@ with first node of $\pi$ the root of $T$,
 and each other node of $\pi$ a child of the previous node in $\pi$.
 
 \item
-A path is \emph{almost-leftmost} if all nodes of $\pi$ but finitely many
-are the left-child of the previous node of $\pi$.
+A path is \emph{left-finite} if only finitely many nodes of $\pi$
+are the left-child of some previous node of $\pi$.
 
 \item
-A proof $\Pi$ is Almost-left-finite if all almost-lefmost paths $\pi$ in $\Pi$ are 
-finite.
+A proof $\Pi$ is left-finite if all paths $\pi$ in $\Pi$ are left-finite.
 
 \item
-$t \in \LAMBDA$ is well-typed if and only if 
-$\Pi:\Gamma \vdash t:A$ for some \emph{almost-left-finite} proof $\Pi$,
-for some $A$ and some context $\Gamma$ with $\FV(\Gamma) \supseteq \FV(t)$.
+$t \in \LAMBDA$ is well-typed if and only if $\Pi:\Gamma \vdash t:A$ 
+for some \emph{left-finite} proof $\Pi$, for some $A$ and some context $\Gamma$ 
+with $\FV(\Gamma) \supseteq \FV(t)$.
 
 \item
 $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
@@ -783,23 +792,27 @@ $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
 \begin{proposition}
 Well-typed terms are closed by well-typed substitution:
 if $\Pi_1, x^U:U \Gamma \vdash t:A$ and $\Pi_2 \Gamma \vdash u:U$
-are almost-left finite,
-then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some almost-left finite $\Pi$.
+are left-finite proofs,
+then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
 \end{proposition}
 
-Proofs not using the $\weak$-rule are unique, because the first symbol of each 
-sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is 
-no more true, but we can prove that the \emph{type} assigned to a term by an 
-Almost-Left-Finite proof is \emph{unique}: if two Almost-Left-Finite proofs 
+%
+%Proofs not using the $\weak$-rule are unique, because the first symbol of each 
+%sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is 
+%no more true. However, 
+%
+
+We we can prove that the \emph{type} assigned to a term by an 
+left-finite proof is \emph{unique}: if two left-finite proofs 
 $\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same $t \in \LAMBDA$, 
 then $A = A'$.
 
 %12:25 13/06/2025
 
-\begin{proposition}[Uniqueness of almost-left-finite proofs and types]
-\label{proposition-almost-left-finite-unique}
+\begin{proposition}[Uniqueness of Typing]
+\label{proposition-left-finite-unique}
 If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  
-$\Pi':\Gamma' \vdash t:A'$ are two almost-left-finite proofs for the
+$\Pi':\Gamma' \vdash t:A'$ are two left-finite proofs for the
 same term $t$, then $A = A'$.
 \end{proposition}
 
@@ -807,7 +820,7 @@ same term $t$, then $A = A'$.
 %%08:56 19/06/2024
 %\begin{proof}
 %By induction on the sum of the length of the leftmost branch in $\Pi$ and $\Pi'$. These lengths are finite
-%because $\Pi$ and $\Pi'$ are assumed to be almost-left-finite. Let $r$ be the last rule of $\Pi$ and $r'$ be the
+%because $\Pi$ and $\Pi'$ are assumed to be left-finite. Let $r$ be the last rule of $\Pi$ and $r'$ be the
 %last rule of $\Pi'$.
 %\begin{enumerate}
 %\item
@@ -865,7 +878,7 @@ same term $t$, then $A = A'$.
 %\begin{Eg}
 %We provide a term in $\LAMBDA$ having more than one type.
 %Let $t=u(0)$ and $u=\cond(t,u)$. $t$ has an infinite lefmost branch $t,u,t,u, \ldots$, therefore
-%$t$ is not almost-left-finite and it has no \emph{almost-left-finite typing proof}.
+%$t$ is not left-finite and it has no \emph{left-finite typing proof}.
 %Unicity fails and we can prove $\vdash t:A$ for all types $A \in \Type$. 
 %The subterms of $t$ are $\{t, u, 0\}$ and a proof $\Pi: \emptyset \vdash t:A$ is
 %\[
@@ -913,10 +926,10 @@ same term $t$, then $A = A'$.
 %
 %
 %\emph{Claim (existence of a polynomial-time typing algorithm)}.
-%We claim without proof that if a term $t$ is regular then we can decide if an almost-left-finite proof 
-%$\Pi:\Gamma \vdash A$ exists. If an almost-left-finite proof $\Pi$ exists 
-%then at least one of almost-left-finite proofs is regular and we can compute it. 
-%We first check whether the term is almost-left-finite in time $O(n^2)$. If it is not we reject the term.
+%We claim without proof that if a term $t$ is regular then we can decide if an left-finite proof 
+%$\Pi:\Gamma \vdash A$ exists. If an left-finite proof $\Pi$ exists 
+%then at least one of left-finite proofs is regular and we can compute it. 
+%We first check whether the term is left-finite in time $O(n^2)$. If it is not we reject the term.
 %Otherwise we start the standard recursive typing algorithm, until a type has been inferred consistently
 %for each of the finitely many subterms, or some type inconsistency has been found.
 %In the first case we accept the term and we return the time, in the second case we reject the term

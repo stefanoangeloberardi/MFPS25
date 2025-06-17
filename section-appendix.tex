@@ -1,5 +1,6 @@
 \section{Appendix}
-We include here all proofs for the statements of our paper.
+We include here all proofs for the statements of our paper and one more example,
+the Ackermann function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTION 1
@@ -13,17 +14,18 @@ We include here all proofs for the statements of our paper.
 % infinite lambda terms
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%\begin{proposition}[Uniqueness of almost-left-finite type]
-%\label{proposition-almost-left-finite-unique}
-%If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are two almost-left-finite
+%\begin{proposition}[Uniqueness of left-finite type]
+%\label{proposition-left-finite-unique}
+%If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are two left-finite
 %proofs then $A = A'$.
 %\end{proposition}
 
 %08:56 19/06/2024
-\begin{proof}(Uniqueness of almost-left-finite type, Prop. \ref{proposition-almost-left-finite-unique})
-By induction on the sum of the length of the leftmost branch in $\Pi$ and $\Pi'$. These lengths are finite
-because $\Pi$ and $\Pi'$ are assumed to be almost-left-finite. Let $r$ be the last rule of $\Pi$ and $r'$ be the
-last rule of $\Pi'$.
+\begin{proof}(Uniqueness of Typing, 
+Prop. \ref{proposition-left-finite-unique})
+By induction on the sum of the length of the leftmost branch in $\Pi$ and $\Pi'$. These lengths 
+are finite because $\Pi$ and $\Pi'$ are assumed to be left-finite. Let $r$ be the last rule of $\Pi$ 
+and $r'$ be the last rule of $\Pi'$.
 \begin{enumerate}
 \item
 Assume $r = \weak$. Then $\Pi$ is obtained from a proof $\Pi_1:\Gamma_1 \vdash t:A$. 
@@ -483,7 +485,7 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %  Note that if we have $\Pi^\circ$ that satisfies the requirements, its possibly infinite path
 %  is a path of $\Pi_t$ or a path of $\Pi_u$ or a path $l\conc(i)\conc l'$,
 %  where $l$ is a path of $T_t$, $i$ is a switching point, and $l'$ is a path of $T_u$.
-%  Hence $\Pi^\circ$ is Almost-left-finite, since $\Pi_t$ and $\Pi_u$ are Almost-left-finite.
+%  Hence $\Pi^\circ$ is left-finite, since $\Pi_t$ and $\Pi_u$ are left-finite.
 %  In addition, if $\Pi_t$ and $\Pi_u$ satisfies the global trace condition,
 %  so is $\Pi^\circ$ by (b3). 
 %  Therefore, to complete the proof, it is enough to construct $\Pi^\circ$. 
@@ -1785,3 +1787,39 @@ Then $t$ is sound by the previous point and the only possibility left is that $t
 a numeral.
 \end{enumerate}
 \end{proof}
+
+
+
+%16:32 30/04/2024
+%22:30 03/06/2024
+\subsection{The Ackermann Function (Better Code it is Easier to Analyse)}
+The Global Trace Condition is a \quotationMarks{fragile} property: two
+terms can be trivial variant each other, can compute the function, yet
+one term can satisfy the global trace condition while the other term does not.
+As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
+  \[
+  \AckA = \lambda \redm, \bluen.\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckA(m',1)}{\lambda n'.\AckA(m',\AckA(\mathbf{\Suc{m'}},n'))}(\bluen)}(\redm)
+  \]
+and as 
+  \[
+  \AckB = \lambda \redm, \bluen.
+\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckB(m',1)}{\lambda n'.\AckB(m',\AckB(\redm,n'))}(\bluen)}(\redm)
+  \]
+The only difference between the two terms is that $\Suc{m'}$ in the first
+term becomes $\redm$ in the second term. $\AckA$ and $\AckB$ are 
+extensionally equal, because in all computations $m'$ is the predecessor of $m$. 
+However, by direct computation we find out that 
+$\AckA$ does \emph{not} satisfy the Global Trace condition, while $\AckB$ does
+satisfy it. 
+
+The reason is that the value of the term $u= \Suc{m'}$ is already stored in a 
+variable $\redm$, so we should write $\ldots (\mathbf{\Suc{m'}},n') \ldots$ in the 
+form  $\ldots (\redm,n') \ldots$, for two reasons.
+First, it is a waste of time to recompute the value $u= \Suc{m'}$ if this value is 
+already stored in $\redm$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
+$\ldots (\Suc{m'},n') \ldots$, then we use the variable $\redm$ as argument of our
+term. When we use a variable as argument, way we add more connections and 
+more traces to our term, and it is more likely that the Global Trace algorithm finds 
+some infinitely increasing trace and therefore proves that the map we defined is 
+total. Replacing  a term $u$ with a variable $\redm$, when this replacing is sound, 
+provides better code which is easier to prove total automatically.
