@@ -1,4 +1,3 @@
-
 \section{Terms with the Global Trace Condition are Finite for Safe Reductions}
 
 \label{section-finite-safe-reductions}
@@ -1035,14 +1034,13 @@ We now have all properties required to prove our Main Theorem.
 
 % 18:27 16/06/2025
 
-\subsection{Strong Normalization for safe reductions in $\CTlambda$
-and Failure of the Closure under Limit for $\CTlambda$}
 
-From this theorem we derive the strong normalization result 
+From the theorem above we derive the strong normalization result 
 for safe reductions on terms of $\GTC$
 and for all terms which satisfy the global trace condition.
 
 \begin{corollary}\label{cor:SN_GTC}
+\label{corollary-finite-safe-reduction}
   Assume  $t \in \CTlambda$ and $n \in \N$.
   \begin {enumerate}
   \item
@@ -1054,105 +1052,36 @@ and for all terms which satisfy the global trace condition.
   \item
     $t$ strongly $n$-safe-normalizes, and in all infinite reductions from $t$
     from some point on all reductions are \emph{not} $n$-safe.
-  \item
-    All infinite reduction sequences in $\CTlambda$ from $t$ have some limit in 
-    $\LAMBDA$, a limit which is sometimes outside $\CTlambda$.
-    %Kimura: {\rm{\color{red}\Large Needs to be checked}}
-  \end{enumerate}
+   \end{enumerate}
 
 \end{corollary}
 
-%{\color{red} Kimura}
-The last point of the Corollary says that 
-$\CTlambda$ is {\bf \emph{not} closed under infinite reductions}:
-the limit of any infinite reduction of any term of $\CTlambda$
-exists in $\LAMBDA$, yet it is often not in $\CTlambda$
-because it is often not regular. An example is the limit
-normal form of the interval map $\interval$.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%MODIFIED 11/02/2025 to make precise the infinitely progressing trace
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-We include a simpler example $f = \lambda x^\N.\cond(x,f(\Succ x))$
-such that the limit normal form of $f(x)$ is not regular. 
-We will prove that $f$ is the unary algorithm for addition. 
-$f$ is regular. $f$ has a type $\N,\N\rightarrow\N$ and we trace the second 
-argument $\bfColor{red}{\N}$ of $f$. The unique infinite branch of $f$ is 
-$$
-f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
-\cond(x,f(\Succ x)) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
-f(\Succ x) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
-f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
-\ldots
-$$
-$f$ is in $\GTC$ because in this unique infinite branch 
-the trace of the second argument crosses the right-hand-side of a $\cond$
-infinitely many times.
-Hence $f\in\CTlambda$.
-From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
- there is a infinite reduction sequence: \ \ 
- $
-  f(x)\,\reduces\,\cond(x,f(\Succ(x))) \,
-  \reduces\,
-  \cond(x,\cond(\Succ(x),f(\Succ^2(x)))) \,
-  \reduces\cdots
-  $
-  
-  The limit normal form of $f(x)$
-  is $\cond(x,\cond(\Succ(x),\cond(\Succ^2(x),\cdots)))$, 
-  which is \emph{not} regular,
-  since it has infinitely many different subterms $x,\Succ(x),\Succ^2(x),\ldots$. 
-  Therefore the limit of $f(x)$ is not in $\CTlambda$, even though each term 
-  finitely reachable from $f(x)$ is in $\CTlambda$, and $f$ is
-  just the unary algorithm for the addition, because 
-  
-  $$
-  f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(\Succ^n(0),\cond(\Succ^{n+1}(0),\cond(\Succ^{n+2}(0),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0)
-  $$
-  
-This is an unfortunate but common situation for the limit of a sequence
-in a topology: finiteness of a notation (which in our case is expressed by 
-\emph{regularity} for trees) is easily lost under limit.
-
-%An example: suppose $T_{n}$ is the complete binary tree of height $n$ and
-%$T_{\infty}$ is the complete infinite binary tree. Then
-%$\lim_{n \rightarrow \infty} T_{n} = T_{\infty}$ and all $T_{n}$ are finite,
-%yet $T_{\infty}$ is not finite.
-
-%
-%
-%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% END MODIFICATION 11/02/2025 for the infinitely progressing trace
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%
-%
-
+In the next subsection we check that $0$-normalization of a closed $t \in \CTlambda$
+of type $\N$ produces a numeral.
 
 \subsection
 {Closed Safe-Normal terms of $\CTlambda$ of type $\N$ are Numeral}
 This property is not straightforward. 
-There are closed normal terms of $\N$ in $\LAMBDA \setminus \CTlambda$, 
+There are closed normal terms of type $\N$ in $\LAMBDA \setminus \CTlambda$, 
 even regular terms, which are not numerals.
-An example is $t = \cond(0, \lambda x^N.1)(t)$ 
+An example is $t \sim \cond(0, \lambda x^N.1)(t)$ 
 (\cite{2021-Anupam-Das}, Remark 44, page 33). 
-$t$ has a unique type $\N$. $t$ is normal,
-because $t$ is not $0$ nor successor, 
+There is a proof $\Pi: \vdash t: \N$, and $\N$ is the unique type of $t$. 
+$t$ is regular: up to $\sim$, the subterms of $t$ are
+$t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
+$t$ is normal, because $t$ is not $0$ nor successor, 
 therefore $t$ cannot be reduced. However $t$ is no numeral.
 
-Remark that $t$ is regular: the subterms of $t$ are
-$t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
-However, $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
-Indeed, the rightmost path of $t$ is an infinite path $t,t,t,t,\ldots$, 
+The reason is that $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
+Indeed, the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, with all nodes 
+labeled by the judgement $\vdash t: \N$. The path $\pi$ is 
 never moving to the right-hand-side of a $\cond$,
-and therefore never progressing.
+and therefore $\pi$ is infinite and never progressing.
 
-We check that instead safe-normalization on closed terms of 
-$\GTC$ of type $\N$ produces a numeral. For reason of efficiency,
-we precise that safe-normalization can be done only contracting 
-\emph{closed} redexes: {\bf no renaming is required}.
+Instead, if we assume that $t \in \GTC$,  then safe-normalization on closed terms 
+$t$ of type $\N$ produces a numeral. For reason of efficiency,
+we also proved that safe-normalization can be done only contracting 
+\emph{closed} redexes of $t$: {\bf no $\alpha$-renaming is required}.
 As an intermediate step in this proof we need the notion of 
 \quotationMarks{sound} term.
 
@@ -1167,9 +1096,12 @@ $t$ has some $0$-safe \emph{closed} redex
 $t=\lambda x.u$ or 
 $t = \cond(f,g)$ for some $u$, $f$, $g$ and $t$ has an arrow type
 \item
-$t$ is a numeral
+$t \in \Num$ ($t$ is a numeral)
 \end{enumerate}
 \end{definition}
+
+The proof is by induction of the leftmost branch of $t$, 
+which is finite because $t \in \CTlambda$. As a corollary we deduce:
 
 \begin{proposition}[Closed Safe-Normal terms of Type $\N$]
 \label{proposition-closed-safe-normal-term-N}
@@ -1224,3 +1156,80 @@ If $t \in \GTC$, $t$ is closed and $0$-safe-normal and $t:\N$ then $t \in \Num$ 
 %a numeral.
 %\end{enumerate}
 %\end{proof}
+
+\subsection{A Notion of Limit Normal Form}
+Normalization on some term $t \in \CTlambda$ can continue forever,
+however we can define a limit normal form $\Lim(t)$, which is sometimes
+not in $\CTlambda$ because it is often not regular. 
+
+$\Lim(t)$ is defined by always reducing
+the leftmost $0$-safe normal form. If continue reducing then, by Corollary
+\ref{corollary-finite-safe-reduction}, we reach some $0$-normal form $u[\vec{v}]$,
+with $\vec{v}$ the vector of all right-hand-side of all $\cond$ in $u[\vec{v}]$.
+$\vec{v}$ are the only subterms which still could include some redex. 
+Then we recursively define 
+$$
+\Lim(t) = u[\vec{\Lim(v)}] \in \LAMBDA
+$$
+by repeating the operation $\Lim(\cdot)$ on each term in $\vec{v}$. $\Lim(t)$ is the
+recursive definition of a possibly infinite tree in $\LAMBDA$. 
+By induction on the depth of a subterm 
+of $\Lim(t)$ we can prove that $\Lim(t)$ is a normal term.
+
+We include an example of some term $f  \sim \lambda x^\N.\cond(x,f(\Succ x))$ 
+in $\CTlambda$ such that $\Lim(f(x))$ is not regular. 
+%We will prove that $f$ is the unary algorithm for addition. 
+$f$ is regular. There is a left-finite proof $\Pi:\Gamma \vdash f:\N,\N\rightarrow\N$,
+and we trace the second argument $\bfColor{red}{\N}$ of $f$. 
+The unique infinite branch of $\Pi$ is labeled with the judgments 
+$$
+\vdash f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
+x^\N:\N \vdash \cond(x,f(\Succ x)) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
+x^\N:\N \vdash f(\Succ x) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
+\vdash f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
+\ldots
+$$
+$f$ is in $\GTC$ because in this unique infinite branch of $\Pi$
+the trace of the second argument of $f$ crosses the right-hand-side of a $\cond$
+infinitely many times.
+Hence $f\in\CTlambda$ and $f(x) \in \CTlambda$.
+From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
+ there is a infinite reduction reducing the unique $0$-safe redex, then
+ the unique $1$-safe redex, the unique $2$-redex and so forth: \ \ 
+ $
+  f(x)\,\reduces\,\cond(x,f(\Succ(x))) \,
+  \reduces\,
+  \cond(x,\cond(\Succ(x),f(\Succ^2(x)))) \,
+  \reduces\cdots
+  $
+  
+  Thus, the limit normal form of $f(x)$
+  is $\Lim(f(x)) = \cond(x,\cond(\Succ(x),\cond(\Succ^2(x),\cdots)))$, 
+  which is \emph{not} regular,
+  since it has infinitely many different subterms $x,\Succ(x),\Succ^2(x),\ldots$. 
+  Therefore $\Lim(f(x)) \not \in \CTlambda$, even though each reduct of 
+  $f(x)$ is in $\CTlambda$, and $f$ is just the unary algorithm for the addition, because 
+  
+  $$
+  f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(\Succ^n(0),\cond(\Succ^{n+1}(0),\cond(\Succ^{n+2}(0),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0)
+  $$
+  
+This is an unfortunate but common situation for the limit of a sequence
+in a topology: finiteness of a notation (which in our case is expressed by 
+\emph{regularity} for trees) is easily lost under limit.
+
+%An example: suppose $T_{n}$ is the complete binary tree of height $n$ and
+%$T_{\infty}$ is the complete infinite binary tree. Then
+%$\lim_{n \rightarrow \infty} T_{n} = T_{\infty}$ and all $T_{n}$ are finite,
+%yet $T_{\infty}$ is not finite.
+
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% END MODIFICATION 11/02/2025 for the infinitely progressing trace
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%
+
