@@ -224,13 +224,15 @@ the occurrence.
 \end{enumerate}
 \end{definition}
 
-We also introduce an $\alpha$-conversion relation. With respect to the $\alpha$-conversion
-relationfor finite $\lambda$-terms (\cite{Barendregt1984-BARTLC}, \S 2.1.11 p.26) 
-we add some finiteness condition. Our goal is to obtain a relation of $\alpha$-conversion 
+We also introduce an $\alpha$-conversion relation, in order to avoid variable capture
+during substitution. With respect to the $\alpha$-conversion
+relation for finite $\lambda$-terms (\cite{Barendregt1984-BARTLC}, \S 2.1.11 p.26) 
+we add the requirement that equal bound variables are renamed by equal bound variables. 
+In this way, we only consider $\alpha$-conversions 
 preserving the regularity of a term.
 
 
-\begin{definition}(finite $\alpha$-conversion)
+\begin{definition}(equality-preserving $\alpha$-conversion)
 \label{definition-alpha-conversion}
 Assume $t,u \in \LAMBDA$.
 \begin{enumerate}
@@ -255,12 +257,7 @@ We say that an $\alpha$-conversion map $\phi$ is equality-preserving if $\phi$ m
 labels into equal labels.
 
 \item
-We say that an $\alpha$-conversion map $\phi:t \rightarrow u$ is finite if there are subterms
-$u_1, \ldots, u_n$, including all but finitely many nodes of $t$ and such that $\phi$
-restricted to each $u_i$ is equality-preserving. 
-
-\item
-We write $t \sim_\alpha u$ if there is some \emph{finite} 
+We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
 $\alpha$-conversion $\phi:t \rightarrow u$.
 \end{enumerate}
 \end{definition}
@@ -393,9 +390,14 @@ $\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$.
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-We define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
-free variable $x$ in $t$, by first replacing $t$ with some $t' \alpha $
+If $t, u$ have finitely many free variables,
+we define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
+free variable $x$ in $t$, by first replacing $t$ with some $t' \alpha t$
 in order to avoid that a free occurrence in $u$ become bound after substitution. 
+This is always possible: if there are only finitely many free variabiles in $u$, we can
+rename all bound variables in $t$ in order to make them different from the free variables
+in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
+
 The use of $\alpha$-convertibility for substitution is not relevant in this paper. Indeed,
 substitution of a closed term $u$ requires no renaming, and  in order to use 
 infinite $\lambda$-terms as a programming language we only need computations 

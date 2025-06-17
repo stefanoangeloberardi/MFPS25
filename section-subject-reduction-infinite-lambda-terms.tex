@@ -537,9 +537,11 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 
 Variable renaming preserves GTC. $\alpha$-conversion preserves regularity, because
 in Def. \ref{definition-alpha-conversion} 
-we assumed a finiteness condition for $\alpha$-conversion.
+we assumed that equal bound variables are renamed by equal bound variables.
+Thus, $\alpha$-conversion maps isomorphic terms trees into isomorphic term trees,
+and preserves the finiteness of the set of subterms up to tree isomorphism.
 
-\begin{proposition}(Renaming)
+\begin{proposition}(Renaming and $\alpha$-conversion)
 \label{prop:renaming}
   \begin{enumerate}
   \item\label{prop:renaming1}
