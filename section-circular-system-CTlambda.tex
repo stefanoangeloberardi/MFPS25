@@ -231,7 +231,7 @@ hence $\Iter \in \CTlambda$.
 %We follow the unique infinite trace $\tau$ of the last unnamed argument $\N$ of $\Iter$ 
 %in the unique infinite path $\pi$ of $\Iter$. 
 %The trace $\tau$ moves from  $\Iter = \lambda f. \lambda a.\iter$
-% to the first unnamed argument of the sub-term $\lambda a.\iter$, 
+% to the first unnamed argument of the subterm $\lambda a.\iter$, 
 %then to $a:\N$ in the context of $\iter = \cond (a, \lambda x.f(\iter(x)))$.
 %Then the infinite path $\pi$ and moves in this order to:
 % $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$
@@ -463,10 +463,10 @@ an infinite term. We have infinitely many nested $\beta$-reductions in
 $\interval$, one for each $\interval(\Succ (x)) \equiv (\lambda x.\ldots)(\Succ (x))$. 
 Suppose we remove all of them in a single step, producing a substitution
 $[\Succ (x)/x]$. $\beta$-redexes are nested, therefore 
-inside the $\beta$-redex number $k$ we obtain a sub-term $\iter[\Succ (x)/x]
+inside the $\beta$-redex number $k$ we obtain a subterm $\iter[\Succ (x)/x]
 \ldots[\Succ (x)/x]$, with the substitution of $x$ nested $k$ times. 
 The result is $\iter[\Succ ^k(x)/x]$.
-The nested substitution produce infinitely many pairwise different sub-terms 
+The nested substitution produce infinitely many pairwise different subterms 
 $\iter(\Succ ^k(x))$ for all $k \in \N$. 
 We need $k$ steps to normalize each $\iter(\Succ ^k(x))$ to $f^k(x)$, 
 even if we allow to reduce infinitely many 
@@ -479,7 +479,7 @@ $f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms.
 %our cyclic graph-notation, except for closed terms of type $\N$, 
 %in this case normalization is the computation of the output.
 
-%These infinite sub-terms are of a particulary simple form, though. 
+%These infinite subterms are of a particulary simple form, though. 
 %They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
 %to the result.
 

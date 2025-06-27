@@ -134,7 +134,7 @@ The set of all terms is denoted by $\LAMBDA$.
 We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
 if and only if there is some label-preserving bijection between $t$ and $u$. 
 
-We say that $t$ is a sub-term of $u$ if $t$ is a sub-tree of $u$,
+We say that $t$ is a subterm of $u$ if $t$ is a sub-tree of $u$,
 with labeling the restriction of the labeling of $u$ to the nodes of $t$.
 An immediate subterm is an immediate sub-tree.
 \end{definition}
@@ -161,7 +161,7 @@ Now we define the regular terms of $\LAMBDA$.
 \begin{enumerate}
 
 \item
-We write $\SubTerm(t) = \{u \mid u \mbox{ subterm of } t\}/\sim$ 
+We write $\SubTerm(t) = \{\,u \mid \mbox{$u$ subterm of $t$}\,\}/\!\sim$ 
 for the set of subterms of $t$, with isomorphic terms identified. 
 
 \item
@@ -204,7 +204,7 @@ However, $t$ is an infinite tree (it includes a proper subtree isomorphic to its
 %with infinitely many distinct bound variables. In the example above we can
 %rename each occurrence of $\lambda x.t(x)$ in the infinite tree 
 %to $\lambda x'.t(x')$, $\lambda x''.t(x'')$, \ldots, the infinite term $t'$ we obtain
-%in this way has infinitely many sub-terms $x', x'', \ldots$, therefore it is not
+%in this way has infinitely many subterms $x', x'', \ldots$, therefore it is not
 %regular, yet is it $\alpha$-equivalent to the regular term $t$.
 
 The binder relation is defined as for finite $\lambda$-calculus 
@@ -830,7 +830,7 @@ then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
 
 %
 %Proofs not using the $\weak$-rule are unique, because the first symbol of each 
-%sub-term forces the rule deriving this sub-term. If we add the $\weak$-rule, this is 
+%subterm forces the rule deriving this subterm. If we add the $\weak$-rule, this is 
 %no more true. However, 
 %
 
