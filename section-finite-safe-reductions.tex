@@ -6,7 +6,7 @@ every infinite reduction sequence $\pi$
 from some term of $\GTC$ includes
 only finitely many \quotationMarks{$0$-safe} (safe) reduction steps:
 from some point on, all reduction steps are \quotationMarks{unsafe},
-that is, they occur in the right-hand-side of some $\cond$.
+that is, they occur in the right-hand side of some $\cond$.
     
 From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on ,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
@@ -25,7 +25,7 @@ all infinite reduction paths include only finitely many $n$-safe reductions
 \end{definition}
 
 To put otherwise: in all infinite reduction paths, from some point on all reductions
-are \emph{not} $n$-safe, they contract redexes occurring in the right-hand-side of
+are \emph{not} $n$-safe, they contract redexes occurring in the right-hand side of
 $n$ $\cond$-terms. In the following, we explicitly write $t[x_1,\ldots,x_n]$,
 when each free variable in a term $t$ is some $x_i$, 
 and, under this notation, we also write $t[a_1,\ldots,a_n]$ for 
@@ -961,7 +961,7 @@ We now have all properties required to prove our Main Theorem.
 %  $a$ and $\vec{b}$ are total, only finitely many reduction on them are possible.
 %  Then infinitely many safe reductions take place on $f[\vec{d_i}]$ or $g[\vec{d_i}]$. 
 %  All these safe reduction are in $f[\vec{d_i}]$, because
-%  a reduction inside $g[\vec{d_i}]$ is in the right-hand-side of some $\cond$, therefore it is not safe.
+%  a reduction inside $g[\vec{d_i}]$ is in the right-hand side of some $\cond$, therefore it is not safe.
 %  The safe-infinite reduction from $f[\vec{d_i}]$ can be raised to an infinite reduction from 
 %  $f[\vec{d_i}](\vec{b})$, with the same safe reductions, therefore with infinite safe reduction.
 %  In this case we take $f[\vec{x}],\vec{d_i},\vec{b}$ as next step of our path in $\Pi$:
@@ -1075,7 +1075,7 @@ therefore $t$ cannot be reduced. However $t$ is no numeral.
 The reason is that $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
 Indeed, the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, with all nodes 
 labeled by the judgement $\vdash t: \N$. The path $\pi$ is 
-never moving to the right-hand-side of a $\cond$,
+never moving to the right-hand side of a $\cond$,
 and therefore $\pi$ is infinite and never progressing.
 
 Instead, if we assume that $t \in \GTC$,  then safe-normalization on closed terms 
@@ -1165,7 +1165,7 @@ not in $\CTlambda$ because it is often not regular.
 $\Lim(t)$ is defined by always reducing
 the leftmost $0$-safe normal form. If continue reducing then, by Corollary
 \ref{corollary-finite-safe-reduction}, we reach some $0$-normal form $u[\vec{v}]$,
-with $\vec{v}$ the vector of all right-hand-side of all $\cond$ in $u[\vec{v}]$.
+with $\vec{v}$ the vector of all right-hand side of all $\cond$ in $u[\vec{v}]$.
 $\vec{v}$ are the only subterms which still could include some redex. 
 Then we recursively define 
 $$
@@ -1190,7 +1190,7 @@ x^\N:\N \vdash f(\Succ x) : \bfColor{red}{\N}\rightarrow\N, \ \ \
 \ldots
 $$
 $f$ is in $\GTC$ because in this unique infinite branch of $\Pi$
-the trace of the second argument of $f$ crosses the right-hand-side of a $\cond$
+the trace of the second argument of $f$ crosses the right-hand side of a $\cond$
 infinitely many times.
 Hence $f\in\CTlambda$ and $f(x) \in \CTlambda$.
 From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that

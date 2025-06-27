@@ -991,7 +991,8 @@ $\reduces_\cond$: $\cond(f,g)(0) \reduces_\cond f$ and
 $\cond(f,g)(\Succ (t)) \reduces_\cond g(t)$.
 
 \item
-$\reduces$ (one-step reduction)
+A \emph{redex} is a term in the shape of the term at the left-hand side of $\reduces_\beta$ or $\reduces_\cond$. 
+The one-step reduction relation $\reduces$
 is the contraction of one $\beta$ or of one $\cond$ redex anywhere
 in the term, namely, it is the context closure of $\reduces_\beta$ union 
 the context closure of $\reduces_\cond$.
@@ -1011,7 +1012,7 @@ $\exists c \in \LAMBDA. (a \reduces^* c) \wedge (b \reduces^* c)$.
 \item
 The $\cond$-depth of a subterm $u$ of $t$ is 
 the number of subterms $\cond(a,b)$
- such that $u$ occurs in the right-hand-side of $\cond(a,b)$.
+ such that $u$ occurs in the right-hand side of $\cond(a,b)$.
 
 \item
 The $n$-safe level of $t$ is the set of nodes of $t$ of $\cond$-depth $\le n$.
@@ -1033,7 +1034,7 @@ with just \quotationMarks{$t$ is safe normal}.
 %14:00 29/04/2024
 
 \begin{Eg}
-Let $u \sim \cond. (0, (\lambda z.u)(z) )$, where we omitted the type superscript
+Let $u \sim \cond(0, (\lambda z.u)(z) )$, where we omitted the type superscript
 $\N$ of $z$. Then $u$ is $0$-safe-normal (safe normal for short), 
 because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-
 hand-side of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-
@@ -1048,9 +1049,9 @@ redexes. Up to tree isomorphism, the tree form of $u$ includes the following bra
   $u$, 
  \quad $\ldots$
 \end{center}
-This branch is cyclic, is infinite,
-and it includes infinitely many $\beta$-redexes, all isomorphic 
-to the same term $(\lambda z.u)(z)$. 
+This infinite branch is cyclic,
+and includes infinitely many $\beta$-redexes.
+%all isomorphic to the same term $(\lambda z.u)(z)$. 
 It takes infinitely many $\beta$-reductions to normalize $t$,
 therefore $u$ has no normal form.
 \end{Eg}
@@ -1059,23 +1060,24 @@ In order to produce the output of a computation we have
 to reduce closed terms of type $\N$ to a numeral. 
 We will define a subset $\CTlambda$ of
 $\LAMBDA$ and prove that if we repeat $0$-safe reductions 
-(those in the the right-hand-side of \emph{no} $\cond$) on any
+(those in the right-hand side of \emph{no} $\cond$) on any
 closed term of type $\N$ of $\CTlambda$ eventually we obtain a numeral. 
-We will in fact prove that $0$-safe reductions strongly normalize on \emph{any} term
+We will in fact prove that the $0$-safe reduction relation is strongly normalizable on \emph{any} term
 of $\CTlambda$. 
 
 %14:11 25/03/2025
 
 \begin{Eg}
 This is an example of $0$-safe-reductions from a term $v(n)$ to a normal form. 
-Assume $n \in \Num$ is any numeral and $v = \cond(1, v)$. There are only finitely 
-many reductions from $v(n)$, and they are all $0$-safe. $v(n)$ $\cond$-reduces to 
+Assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$. There are only finitely 
+many reductions from $v(n)$, and they are all $0$-safe. The initial term $v(n)$ $\cond$-reduces to 
 $v(n-1)$, then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
 After $n$ $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
-get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes to $1$ in $(n+1)$
-steps. $v(n)$ has a unique reduction path,
-having length $(n+1)$ and terminating in $1$. The final output is 
-independent from $n$.
+get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes (the reduction path is unique)
+to $1$ in $(n+1)$ steps.
+%$v(n)$ has a unique reduction path,
+%having length $(n+1)$ and terminating in $1$.
+The final output is independent from $n$.
 \end{Eg}
 
 We will exhibit meaningful terms of $\CTlambda$ without a normal form. 
