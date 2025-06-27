@@ -32,7 +32,7 @@ Global Trace Condition also satisfy a termination result.
 %l \conc m = (i_1, \ldots, i_n,\ j_1, \ldots, j_m)
 %$
 %%If $I \subseteq \List(\{1,2\})$
-%%we write $l \conc I = \{l \conc m | m \in I\}$. 
+%%we write $l \conc I = \{l \conc m \mid m \in I\}$. 
 %\item
 %The prefix order $\le$ on lists
 %is defined by $l \le m$ if and only if $m = l \conc m'$ for some $m' \in  \List(\{1,2\})$.
@@ -58,7 +58,7 @@ Global Trace Condition also satisfy a termination result.
 %if $l$ has no children). 
 %
 %\item
-%If $T$ is a tree and $l \in T$ we define $T \restr l = \{m \in \List(\{1,2\}) | l \conc m \in T\}$.
+%If $T$ is a tree and $l \in T$ we define $T \restr l = \{m \in \List(\{1,2\}) \mid l \conc m \in T\}$.
 %$T \restr l$ is a tree and we say that $T \restr l$ is a subtree of $T$ in the node $l$,
 %and for each $m \in T \restr l$ we say that $l \conc m$ is the corresponding node in $T$.
 %\item
@@ -86,64 +86,69 @@ Global Trace Condition also satisfy a termination result.
 %$\setT \restr (i) = \setT_i$ for all $1 \le i \le n$.
 
 
-\subsection{Types, Terms and Contexts}
+\subsection{Types, terms and contexts}
 We define the set $\LAMBDA$ of infinite binary tree notations: 
-first the types of $\LAMBDA$, 
-then the terms and the contexts of $\LAMBDA$.
+first the types for $\LAMBDA$, 
+then the terms and the contexts for $\LAMBDA$.
 
-\begin{definition}(Types and Variables of $\LAMBDA$)
-%\mbox{}
+\begin{definition}(Types)
+We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables. 
 \begin{enumerate}
-
+\item  
+  The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
+  of $\LAMBDA$ are inductively defined by: 
+  $\N$ of natural numbers, type variables, and $A \rightarrow B$, provided $A$ and $B$ are types.
 \item
-The types of $\LAMBDA$ are: the type $\N$ of natural numbers, an infinite list 
-$\alpha,\beta,\ldots$ of type variables. For all types $A,B$ we have the type $A \rightarrow B$.
-We call them simple types, just \emph{types} for short. 
-
-\item 
+  We abbreviate $A_1 \rightarrow (A_2 \rightarrow \cdots (A_n \rightarrow B))$
+  by $A_1,A_2,\ldots,A_n \rightarrow B$. 
+  In particular, we write $A^n \rightarrow B$ when $A_1,\ldots,A_n$ are the same type $A$. 
+\item   
 $\Type$ is the set of simples types.
-
-\item
-We suppose to be given a set $\var$, consisting of all pairs $x^T=(x,T)$ 
-of a variable name $x$ and a type $T \in \Type$.
 \end{enumerate}
 \end{definition}
 
-Terms of $\LAMBDA$ are possibly infinite binary trees, with each node labeled by 
-some connective on $\lambda$-terms of arity $0,1,2$.
+Terms of our system are possibly infinite binary trees, with each node labeled by 
+some connective on $\lambda$-terms with its arity (number of children) $0$, $1$, or $2$.
 
-\begin{definition}(Terms of $\LAMBDA$)
-The terms of $\LAMBDA$ 
-are all labeled binary trees $t$ with set of labels 
-$\{x^T, \ \lambda x^T., \ \ap, 0, \ \Succ, \ \cond\}$ for some $T \in \Type$, such that:
-
+\begin{definition}(Variables and terms)
+We fix a countable set $\{x,y,\ldots\}$ of variable names. 
+\begin{enumerate}
+\item
+A \emph{variable} $x^T$ is a type name $x$ with a type superscript $T$. 
+\item  
+A \emph{term} is a labeled binary tree, denoted by $t,u,v,\ldots$, with labels 
+$x^T$, $\lambda x^T$, $\ap$, $0$, $\Succ$, and $\cond$, such that:
 \begin{enumerate}
 \item 
-a node labeled $x^T$ or $0$ has \emph{no} children.
+a node labeled $x^T$ or $0$ has \emph{no} children;
 
 \item
-a node labeled $\lambda x^T.$ or $\Succ$ has a \emph{unique} 
-child $u$.
+a node labeled $\lambda x^T$ or $\Succ$ has a \emph{unique} child;
 
 \item
-a node labeled $\ap$, $\cond$ has \emph{two} children.
-
+a node labeled $\ap$ or $\cond$ has \emph{two} children.
+\end{enumerate}  
 \item
-we write $t \sim u$ and we read \quotationMarks{$t$, $u$ are isomorphic terms}
-if and only if there is some some label-preserving bijection between $t$ and $u$
+The set of all terms is denoted by $\LAMBDA$.
 \end{enumerate}
+We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
+if and only if there is some label-preserving bijection between $t$ and $u$. 
+
 We say that $t$ is a sub-term of $u$ if $t$ is a sub-tree of $u$,
 with labeling the restriction of the labeling of $u$ to the nodes of $t$.
 An immediate subterm is an immediate sub-tree.
 \end{definition}
- 
-If $t, u \in \LAMBDA$ then we denote with
-$x^T, 0, \lambda x^T.t,\ap(t,u),\Succ(t),\cond(t,u) \in \LAMBDA$ 
-the terms with the root labeled $l = x^T, \lambda x^T., \ap, 0, \Succ, \cond$, 
-respectively, and with immediate subterms $t$, $u$, respectively. 
-This term is unique up to term isomorphism.
-Conversely, each $v \in \LAMBDA$ is in one of the forms: $x^T, 0, \lambda 
-x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
+
+We identify a term with its (possibly infinite) one-line denotation,
+namely, a term with the root labeled $x^T$, $0$,
+$\Succ$ with a child $t$,
+$\lambda x^T$ with a child $t$,
+$\ap$ with (left and right) children $t$ and $u$,
+$\cond$ with children $t$ and $u$ is denoted by
+$x^T$, $0$, $\Succ(t)$, $\lambda x^T.t$, $\ap(t,u)$, $\cond(t,u)$, respectively. 
+This denotation is unique up to term isomorphism.
+Conversely, each $v \in \LAMBDA$ is in one of the forms:
+$x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
 
 As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
 
@@ -156,7 +161,7 @@ Now we define the regular terms of $\LAMBDA$.
 \begin{enumerate}
 
 \item
-We write $\SubTerm(t) = \{u| u \mbox{ subterm of } t\}/\sim$ 
+We write $\SubTerm(t) = \{u \mid u \mbox{ subterm of } t\}/\sim$ 
 for the set of subterms of $t$, with isomorphic terms identified. 
 
 \item
@@ -170,8 +175,8 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 % for all $(i+1) \le n$ we have $t_{i+1}=t_i$ or $t_{i+1} \sqsubset_1 t_i$.
 
 \item
-When $t = \Succ ^n(0)$ for some natural number $n \in \Nat$
-we say that $t$ is a numeral. $\Num$ is the set of numerals.
+When $t = \Succ ^n(0)$, namely $\Succ(\cdots \Succ(0))$ ($n$-times of $\Succ$), for some natural number $n \in \Nat$,
+we say that $t$ is a numeral. We write $\Num$ for the set of numerals.
 
 \end{enumerate}
  
@@ -180,16 +185,14 @@ we say that $t$ is a numeral. $\Num$ is the set of numerals.
 %We use two different names for the operation $\ap(t,u)$: 
 %we call it $\ap$ when $u$ is not a variable and $\apvar$ when $u$ is a variable. 
 
-The set $\Num$ of numerals is the representation inside $\LAMBDA$ of the set 
-$\Nat$ of natural numbers. 
-
+The set $\Num$ is the representation of the set $\Nat$ of natural numbers inside $\LAMBDA$. 
 
 \begin{Eg}
 \label{example-regular-infinite}
 An example of regular term and an infinite tree: the term defined by the isomorphism
 $t \sim \cond(0,\lambda x^N.t(x))$. 
-The set $\SubTerm(t)$ of subterms  of $t$ 
-is equal to $\{t,0,\lambda x.t(x), x\}$, up to term isomorphism. Thus, $t$ is a regular term.
+Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$, up to term isomorphism.
+Thus, $t$ is a regular term.
 However, $t$ is an infinite tree (it includes a proper subtree isomorphic to itself). 
 \end{Eg}
 
@@ -207,20 +210,21 @@ However, $t$ is an infinite tree (it includes a proper subtree isomorphic to its
 The binder relation is defined as for finite $\lambda$-calculus 
 (\cite{Barendregt1984-BARTLC}, \S 2.1.6 p. 24). 
 
-\begin{definition}(Binders Relation)
+\begin{definition}(Binding relation)
 \label{definition-binder-relation}
-Assume $t,u \in \LAMBDA$.
+Let $t$ be a term.
 \begin{enumerate}
 \item
 An occurrence of a variable $x^T$ in $t$ is any node of $t$ labeled $x^T$.
 \item
-An occurrence of a variable $x^T$ in $t$ is free if there is no node labeled $\lambda x^T.$
+An occurrence of a variable $x^T$ in $t$ is said to be \emph{free} if there is no node labeled $\lambda x^T$
 in the path from the root of $t$ to the occurrence. 
 $\FV(t)$ is the (finite or infinite) set of variables having at least one free occurence in $t$.
 \item
-An occurrence of $x^T$ in $t$ is bound if it is not free. If an occurrence is bound, then
-the node labeled $\lambda x^T.$ closest to the occurrence is called the binder of
+An occurrence of $x^T$ in $t$ is said to be \emph{bound} if it is not free. If an occurrence is bound, then
+the node labeled $\lambda x^T$ closest to the occurrence is called the \emph{binder} of
 the occurrence.
+The binding relation is a binary relation from a node occurrence of a bound variable to the node of its binder. 
 \end{enumerate}
 \end{definition}
 
@@ -232,24 +236,23 @@ In this way, we only consider $\alpha$-conversions
 preserving the regularity of a term.
 
 
-\begin{definition}(equality-preserving $\alpha$-conversion)
+\begin{definition}(Equality-preserving $\alpha$-conversion)
 \label{definition-alpha-conversion}
-Assume $t,u \in \LAMBDA$.
+Let $t$ and $u$ be terms.
 \begin{enumerate}
 \item
-We say that $\phi:t \rightarrow u$ is an $\alpha$-conversion map if and only if 
+We say that $\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if and only if 
 $\phi$ is a tree isomorphism between $t$ and $u$ such that:
 \begin{enumerate}
 \item
-$\phi$ preserves all labels $\not = \lambda x^T., x^T$
+$\phi$ preserves all labels except $\lambda x^T$ and $x^T$;
 \item 
 $\phi$ preserves all labels $x^T$
-on a free variable occurrence, and the fact that the occurrence is free;
+on a free variable occurrence, and the fact that it is free;
 \item
-$\phi$ sends each binder label $\lambda x^T.$ to some binder 
-label $\lambda y^T.$, each label $x^T$
-on a bound variable to some label $z^T$ on a bound variable, and preserves the
-binder relation
+$\phi$ sends each label $\lambda x^T$ to some label $\lambda y^T$, each label $x^T$
+on a bound variable to some label $y^T$ on a bound variable, and preserves the
+binding relation. 
 \end{enumerate}
 
 \item
@@ -262,33 +265,31 @@ $\alpha$-conversion $\phi:t \rightarrow u$.
 \end{enumerate}
 \end{definition}
 
-In order to define the type of an infinite term, we first 
-define contexts and typing judgments for any term of $\LAMBDA$.
-A context is a list of type assignments to distinct
-variables: our variables already have a type superscript,
-so in fact a type assignment $x^T:T$ is a \emph{redundant information} for our 
-variables (not for our terms). We write $x^T:T$ for uniformity with the notation $x:T$ 
-in use in Type Theory.
+In order to define typing of our possibly infinite terms, we first 
+define contexts and typing judgments.
 
 %13:32 22/04/2024
 %11:17 29/04/2024
 
-\begin{definition}(Contexts of $\LAMBDA$)
+\begin{definition}(Contexts and typing jugdments for $\LAMBDA$)
 \label{definition-context-lambda}
 \begin{enumerate}
 
 \item
 \label{definition-context-lambda-01}
-A  context of $\LAMBDA$ is any finite list 
-$\Gamma = ({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ 
-of \emph{distinct variables}, for some $A_1, \ldots, A_n \in \Type$. 
-We denote the empty context with $\nil$. 
+A \emph{context}, denoted by $\Gamma, \Delta$, is a finite list
+$(x_1^{A_1}:A_1,\ldots,x_n^{A_n}:A_n)$ of type assignments to distinct
+variables.
+The set $\FV(\Gamma)$ is the set of variables in a context $\Gamma$.
+We write $\Ctxt$ for the set of contexts.
+%% A  context of $\LAMBDA$ is any finite list 
+%% $\Gamma = ({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ 
+%% of \emph{distinct variables}, for some $A_1, \ldots, A_n \in \Type$. 
+%% We denote the empty context with $\nil$. 
 %We write $\Ctxt$ for the set of all contexts.
 
-\item
-\label{definition-context-lambda-05}
-We write $\FV(\Gamma) = \{ {x_1}^{A_1}, \ldots, {x_n}^{A_n} \}$ for the set
-of variables in $\Gamma$.
+%% \item
+%% \label{definition-context-lambda-05}
 %We say that $\Gamma$ is a context for $t \in \LAMBDA$ and we write $\Gamma 
 %\vdash t$ if $\FV(t) \subseteq \FV(\Gamma)$.
 
@@ -298,13 +299,27 @@ of variables in $\Gamma$.
 %%, which we write as $\Gamma \vdash A$. 
 %We write $\Stat = \Ctxt \times \Type$ for the set of all sequents.
 
+\item
+\label{definition-context-lambda-07}
+The context $\Gamma\setminus\{x^T:T\}$ is the one obtained
+by removing $x^T:T$ from $\Gamma$ if the type assignment presents. 
+Otherwise $\Gamma\setminus\{x^T:T\}$ is $\Gamma$.
+
+\item
+\label{definition-context-lambda-08}
+  Let $\Gamma$ and $\Gamma'$ be $({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ and $({x'_1}^{A'_1}:A'_1, \ldots, x'_{n'}^{A'_{n'}}:A'_{n'})$, respectively. 
+We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
+$\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
+and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
+Note that we have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
+$\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$. 
+
 \item 
 \label{definition-context-lambda-04}
-A typing judgment is the list of a context  $\Gamma$, a term $t$ and a type $A$, 
-which we write as $\Gamma \vdash t:A$.
-We write $\Stat = \Ctxt \times \LAMBDA \times \Type$ 
-for the set of all typing judgments.
-
+A \emph{typing judgment} is $(\Gamma,t,A) \in \Ctxt \times \LAMBDA \times \Type$,
+which is written in the form $\Gamma \vdash t:A$.
+When $\Gamma$ is the empty context $\nil$, we abbreviate $\nil\vdash t:A$ with $\vdash t:A$. 
+We write $\Stat$ for the set of all typing judgments.
 
 %\item
 %\label{definition-context-lambda-06}
@@ -322,25 +337,17 @@ for the set of all typing judgments.
 %$(x^A:A) \in \Gamma  \ \Leftrightarrow  \  (x^A:A)\in\Gamma'$
 %\end{enumerate}
 
-\item
-\label{definition-context-lambda-07}
-If $\Gamma$ is a context of $\LAMBDA$, 
-then $\Gamma\setminus\{x^T:T\}$ is the context obtained
-by removing $x_i^{A_i}:A_i$ from $\Gamma$ if present. 
-If $x \not \in \FV(\Gamma)$ then $\Gamma\setminus\{x^T:T\} = \Gamma$.
-
-\item
-\label{definition-context-lambda-08}
-We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
-$\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
-and for all $i \in \{1,\ldots,n\}$ we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$. 
-
 \end{enumerate}
 %As usual, we informally write a sequent $(\Gamma, A)$ for $t$ in the form $\Gamma \vdash t:A$.
 \end{definition}
 
-We have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
-$\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$. 
+In fact a type assignment $x^T:T$ is a \emph{redundant information} for our
+variables (not for our terms), 
+since each variable already has its type superscript.
+However we write $x^T:T$ for uniformity with the notation $x:T$ 
+in use in Type Theory.
+
+
 
 %We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
 %and  $\Gamma \supseteqsim \Gamma'$ if and only if $\Gamma$, $\Gamma'$ are permutation
@@ -390,10 +397,10 @@ $\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$.
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-If $t, u$ have finitely many free variables,
-we define the term $t[u/x]$ obtained by substituting the infinite term $u$ for the 
-free variable $x$ in $t$, by first replacing $t$ with some $t' \alpha t$
-in order to avoid that a free occurrence in $u$ become bound after substitution. 
+Assume that terms $t$ and $u$ have finitely many free variables. 
+We define the term $t[u/x]$ obtained by substituting $u$ for all free occurrences of $x$ in $t$, 
+by first replacing $t$ with some $t' \sim_\alpha t$
+in order to avoid that free occurrences in $u$ become bound after substitution. 
 This is always possible: if there are only finitely many free variabiles in $u$, we can
 rename all bound variables in $t$ in order to make them different from the free variables
 in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
@@ -505,14 +512,14 @@ involving substitution of closed terms.
 %\end{lemma}
 %%%%%%%%%%%%%%%%
 
-\subsection{Typing Rules}
+\subsection{Typing rules}
 We define typing rules for terms of $\LAMBDA$ 
 and the subset $\WTyped$ of well-typed terms.
 
 The typing rules are the usual ones but for 
 %the conditional binder $\cond$, and for 
-the \emph{typing rule $\ap$ for an application} $t(u)$, which we split in two sub-rules, $\apvar$
-and $\apnotvar$, according whether $u$ is a variable or is not a variable.
+the \emph{typing rule for applications} $t(u)$, which we split the rule into two sub-rules, $\apvar$
+and $\apnotvar$, according to whether $u$ is a variable or is not a variable.
 %$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
 %for the first argument of $t$. 
 %As we said, 
@@ -580,54 +587,36 @@ Let $p=0,1,2$.
 %$\struct_f$-rule.
 %If $t: \Gamma \vdash T$ then $t[ y_{f(1)}/x_1, \ldots,  y_{f(p)}/x_p]:\Delta \vdash T$
 \item
-A rule is a list of $p+1$ typing judgments: 
-$\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p, \Gamma \vdash t : A$.
-which we read as: 
-\emph{``if $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$
-then $\Gamma \vdash t : A$"}, and we draw as:
- \[
-  \infer[r]{
-    \Delta \prove u : B
-  }{
-    \Delta_1  \prove u_1:B_1
-    &
-    \cdots
-    &
-    \Delta_p  \prove u_p:B_p
-  }
-  \]
-\end{enumerate}
-
-We list the typing rules of $\LAMBDA$.
+We list the typing rules for $\LAMBDA$.
 
 \begin{enumerate}
 \item
 $\weak$-rule (for Weakening + Exchange).
-If $\Gamma \vdash t:T$ and $\FV(\Gamma) \subseteq \FV(\Gamma')$
+If $\Gamma \vdash t:T$ and $\FV(\Gamma) \subseteq \FV(\Gamma')$,
 then $\Gamma' \vdash t : T$.
 
 \item
 $\var$-rule.
-If $x^A \in \FV(\Gamma)$ then $\Gamma \vdash x^A:A$.
+If $x^A \in \FV(\Gamma)$, then $\Gamma \vdash x^A:A$.
 
 \item
 $\lambda$-rule.
-If $\Gamma\setminus \{x^A:A\}, x^A:A \vdash b: B$
+If $\Gamma\setminus \{x^A:A\}, x^A:A \vdash b: B$,
 then $ \Gamma \vdash \lambda x^A.b :A \rightarrow B$.
 
 \item
 $\apvar$-rule.
-If $\Gamma \vdash f: A \rightarrow B$ then $\Gamma \vdash f(x^A) :  B$,
+If $\Gamma \vdash f: A \rightarrow B$, then $\Gamma \vdash f(x^A) :  B$,
 provided  $x^A \in \FV(\Gamma)$.
 
 \item
 $\apnotvar$-rule.
 If $\Gamma \vdash f:A \rightarrow B$ and $\Gamma \vdash a:A$
-then $\Gamma \vdash f(a) : B$, provided $a$ is \emph{not} a variable 
+then $\Gamma \vdash f(a) : B$, provided $a$ is \emph{not} a variable. 
 
 \item
 $0$-rule.
-$\Gamma \vdash 0: \N$
+$\Gamma \vdash 0: \N$ holds without any premises. 
 
 \item
 $\Succ$-rule.
@@ -638,21 +627,38 @@ $\cond$-rule.
 If $\Gamma \vdash  f :T$ and  $\Gamma \vdash g : \N \rightarrow T$ 
 then $\Gamma \vdash \cond(f,g) : \N \rightarrow T$.
 \end{enumerate}
-We abbreviate $\nil \vdash  t:A$ ($t:A$ in the empty context) with $\vdash t:A$. 
-We write the set of rules of $\LAMBDA$ as
+
+An instance of a typing rule $r$ is a list $(J_1,\ldots,J_p,J)$ of typing judgments $(p=0,1,2)$,
+where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$"}, and we draw it as:
+ \[
+  \infer[r]{
+    J
+  }{
+    J_1
+    &
+    \cdots
+    &
+    J_p
+  }.
+  \]
+  The judgments $J_1,\ldots,J_p$ are called the \emph{premises} of $r$,
+  and $J$ is called the \emph{conclusion} of $r$. 
+\end{enumerate}
+
+The set $\Rule$ of rule instances for $\LAMBDA$ is defined by
 \[
 \Rule = 
-\{r \in \Stat \cup \Stat^2 \cup \Stat^3 \ | \ r \mbox{ instance of some rule of }\LAMBDA\}
+\{\,r \in \Stat \cup \Stat^2 \cup \Stat^3 \mid \mbox{$r$ is an instance of some rule for $\LAMBDA$}\,\}.
 \]
 \end{definition}
 
-When $x^A \not \in \FV(\Gamma)$, then the $\lambda$-rule becomes:
+We note that, when $x^A \not \in \FV(\Gamma)$, the $\lambda$-rule becomes:
 if $\Gamma, x^A:A \vdash b: B$
 then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
 
-We chose having $\weak$-rule as a primitive rule, even if $\weak$ could 
-conditionally derived from the other rules. The reason is that we found simpler
-to write example of regular terms when we use typing rules including $\weak$.
+We have $\weak$-rule as a primitive rule, even if $\weak$ could 
+conditionally derived from the other rules. The reason is that it is simpler
+to write examples of regular terms when we use typing rules with $\weak$.
  
 %Indeed, we use $\weak$-rule to remove bound variables no more in use when 
 %whenever we unfold a fixed point definition. Without $\weak$-rule, we would be 
@@ -666,21 +672,20 @@ to write example of regular terms when we use typing rules including $\weak$.
 %We will use the information in $\phi$ to state the Global Trace condition for terms
 %of $\LAMBDA$.
 
-We say that two rules are equal if they have the same list of judgements. 
-Any rule different from $\weak$ can be uniquely recovered from its last
-judgment, which we call its \quotationMarks{conclusion}.
+We say that two rule instances are equal if they have the same list of judgments. 
+Any rule instance different from $\weak$ can be uniquely recovered from its conclusion.
 
 \begin{proposition}(Rules and subterms)
 \label{proposition-rules-subterms}
 Assume $r, r' \in \Rule$ are no instances of the $\weak$-rule 
-and have conclusion the same judgment $\Gamma \vdash t:A$.
+and have the same conclusion $\Gamma \vdash t:A$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % WE CANNO INCLUDE THE weak RULE
 % THE ASSUMPTIONS OF weak ARE NOT UNIQUE. 
 % This is why weak is taken as a derived rule
 Then $r = r'$, and if the premises of $r$ are some 
 $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
-then the list of immediate subterms of $t$ is exactly $t_1, \ldots, t_p$.
+then the list of immediate subterms of $t$ is exactly $(t_1, \ldots, t_p)$.
 \end{proposition}
 
 From the typing rules we define the proofs that a term is well-typed. 
@@ -732,24 +737,20 @@ From the typing rules we define the proofs that a term is well-typed.
 
 \begin{definition}(Proofs of $\LAMBDA$)
 Assume $\Pi=(T,\phi, \psi)$ is a binary tree $T$ with each node $l \in T$ 
-labeled by a judgment $\phi(l) \in \Stat$ and by a rule $\psi(l) \in \Rule$
+labeled by a judgment $\phi(l) \in \Stat$ and by a rule $\psi(l) \in \Rule$. 
 We denote the root of $T$ with $\nil$
-and the child number $i$ of the node $l \in T$, if it exists, with $l \conc (i)$.
+and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$.
 
-Assume $\Gamma \vdash t:A$ is judgment. 
-Then we write $\Pi: \Gamma \vdash t:A$, and we say that 
-$\Pi$ is a proof of conclusion $\Gamma \vdash t:A$ if:
+Let $J$ be a judgment. 
+Then we write $\Pi: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 
 \begin{enumerate}
 \item 
-  The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = \Gamma \vdash t:A$.
-  
+  The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
 \item
-  If the judgment labeling $l \in T$ is $\phi(l) = \Delta \vdash u: B$, if $l$ has $p$ children
-    and $\phi(l \conc (i)) = \Delta_i \vdash u_i: B_i$ for $i=1, \ldots, p$, 
-  then the rule $r = \psi(l) \in \Rule$ labeling $l$ is $\Delta_1  \prove u_1:B_1, \ldots,
-  \Delta_p  \prove u_p : B_p, \Delta  \prove u:B$.
-  
+  If the judgment labeling $l \in T$ is $\phi(l) = J_0$, if $l$ has $p$ children
+  and $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
+  then the rule instance $r = \psi(l) \in \Rule$ labeling $l$ is $(J_1,\ldots,J_p,J_0)$.
 \end{enumerate}
 
 \end{definition}
@@ -771,16 +772,16 @@ $\Pi$ is a proof of conclusion $\Gamma \vdash t:A$ if:
 %and the total computation time to $O(n^2)$.
 %\\
 
-There are non-sensical typing proofs. An example. Assume $t_{n+1} = t_n(0^N)$ is a term 
-family indexed on $n \in \N$. Then for all types $A$ we can define a proof family $\Pi_n: 
-\emptyset \vdash t_n : \N^n \rightarrow A$. 
-The assumptions of the conclusion of $\Pi_n$  are proved by $
-\Pi_{n+1} : \emptyset \vdash t_{n+1} : \N^{n+1} \rightarrow A$ 
-and by $\Pi:\emptyset\vdash 0^\N:\N$. 
-There is no obvious interpretation for the term $t_0 \in \LAMBDA$, 
-which can have any possible type.
+There are non-sensical typing proofs. For example, assume $t_{n+1} = t_n(0)$ is
+a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a proof family
+$\Pi_n:\ \vdash t_n : \N^n \rightarrow A$. 
+The assumptions of the conclusion of $\Pi_n$  are proved by
+$\Pi_{n+1} :\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ 
+and by $\Pi:\ \vdash 0:\N$. 
+There is no obvious interpretation for the term $t_0$, 
+since it can have type $A$, which is arbitrary taken. 
 
-For this reason, we say that a term $t \in \LAMBDA$
+For this reason, we say that a term $t$
 is well-typed if $\Pi:\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
 condition, \emph{left-finiteness}, used to remove some non-sensical proofs like above.
 
@@ -796,18 +797,17 @@ and each other node of $\pi$ a child of the previous node in $\pi$.
 
 \item
 A path is \emph{left-finite} if only finitely many nodes of $\pi$
-are the left-child of some previous node of $\pi$.
+are left-child, where a left-child node is the left child of its parent.
 
 \item
-A proof $\Pi$ is left-finite if all paths $\pi$ in $\Pi$ are left-finite.
+A proof $\Pi$ is \emph{left-finite} if all paths $\pi$ in $\Pi$ are left-finite.
 
 \item
-$t \in \LAMBDA$ is well-typed if and only if $\Pi:\Gamma \vdash t:A$ 
-for some \emph{left-finite} proof $\Pi$, for some $A$ and some context $\Gamma$ 
-with $\FV(\Gamma) \supseteq \FV(t)$.
+A term $t$ is \emph{well-typed} if and only if $\Pi:\Gamma \vdash t:A$ 
+for some left-finite proof $\Pi$ with $\FV(\Gamma) \supseteq \FV(t)$.
 
 \item
-$\WTyped$ is the set of well-typed $t \in \LAMBDA$.
+$\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 
 \end{enumerate}
 
@@ -823,7 +823,7 @@ $\WTyped$ is the set of well-typed $t \in \LAMBDA$.
 
 \begin{proposition}
 Well-typed terms are closed by well-typed substitution:
-if $\Pi_1, x^U:U \Gamma \vdash t:A$ and $\Pi_2 \Gamma \vdash u:U$
+if $\Pi_1: x^U:U, \Gamma \vdash t:A$ and $\Pi_2: \Gamma \vdash u:U$
 are left-finite proofs,
 then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
 \end{proposition}
@@ -834,18 +834,14 @@ then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
 %no more true. However, 
 %
 
-We we can prove that the \emph{type} assigned to a term by an 
-left-finite proof is \emph{unique}: if two left-finite proofs 
-$\Pi$, $\Pi'$ assign two types$A$, $A'$ to the same $t \in \LAMBDA$, 
-then $A = A'$.
+We can prove the \emph{uniqueness} of type for a well-typed term. 
 
 %12:25 13/06/2025
 
 \begin{proposition}(Uniqueness of Typing)
 \label{proposition-left-finite-unique}
-If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  
-$\Pi':\Gamma' \vdash t:A'$ are two left-finite proofs for the
-same term $t$, then $A = A'$.
+If both $\Pi:\Gamma \vdash t:A$ and $\Pi':\Gamma' \vdash t:A'$ are two left-finite proofs,
+then $A = A'$.
 \end{proposition}
 
 %
@@ -973,7 +969,7 @@ same term $t$, then $A = A'$.
 %13:49 29/04/2024
 %12:20 27/03/2025
 
-\subsection{Reduction Rules}
+\subsection{Reduction rules}
 Our goal is to provide a set of well-formed term for $\LAMBDA$ and interpret 
 them as partial functionals, a semantics for circular $\lambda$-terms.
 Some terms of $\LAMBDA$, those satisfying the global trace condition 
