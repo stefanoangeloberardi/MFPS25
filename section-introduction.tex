@@ -1,6 +1,7 @@
 % !TEX root = main.tex
 
-\section{Introduction} 
+\section{Introduction}
+
 We consider $\LAMBDA$, the set of infinitary simply typed $\lambda$-terms 
 with conditional on zero, in the style for instance of 
 Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
@@ -41,7 +42,6 @@ G\"{o}del system $\systemT$ by adding an explicit use of the binder $\lambda$.
 Adding $\lambda$,  
 we hope to provide a circular syntax more familiar to researchers working in the
 field of Type Theory. % We call $\CTlambda$ our extended circular syntax.
-\\
 
 We will prove for $\CTlambda$ (with binders) a result only
 known for the \emph{algebraic} circular syntax for system $\systemT$:
@@ -68,6 +68,19 @@ in $\CTlambda$ no \quotationMarks{undefined} subterm is required
 in order to represent the limit of a reduction, while B\"{o}hm trees 
 can have undefined subtrees. 
 
+In Section~\ref{section-infinite-lambda}, we introduce
+the set $\LAMBDA$ of our infinite $\lambda$-calculus,
+including its types, terms, typing rules, and reduction rules.
+Section~\ref{section-trace-infinite-lambda-terms} and Section~\ref{section-circular-system-CTlambda}
+introduce the notion of traces and the global trace condition for $\LAMBDA$, respectively.
+Section~\ref{section-subject-reduction} shows the subject reduction
+for terms of $\LAMBDA$ with GTC. 
+Section~\ref{section-finite-safe-reductions} introduces the notion of $n$-safe reductions
+that compute finite approximations of the limit normal forms of infinite reductions, 
+and also shows that any closed $\CTlambda$ term of type $\N$ is reduced to a numeral
+by a finite number of the $0$-safe reductions. 
+Section~\ref{section-comparison} compares our work with some related work. 
+Section~\ref{section-conclusion} concludes the current paper, mentioning our plan in the future. 
 
 
 %14:57 17/04/2024

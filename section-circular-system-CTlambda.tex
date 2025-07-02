@@ -1,9 +1,9 @@
+\section{The circular simply typed $\lambda$-calculus $\CTlambda$}\label{section-circular-system-CTlambda}
 
-\section{The Circular Simply Typed $\lambda$-Calculus $\CTlambda$}
 We introduce a condition call \emph{global trace condition} (GTC) for any proof 
 $\Pi$ that the term $t$ is well-typed. GTC implies a termination result (see below). 
 As we explained in the introduction,
-GTC was already defined for infinitary simply typed combinatorial terms, 
+GTC was already defined for infinitary simply typed combinatorial terms (\cite{2021-Anupam-Das}), 
 our contribution is to give an explicit formulation of GTC in the case of the binder $\lambda$.
 
 In this section we also define the set $\GTC$ of well-typed terms 
@@ -62,8 +62,8 @@ $\CTlambda$ are all well-typed terms which are regular trees
 
 Global Trace Condition is decidable in polynomial space in the number of
 subterms of $t$, counted up to isomorphism, 
-because it is a particular case of Neil Jones Size Change algorithm for Program 
-Termination (\cite{SCT}). 
+because it is a particular case of the size change algorithm for program 
+termination (\cite{SCT}). 
 We believe that the global trace condition is decidable quite fast
 for infinitary $\lambda$-terms describing realistic programs. 
 
@@ -76,6 +76,23 @@ for infinitary $\lambda$-terms describing realistic programs.
 %then we can assign a unique type to $t$ with a unique proof, which is left-
 %finite.
 
+\begin{remark}
+  We now explain the effect of splitting the typing rule for $\ap$ into 
+  $\apvar$ and $\apnotvar$.
+%$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
+%for the first argument of $t$. 
+%As we said, 
+We need to consider apart the case $t(x)$ of application of $t$ to a variable
+$x$, because in this case we will also check, using GTC, 
+whether the first argument of $t$ is infinitely decreasing in any infinite 
+computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
+a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
+it helps to automatically discover a part of the terminating functions.
+Remark that we introduced a unique \emph{term notation $\ap$} for application: 
+we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
+the typing rule for $\ap$ into two sub-cases. 
+\end{remark}
+
 We include now some examples of  terms in $\CTlambda$, i.e., 
 of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, 
 in particular they are left-finite, and by definition of $\CTlambda$ they are regular.
@@ -85,6 +102,9 @@ in particular they are left-finite, and by definition of $\CTlambda$ they are re
 %\section{Examples of terms of $\CTlambda$}
 %21:25 25/03/2025
 %15:35 26/03/2025
+
+
+
 \subsection{The sum map}
 
 A first example of term of  $\CTlambda$. 
@@ -188,6 +208,7 @@ therefore $\Sum \in \CTlambda$.
 %  \draw (0,0) -- (30:3cm);
 %  \draw (0,5) -- +(0:2cm);
 %\end{tikzpicture}
+
 
 
 %10:43 16/04/2024

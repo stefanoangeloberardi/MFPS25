@@ -1,4 +1,5 @@
-\section{The set of infinite lambda-terms}
+\section{The set of infinite lambda-terms}\label{section-infinite-lambda}
+
 In this section we define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
 of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
 we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy the
@@ -85,7 +86,6 @@ Global Trace Condition also satisfy a termination result.
 %as the unique tree $\setT$ labeled on $L$ with the root labeled $l$ and with:
 %$\setT \restr (i) = \setT_i$ for all $1 \le i \le n$.
 
-
 \subsection{Types, terms and contexts}
 We define the set $\LAMBDA$ of infinite binary tree notations: 
 first the types for $\LAMBDA$, 
@@ -98,12 +98,12 @@ We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables.
   The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
   of $\LAMBDA$ are inductively defined by: 
   $\N$ of natural numbers, type variables, and $A \rightarrow B$, provided $A$ and $B$ are types.
+  We write $\Type$ for the set of simples types.
 \item
   We abbreviate $A_1 \rightarrow (A_2 \rightarrow \cdots (A_n \rightarrow B))$
-  by $A_1,A_2,\ldots,A_n \rightarrow B$. 
+  with $A_1,A_2,\ldots,A_n \rightarrow B$ and also, more shortly,  
+  with $\vec{A} \rightarrow B$ when $\vec{A} = A_1, \ldots, A_n$.
   In particular, we write $A^n \rightarrow B$ when $A_1,\ldots,A_n$ are the same type $A$. 
-\item   
-$\Type$ is the set of simples types.
 \end{enumerate}
 \end{definition}
 
@@ -131,15 +131,21 @@ a node labeled $\ap$ or $\cond$ has \emph{two} children.
 \item
 The set of all terms is denoted by $\LAMBDA$.
 \end{enumerate}
-We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
-if and only if there is some label-preserving bijection between $t$ and $u$. 
 
-We say that $t$ is a subterm of $u$ if $t$ is a sub-tree of $u$,
-with labeling the restriction of the labeling of $u$ to the nodes of $t$.
+We say that $u$ is a subterm of $t$ if $u$ is a sub-tree of $t$,
+with labeling the restriction of the labeling of $t$ to the nodes of $u$.
 An immediate subterm is an immediate sub-tree.
 \end{definition}
 
-We identify a term with its (possibly infinite) one-line denotation,
+We define a tree isomorphism between two possibly infinite trees by
+a bijection on nodes that preserves root, edges, and the children-order of corresponding parent nodes. 
+We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
+if and only if there is some label-preserving tree isomorphism between $t$ and $u$.
+We may identify two isomorphic terms when we are interested in the shape of these terms,
+but, in general, we do not identify them because we need to distinguish different occurrences
+of redexes (defined later), which may have the same shape in an infinite term. 
+
+We often write a term by its (possibly infinite) one-line denotation,
 namely, a term with the root labeled $x^T$, $0$,
 $\Succ$ with a child $t$,
 $\lambda x^T$ with a child $t$,
@@ -149,7 +155,6 @@ $x^T$, $0$, $\Succ(t)$, $\lambda x^T.t$, $\ap(t,u)$, $\cond(t,u)$, respectively.
 This denotation is unique up to term isomorphism.
 Conversely, each $v \in \LAMBDA$ is in one of the forms:
 $x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
-
 As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
 
 Now we define the regular terms of $\LAMBDA$.
@@ -189,7 +194,7 @@ The set $\Num$ is the representation of the set $\Nat$ of natural numbers inside
 
 \begin{Eg}
 \label{example-regular-infinite}
-An example of regular term and an infinite tree: the term defined by the isomorphism
+An example of a regular term and an infinite tree: the term defined by the isomorphism
 $t \sim \cond(0,\lambda x^N.t(x))$. 
 Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$, up to term isomorphism.
 Thus, $t$ is a regular term.
@@ -245,7 +250,7 @@ We say that $\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if and o
 $\phi$ is a tree isomorphism between $t$ and $u$ such that:
 \begin{enumerate}
 \item
-$\phi$ preserves all labels except $\lambda x^T$ and $x^T$;
+$\phi$ preserves all labels except for $\lambda x^T$ and $x^T$;
 \item 
 $\phi$ preserves all labels $x^T$
 on a free variable occurrence, and the fact that it is free;
@@ -297,7 +302,7 @@ We write $\Ctxt$ for the set of contexts.
 %\label{definition-context-lambda-03}
 %A sequent is a pair $(\Gamma, A)$ of a context $\Gamma$ and a type $A$.
 %%, which we write as $\Gamma \vdash A$. 
-%We write $\Stat = \Ctxt \times \Type$ for the set of all sequents.
+%We write $\Judg = \Ctxt \times \Type$ for the set of all sequents.
 
 \item
 \label{definition-context-lambda-07}
@@ -309,7 +314,7 @@ Otherwise $\Gamma\setminus\{x^T:T\}$ is $\Gamma$.
 \label{definition-context-lambda-08}
   Let $\Gamma$ and $\Gamma'$ be $({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ and $({x'_1}^{A'_1}:A'_1, \ldots, x'_{n'}^{A'_{n'}}:A'_{n'})$, respectively. 
 We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
-$\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$
+$\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$ is an injection
 and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
 Note that we have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
 $\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$. 
@@ -319,7 +324,7 @@ $\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$.
 A \emph{typing judgment} is $(\Gamma,t,A) \in \Ctxt \times \LAMBDA \times \Type$,
 which is written in the form $\Gamma \vdash t:A$.
 When $\Gamma$ is the empty context $\nil$, we abbreviate $\nil\vdash t:A$ with $\vdash t:A$. 
-We write $\Stat$ for the set of all typing judgments.
+We write $\Judg$ for the set of all typing judgments.
 
 %\item
 %\label{definition-context-lambda-06}
@@ -515,65 +520,35 @@ involving substitution of closed terms.
 \subsection{Typing rules}
 We define typing rules for terms of $\LAMBDA$ 
 and the subset $\WTyped$ of well-typed terms.
+The typing rules are similar to those of the usual simply typed $\lambda$-calculi
+with natural number types (though ours are for possibly infinite terms),
+except for the rules for $\cond$ and $\ap$. 
+The typing rule for $\cond(a,f)$ reflects the computational meaning of $\cond$,
+which is a function $\N\rightarrow A$ that returns $a$ for the input $0$,
+and returns $f(t)$ for an input $\Suc{t}$. 
+The typing rule for $\ap(t,u)$ is split into two sub-rules,
+$\apvar$ and $\apnotvar$ depending on whether $u$ is a variable or not. 
+This is for the traces and the global trace condition for $\LAMBDA$ that will be defined later. 
+We will explain the rules for $\ap$ in more detail after the definition of GTC. 
 
-The typing rules are the usual ones but for 
-%the conditional binder $\cond$, and for 
-the \emph{typing rule for applications} $t(u)$, which we split the rule into two sub-rules, $\apvar$
-and $\apnotvar$, according to whether $u$ is a variable or is not a variable.
-%$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
-%for the first argument of $t$. 
-%As we said, 
-We need to consider apart the case $t(x)$ of application of $t$ to a variable
-$x$, because in this case we will also check, using the Global Trace Condition, 
-whether the first argument of $t$ is infinitely decreasing in any infinite 
-computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
-a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
-it helps to automatically discover a part of the terminating functions.
+%% [The following part will be put in the later section]
+%% %the conditional binder $\cond$, and for 
+%% the \emph{typing rule for applications} $t(u)$, which we split the rule into two sub-rules, $\apvar$
+%% and $\apnotvar$, according to whether $u$ is a variable or is not a variable.
+%% %$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
+%% %for the first argument of $t$. 
+%% %As we said, 
+%% We need to consider apart the case $t(x)$ of application of $t$ to a variable
+%% $x$, because in this case we will also check, using the Global Trace Condition, 
+%% whether the first argument of $t$ is infinitely decreasing in any infinite 
+%% computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
+%% a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
+%% it helps to automatically discover a part of the terminating functions.
 
-Remark that we introduced a unique \emph{term notation $\ap$} for application: 
-we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
-the typing rule for $\ap$ into two sub-cases. 
+%% Remark that we introduced a unique \emph{term notation $\ap$} for application: 
+%% we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
+%% the typing rule for $\ap$ into two sub-cases. 
 
-%We have a single structural rule  $\struct_f$, which can be used for:
-% weakening, variable permutation and variable renaming. 
-%We have a a single structural rule $\weak$ for extending a context 
-%$\Gamma$ to a context 
-%$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
-%$\Gamma'$, $\Gamma$ are permutation each other), 
-%the rule $\weak$ can be used for variable permutation.
-%%Variable renaming for a term $t[\vec{x}]$ can be obtained by writing 
-%%$(\lambda \vec{x}.t[\vec{x}])(\vec{x'})$. 
-
-%Therefore we do not assume having a primitive rule for renaming. 
-%The lack of a renaming rule is a 
-%\emph{difference with the circular syntax for inductive \underline{proofs}}.
-%
-%The reason of not having implicit $\alpha$-conversion mentioned in the previous section 
-%comes from this assumption. 
-%For example, if we identify the $\alpha$-equivalent terms $\lambda x^A.x$ and $\lambda z^A.z$,
-%the left derivation is a correct proof, but the right one is not ($(z:A,z:A)$ is not a context).
-%That is, the proof structure does not closed under identity of the $\alpha$-equivalence. 
-%\begin{center}
-%  $\infer{
-%    z:A \vdash \lambda x^A.x:A\to A
-%  }{
-%    \infer{
-%      z:A, x:A \vdash x:A
-%    }{}
-%  }$
-%  \qquad
-%  $\infer{
-%    z:A \vdash \lambda z^A.z:A\to A
-%  }{
-%    \infer{
-%      z:A, z:A \vdash z:A
-%    }{}
-%  }$  
-%\end{center}
-%The provability of sequents is closed under the variable renaming and the $\alpha$-equivalence.
-%We will discuss this point later. 
-
-%11:56 29/04/2024
 
 \begin{definition}(Typing rules of $\LAMBDA$)
 %Assume $\Gamma = {x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_1$ is a context. 
@@ -624,9 +599,51 @@ If $\Gamma \vdash t:\N$ then $\Gamma \vdash \Succ (t):\N$.
 
 \item
 $\cond$-rule.
-If $\Gamma \vdash  f :T$ and  $\Gamma \vdash g : \N \rightarrow T$ 
-then $\Gamma \vdash \cond(f,g) : \N \rightarrow T$.
+If $\Gamma \vdash  a :A$ and  $\Gamma \vdash f : \N \rightarrow A$ 
+then $\Gamma \vdash \cond(a,f) : \N \rightarrow A$.
 \end{enumerate}
+
+%We have a single structural rule  $\struct_f$, which can be used for:
+% weakening, variable permutation and variable renaming. 
+%We have a a single structural rule $\weak$ for extending a context 
+%$\Gamma$ to a context 
+%$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
+%$\Gamma'$, $\Gamma$ are permutation each other), 
+%the rule $\weak$ can be used for variable permutation.
+%%Variable renaming for a term $t[\vec{x}]$ can be obtained by writing 
+%%$(\lambda \vec{x}.t[\vec{x}])(\vec{x'})$. 
+
+%Therefore we do not assume having a primitive rule for renaming. 
+%The lack of a renaming rule is a 
+%\emph{difference with the circular syntax for inductive \underline{proofs}}.
+%
+%The reason of not having implicit $\alpha$-conversion mentioned in the previous section 
+%comes from this assumption. 
+%For example, if we identify the $\alpha$-equivalent terms $\lambda x^A.x$ and $\lambda z^A.z$,
+%the left derivation is a correct proof, but the right one is not ($(z:A,z:A)$ is not a context).
+%That is, the proof structure does not closed under identity of the $\alpha$-equivalence. 
+%\begin{center}
+%  $\infer{
+%    z:A \vdash \lambda x^A.x:A\to A
+%  }{
+%    \infer{
+%      z:A, x:A \vdash x:A
+%    }{}
+%  }$
+%  \qquad
+%  $\infer{
+%    z:A \vdash \lambda z^A.z:A\to A
+%  }{
+%    \infer{
+%      z:A, z:A \vdash z:A
+%    }{}
+%  }$  
+%\end{center}
+%The provability of sequents is closed under the variable renaming and the $\alpha$-equivalence.
+%We will discuss this point later. 
+
+%11:56 29/04/2024
+
 
 An instance of a typing rule $r$ is a list $(J_1,\ldots,J_p,J)$ of typing judgments $(p=0,1,2)$,
 where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$"}, and we draw it as:
@@ -648,7 +665,7 @@ where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$"}
 The set $\Rule$ of rule instances for $\LAMBDA$ is defined by
 \[
 \Rule = 
-\{\,r \in \Stat \cup \Stat^2 \cup \Stat^3 \mid \mbox{$r$ is an instance of some rule for $\LAMBDA$}\,\}.
+\{\,r \in \Judg \cup \Judg^2 \cup \Judg^3 \mid \mbox{$r$ is an instance of some rule for $\LAMBDA$}\,\}.
 \]
 \end{definition}
 
@@ -737,7 +754,7 @@ From the typing rules we define the proofs that a term is well-typed.
 
 \begin{definition}(Proofs of $\LAMBDA$)
 Assume $\Pi=(T,\phi, \psi)$ is a binary tree $T$ with each node $l \in T$ 
-labeled by a judgment $\phi(l) \in \Stat$ and by a rule $\psi(l) \in \Rule$. 
+labeled by a judgment $\phi(l) \in \Judg$ and by a rule $\psi(l) \in \Rule$. 
 We denote the root of $T$ with $\nil$
 and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$.
 
@@ -772,12 +789,11 @@ Then we write $\Pi: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 %and the total computation time to $O(n^2)$.
 %\\
 
-There are non-sensical typing proofs. For example, assume $t_{n+1} = t_n(0)$ is
+There are non-sensical typing proofs. For example, assume $t_n = t_{n+1}(0)$ is
 a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a proof family
-$\Pi_n:\ \vdash t_n : \N^n \rightarrow A$. 
-The assumptions of the conclusion of $\Pi_n$  are proved by
-$\Pi_{n+1} :\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ 
-and by $\Pi:\ \vdash 0:\N$. 
+$\Pi_n:\ \vdash t_n : \N^n \rightarrow A$ whose conclusion is obtained by
+$\Pi_{n+1} :\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
+and $\Pi:\ \vdash 0:\N$. 
 There is no obvious interpretation for the term $t_0$, 
 since it can have type $A$, which is arbitrary taken. 
 
@@ -980,52 +996,41 @@ functionals. Our first step is to provide reduction rules for $\LAMBDA$.
 
 
 \begin{definition}(Reduction Rules for $\LAMBDA$)
-Assume $a,b,f,g,t,u \in \LAMBDA$.
+  Let $a$, $b$, $f$, $g$, $t$, and $u$ be in $\LAMBDA$.
+  We first define the binary relations $\reduces_\beta$ and $\reduces_\cond$ as follows.
 \begin{enumerate}
-
 \item
 $\reduces_\beta$: $(\lambda x^A.b)(a) \reduces_\beta b[a/x]$
-
 \item 
-$\reduces_\cond$: $\cond(f,g)(0) \reduces_\cond f$ and
+$\reduces_\cond$:
+$\cond(f,g)(0) \reduces_\cond f$ and
 $\cond(f,g)(\Succ (t)) \reduces_\cond g(t)$.
+\end{enumerate}
 
-\item
 A \emph{redex} is a term in the shape of the term at the left-hand side of $\reduces_\beta$ or $\reduces_\cond$. 
-The one-step reduction relation $\reduces$
+The \emph{one-step reduction relation} $\reduces$
 is the contraction of one $\beta$ or of one $\cond$ redex anywhere
-in the term, namely, it is the context closure of $\reduces_\beta$ union 
-the context closure of $\reduces_\cond$.
-
-\item
-$\reduces^*$ is the reflexive and 
+in the term, namely,
+it is the union of the context closures of $\reduces_\beta$ and $\reduces_\cond$.
+The relation $\reduces^*$ is the reflexive and 
 transitive closure of $\reduces$ (zero or more reductions).
-
-\item
-$\reduces^{+}$ is the 
+The relation $\reduces^{+}$ is the 
 transitive closure of $\reduces$ (one or more reductions).
 
-\item
-$a \sim b$ is the existence of a common reduct: 
-$\exists c \in \LAMBDA. (a \reduces^* c) \wedge (b \reduces^* c)$.
+%$a \sim b$ is the existence of a common reduct: 
+%$\exists c \in \LAMBDA. (a \reduces^* c) \wedge (b \reduces^* c)$.
 
-\item
 The $\cond$-depth of a subterm $u$ of $t$ is 
-the number of subterms $\cond(a,b)$
- such that $u$ occurs in the right-hand side of $\cond(a,b)$.
+the number of edges between a $\cond$ node and its right child on the path
+from the root of $t$ to the root of $u$. 
+The $n$-safe level of $t$ is the set of nodes of $t$ with $\cond$-depth $\le n$.
 
-\item
-The $n$-safe level of $t$ is the set of nodes of $t$ of $\cond$-depth $\le n$.
-
-\item
 We say that $t \nsafeReduces{n} u$, or that $t$ $n$-safely reduces to $u$,  
 if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $t$ 
 (i.e. of $\cond$-depth $\le n$).
 %We call \emph{unsafe} a reduction inside any $\cond(f,g)$.
-
-\item
 A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
-\end{enumerate}
+
 We abbreviate \quotationMarks{$t$ is $0$-safe normal} 
 with just \quotationMarks{$t$ is safe normal}.
 \end{definition}
