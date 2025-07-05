@@ -3,13 +3,12 @@
 %19:34 27/03/2024
 We define a notion of trace for possibly infinite $\lambda$-terms, 
 describing how an input of type $\N$ is used when computing the output
-and when its value decreases. A notion of trace is useful to analyse termination.
-If in all infinite computations of a term we are able to find some infinitely
-decreasing value, then no infinite computation can exists for this term. 
-The first step toward a notion of  trace is defining a notion of \emph{connection} 
-between arguments of type $\N$ in the proof that $t$ is well-typed. 
-To this aim, we need the notions of \emph{list of argument
- types} and of \emph{index of atomic types} for a term.
+and when its value decreases. The notion of trace is useful to analyse termination.
+If, in all infinite computations of a term, we are able to find some infinitely
+decreasing value, then no infinite computation can exist for this term. 
+The first step toward the notion of trace is defining a notion of \emph{connection} 
+between arguments of type $\N$ in a proof that evidences the well-typedness of $t$. 
+To this aim, we need to define \emph{lists of argument types} and \emph{indexes of atomic types} for a term.
 
 %We sketch the notion of connection through an example.
 %Assume 
@@ -31,24 +30,22 @@ To this aim, we need the notions of \emph{list of argument
 %
 %Below is the formal definition of argument types for a term.
 
-\begin{definition}(List of argument types of a term)
-Assume that $\vec{A} = A_1, \ldots, A_n$, 
-$\vec{B}=B_{n+1}, \ldots, B_{n+m}$, 
-$\Gamma = \{\vec{x}:\vec{A}\}$,
-and $\Gamma \vdash t: \vec{B} \rightarrow \N$ is a judgement.
+\begin{definition}(List of argument types)
+Let $J$ be a judgment.
+Then $J$ has the form $\Gamma \vdash \vec{B}\rightarrow \N$,
+where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and $\vec{B}=B_{n+1}, \ldots, B_{n+m}$. 
+We define as follows.
 
 \begin{enumerate}
 \item
-The \emph{list of argument types} of the judgement
-$\Gamma \vdash t: \vec{B} \rightarrow \N$ 
-is $\vec{C} = \vec{A},\vec{B}$. 
+The \emph{list of argument types} of the judgment $J$ is $\vec{C} = \vec{A},\vec{B}$,
+where $\vec{A} = A_1,\ldots,A_n$.
 
 \item
-$A_1, \ldots, A_n$ are the \emph{named arguments} of the judgement, 
-with names $x_1, \ldots, x_n$.
-
+An element $A_i \in \vec{A}$ is called a \emph{named argument} of $J$, with name $x_i$.
+    
 \item
-$B_{n+1}, \ldots, B_{n+m}$ are the \emph{unnamed arguments} of the judgement.
+An element of $\vec{B}$ is called an \emph{unnamed argument} of $J$. 
 
 \item
 An \emph{index of an $\N$-argument} 
@@ -58,7 +55,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 \end{definition}
 
 %We now define the connection between $\N$-arguments of subterms of $t$
-%in a proof $\Pi: t:\Gamma \vdash A$ of  $\LAMBDA$. The connection describes
+%in a proof $\Pi:: \Gamma \vdash t:A$ of  $\LAMBDA$. The connection describes
 %how an input  moves through the infinite unfolding of the term.
 %The definition of  atom connection for a syntax including the binder $\lambda$ 
 %is the main contribution of this paper. 
@@ -132,7 +129,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 
 %15:19 24/03/2025
 
-Let $\Gamma$ be a length $n$ context.
+Let $\Gamma$ be a context of length $n$.
 Suppose be given a typing rule $r$.
 We define a connection between the arguments of the conclusion $\Gamma \vdash t:\vec{B} 
 \rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
@@ -189,7 +186,7 @@ premise. We also need some care in the case of a $\weak$-rule: the premise can
 have less free variables and taken in a different order. 
 In this case we use the map $\phi:\Gamma \rightarrow \Gamma'$ between contexts 
 (Def.\ref{definition-context-lambda}.\ref{definition-context-lambda-08}) 
-in order to relate the indexes of a a free variable in the premise with its index in the 
+in order to relate the indexes of a free variable in the premise with its index in the 
 conclusion. 
 
 In order to define the connection relation, we have first to define for each $x \in \N$
@@ -211,7 +208,7 @@ express the notion of connection through a formal definition.
 
 
 %The role of $\ins$ is describing the fact that
-%the the first argument $A$ of $t:A \rightarrow B$ 
+%the first argument $A$ of $t:A \rightarrow B$ 
 %in the proof that $t(u):B$ is well-typed is
 %connected to no argument type of $t(u)$.
 
@@ -246,7 +243,7 @@ If $t'=g$ then $k'=k$.
 if $t = \Succ(u)$ is obtained by a rule $\Succ$ then $k = k'$.
 
 \item
-if $\lambda x.v$ is obtained by a rule $\lambda$, then $k = k'$ if 
+if $t = \lambda x.v$ is obtained by a rule $\lambda$, then $k = k'$ if 
 $x \not \in \FV(\Gamma)$, and $k = \ins(i,k')$ if $x$ has index $i$ in $\Gamma$.
 
 \item
@@ -307,9 +304,9 @@ is connected with the last variable in the premise of the rule (outlined).
 %When  we move up in a $\lambda$-rule, the type of the first unnamend argument
 %corresponds to the type of the last free variable.
 
-The connection on $\N$-arguments in a proof $\Pi:\Gamma\vdash t:A$ defines a 
+The connection on $\N$-arguments in a proof $\Pi::\Gamma\vdash t:A$ defines a 
 graph $\Graph(\Pi)$ whose nodes are all pairs $(k,\theta)$, with $\theta$ node of $\Pi$ and 
-$k$ index of some $\N$-argument of  the judgement labeling $\theta$. 
+$k$ index of some $\N$-argument of  the judgment labeling $\theta$. 
 A trace represents the movement of an input information through the 
 infinite unfolding of a tree. Formally, we define a trace as a (finite or infinite) path 
 in the graph $\Graph(\Pi)$.

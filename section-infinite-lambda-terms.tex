@@ -1,7 +1,8 @@
 \section{The set of infinite lambda-terms}\label{section-infinite-lambda}
 
-In this section we define the set $\LAMBDA$ of infinite circular terms, the subset $\WTyped$
-of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
+In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
+the subset $\Reg$ of circular terms, namely regular trees, of $\LAMBDA$, 
+the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
 we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy the
 Global Trace Condition also satisfy a termination result.
 
@@ -87,16 +88,16 @@ Global Trace Condition also satisfy a termination result.
 %$\setT \restr (i) = \setT_i$ for all $1 \le i \le n$.
 
 \subsection{Types, terms and contexts}
-We define the set $\LAMBDA$ of infinite binary tree notations: 
-first the types for $\LAMBDA$, 
-then the terms and the contexts for $\LAMBDA$.
+We define the syntax of our infinite $\lambda$-calculus. 
+First we introduce the types, 
+and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 
 \begin{definition}(Types)
 We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables. 
 \begin{enumerate}
 \item  
   The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
-  of $\LAMBDA$ are inductively defined by: 
+  are inductively defined by: 
   $\N$ of natural numbers, type variables, and $A \rightarrow B$, provided $A$ and $B$ are types.
   We write $\Type$ for the set of simples types.
 \item
@@ -261,14 +262,23 @@ binding relation.
 \end{enumerate}
 
 \item
-We say that an $\alpha$-conversion map $\phi$ is equality-preserving if $\phi$ maps equal
-labels into equal labels.
-
+  We say that an $\alpha$-conversion map $\phi$ is \emph{equality-preserving} if $\phi$ preserves
+  the equalities of labels. 
 \item
 We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
 $\alpha$-conversion $\phi:t \rightarrow u$.
 \end{enumerate}
 \end{definition}
+
+We remark that the equality-preserving $\alpha$-conversion $\sim_\alpha$ is
+a restriction of the usual $\alpha$-conversion, which is defined by an $\alpha$-conversion map.
+The equality-preserving condition says that if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
+all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$. 
+The condition is to avoid breaking regularity after the renaming of bound variables.
+For example, without the condition, some $\alpha$-conversion map sends
+a regular term $f$ defined by $f\sim \lambda x^\N.\cond(x,f0)$ into
+a non-regular term $\lambda x_1^\N.\cond(x_1,\lambda x_2^\N.\cond(x_2,(\lambda x_3^\N.\cond(...))0)0)$,
+with distinguished bound variables $x_1,x_2,\ldots$. 
 
 In order to define typing of our possibly infinite terms, we first 
 define contexts and typing judgments.
@@ -308,16 +318,16 @@ We write $\Ctxt$ for the set of contexts.
 \label{definition-context-lambda-07}
 The context $\Gamma\setminus\{x^T:T\}$ is the one obtained
 by removing $x^T:T$ from $\Gamma$ if the type assignment presents. 
-Otherwise $\Gamma\setminus\{x^T:T\}$ is $\Gamma$.
+Otherwise it is $\Gamma$.
 
 \item
 \label{definition-context-lambda-08}
   Let $\Gamma$ and $\Gamma'$ be $({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ and $({x'_1}^{A'_1}:A'_1, \ldots, x'_{n'}^{A'_{n'}}:A'_{n'})$, respectively. 
 We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
-$\phi:\{1,\ldots,n\} \rightarrow \{1,\ldots,n'\}$ is an injection
+$\phi$ is an injection from $\{1,\ldots,n\}$ to $\{1,\ldots,n'\}$
 and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
 Note that we have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
-$\phi:\Gamma \rightarrow \Gamma'$ for some unique map $\phi$. 
+there is a unique $\phi:\Gamma \rightarrow \Gamma'$. 
 
 \item 
 \label{definition-context-lambda-04}
@@ -605,7 +615,7 @@ then $\Gamma \vdash \cond(a,f) : \N \rightarrow A$.
 
 %We have a single structural rule  $\struct_f$, which can be used for:
 % weakening, variable permutation and variable renaming. 
-%We have a a single structural rule $\weak$ for extending a context 
+%We have a single structural rule $\weak$ for extending a context 
 %$\Gamma$ to a context 
 %$\Gamma' \supseteqsim \Gamma$. When $\Gamma' \sim \Gamma$ (when 
 %$\Gamma'$, $\Gamma$ are permutation each other), 
@@ -673,7 +683,7 @@ We note that, when $x^A \not \in \FV(\Gamma)$, the $\lambda$-rule becomes:
 if $\Gamma, x^A:A \vdash b: B$
 then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
 
-We have $\weak$-rule as a primitive rule, even if $\weak$ could 
+We have $\weak$-rule as a primitive rule, even if $\weak$ could be
 conditionally derived from the other rules. The reason is that it is simpler
 to write examples of regular terms when we use typing rules with $\weak$.
  
@@ -694,7 +704,7 @@ Any rule instance different from $\weak$ can be uniquely recovered from its conc
 
 \begin{proposition}(Rules and subterms)
 \label{proposition-rules-subterms}
-Assume $r, r' \in \Rule$ are no instances of the $\weak$-rule 
+Assume $r, r' \in \Rule$ are not instances of the $\weak$-rule 
 and have the same conclusion $\Gamma \vdash t:A$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % WE CANNO INCLUDE THE weak RULE
@@ -756,10 +766,11 @@ From the typing rules we define the proofs that a term is well-typed.
 Assume $\Pi=(T,\phi, \psi)$ is a binary tree $T$ with each node $l \in T$ 
 labeled by a judgment $\phi(l) \in \Judg$ and by a rule $\psi(l) \in \Rule$. 
 We denote the root of $T$ with $\nil$
-and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$.
+and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$
+(appending $i$ after the last element of $l$).
 
 Let $J$ be a judgment. 
-Then we write $\Pi: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
+Then we write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 
 \begin{enumerate}
 \item 
@@ -791,14 +802,14 @@ Then we write $\Pi: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 
 There are non-sensical typing proofs. For example, assume $t_n = t_{n+1}(0)$ is
 a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a proof family
-$\Pi_n:\ \vdash t_n : \N^n \rightarrow A$ whose conclusion is obtained by
-$\Pi_{n+1} :\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
-and $\Pi:\ \vdash 0:\N$. 
+$\Pi_n ::\ (\vdash t_n : \N^n \rightarrow A)$ whose conclusion is obtained by
+$\Pi_{n+1} ::\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
+and $\Pi ::\ \vdash 0:\N$. 
 There is no obvious interpretation for the term $t_0$, 
 since it can have type $A$, which is arbitrary taken. 
 
 For this reason, we say that a term $t$
-is well-typed if $\Pi:\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
+is well-typed if $\Pi ::\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
 condition, \emph{left-finiteness}, used to remove some non-sensical proofs like above.
 
 \begin{definition}(Well-typed term of $\LAMBDA$)
@@ -819,7 +830,7 @@ are left-child, where a left-child node is the left child of its parent.
 A proof $\Pi$ is \emph{left-finite} if all paths $\pi$ in $\Pi$ are left-finite.
 
 \item
-A term $t$ is \emph{well-typed} if and only if $\Pi:\Gamma \vdash t:A$ 
+A term $t$ is \emph{well-typed} if and only if $\Pi :: \Gamma \vdash t:A$ 
 for some left-finite proof $\Pi$ with $\FV(\Gamma) \supseteq \FV(t)$.
 
 \item
@@ -827,7 +838,7 @@ $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 
 \end{enumerate}
 
-%A proof $\Pi:\Gamma \vdash  t :T$ is canonical if all $\weak$-rules
+%A proof $\Pi::\Gamma \vdash  t :T$ is canonical if all $\weak$-rules
 %\begin{enumerate}
 %\item
 % either follow some $\lambda$-rule for a term $\lambda x^T.b$, and they introduce $x^T$ in the context,
@@ -839,9 +850,9 @@ $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 
 \begin{proposition}
 Well-typed terms are closed by well-typed substitution:
-if $\Pi_1: x^U:U, \Gamma \vdash t:A$ and $\Pi_2: \Gamma \vdash u:U$
+if $\Pi_1:: x^U:U, \Gamma \vdash t:A$ and $\Pi_2:: \Gamma \vdash u:U$
 are left-finite proofs,
-then $\Pi:\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
+then $\Pi::\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
 \end{proposition}
 
 %
@@ -856,7 +867,7 @@ We can prove the \emph{uniqueness} of type for a well-typed term.
 
 \begin{proposition}(Uniqueness of Typing)
 \label{proposition-left-finite-unique}
-If both $\Pi:\Gamma \vdash t:A$ and $\Pi':\Gamma' \vdash t:A'$ are two left-finite proofs,
+If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two left-finite proofs,
 then $A = A'$.
 \end{proposition}
 
@@ -873,7 +884,7 @@ then $A = A'$.
 %
 %\item
 %Assume $r \not = \weak$ and $r' = \weak$. 
-%Then $\Pi'$ is obtained from a proof $\Pi'_1:\Gamma_1 \vdash t:A$. 
+%Then $\Pi'$ is obtained from a proof $\Pi'_1::\Gamma_1 \vdash t:A$. 
 %By induction hypothesis on $\Pi$ and $\Pi'_1$ we conclude that $A = A'$.
 %
 %\item
@@ -891,23 +902,23 @@ then $A = A'$.
 %Assume $t =0^\N$. Then $r=r'=0$-rule and $A = A' = \N$.
 %
 %\item
-%Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1:\Gamma \vdash u: \N$
-%and $\Pi_2:\Gamma' \vdash u:\N$ and $A = A' = \N$.
+%Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1::\Gamma \vdash u: \N$
+%and $\Pi_2::\Gamma' \vdash u:\N$ and $A = A' = \N$.
 %
 %\item
-%Assume $t = f(u)$. Then $r=r'=\ap$-rule and $\Pi_1:\Gamma \vdash f:U \rightarrow A$
-%and $\Pi_2:\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on $\Pi_1$ and
+%Assume $t = f(u)$. Then $r=r'=\ap$-rule and $\Pi_1::\Gamma \vdash f:U \rightarrow A$
+%and $\Pi_2::\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on $\Pi_1$ and
 %$\Pi'_1$ we deduce that $(U \rightarrow A) = (U' \rightarrow A')$, in particular that $A = A'$.
 %
 %\item
 %Assume $t = \lambda x^T.b$. Then $r=r'=\lambda$-rule and 
-%$\Pi_1:\Gamma \vdash b:B$
-%and $\Pi_2:\Gamma' \vdash b:B'$. By induction hypothesis on $\Pi_1$ and
+%$\Pi_1::\Gamma \vdash b:B$
+%and $\Pi_2::\Gamma' \vdash b:B'$. By induction hypothesis on $\Pi_1$ and
 %$\Pi'_1$ we deduce that $B=B'$, in particular that $A = T \rightarrow B = T \rightarrow B' = A'$.
 %
 %\item
-%Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1:\Gamma \vdash f:A$
-%and $\Pi_2:\Gamma' \vdash f:A'$. By induction hypothesis on $\Pi_1$ and
+%Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1::\Gamma \vdash f:A$
+%and $\Pi_2::\Gamma' \vdash f:A'$. By induction hypothesis on $\Pi_1$ and
 %$\Pi'_1$ we deduce that $A = A'$.
 %
 %\end{enumerate}
@@ -924,7 +935,7 @@ then $A = A'$.
 %Let $t=u(0)$ and $u=\cond(t,u)$. $t$ has an infinite lefmost branch $t,u,t,u, \ldots$, therefore
 %$t$ is not left-finite and it has no \emph{left-finite typing proof}.
 %Unicity fails and we can prove $\vdash t:A$ for all types $A \in \Type$. 
-%The subterms of $t$ are $\{t, u, 0\}$ and a proof $\Pi: \emptyset \vdash t:A$ is
+%The subterms of $t$ are $\{t, u, 0\}$ and a proof $\Pi:: \emptyset \vdash t:A$ is
 %\[
 %\infer[\apnotvar]{
 %  \prove t : A
@@ -971,7 +982,7 @@ then $A = A'$.
 %
 %\emph{Claim (existence of a polynomial-time typing algorithm)}.
 %We claim without proof that if a term $t$ is regular then we can decide if an left-finite proof 
-%$\Pi:\Gamma \vdash A$ exists. If an left-finite proof $\Pi$ exists 
+%$\Pi::\Gamma \vdash A$ exists. If an left-finite proof $\Pi$ exists 
 %then at least one of left-finite proofs is regular and we can compute it. 
 %We first check whether the term is left-finite in time $O(n^2)$. If it is not we reject the term.
 %Otherwise we start the standard recursive typing algorithm, until a type has been inferred consistently
@@ -986,7 +997,7 @@ then $A = A'$.
 %12:20 27/03/2025
 
 \subsection{Reduction rules}
-Our goal is to provide a set of well-formed term for $\LAMBDA$ and interpret 
+Our goal is to provide a set of well-formed terms for $\LAMBDA$ and interpret 
 them as partial functionals, a semantics for circular $\lambda$-terms.
 Some terms of $\LAMBDA$, those satisfying the global trace condition 
 (to be introduced later) will denote a subset of the total 
@@ -1031,7 +1042,7 @@ if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $
 %We call \emph{unsafe} a reduction inside any $\cond(f,g)$.
 A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
 
-We abbreviate \quotationMarks{$t$ is $0$-safe normal} 
+We abbreviate \quotationMarks{$t$ is $0$-safe-normal} 
 with just \quotationMarks{$t$ is safe normal}.
 \end{definition}
 
@@ -1040,10 +1051,10 @@ with just \quotationMarks{$t$ is safe normal}.
 
 \begin{Eg}
 Let $u \sim \cond(0, (\lambda z.u)(z) )$, where we omitted the type superscript
-$\N$ of $z$. Then $u$ is $0$-safe-normal (safe normal for short), 
-because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-
-hand-side of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-
-redexes. Up to tree isomorphism, the tree form of $u$ includes the following branch:
+$\N$ of $z$. Then $u$ is $0$-safe-normal (safe-normal for short), 
+because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-hand side
+of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-redexes.
+Up to tree isomorphism, the tree form of $u$ includes the following branch:
 \begin{center}
   $u$, 
   \quad
@@ -1077,7 +1088,7 @@ This is an example of $0$-safe-reductions from a term $v(n)$ to a normal form.
 Assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$. There are only finitely 
 many reductions from $v(n)$, and they are all $0$-safe. The initial term $v(n)$ $\cond$-reduces to 
 $v(n-1)$, then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
-After $n$ $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
+After $n$-time $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
 get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes (the reduction path is unique)
 to $1$ in $(n+1)$ steps.
 %$v(n)$ has a unique reduction path,

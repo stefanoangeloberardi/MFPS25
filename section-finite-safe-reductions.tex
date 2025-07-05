@@ -11,8 +11,8 @@ that is, they occur in the right-hand side of some $\cond$.
 From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on ,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
 no matter how we reduce within the $n$-safe level of a term, 
-eventually no reductions are left, therefore we obtained some $n$-safe normal 
-form. In the case the term is closed of type $\N$, then any $n$-safe normal form is a numeral.
+eventually no reductions are left, therefore we obtained some $n$-safe-normal 
+form. In the case the term is closed of type $\N$, then any $n$-safe-normal form is a numeral.
 \\
 
 We introduce the property of being \quotationMarks{finite for $n$-safe reductions}.
@@ -21,7 +21,7 @@ We introduce the property of being \quotationMarks{finite for $n$-safe reduction
 \label{definition-finite-n-safe-reduction}
 Assume $t \in \LAMBDA$. 
 We say that $t$ is \emph{finite for $n$-safe reductions} if and only if 
-all infinite reduction paths include only finitely many $n$-safe reductions
+all infinite reduction paths include only finitely many $n$-safe reductions. 
 \end{definition}
 
 To put otherwise: in all infinite reduction paths, from some point on all reductions
@@ -36,7 +36,7 @@ the general case will follow.
 As we previously said, 
 we often abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
 We have to prove that all terms in $\GTC$ are finite for safe reductions. 
-For, we define total well-typed terms by induction on the type, 
+We define total well-typed terms by induction on the type, 
 as in Tait's normalization proof.
 
 %We recall that $u \in \LAMBDA$ is \emph{finite for safe reduction} 
@@ -48,7 +48,7 @@ as in Tait's normalization proof.
 
 \begin{definition}[Total well-typed terms of $\LAMBDA$]
 \label{definition-total-term}
-Assume $t \in \WTyped$ and $\Pi:\Gamma \vdash t : T$ for some $\Pi,\Gamma$.
+Assume $t \in \WTyped$ and $\Pi::\Gamma \vdash t : T$ for some $\Pi,\Gamma$.
 We define \quotationMarks{$t$ is total of type $T$} by induction on $T$
 
 \begin{enumerate}
@@ -66,7 +66,7 @@ Then $f$ is total of type $T$ if and only if for all total $a$ of type $A$ we ha
 % A term $t$ is \emph{total by substitution} if and only if:
 % $t[\vec{v}/\vec{x}]$ is total for all total assignments $[\vec{v}/\vec{x}]$
 A term $t[\vec{x}]$ with free variables $\vec{x}:\vec{B}$ is \emph{total by substitution} if and only if:
-$t[\vec{v}]$ is total for all totals $\vec{v}:\vec{B}$. 
+$t[\vec{v}]$ is total for all total terms $\vec{v}:\vec{B}$. 
 
 Let $U$ be an atomic type, $t[\vec{x}]:\vec{A}\to U$, and $\vec{x}:\vec{B}$. 
 A \emph{total assignment} of $t[\vec{x}]$ is $(\vec{v},\vec{a})$, where 
@@ -154,7 +154,7 @@ $\prec$ is well-founded on total terms of type $\N$.
 %\end{proof}
 
 We will prove that if $t \in \GTC$ is not total, then we can assign total terms to  the 
-subterms of $t$ in any infinite path $\pi$ of a proof $\Pi : \Gamma \vdash t : A$ 
+subterms of $t$ in any infinite path $\pi$ of a proof $\Pi :: \Gamma \vdash t : A$ 
 in a way compatible with traces and progress points. In particular, the 
 total terms associated to any infinitely progressing trace $\tau$
 in $\pi$ will form an infinite decreasing sequence for $\prec$, contradicting
@@ -171,7 +171,7 @@ is any sequence of total assignments, where, for each $i$, $r_i=(r_{i,1},\ldots,
 $\vec{v}$ is \emph{trace-compatible} in an index $i$ of $\pi$  
 if and only if it satisfies the following condition:
 
-  for all $j$  index of an $\N$-argument of $t_i$, 
+  for all $j$ index of an $\N$-argument of $t_i$, 
   all $k$ index of an $\N$-argument of $t_{i+1}$, 
   if $j$ is connected to $k$ then:
  \begin{enumerate}
@@ -183,7 +183,7 @@ if and only if it satisfies the following condition:
 $\vec{v}$ is \emph{trace-compatible} if it is trace-compatible in all $i$.
 \end{definition}
 
-Now we will prove that if an infinite branch $\pi$ of a proof tree $\Pi:\Gamma \vdash t:A$ 
+Now we will prove that if an infinite branch $\pi$ of a proof tree $\Pi::\Gamma \vdash t:A$ 
 has a trace-compatible assignment made of total terms, 
 then all traces $\sigma$ of $\pi$ progress only finitely many times and the term 
 $t$ is not in $\GTC$
@@ -193,9 +193,9 @@ $t$ is not in $\GTC$
 
 \begin{proposition}[Trace assignment]
 \label{prop:trace_assign-finiteness}
-Assume $\Pi:\Gamma \vdash t:A$ 
+Assume $\Pi::\Gamma \vdash t:A$ 
 and there is some infinite path $\pi$ of $\Pi$ for which we have
-some \emph{total} trace-compatible assignment  $\rho$ to $\pi$. 
+some \emph{total} trace-compatible assignment  $\rho$ to $\pi$. Then we have the following clauses. 
 \begin{enumerate}
 \item
 \label{prop:trace_assign-finiteness1}
@@ -231,10 +231,9 @@ $t \not \in \GTC$.
 %%16:46 04/09/2024
 
 We now continue with our Tait's-style proof of Strong Normalization.
-We check that total terms are closed by reductions, by application and by variables.
+We check that the set of total terms is closed under reductions and under applications,
+and it contains all variables.
 Any total term is finite for safe reductions.
-
-
 
 \begin{lemma}\label{lem:total_value-finiteness}
 Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
@@ -625,7 +624,7 @@ $u \reduces^{+} u'$ is safe, too.
 %
 %\item
 %Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r[a']$, with both the left
-%and right hand-side of $r$ not included in any $a'$ obtained by substitution. 
+%and right-hand side of $r$ not included in any $a'$ obtained by substitution. 
 %In this case we have $v[a'] = e[r[a'],a'] \reduces e[s'[a'],a']$, and
 %$r[a'] = \cond(f[a'],g[a'])(0) \reduces f[a'] = s[a']$ or 
 %$r[a'] = \cond(f[a'],g[a'])(S(t[a'])) \reduces g[a'](t[a']) = s[a']$
@@ -637,9 +636,9 @@ $u \reduces^{+} u'$ is safe, too.
 %\item
 %  {\Large\color{red} This proof should be fixed}
 %Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r$, with either the left
-%or right hand-side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
-%obtained by substitution, or the left or right hand side of $r$ is equal to some $a'$ obtained by substitution.
-%We cannot have both the left and right hand side equal to $a$, because the two sides of any redex 
+%or right-hand side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
+%obtained by substitution, or the left or right-hand side of $r$ is equal to some $a'$ obtained by substitution.
+%We cannot have both the left and right-hand side equal to $a$, because the two sides of any redex 
 %have a different type.
 %
 %In this case there is a single $a'$ whose value matters, that is, $v[a] = v_0[a][a]$, with the first $a$ denoting
@@ -648,7 +647,7 @@ $u \reduces^{+} u'$ is safe, too.
 %because $a \reduces^{*} a'$ and there is a single occurrence of $a$ in $v_0[a][.]$. 
 %
 %The reduction on $v'[a']$ has both the left
-%and right hand-side of $r$ not included in any $a'$ obtained by substitution, because this unique
+%and right-hand side of $r$ not included in any $a'$ obtained by substitution, because this unique
 %$a'$ is not part of $v'[.]$. We conclude from the previous case applied to $v'[a]$, $v'[a']$.
 %
 %\end{enumerate}
@@ -668,7 +667,7 @@ We now have all properties required to prove our Main Theorem.
 
 \begin{theorem}[Main Theorem]
 \label{theorem-main-finite-safe-reduction}
-  Assume $\Pi:\Gamma\vdash t : A$ (hence $t\in \WTyped$).
+  Assume $\Pi::\Gamma\vdash t : A$ (hence $t\in \WTyped$).
   If $t$ is \emph{not} total by substitution, then $t \not \in \GTC$, i.e.:
   there is some infinite path $\pi = (e_1, e_2, \ldots)$ of $\Pi$ with no infinite progressing trace. 
 \end{theorem}
@@ -1066,7 +1065,7 @@ There are closed normal terms of type $\N$ in $\LAMBDA \setminus \CTlambda$,
 even regular terms, which are not numerals.
 An example is $t \sim \cond(0, \lambda x^N.1)(t)$ 
 (\cite{2021-Anupam-Das}, Remark 44, page 33). 
-There is a proof $\Pi: \vdash t: \N$, and $\N$ is the unique type of $t$. 
+There is a proof $\Pi:: \vdash t: \N$, and $\N$ is the unique type of $t$. 
 $t$ is regular: up to $\sim$, the subterms of $t$ are
 $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
 $t$ is normal, because $t$ is not $0$ nor successor, 
@@ -1074,7 +1073,7 @@ therefore $t$ cannot be reduced. However $t$ is no numeral.
 
 The reason is that $t \not \in \GTC$, hence $t \not \in \CTlambda$. 
 Indeed, the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, with all nodes 
-labeled by the judgement $\vdash t: \N$. The path $\pi$ is 
+labeled by the judgment $\vdash t: \N$. The path $\pi$ is 
 never moving to the right-hand side of a $\cond$,
 and therefore $\pi$ is infinite and never progressing.
 
@@ -1138,7 +1137,7 @@ If $t \in \GTC$, $t$ is closed and $0$-safe-normal and $t:\N$ then $t \in \Num$ 
 %If $u$ or $v$ have a $0$-safe redex then so does $t$.
 %
 %Suppose $u = \lambda x.v, \cond(f,g)$. If $u = \lambda x.v$ then $t=u(v)$ is a $0$-safe $\beta$-redex.
-%If $u = \cond(f,g)$ then $A = \N$ and $v:\N$. $v$ is not open nor has a a $0$-safe redex, and $v$ has no
+%If $u = \cond(f,g)$ then $A = \N$ and $v:\N$. $v$ is not open nor has a $0$-safe redex, and $v$ has no
 %arrow type. The only possibility left is that $v$ is a numeral: we conclude that $t=\cond(f,g)(v)$ is a $\cond$-redex, therefore $t$ is sound.
 %
 %The only possibility left for $u$ is that it is a numeral. But this cannot be, because $u$ has an arrow type.
@@ -1163,14 +1162,14 @@ however we can define a limit normal form $\Lim(t)$, which is sometimes
 not in $\CTlambda$ because it is often not regular. 
 
 $\Lim(t)$ is defined by always reducing
-the leftmost $0$-safe normal form. If continue reducing then, by Corollary
+the leftmost $0$-safe-normal form. If continue reducing then, by Corollary
 \ref{corollary-finite-safe-reduction}, we reach some $0$-normal form $u[\vec{v}]$,
 with $\vec{v}$ the vector of all right-hand side of all $\cond$ in $u[\vec{v}]$.
 $\vec{v}$ are the only subterms which still could include some redex. 
 Then we recursively define 
-$$
+\[
 \Lim(t) = u[\vec{\Lim(v)}] \in \LAMBDA
-$$
+\]
 by repeating the operation $\Lim(\cdot)$ on each term in $\vec{v}$. $\Lim(t)$ is the
 recursive definition of a possibly infinite tree in $\LAMBDA$. 
 By induction on the depth of a subterm 
@@ -1179,16 +1178,16 @@ of $\Lim(t)$ we can prove that $\Lim(t)$ is a normal term.
 We include an example of some term $f  \sim \lambda x^\N.\cond(x,f(\Succ x))$ 
 in $\CTlambda$ such that $\Lim(f(x))$ is not regular. 
 %We will prove that $f$ is the unary algorithm for addition. 
-$f$ is regular. There is a left-finite proof $\Pi:\Gamma \vdash f:\N,\N\rightarrow\N$,
+$f$ is regular. There is a left-finite proof $\Pi::\Gamma \vdash f:\N,\N\rightarrow\N$,
 and we trace the second argument $\bfColor{red}{\N}$ of $f$. 
 The unique infinite branch of $\Pi$ is labeled with the judgments 
-$$
+\[
 \vdash f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
 x^\N:\N \vdash \cond(x,f(\Succ x)) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
 x^\N:\N \vdash f(\Succ x) : \bfColor{red}{\N}\rightarrow\N, \ \ \ 
 \vdash f : \N,\bfColor{red}{\N}\rightarrow\N, \ \ \ 
 \ldots
-$$
+\]
 $f$ is in $\GTC$ because in this unique infinite branch of $\Pi$
 the trace of the second argument of $f$ crosses the right-hand side of a $\cond$
 infinitely many times.
@@ -1210,13 +1209,14 @@ From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
   Therefore $\Lim(f(x)) \not \in \CTlambda$, even though each reduct of 
   $f(x)$ is in $\CTlambda$, and $f$ is just the unary algorithm for the addition, because 
   
-  $$
+  \[
   f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(\Succ^n(0),\cond(\Succ^{n+1}(0),\cond(\Succ^{n+2}(0),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0)
-  $$
+  \]
   
-This is an unfortunate but common situation for the limit of a sequence
-in a topology: finiteness of a notation (which in our case is expressed by 
-\emph{regularity} for trees) is easily lost under limit.
+  This is an unfortunate but common situation for the limit of a sequence in a topology:
+  a sequence of finitely represented elements
+  (which in our case is a reduction sequence from a \emph{regular} term)
+  easily loses its finiteness under taking its limit.
 
 %An example: suppose $T_{n}$ is the complete binary tree of height $n$ and
 %$T_{\infty}$ is the complete infinite binary tree. Then

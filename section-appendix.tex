@@ -16,7 +16,7 @@ the Ackermann function.
 
 %\begin{proposition}[Uniqueness of left-finite type]
 %\label{proposition-left-finite-unique}
-%If $t \in \LAMBDA$, $\Pi:\Gamma \vdash t:A$ and  $\Pi':\Gamma' \vdash t:A'$ are two left-finite
+%If $t \in \LAMBDA$, $\Pi::\Gamma \vdash t:A$ and  $\Pi'::\Gamma' \vdash t:A'$ are two left-finite
 %proofs then $A = A'$.
 %\end{proposition}
 
@@ -28,12 +28,12 @@ are finite because $\Pi$ and $\Pi'$ are assumed to be left-finite. Let $r$ be th
 and $r'$ be the last rule of $\Pi'$.
 \begin{enumerate}
 \item
-Assume $r = \weak$. Then $\Pi$ is obtained from a proof $\Pi_1:\Gamma_1 \vdash t:A$. 
+Assume $r = \weak$. Then $\Pi$ is obtained from a proof $\Pi_1::\Gamma_1 \vdash t:A$. 
 By induction hypothesis on $\Pi_1$ and $\Pi'$ we conclude that $A = A'$.
 
 \item
 Assume $r \not = \weak$ and $r' = \weak$. 
-Then $\Pi'$ is obtained from a proof $\Pi'_1:\Gamma_1 \vdash t:A$. 
+Then $\Pi'$ is obtained from a proof $\Pi'_1::\Gamma_1 \vdash t:A$. 
 By induction hypothesis on $\Pi$ and $\Pi'_1$ we conclude that $A = A'$.
 
 \item
@@ -50,25 +50,25 @@ Assume $t = x^T$. Then $r=r'=\var$-rule and $A = A' = T$.
 Assume $t =0^\N$. Then $r=r'=0$-rule and $A = A' = \N$.
 
 \item
-Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1:\Gamma \vdash u: \N$
-and $\Pi_1:\Gamma' \vdash u:\N$ and $A = A' = \N$.
+Assume $t =\Succ(u)$. Then $r=r'=\Succ$-rule  and $\Pi_1::\Gamma \vdash u: \N$
+and $\Pi_1::\Gamma' \vdash u:\N$ and $A = A' = \N$.
 
 \item
 Assume $t = f(u)$. Then $r=r'=\apvar$-rule or $r=r'=\apnotvar$-rule .
-In both cases we have $\Pi_1:\Gamma \vdash f:U \rightarrow A$
-and $\Pi_1:\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on 
+In both cases we have $\Pi_1::\Gamma \vdash f:U \rightarrow A$
+and $\Pi_1::\Gamma' \vdash f:U' \rightarrow A'$. By induction hypothesis on 
 $\Pi_1$ and $\Pi'_1$ we deduce that $(U \rightarrow A) = (U' \rightarrow A')$, 
 in particular that $A = A'$.
 
 \item
 Assume $t = \lambda x^T.b$. Then $r=r'=\lambda$-rule and 
-$\Pi_1:\Gamma\setminus\{x^T:T\}, x^T \vdash b:B$ and 
-$\Pi'_1:\Gamma'\setminus\{x^T:T\}, x^T \vdash b:B'$. 
+$\Pi_1::\Gamma\setminus\{x^T:T\}, x^T \vdash b:B$ and 
+$\Pi'_1::\Gamma'\setminus\{x^T:T\}, x^T \vdash b:B'$. 
 By induction hypothesis on $\Pi_1$ and $\Pi'_1$ we deduce that $B=B'$, in particular that $A = (T \rightarrow B) = (T \rightarrow B') = A'$.
 
 \item
-Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1:\Gamma \vdash f:A$
-and $\Pi'_1:\Gamma' \vdash f:A'$ by definition of $\cond$-rule with conclusion
+Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1::\Gamma \vdash f:A$
+and $\Pi'_1::\Gamma' \vdash f:A'$ by definition of $\cond$-rule with conclusion
 $A$. By induction hypothesis on $\Pi_1$ and
 $\Pi'_1$ we deduce that $A = A'$.
 
@@ -171,7 +171,7 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %and also show the global trace condition is preserved by reductions. 
 %We first introduce some auxiliary notations for proofs of them.
 %
-%Assume $\Pi:\Gamma \vdash t:A$ is any typing proof, $\alpha$ any node of
+%Assume $\Pi::\Gamma \vdash t:A$ is any typing proof, $\alpha$ any node of
 %$\Pi$ and $\Delta \vdash u:A$ the sequent of $\alpha$ in $\Pi$. Then a variable
 %$x \in \FV(\Delta)$ is local in $\Pi, \alpha$ if and only if there is some ancestor
 %$\beta < \alpha$ whose sequent is some $\lambda x.v$. 
@@ -185,7 +185,7 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %named arguments $x$ of the trace are local variables. This means that if we 
 %remove all elements of a trace before the first progress point we are left with a 
 %local trace, and all infinitely progressing trace have a local suffix with the same 
-%progress points. Thus, $\Pi:\Gamma \vdash t:A$ satisfies the global trace 
+%progress points. Thus, $\Pi::\Gamma \vdash t:A$ satisfies the global trace 
 %condition if and only if all infinite paths of $\Pi$ have some local infinitely 
 %progressing trace. In fact we can ask more: all infinite paths of $\Pi$ have some 
 %local and effectively occurring infinitely progressing trace.
@@ -252,8 +252,8 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %
 %\begin{lemma}[Thinning]
 %  \label{lem:thinning}
-%  Assume $\Pi:\Gamma\vdash t:A$ and $\FV(t) \subseteq \FV(\Delta)$.
-%  Then $\Pi':\Delta \vdash t:A$ for a unique $\weak$-free
+%  Assume $\Pi::\Gamma\vdash t:A$ and $\FV(t) \subseteq \FV(\Delta)$.
+%  Then $\Pi'::\Delta \vdash t:A$ for a unique $\weak$-free
 %  proof $\Pi'$.
 %  
 %  Moreover if the global trace condition holds for $\Pi$, 
@@ -433,13 +433,13 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %
 %
 %\begin{lemma}[Substitution lemma]
-%  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
-%  Then there exists $\Pi^\circ$ such that $\Pi^\circ:\mergeCtx{\Delta}{\Gamma} \vdash t[u/x]:B$. 
+%  Assume that $\Pi_u:: \Delta \vdash u:A$ and $\Pi_t::\Gamma,x:A \vdash t:B$ hold. 
+%  Then there exists $\Pi^\circ$ such that $\Pi^\circ::\mergeCtx{\Delta}{\Gamma} \vdash t[u/x]:B$. 
 %  Moreover, if both $\Pi_u$ and $\Pi_t$ satisfy the global trace condition,
 %  then $\Pi^\circ$ also satisfies it. 
 %\end{lemma}
 %\begin{proof}
-%  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
+%  Assume that $\Pi_u:: \Delta \vdash u:A$ and $\Pi_t::\Gamma,x:A \vdash t:B$ hold. 
 %  By Lemma~\ref{lem:thinning}, without loss of generality,
 %  we can assume $\FV(\Delta) = \FV(u)$ and $\Pi_t$ is a proof with the restricted $\lambda$ rule (the $\lambda'$ rule). 
 %  Let $\Pi_u=(T_u,\phi_u)$ and $\Pi_t=(T_t,\phi_t)$.
@@ -487,7 +487,7 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %  where $l$ is a path of $T_t$, $i$ is a switching point, and $l'$ is a path of $T_u$.
 %  Hence $\Pi^\circ$ is left-finite, since $\Pi_t$ and $\Pi_u$ are left-finite.
 %  In addition, if $\Pi_t$ and $\Pi_u$ satisfies the global trace condition,
-%  so is $\Pi^\circ$ by (b3). 
+%  so does $\Pi^\circ$ by (b3). 
 %  Therefore, to complete the proof, it is enough to construct $\Pi^\circ$. 
 %
 %  First, for each $l\conc(j)\conc l'\in T_\var\cup T_\apvar$ with a switching point $j$, 
@@ -646,46 +646,46 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %%\begin{lemma}(Inversion Lemma)\label{lem:inversion}
 %%  \begin{enumerate}
 %%  \item\label{lem:inversion1}
-%%    If $\Pi:\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
+%%    If $\Pi::\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
 %%    there exist $\Pi_1$, $\Pi_2$ and $B$ such that
-%%    $\Pi_1:\Gamma\vdash f:B\to A$, $\Pi_2:\Gamma\vdash a:B$,
+%%    $\Pi_1::\Gamma\vdash f:B\to A$, $\Pi_2::\Gamma\vdash a:B$,
 %%    and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
 %%  \item\label{lem:inversion2}
-%%    If $\Pi:\Gamma\vdash \lambda x^T.b:A$, where $x\not\in\FV(\Gamma)$,
+%%    If $\Pi::\Gamma\vdash \lambda x^T.b:A$, where $x\not\in\FV(\Gamma)$,
 %%    and $\Pi$ satisfies the global trace condition, then
 %%    there exist $\Pi_1$ and $B$ such that
-%%    $\Pi_1:\Gamma,x:T\vdash b:B$ and $A = T\to B$,
+%%    $\Pi_1::\Gamma,x:T\vdash b:B$ and $A = T\to B$,
 %%    and $\Pi_1$ satisfies the global trace condition. 
 %%  \item\label{lem:inversion3}
-%%    If $\Pi:\Gamma\vdash \cond(f,g):A$ and $\Pi$ satisfies the global trace condition, then
+%%    If $\Pi::\Gamma\vdash \cond(f,g):A$ and $\Pi$ satisfies the global trace condition, then
 %%    there exist $\Pi_1$, $\Pi_2$ and $B$ such that
-%%    $\Pi_1:\Gamma \vdash f:B$, $\Pi_2:\Gamma \vdash g:N\to B$, $A = N\to B$,
+%%    $\Pi_1::\Gamma \vdash f:B$, $\Pi_2::\Gamma \vdash g:N\to B$, $A = N\to B$,
 %%    and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
 %%  \item\label{lem:inversion4}
-%%    If $\Pi:\Gamma\vdash \Succ(t):A$ and $\Succ(t) \in \GTC$, then    
-%%    there exists $\Pi_1$ such that $\Pi_1:\Gamma \vdash t:N$, $A=N$, 
+%%    If $\Pi::\Gamma\vdash \Succ(t):A$ and $\Succ(t) \in \GTC$, then    
+%%    there exists $\Pi_1$ such that $\Pi_1::\Gamma \vdash t:N$, $A=N$, 
 %%    and $\Pi_1$ satisfies the global trace condition. 
 %%  \end{enumerate}
 %%\end{lemma}
 %
 %\begin{proof}(Inversion Lemma \ref{lem:inversion})
-%  We first claim that if $t\in\GTC$ and $\Pi:\Gamma\vdash t:A$ with $\Pi=(T,\phi)$, 
+%  We first claim that if $t\in\GTC$ and $\Pi::\Gamma\vdash t:A$ with $\Pi=(T,\phi)$, 
 %  then there exists $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
 %  Because, if not, the only infinite path in $\Pi$ is the consective use of $\weak$,
 %  which does not contain progressing trace, this contradicts with $t\in\GTC$.
 %
 %  We show the point \ref{lem:inversion1}.
-%  Assume that $\Pi:\Gamma\vdash f(a):A$ with $\Pi=(T,\phi)$ and $f(a) \in \GTC$.
+%  Assume that $\Pi::\Gamma\vdash f(a):A$ with $\Pi=(T,\phi)$ and $f(a) \in \GTC$.
 %  By the claim, take $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
 %  Let $\Gamma' \vdash f(a):A$ be the conclusion of $\phi(l)$. Then $\Gamma'\subseteqsim \Gamma$ holds
 %  by the transitivity of $\subseteqsim$.
 %  Now $\phi(l)$ is $\apvar$ or $\apnotvar$.
-%  In the former case $\phi(l) = \apvar$, we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ for some $B$,
-%  and $a = x^B \in \Gamma'$. Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ by $\weak$. 
-%  We also obtain $\Pi_2:\Gamma\vdash a:B$ by $a = x^B \in \Gamma'$ and $\weak$. 
+%  In the former case $\phi(l) = \apvar$, we have $\Pi\restr l\conc(1)::\Gamma'\vdash f:B\to A$ for some $B$,
+%  and $a = x^B \in \Gamma'$. Hence we have a proof $\Pi_1::\Gamma\vdash f:B\to A$ by $\weak$. 
+%  We also obtain $\Pi_2::\Gamma\vdash a:B$ by $a = x^B \in \Gamma'$ and $\weak$. 
 %  In the latter case $\phi(l) = \apnotvar$,
-%  we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ and $\Pi\restr l\conc(2):\Gamma'\vdash a:B$ for some $B$. 
-%  Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ and $\Pi_2:\Gamma\vdash a:B$ by $\weak$.
+%  we have $\Pi\restr l\conc(1)::\Gamma'\vdash f:B\to A$ and $\Pi\restr l\conc(2)::\Gamma'\vdash a:B$ for some $B$. 
+%  Hence we have a proof $\Pi_1::\Gamma\vdash f:B\to A$ and $\Pi_2::\Gamma\vdash a:B$ by $\weak$.
 %  In both cases, if $t\in\GTC$, we have $f\in\GTC$ and $a\in\GTC$ by the construction of $\Pi_1$ and $\Pi_2$. 
 %  
 %  The points \ref{lem:inversion2}, \ref{lem:inversion3}, and \ref{lem:inversion4} are shown similarly. 
@@ -694,51 +694,51 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %%
 %%\begin{theorem}[Subject reduction]
 %%\label{theorem-subject-reduction}
-%%  Assume that $\Pi_t:\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
-%%  Then there exists $\Pi_u$ such that $\Pi_u:\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
+%%  Assume that $\Pi_t::\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
+%%  Then there exists $\Pi_u$ such that $\Pi_u::\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
 %%\end{theorem}
 %
 %\begin{proof}(Subject reduction, Theorem \ref{theorem-subject-reduction})
 %  By the definition of $t\reduces u$, there is a context $\hat{t}[-]$ such that
 %  $t=\hat{t}[t_0]$, $u=\hat{t}[u_0]$, and $t_0\reduces_\Box u_0$, where $\Box\in\{\beta,\cond\}$. 
-%  Since $t_0$ is a subterm of $t$, there is $l$ such that $\Pi_t\restr l: \Gamma_0\vdash t_0:A_0$.
+%  Since $t_0$ is a subterm of $t$, there is $l$ such that $\Pi_t\restr l:: \Gamma_0\vdash t_0:A_0$.
 %  Note that $\Pi_t\restr l$ satisfies the global trace condition,
 %  since it is a subtree of $\Pi_t$, which satisfies the global trace condition. 
-%  Then, if we have $\Pi'_u:\Gamma_0\vdash u_0:A_0$ that satisfies the global trace condition,
+%  Then, if we have $\Pi'_u::\Gamma_0\vdash u_0:A_0$ that satisfies the global trace condition,
 %  the tree obtained from $\Pi_t$ by replacing the subtree $\Pi_t\restr l$ by $\Pi'_u$ is also
 %  a proof of $\Gamma\vdash \hat{t}[u_0]:A$ that satisfies the global trace condition. 
 %  Hence it is enough to show the following:
 %  \begin{itemize}
 %  \item[(a)]
-%    If $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash b[a/x]: B$ for some $\Pi'$ that satisfies the global trace condition.
+%    If $\Pi::\Gamma \vdash (\lambda x^A.b)(a): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash b[a/x]: B$ for some $\Pi'$ that satisfies the global trace condition.
 %  \item[(b)]
-%    If $\Pi:\Gamma \vdash \cond(f,g)(0): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash f: B$ for some $\Pi'$ that satisfies the global trace condition. 
+%    If $\Pi::\Gamma \vdash \cond(f,g)(0): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash f: B$ for some $\Pi'$ that satisfies the global trace condition. 
 %  \item[(c)]
-%    If $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash g(t): B$ for some $\Pi'$ that satisfies the global trace condition. 
+%    If $\Pi::\Gamma \vdash \cond(f,g)(\Succ(t)): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash g(t): B$ for some $\Pi'$ that satisfies the global trace condition. 
 %  \end{itemize}
 %  (b) is shown immediately by Lemma~\ref{lem:inversion}~\ref{lem:inversion3}.
 %  We show (c).
-%  Assume $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$.
+%  Assume $\Pi::\Gamma \vdash \cond(f,g)(\Succ(t)): B$.
 %  Then by \ref{lem:inversion1}, \ref{lem:inversion3}, and \ref{lem:inversion4} of Lemma~\ref{lem:inversion},
 %  we have
-%  $\Pi_1:\Gamma \vdash g:N\to B$ and $\Pi_2:\Gamma \vdash t:N$,
+%  $\Pi_1::\Gamma \vdash g:N\to B$ and $\Pi_2::\Gamma \vdash t:N$,
 %  where $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
 %  Hence, by applying $\apnotvar$ or $\apvar$ to $\Pi_1$ and $\Pi_2$, 
-%  we have a proof $\Pi':\Gamma\vdash g(t):B$ that satisfies the global trace condition. 
-%  In order to show (a), assume $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$.
+%  we have a proof $\Pi'::\Gamma\vdash g(t):B$ that satisfies the global trace condition. 
+%  In order to show (a), assume $\Pi::\Gamma \vdash (\lambda x^A.b)(a): B$.
 %  Then by Lemma~\ref{lem:inversion}~\ref{lem:inversion1},
-%  we have $\Pi_1:\Gamma \vdash \lambda x^A.b:A\to B$ and $\Pi_2:\Gamma \vdash a:A$,
+%  we have $\Pi_1::\Gamma \vdash \lambda x^A.b:A\to B$ and $\Pi_2::\Gamma \vdash a:A$,
 %  where $\Pi_1$ and $\Pi_2$ satisty the global trace condition. 
 %  Then, by Lemma~\ref{lem:thinning},
-%  we have $\Pi'_1:\Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x^A.b:A\to B$,
+%  we have $\Pi'_1::\Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x^A.b:A\to B$,
 %  where $\Pi'$ satisfies the global trace condition. 
 %  By Lemma~\ref{lem:inversion}~\ref{lem:inversion2},
-%  we have a proof $\Pi''_1:\Restrict{\Gamma}{\FV(\lambda x.b)},x:A \vdash b:B$
+%  we have a proof $\Pi''_1::\Restrict{\Gamma}{\FV(\lambda x.b)},x:A \vdash b:B$
 %  that satisfies the global trace condition. 
-%  Hence, by the substitution lemma, we have a proof $\Pi':\Gamma\vdash b[a/x]:B$
+%  Hence, by the substitution lemma, we have a proof $\Pi'::\Gamma\vdash b[a/x]:B$
 %  that satisfies the global trace condition, as we wished. 
 %\end{proof}
 %
@@ -749,13 +749,13 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %%  \begin{enumerate}
 %%  \item\label{prop:renaming1}
 %%    Let $\theta$ be a renaming.
-%%    If $\Pi:\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
-%%    then $\Pi':\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
-%%    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+%%    If $\Pi::\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
+%%    then $\Pi'::\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
+%%    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
 %%  \item\label{prop:renaming2}
-%%    If $\Pi:\Gamma\vdash t:A$ and $t'$ is an $\alpha$-equivalent term of $t$,
-%%    then $\Pi':\Gamma\vdash t':A$ for some $\Pi'$.
-%%    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+%%    If $\Pi::\Gamma\vdash t:A$ and $t'$ is an $\alpha$-equivalent term of $t$,
+%%    then $\Pi'::\Gamma\vdash t':A$ for some $\Pi'$.
+%%    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
 %%  \end{enumerate}
 %%\end{proposition}
 %
@@ -765,17 +765,17 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %  It is enough to show the claim for a single renaming $\theta = \{y'/y\}$.
 %  Then, by the assumption, we have a proof $\Pi_1$ of $\Gamma[y'/y] \vdash (\lambda y^B.t)y':A$
 %  such that $\Pi_1$ satisfies the global trace condition if $\Pi$ satisfies it.  
-%  Hence we have $\Pi': \Gamma[y'/y] \vdash t[y'/y]:A$ by the subject reduction theorem
+%  Hence we have $\Pi':: \Gamma[y'/y] \vdash t[y'/y]:A$ by the subject reduction theorem
 %  such that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it.
 %
 %  Next we show the point \ref{prop:renaming2}.
 %  It is enough to show when $t = \lambda x.b$ and $t' = \lambda x'.(b[x'/x])$, where $x'\not\in\FV(\lambda x.b)$. 
 %  Let $\Pi$ be a proof of $\Gamma\vdash \lambda x.b:A\to B$.
-%  Then we have $\Pi_1: \Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x.b:A\to B$
+%  Then we have $\Pi_1:: \Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x.b:A\to B$
 %  by Lemma~\ref{lem:thinning}, and
-%  also have $\Pi_2: \Restrict{\Gamma}{\FV(\lambda x.b)},x':B \vdash b[x'/x]:B$
+%  also have $\Pi_2:: \Restrict{\Gamma}{\FV(\lambda x.b)},x':B \vdash b[x'/x]:B$
 %  by the subject reduction theorem. 
-%  Hence we have $\Pi': \Gamma \vdash \lambda x'.b[x'/x]:A\to B$ by the rules $\lambda$ and $\weak$. 
+%  Hence we have $\Pi':: \Gamma \vdash \lambda x'.b[x'/x]:A\to B$ by the rules $\lambda$ and $\weak$. 
 %  Note that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it. 
 %\end{proof}
 %
@@ -845,7 +845,7 @@ contradicting point \ref{lemma-prec-order-01} above.
 
 %\begin{proposition}[Trace assignment]
 %\label{prop:trace_assign-finiteness}
-%Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ 
+%Assume $\Pi::\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ 
 %for which we have
 %some \emph{total} trace-compatible assignment  $\rho$ to $\pi$. 
 %\begin{enumerate}
@@ -865,7 +865,7 @@ contradicting point \ref{lemma-prec-order-01} above.
 %%%%%%%%%%%%%%%%%%%
 % checked 11:04 03/04/2025
 %%%%%%%%%%%%%%%%%%%
-Assume $\Pi:\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ for which we 
+Assume $\Pi::\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ for which we 
 have some \emph{total} trace-compatible assignment  $\rho(\cdot,\cdot)$ to $\pi$.
 \begin{enumerate}
 \item
@@ -1260,7 +1260,7 @@ safe, too.
 %
 %\item
 %Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r[a']$, with both the left
-%and right hand-side of $r$ not included in any $a'$ obtained by substitution. 
+%and right-hand side of $r$ not included in any $a'$ obtained by substitution. 
 %In this case we have $v[a'] = e[r[a'],a'] \reduces e[s'[a'],a']$, and
 %$r[a'] = \cond(f[a'],g[a'])(0) \reduces f[a'] = s[a']$ or 
 %$r[a'] = \cond(f[a'],g[a'])(S(t[a'])) \reduces g[a'](t[a']) = s[a']$
@@ -1272,9 +1272,9 @@ safe, too.
 %\item
 %%  {\Large\color{red} This proof should be fixed}
 %Assume the reduction $v[a'] \reduces w$ is on a redex of the form $r$, with either the left
-%or right hand-side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
-%obtained by substitution, or the left or right hand side of $r$ is equal to some $a'$ obtained by substitution.
-%We cannot have both the left and right hand side equal to $a$, because the two sides of any redex 
+%or right-hand side of $r$ not included in some $a'$. In this case either $r$ is included in some $a'$ 
+%obtained by substitution, or the left or right-hand side of $r$ is equal to some $a'$ obtained by substitution.
+%We cannot have both the left and right-hand side equal to $a$, because the two sides of any redex 
 %have a different type.
 %
 %In this case there is a single $a'$ whose value matters, that is, $v[a] = v_0[a][a]$, with the first $a$ denoting
@@ -1283,7 +1283,7 @@ safe, too.
 %because $a \reduces^{*} a'$ and there is a single occurrence of $a$ in $v_0[a][.]$. 
 %
 %The reduction on $v'[a']$ has both the left
-%and right hand-side of $r$ not included in any $a'$ obtained by substitution, because this unique
+%and right-hand side of $r$ not included in any $a'$ obtained by substitution, because this unique
 %$a'$ is not part of $v'[.]$. We conclude from the previous case applied to $v'[a]$, $v'[a']$.
 %
 %\end{enumerate}
@@ -1297,7 +1297,7 @@ safe, too.
 %
 %\begin{theorem}[Main Theorem]
 %\label{theorem-main-finite-safe-reduction}
-%  Assume $\Pi:\Gamma\vdash t : A$ (hence $t\in \WTyped$).
+%  Assume $\Pi::\Gamma\vdash t : A$ (hence $t\in \WTyped$).
 %  If $t$ is \emph{not} total by substitution, then $t \not \in \GTC$, i.e.:
 %  there is some infinite path $\pi = (e_1, e_2, \ldots)$ of $\Pi$ with no infinite progressing trace. 
 %\end{theorem}
@@ -1765,7 +1765,7 @@ Now assume that $u$ and $v$ have no $0$-safe \emph{closed} redex.
 Suppose $u = \lambda x.v, \cond(f,g)$. 
 If $u = \lambda x.v$ then $t=u(v)$ is a $0$-safe $\beta$-redex and $t$ is \emph{closed}.
 If $u = \cond(f,g)$ then $A = \N$ and $v:\N$. 
-$v$ is not open nor has a a $0$-safe \emph{closed} redex, and $v$ has no arrow type. 
+$v$ is not open nor has a $0$-safe \emph{closed} redex, and $v$ has no arrow type. 
 The only possibility left is that $v$ is a numeral: 
 we conclude that $t=\cond(f,g)(v)$ is a $\cond$-redex and $t$ is \emph{closed},
 therefore $t$ is sound.
@@ -1792,9 +1792,9 @@ a numeral.
 
 %16:32 30/04/2024
 %22:30 03/06/2024
-\subsection{The Ackermann Function (Better Code it is Easier to Analyse)}
+\subsection{The Ackermann Function (Better Code is Easier to Analyse)}
 The Global Trace Condition is a \quotationMarks{fragile} property: two
-terms can be trivial variant each other, can compute the function, yet
+terms can be trivial variants each other, can compute the same function, yet
 one term can satisfy the global trace condition while the other term does not.
 As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
   \[
@@ -1818,7 +1818,7 @@ form  $\ldots (\redm,n') \ldots$, for two reasons.
 First, it is a waste of time to recompute the value $u= \Suc{m'}$ if this value is 
 already stored in $\redm$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
 $\ldots (\Suc{m'},n') \ldots$, then we use the variable $\redm$ as argument of our
-term. When we use a variable as argument, way we add more connections and 
+term. When we use a variable as argument, we add more connections and 
 more traces to our term, and it is more likely that the Global Trace algorithm finds 
 some infinitely increasing trace and therefore proves that the map we defined is 
 total. Replacing  a term $u$ with a variable $\redm$, when this replacing is sound, 

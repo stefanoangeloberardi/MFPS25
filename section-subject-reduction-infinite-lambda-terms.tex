@@ -47,8 +47,8 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %even if the rule $\lambda$ is restricted to $\lambda'$. 
 %
 %\begin{lemma}\label{lem:thinning}
-%  Assume $\Pi:\Gamma\vdash t:A$.
-%  Then $\Pi':\Gamma_{\FV(t)}\vdash t:A$ for some $\Pi'$ that may have instances of the rule $\lambda'$
+%  Assume $\Pi::\Gamma\vdash t:A$.
+%  Then $\Pi'::\Gamma_{\FV(t)}\vdash t:A$ for some $\Pi'$ that may have instances of the rule $\lambda'$
 %  and not have those of the rule $\lambda$.
 %  Moreover if the global trace condition holds for $\Pi$, then it also holds for $\Pi'$. 
 %\end{lemma}
@@ -224,15 +224,15 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %%
 %
 %\begin{lemma}[Substitution lemma]
-%  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
-%  Then there exists $\Pi^\circ$ such that $\Pi^\circ:\mergeCtx{\Delta}{\Gamma} \vdash t[u/x]:B$. 
+%  Assume that $\Pi_u:: \Delta \vdash u:A$ and $\Pi_t::\Gamma,x:A \vdash t:B$ hold. 
+%  Then there exists $\Pi^\circ$ such that $\Pi^\circ::\mergeCtx{\Delta}{\Gamma} \vdash t[u/x]:B$. 
 %  Moreover, if both $\Pi_u$ and $\Pi_t$ satisfy the global trace condition,
 %  then $\Pi^\circ$ also satisfies it. 
 %\end{lemma}
 %
 %
 %%\begin{proof}
-%%  Assume that $\Pi_u: \Delta \vdash u:A$ and $\Pi_t:\Gamma,x:A \vdash t:B$ hold. 
+%%  Assume that $\Pi_u:: \Delta \vdash u:A$ and $\Pi_t::\Gamma,x:A \vdash t:B$ hold. 
 %%  By Lemma~\ref{lem:thinning}, without loss of generality,
 %%  we can assume $\FV(\Delta) = \FV(u)$ and $\Pi_t$ is a proof with the restricted $\lambda$ rule (the $\lambda'$ rule). 
 %%  Let $\Pi_u=(T_u,\phi_u)$ and $\Pi_t=(T_t,\phi_t)$.
@@ -280,7 +280,7 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %%  where $l$ is a path of $T_t$, $i$ is a switching point, and $l'$ is a path of $T_u$.
 %%  Hence $\Pi^\circ$ is Almost-left-finite, since $\Pi_t$ and $\Pi_u$ are Almost-left-finite.
 %%  In addition, if $\Pi_t$ and $\Pi_u$ satisfies the global trace condition,
-%%  so is $\Pi^\circ$ by (b3). 
+%%  so does $\Pi^\circ$ by (b3). 
 %%  Therefore, to complete the proof, it is enough to construct $\Pi^\circ$. 
 %%
 %%  First, for each $l\conc(j)\conc l'\in T_\var\cup T_\apvar$ with a switching point $j$, 
@@ -437,47 +437,47 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 \begin{lemma}(Inversion Lemma)\label{lem:inversion}
   \begin{enumerate}
   \item\label{lem:inversion1}
-    If $\Pi:\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
+    If $\Pi::\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
     there exist $\Pi_1$, $\Pi_2$ and $B$ such that
-    $\Pi_1:\Gamma\vdash f:B\to A$, $\Pi_2:\Gamma\vdash a:B$,
+    $\Pi_1::\Gamma\vdash f:B\to A$, $\Pi_2::\Gamma\vdash a:B$,
     and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
   \item\label{lem:inversion2}
-    If $\Pi:\Gamma\vdash \lambda x^T.b:A$, where $x\not\in\FV(\Gamma)$,
+    If $\Pi::\Gamma\vdash \lambda x^T.b:A$, where $x\not\in\FV(\Gamma)$,
     and $\Pi$ satisfies the global trace condition, then
     there exist $\Pi_1$ and $B$ such that
-    $\Pi_1:\Gamma,x:T\vdash b:B$ and $A = T\to B$,
+    $\Pi_1::\Gamma,x:T\vdash b:B$ and $A = T\to B$,
     and $\Pi_1$ satisfies the global trace condition. 
   \item\label{lem:inversion3}
-    If $\Pi:\Gamma\vdash \cond(f,g):A$ and $\Pi$ satisfies the global trace condition, then
+    If $\Pi::\Gamma\vdash \cond(f,g):A$ and $\Pi$ satisfies the global trace condition, then
     there exist $\Pi_1$, $\Pi_2$ and $B$ such that
-    $\Pi_1:\Gamma \vdash f:B$, $\Pi_2:\Gamma \vdash g:N\to B$, $A = N\to B$,
+    $\Pi_1::\Gamma \vdash f:B$, $\Pi_2:\Gamma \vdash g:N\to B$, $A = N\to B$,
     and both $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
   \item\label{lem:inversion4}
-    If $\Pi:\Gamma\vdash \Succ(t):A$ and $\Pi$ satisfies the global trace condition, 
-    then, there exists $\Pi_1$ such that $\Pi_1:\Gamma \vdash t:N$, $A=N$, 
+    If $\Pi::\Gamma\vdash \Succ(t):A$ and $\Pi$ satisfies the global trace condition, 
+    then, there exists $\Pi_1$ such that $\Pi_1::\Gamma \vdash t:N$, $A=N$, 
  and $\Pi_1$ satisfies the global trace condition. 
   \end{enumerate}
 \end{lemma}
 
 %
 %\begin{proof}
-%  We first claim that if $t\in\GTC$ and $\Pi:\Gamma\vdash t:A$ with $\Pi=(T,\phi)$, 
+%  We first claim that if $t\in\GTC$ and $\Pi::\Gamma\vdash t:A$ with $\Pi=(T,\phi)$, 
 %  then there exists $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
 %  Because, if not, the only infinite path in $\Pi$ is the consective use of $\weak$,
 %  which does not contain progressing trace, this contradicts with $t\in\GTC$.
 %
 %  We show the point \ref{lem:inversion1}.
-%  Assume that $\Pi:\Gamma\vdash f(a):A$ with $\Pi=(T,\phi)$ and $f(a) \in \GTC$.
+%  Assume that $\Pi::\Gamma\vdash f(a):A$ with $\Pi=(T,\phi)$ and $f(a) \in \GTC$.
 %  By the claim, take $l\in T$ such that $\phi(l) \neq \weak$ and $\phi(m) = \weak$ for all $m < l$.
 %  Let $\Gamma' \vdash f(a):A$ be the conclusion of $\phi(l)$. Then $\Gamma'\subseteqsim \Gamma$ holds
 %  by the transitivity of $\subseteqsim$.
 %  Now $\phi(l)$ is $\apvar$ or $\apnotvar$.
-%  In the former case $\phi(l) = \apvar$, we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ for some $B$,
-%  and $a = x^B \in \Gamma'$. Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ by $\weak$. 
-%  We also obtain $\Pi_2:\Gamma\vdash a:B$ by $a = x^B \in \Gamma'$ and $\weak$. 
+%  In the former case $\phi(l) = \apvar$, we have $\Pi\restr l\conc(1)::\Gamma'\vdash f:B\to A$ for some $B$,
+%  and $a = x^B \in \Gamma'$. Hence we have a proof $\Pi_1::\Gamma\vdash f:B\to A$ by $\weak$. 
+%  We also obtain $\Pi_2::\Gamma\vdash a:B$ by $a = x^B \in \Gamma'$ and $\weak$. 
 %  In the latter case $\phi(l) = \apnotvar$,
-%  we have $\Pi\restr l\conc(1):\Gamma'\vdash f:B\to A$ and $\Pi\restr l\conc(2):\Gamma'\vdash a:B$ for some $B$. 
-%  Hence we have a proof $\Pi_1:\Gamma\vdash f:B\to A$ and $\Pi_2:\Gamma\vdash a:B$ by $\weak$.
+%  we have $\Pi\restr l\conc(1)::\Gamma'\vdash f:B\to A$ and $\Pi\restr l\conc(2)::\Gamma'\vdash a:B$ for some $B$. 
+%  Hence we have a proof $\Pi_1::\Gamma\vdash f:B\to A$ and $\Pi_2::\Gamma\vdash a:B$ by $\weak$.
 %  In both cases, if $t\in\GTC$, we have $f\in\GTC$ and $a\in\GTC$ by the construction of $\Pi_1$ and $\Pi_2$. 
 %  
 %  The points \ref{lem:inversion2}, \ref{lem:inversion3}, and \ref{lem:inversion4} are shown similarly. 
@@ -486,52 +486,52 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 
 \begin{theorem}[Subject reduction]
 \label{theorem-subject-reduction}
-  Assume that $\Pi_t:\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
-  Then there exists $\Pi_u$ such that $\Pi_u:\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
+  Assume that $\Pi_t::\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
+  Then there exists $\Pi_u$ such that $\Pi_u::\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
 \end{theorem}
 
 
 %\begin{proof}
 %  By the definition of $t\reduces u$, there is a context $\hat{t}[-]$ such that
 %  $t=\hat{t}[t_0]$, $u=\hat{t}[u_0]$, and $t_0\reduces_\Box u_0$, where $\Box\in\{\beta,\cond\}$. 
-%  Since $t_0$ is a subterm of $t$, there is $l$ such that $\Pi_t\restr l: \Gamma_0\vdash t_0:A_0$.
+%  Since $t_0$ is a subterm of $t$, there is $l$ such that $\Pi_t\restr l:: \Gamma_0\vdash t_0:A_0$.
 %  Note that $\Pi_t\restr l$ satisfies the global trace condition,
 %  since it is a subtree of $\Pi_t$, which satisfies the global trace condition. 
-%  Then, if we have $\Pi'_u:\Gamma_0\vdash u_0:A_0$ that satisfies the global trace condition,
+%  Then, if we have $\Pi'_u::\Gamma_0\vdash u_0:A_0$ that satisfies the global trace condition,
 %  the tree obtained from $\Pi_t$ by replacing the subtree $\Pi_t\restr l$ by $\Pi'_u$ is also
 %  a proof of $\Gamma\vdash \hat{t}[u_0]:A$ that satisfies the global trace condition. 
 %  Hence it is enough to show the following:
 %  \begin{itemize}
 %  \item[(a)]
-%    If $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash b[a/x]: B$ for some $\Pi'$ that satisfies the global trace condition.
+%    If $\Pi::\Gamma \vdash (\lambda x^A.b)(a): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash b[a/x]: B$ for some $\Pi'$ that satisfies the global trace condition.
 %  \item[(b)]
-%    If $\Pi:\Gamma \vdash \cond(f,g)(0): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash f: B$ for some $\Pi'$ that satisfies the global trace condition. 
+%    If $\Pi::\Gamma \vdash \cond(f,g)(0): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash f: B$ for some $\Pi'$ that satisfies the global trace condition. 
 %  \item[(c)]
-%    If $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$ and it satisfies the global trace condition,
-%    then $\Pi':\Gamma \vdash g(t): B$ for some $\Pi'$ that satisfies the global trace condition. 
+%    If $\Pi::\Gamma \vdash \cond(f,g)(\Succ(t)): B$ and it satisfies the global trace condition,
+%    then $\Pi'::\Gamma \vdash g(t): B$ for some $\Pi'$ that satisfies the global trace condition. 
 %  \end{itemize}
 %  (b) is shown immediately by Lemma~\ref{lem:inversion}~\ref{lem:inversion3}.
 %  We show (c).
-%  Assume $\Pi:\Gamma \vdash \cond(f,g)(\Succ(t)): B$.
+%  Assume $\Pi::\Gamma \vdash \cond(f,g)(\Succ(t)): B$.
 %  Then by \ref{lem:inversion1}, \ref{lem:inversion3}, and \ref{lem:inversion4} of Lemma~\ref{lem:inversion},
 %  we have
-%  $\Pi_1:\Gamma \vdash g:N\to B$ and $\Pi_2:\Gamma \vdash t:N$,
+%  $\Pi_1::\Gamma \vdash g:N\to B$ and $\Pi_2::\Gamma \vdash t:N$,
 %  where $\Pi_1$ and $\Pi_2$ satisfy the global trace condition. 
 %  Hence, by applying $\apnotvar$ or $\apvar$ to $\Pi_1$ and $\Pi_2$, 
-%  we have a proof $\Pi':\Gamma\vdash g(t):B$ that satisfies the global trace condition. 
-%  In order to show (a), assume $\Pi:\Gamma \vdash (\lambda x^A.b)(a): B$.
+%  we have a proof $\Pi'::\Gamma\vdash g(t):B$ that satisfies the global trace condition. 
+%  In order to show (a), assume $\Pi::\Gamma \vdash (\lambda x^A.b)(a): B$.
 %  Then by Lemma~\ref{lem:inversion}~\ref{lem:inversion1},
-%  we have $\Pi_1:\Gamma \vdash \lambda x^A.b:A\to B$ and $\Pi_2:\Gamma \vdash a:A$,
+%  we have $\Pi_1::\Gamma \vdash \lambda x^A.b:A\to B$ and $\Pi_2::\Gamma \vdash a:A$,
 %  where $\Pi_1$ and $\Pi_2$ satisty the global trace condition. 
 %  Then, by Lemma~\ref{lem:thinning},
-%  we have $\Pi'_1:\Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x^A.b:A\to B$,
+%  we have $\Pi'_1::\Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x^A.b:A\to B$,
 %  where $\Pi'$ satisfies the global trace condition. 
 %  By Lemma~\ref{lem:inversion}~\ref{lem:inversion2},
-%  we have a proof $\Pi''_1:\Restrict{\Gamma}{\FV(\lambda x.b)},x:A \vdash b:B$
+%  we have a proof $\Pi''_1::\Restrict{\Gamma}{\FV(\lambda x.b)},x:A \vdash b:B$
 %  that satisfies the global trace condition. 
-%  Hence, by the substitution lemma, we have a proof $\Pi':\Gamma\vdash b[a/x]:B$
+%  Hence, by the substitution lemma, we have a proof $\Pi'::\Gamma\vdash b[a/x]:B$
 %  that satisfies the global trace condition, as we wished. 
 %\end{proof}
 
@@ -546,13 +546,13 @@ and preserves the finiteness of the set of subterms up to tree isomorphism.
   \begin{enumerate}
   \item\label{prop:renaming1}
     Let $\theta$ be a renaming.
-    If $\Pi:\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
-    then $\Pi':\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
-    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+    If $\Pi::\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
+    then $\Pi'::\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
   \item\label{prop:renaming2}
-    If $\Pi:\Gamma\vdash t:A$ and $t'$ is $\alpha$-equivalent to $t$,
-    then $\Pi':\Gamma\vdash t':A$ for some $\Pi'$.
-    Moreover, if $\Pi$ satisfies the global trace condition, so is $\Pi'$.
+    If $\Pi::\Gamma\vdash t:A$ and $t'$ is $\alpha$-equivalent to $t$,
+    then $\Pi'::\Gamma\vdash t':A$ for some $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
   \end{enumerate}
 \end{proposition}
 
@@ -563,17 +563,17 @@ and preserves the finiteness of the set of subterms up to tree isomorphism.
 %  It is enough to show the claim for a single renaming $\theta = \{y'/y\}$.
 %  Then, by the assumption, we have a proof $\Pi_1$ of $\Gamma[y'/y] \vdash (\lambda y^B.t)y':A$
 %  such that $\Pi_1$ satisfies the global trace condition if $\Pi$ satisfies it.  
-%  Hence we have $\Pi': \Gamma[y'/y] \vdash t[y'/y]:A$ by the subject reduction theorem
+%  Hence we have $\Pi':: \Gamma[y'/y] \vdash t[y'/y]:A$ by the subject reduction theorem
 %  such that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it.
 %
 %  Next we show the point \ref{prop:renaming2}.
 %  It is enough to show when $t = \lambda x.b$ and $t' = \lambda x'.(b[x'/x])$, where $x'\not\in\FV(\lambda x.b)$. 
 %  Let $\Pi$ be a proof of $\Gamma\vdash \lambda x.b:A\to B$.
-%  Then we have $\Pi_1: \Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x.b:A\to B$
+%  Then we have $\Pi_1:: \Restrict{\Gamma}{\FV(\lambda x.b)} \vdash \lambda x.b:A\to B$
 %  by Lemma~\ref{lem:thinning}, and
-%  also have $\Pi_2: \Restrict{\Gamma}{\FV(\lambda x.b)},x':B \vdash b[x'/x]:B$
+%  also have $\Pi_2:: \Restrict{\Gamma}{\FV(\lambda x.b)},x':B \vdash b[x'/x]:B$
 %  by the subject reduction theorem. 
-%  Hence we have $\Pi': \Gamma \vdash \lambda x'.b[x'/x]:A\to B$ by the rules $\lambda$ and $\weak$. 
+%  Hence we have $\Pi':: \Gamma \vdash \lambda x'.b[x'/x]:A\to B$ by the rules $\lambda$ and $\weak$. 
 %  Note that $\Pi'$ satisfies the global trace condition if $\Pi$ satisfies it. 
 %\end{proof}
 
