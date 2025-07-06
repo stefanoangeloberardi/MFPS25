@@ -783,13 +783,13 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTION 6
-% finite safe reductions
+% finite safe-reductions
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 %\begin{lemma}[The $\prec$-order]
 %\label{lemma-prec-order}
-%Assume $t \in \WTyped$ has type $\N$, and $t$ is finite for safe reductions .
+%Assume $t \in \WTyped$ has type $\N$, and $t$ is finite for safe-reductions .
 %
 %\begin{enumerate}
 %\item
@@ -808,7 +808,7 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 %%%%%%%%%%%%%%%%%%%
 
 \begin{proof}(The $\prec$-order, Lemma \ref{lemma-prec-order})
-Assume that $t \in \WTyped$ has type $\N$, and $t$ is finite for safe reductions.
+Assume that $t \in \WTyped$ has type $\N$, and $t$ is finite for safe-reductions.
 \begin{enumerate}
 \item 
 %\label{lemma-prec-order-01}
@@ -816,7 +816,7 @@ Assume that there is some infinite sequence
 $\sigma: t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$ 
 to show a contradiction. Since $t$ is finite for safe-reductions, 
 $\sigma$ only has finitely many safe-reductions. 
-Thus, from some $k\in\N$ there are no more safe reductions from
+Thus, from some $k\in\N$ there are no more safe-reductions from
 $\Succ^k(t_k)$. This implies that for some $\cond$-free term 
 $u$ and some terms $f_1, g_1, \ldots, f_m, g_m$ we have
 $t_k = u[\cond(f_1,g_1), \ldots, \cond(f_m,g_m)]$ and all reductions from $t_k$ on are inside
@@ -833,7 +833,7 @@ the number of symbols in $u$.
 %\label{lemma-prec-order-02}
 Assume for contradiction that there is some infinite sequence
 $\ldots t_n \prec \ldots \prec t_2 \prec t_1 \prec t_0 = t$
-from some $t_0:\N$ total. By assumption, $t_0$ is finite for safe reductions.
+from some $t_0:\N$ total. By assumption, $t_0$ is finite for safe-reductions.
 Then there is some infinite sequence 
 $\sigma: t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$,
 contradicting point \ref{lemma-prec-order-01} above.
@@ -878,7 +878,7 @@ By definition of trace-compatible assignment $\rho$, if $\sigma$ progresses at s
 then $\rho(i+1,\sigma(i+1))\prec \rho(i,\sigma(i))$, and if $\sigma$ 
 does not progress at step $i$,  then  $\rho(i+1,\sigma(i+1)) = \rho(i,\sigma(i))$
 The assignment $\rho$ is made of total terms of type $\N$.
-By definition of total for type $\N$, each $\rho(i,\sigma(i))$ is finite for safe reductions. 
+By definition of total for type $\N$, each $\rho(i,\sigma(i))$ is finite for safe-reductions. 
 $\prec$ is well-founded on such terms
 by lemma \ref{lemma-prec-order}.\ref{lemma-prec-order-02}.
 Thus, we have $\rho(i+1,\sigma(i+1))\prec \rho(i,\sigma(i))$ only finitely many times, 
@@ -894,7 +894,7 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 \end{proof}
 
 
-%\begin{lemma}(Total terms and Finiteness for Safe Reductions, \label{lem:total_value-finiteness})
+%\begin{lemma}(Total terms and Finiteness for Safe-Reductions, \label{lem:total_value-finiteness})
 %Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
 %
 %  \begin{enumerate}
@@ -913,7 +913,7 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 %
 % \item
 %\label{lem:total_value-finiteness2ter}
-%  If $t$ is total then $t$ is  finite for safe reductions.
+%  If $t$ is total then $t$ is  finite for safe-reductions.
 %
 %  \item
 %\label{lem:total_value-finiteness3}
@@ -921,13 +921,13 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 %    whose all free variables are $\vec{x}:\vec{B}$.
 %
 %    If for all total $\vec{u}:\vec{B}$, $\vec{a}:\vec{A}$ the term 
-%    $t[\vec{u}]\vec{a}: U$ is \emph{finite for safe reductions}, then
+%    $t[\vec{u}]\vec{a}: U$ is \emph{finite for safe-reductions}, then
 %    the term $t[\vec{x}]$ is \emph{total by substitution}.
 %  \end{enumerate}
 %
 %\end{lemma}
 
-\begin{proof}(Total terms and Finiteness for Safe Reductions, 
+\begin{proof}(Total terms and Finiteness for Safe-Reductions, 
 Lemma \ref{lem:total_value-finiteness})
 \begin{enumerate}
 %%%%%%%%%%%%%%%%%%%%%
@@ -944,13 +944,13 @@ Lemma \ref{lem:total_value-finiteness})
   We show the \emph{base case}, namely when $A =\N,\alpha$ is an atomic type.
   By the assumption, $t$ is total.
   By definition of $t$ total for $T$ atomic, all infinite 
-  reductions from $t$ only include finitely many safe reductions, for all $n \in \N$.
+  reductions from $t$ only include finitely many safe-reductions, for all $n \in \N$.
   In particular, all infinite reductions $\sigma: t \reduces \ldots \reduces 
   u \reduces u_1 \reduces u_2 \ldots$ 
-  passing through $u$ only include finitely many safe reductions. We conclude that
+  passing through $u$ only include finitely many safe-reductions. We conclude that
   all infinite reductions 
   $\sigma': u \reduces u_1 \reduces u_2 \ldots$  from $u$
-  only include finitely many safe reductions. 
+  only include finitely many safe-reductions. 
   From $u:A =\N,\alpha$ we conclude that  $u$ is total.
   
 \item
@@ -970,7 +970,7 @@ If $f:A \rightarrow B$, $a:A$ are total  terms, then $f(a)$  is total by definit
 \item
 %\label{lem:total_value-finiteness3}
 We prove that $x^T:T$ is total and that 
-if $t:T$ is total then $t$ is finite for safe reductions.
+if $t:T$ is total then $t$ is finite for safe-reductions.
 We argue by principal induction on $T$.
 
 \begin{enumerate}
@@ -986,11 +986,11 @@ We argue by secondary induction on $U$.
 Assume $U$ is atomic. Every reduction on $x(\vec{a}):U$
 takes place in $\vec{a}$. By definition of total
 for an atomic type we have to prove that in all infinite reduction sequences from $x(\vec{a}):U$ 
-there are only finitely many safe reduction. 
+there are only finitely many safe-reduction. 
 Since each $a_i$ in $\vec{a}$ is total, by principal induction hypothesis on $A_i$ 
-only finitely many safe reductions are possible from $a_i$. 
+only finitely many safe-reductions are possible from $a_i$. 
 All reductions on $x(\vec{a})$ take place on $\vec{a}$, therefore
-only finitely many safe reductions are possible. 
+only finitely many safe-reductions are possible. 
 \item
 Assume $U = A_1 \to A_2$. By definition of total
 for an arrow type we have to prove that for all total $a$ we have  $x(\vec{a},a):A_2$ total.
@@ -999,7 +999,7 @@ This follows by secondary induction hypothesis on $A_2$.
 
 \item
 %\label{lem:total_value-finiteness4}
-\emph{We assume that  $t:T$ is total in order to prove that $t$ is finite for safe reductions},
+\emph{We assume that  $t:T$ is total in order to prove that $t$ is finite for safe-reductions},
 for all $n \in \N$.
 \begin{enumerate}
 \item
@@ -1008,13 +1008,13 @@ If $T$ is atomic then the thesis is true by definition of total.
 Suppose $T = (A_1 \rightarrow A_2)$. By principal induction hypothesis on $A_1$,
 the variable 
 $x^{A_1}:A_1$ is total, therefore $t(x):A_2$ is total and by induction hypothesis on $A_2$
-any infinite reduction sequence from $t(x)$ only includes finitely many safe reductions. 
+any infinite reduction sequence from $t(x)$ only includes finitely many safe-reductions. 
 Any infinite reduction sequence 
 $\sigma: t = t_0 \reduces_1 t_1 \reduces_1 t_2 \reduces_1 \ldots$  from $t$ 
 can be raised to an infinite reduction sequence 
 $\tau: t(x) = t_0(x) \reduces_1 t_1(x) \reduces_1 t_2(x) \reduces_1 \ldots$ from $t(x)$
 while preserving the fact that a reduction is safe, because $t$ occurs in no $\cond$ in $t(x)$.
-We conclude that $\sigma$ only includes finitely many safe reductions. 
+We conclude that $\sigma$ only includes finitely many safe-reductions. 
 \end{enumerate}
 \end{enumerate}
 
@@ -1023,7 +1023,7 @@ We conclude that $\sigma$ only includes finitely many safe reductions.
 Assume $U=\N, \alpha$ is any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow U$ is a term
 whose all free variables are $\vec{x}:\vec{B}$.
 Assume that for all total $\vec{u}:\vec{B}$, $\vec{a}:\vec{A}$ the term 
-$t[\vec{u}]\vec{a}: U$ is \emph{finite for safe reductions}. We have to prove that
+$t[\vec{u}]\vec{a}: U$ is \emph{finite for safe-reductions}. We have to prove that
 $t[\vec{x}]$ is \emph{total by substitution}.
 We assume that  $\vec{u}:\vec{B}$ and we have to prove that $t[\vec{u}]$ is total.
 We argue by induction on the number $|\vec{A}|$ of elements of $\vec{A}$.
@@ -1249,7 +1249,7 @@ safe, too.
 %% checked 09:17 04/04/2025
 %%%%%%%%%%%%%%%%%%%%%%%%%
 %We prove that if $a \reduces^{*} a'$ then we can move one reduction from
-% $v[a']$ to to one or more from  $v[a]$, while preserving safe reductions. 
+% $v[a']$ to to one or more from  $v[a]$, while preserving safe-reductions. 
 % 
 % We assume that  $a \reduces^{*} a'$ and $v[a'] \reduces w$ in order to prove that:
 %  for some $z$ we have $w=z[a']$ and $v[a] \reduces^+ z[a]$, and
@@ -1289,8 +1289,8 @@ safe, too.
 %\end{enumerate}
 %Then by induction on $n' \in \N$ we prove that if $v[a'] \reduces^{n'} w$ ($n'$ steps) 
 %then for some $z$, some $n \ge n'$ we have $w=z[a']$ and $v[a] \reduces^{n} z[a]$,
-%with the number of safe reductions in  $v[a'] \reduces^{n'} z[a']$ less or equal than the number
-%of safe reductions in $v[a] \reduces^{n} z[a]$.
+%with the number of safe-reductions in  $v[a'] \reduces^{n'} z[a']$ less or equal than the number
+%of safe-reductions in $v[a] \reduces^{n} z[a]$.
 %
 %\end{proof}
 
@@ -1358,7 +1358,7 @@ safe, too.
   We first define $(l_1,\vec{d_1},\vec{a_1})$ for the root node $t$ of $\Pi$.
   In this case $l_1 = \nil$ 
    and $(\vec{d},\vec{a})$ are total terms such that $t[\vec{d}](\vec{a})$ is not total
-   (has some infinite reduction with infinitely many safe reduction).
+   (has some infinite reduction with infinitely many safe-reduction).
   Trace compatibility is vacuous because the branch $l_1$ only contains one node.
   %Points (i), (ii), (iii), (iv) are immediate.
 
@@ -1435,12 +1435,12 @@ safe, too.
   for some $u$ is obtained from our assumptions on
   $\Gamma\vdash u: \N$. In this case $\vec{a_i}$ is empty, $t_{i+1}=u$, and
   by the induction hypothesis $\Succ(u)[\vec{d_i}]:\N$ has an infinite reduction with
-  infinitely many safe reductions
+  infinitely many safe-reductions
   $\Succ(u) \reduces  \Succ(u_1) \reduces \Succ(u_2) \reduces \ldots$,
   all taking place on $u$.
   Then, by the definition of total, $u[\vec{d_i}] =t_{i+1}[\vec{d_i}] $ is not total, because the
  $u \reduces_1  u_1 \reduces_1 u_2 \reduces_1 \ldots$ is an infinite reduction with
-  infinitely many safe reductions.
+  infinitely many safe-reductions.
 
   We define $e_{i}=1$, 
   the index of the unique child node of $l_{i+1}=l_i\conc(1)$ in the $\Succ$-rule, and
@@ -1476,7 +1476,7 @@ safe, too.
   then $l_{i+1}=l_i \conc (1)$, taking the first premise of the rule,
   and we define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = b,\vec{a_i}$. 
   This is an assignment with total values, 
-  and providing an infinite reduction with infinitely many safe reductions, as expected. 
+  and providing an infinite reduction with infinitely many safe-reductions, as expected. 
   The connection from 
   $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},b,\vec{a_i})$ 
   is trace-compatible: all connected 
@@ -1488,11 +1488,11 @@ safe, too.
   Let $B = \vec{C}\rightarrow U$.
   By lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness3}
   there is a sequence of values $\vec{c}:\vec{C}$ and an infinite reductions from 
-  $u[\vec{d_i}]\vec{c}: U$ with infinitely many safe reductions.
+  $u[\vec{d_i}]\vec{c}: U$ with infinitely many safe-reductions.
   Define $l_{i+1}= l_i \conc (2)$ taking the second premise of the rule,
   and define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = \vec{c}$. 
   This is an assignment with total terms providing an infinite reductions with 
-  infinitely many safe reductions, as expected.
+  infinitely many safe-reductions, as expected.
   The connection from 
   $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},\vec{c})$ is
   trace compatible: all connected $\N$-argument of $t_{i} = f(u)[\vec{x}]$ and $t_{i+1}=u[\vec{x}]$ are 
@@ -1510,12 +1510,12 @@ safe, too.
   $x:D = x_k:D_k$ for some $k \in [1,n]$. 
   By the induction hypothesis, 
   there is an infinite reduction from $f[\vec{d_i}]d_{i,k}\vec{a_i}: U$
-  with infinitely many safe reductions,
+  with infinitely many safe-reductions,
   where $\vec{d_i} = (d_{i,1},\ldots,d_{i,n})$. 
   Define $l_{i+1}=l_i\conc(1)$ as the unique child of $l_i$ in $\Pi$, and
   also define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = d_{i,k},\vec{a_i}$. 
   This is an assignment with total terms providing an infinite reductions with 
-  infinitely many safe reductions, as expected.
+  infinitely many safe-reductions, as expected.
   The connection from
   $(\vec{d_i},\vec{a_i})$ to
   $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d_i},d_{i,k},\vec{a_i})$
@@ -1552,7 +1552,7 @@ safe, too.
   
   By the induction hypothesis we have an infinite reduction sequence $\sigma$ from
   $t_i[\vec{d_i}]\vec{a_i} = (\lambda x.(u[\vec{d_i},x]))\vec{a_i}: U$ 
-  with infinitely many safe reductions, where $\vec{a_i} = a,\vec{b}$. 
+  with infinitely many safe-reductions, where $\vec{a_i} = a,\vec{b}$. 
   Define $\vec{d'_i}$ by skipping from $\vec{d_i}$ all positions $j$ such that $x_j = x$.
   Define $l_{i+1}=l_i\conc(1)$ as the unique child of $l_i$ in $\Pi$,
   and $\vec{d_{i+1}} = \vec{d'_i},a$, and $\vec{a_{i+1}} = \vec{b}$. 
@@ -1565,7 +1565,7 @@ safe, too.
  
   We have to prove that there is some infinite reduction from 
   $t_{i+1}[\vec{d_{i+1}}](\vec{a_{i+1}})$ with infinitely
-  many safe reductions. This requires some care because, as we pointed out,
+  many safe-reductions. This requires some care because, as we pointed out,
   reduction and substitution do not commute for infinite $\lambda$-terms.
   We argue by case.
 
@@ -1574,12 +1574,12 @@ safe, too.
  Suppose all reductions in the infinite reduction $\sigma$ 
   are inside $\lambda x.(u[\vec{d_i},x])$ or $\vec{a_i}$.
  By Lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis},
-  there are finitely many safe reductions in $\vec{a_i}$ because $\vec{a_i}$ is total.
- Thus, there are infinitely many safe reductions on the part of $\sigma$
+  there are finitely many safe-reductions in $\vec{a_i}$ because $\vec{a_i}$ is total.
+ Thus, there are infinitely many safe-reductions on the part of $\sigma$
   taking place on $\lambda x.(u[\vec{d_i},x])$.
   We conclude that there is an infinite reduction from $u[\vec{d_i},x]$ 
-  with infinitely many safe reduction. This is true for $u[\vec{d_i},a]$, too, 
-  because reductions and safe reductions are closed by substitution of $x$ with $a$.
+  with infinitely many safe-reduction. This is true for $u[\vec{d_i},a]$, too, 
+  because reductions and safe-reductions are closed by substitution of $x$ with $a$.
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 09:39 05/09/2024
@@ -1595,7 +1595,7 @@ safe, too.
  $u[\vec{d_i},x] \reduces^{*} v[x]$ and 
  $a\reduces^{*} a'$ and $\vec{b} \reduces^{*} \vec{b'}$.
  Then the reduction sequence $\sigma$ continues with some infinite reduction $\sigma'$ from 
-  $v[a']\vec{b'}$, including infinitely many safe reductions. 
+  $v[a']\vec{b'}$, including infinitely many safe-reductions. 
  From $u[\vec{d_i},x] \reduces^{*} v[x]$ and $\vec{b} \reduces^{*} \vec{b'}$ we deduce that 
  \[
  t_{i+1}[\vec{d_i},a]\vec{b}  
@@ -1608,9 +1608,9 @@ safe, too.
  \ \ \ \mbox{(1)}
  \]
  We proved that there is a reduction $\sigma'$ 
- including infinitely many safe reductions from  $v[a']\vec{b'}$.
+ including infinitely many safe-reductions from  $v[a']\vec{b'}$.
  From $a \reduces^{*} a'$ and Lemma \ref{lemma-safety-preserving-simulation}
- we deduce that there is a reduction including infinitely many safe reductions from  
+ we deduce that there is a reduction including infinitely many safe-reductions from  
  $v[a]\vec{b'}$. From $(1)$ above we conclude that the same holds for
  $t_{i+1}[\vec{d_i},a]\vec{b}$.
 \end{enumerate}
@@ -1628,7 +1628,7 @@ safe, too.
   $\Gamma\vdash g[\vec{x}]:\N,\vec{A}\rightarrow U$. 
   By the induction hypothesis, there is some infinite reduction sequence $\sigma$ from
   $t_i[\vec{d_i}]a \vec{b} = \cond(f[\vec{d_i}],g[\vec{d_i}])a\vec{b}: U$
-  with infinitely many safe reductions,
+  with infinitely many safe-reductions,
   where $\vec{a_i} = a,\vec{b}$. 
   We argue by case.
 
@@ -1638,13 +1638,13 @@ safe, too.
   $a$ and $\vec{b}$ are total, 
   by Lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}
   only finitely many reduction on them are possible.
-  Then infinitely many safe reductions take place on $f[\vec{d_i}]$ or $g[\vec{d_i}]$. 
-  All these safe reduction are in $f[\vec{d_i}]$, because
+  Then infinitely many safe-reductions take place on $f[\vec{d_i}]$ or $g[\vec{d_i}]$. 
+  All these safe-reduction are in $f[\vec{d_i}]$, because
   a reduction inside $g[\vec{d_i}]$ is in the right-hand side of some $\cond$, 
   therefore it is not safe.
   The safe-infinite reduction from $f[\vec{d_i}]$ can be raised to an infinite reduction from 
-  $f[\vec{d_i}](\vec{b})$, with the same safe reductions, therefore with infinitely
-  many safe reductions.
+  $f[\vec{d_i}](\vec{b})$, with the same safe-reductions, therefore with infinitely
+  many safe-reductions.
   In this case we take $f[\vec{x}],\vec{d_i},\vec{b}$ as next step of our path in $\Pi$:
   we choose $l_{i+1} = l_i \conc (1)$, $\vec{d_{i+1}} = \vec{d_i}$, and
   $\vec{a_{i+1}} = \vec{b}$.  This is an assignment with total terms.
@@ -1664,7 +1664,7 @@ safe, too.
   with $f[\vec{d_i}] \reduces^{*} f'$, $g[\vec{d_i}] \reduces^{*} g'$, 
   and $\vec{b} \reduces^{*} \vec{b'}$.
   After this $\cond$-reduction we have a reduction sequence 
-  with infinitely many safe reductions.
+  with infinitely many safe-reductions.
   We prove our thesis by subcases, according if $a'' = 0$ or $a'' = \Succ(a')$.
    
 %19:37 05/09/2024
@@ -1677,7 +1677,7 @@ safe, too.
   and $\vec{a_{i+1}} = \vec{b}$. 
   This is an assignment with total terms.
   $f[\vec{d_{i+1}}](\vec{b})$ reduces to $f' \vec{b'}$, 
-  then we have infinitely many safe reductions.
+  then we have infinitely many safe-reductions.
 
   We have trace-compatibility because: 
   each argument of $t_i$ is connected to some equal argument of
@@ -1792,8 +1792,8 @@ a numeral.
 
 %16:32 30/04/2024
 %22:30 03/06/2024
-\subsection{The Ackermann Function (Better Code is Easier to Analyse)}
-The Global Trace Condition is a \quotationMarks{fragile} property: two
+\subsection{The ackermann function (Better code is easier to analyse)}
+The global trace condition is a \quotationMarks{fragile} property: two
 terms can be trivial variants each other, can compute the same function, yet
 one term can satisfy the global trace condition while the other term does not.
 As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
@@ -1809,7 +1809,7 @@ The only difference between the two terms is that $\Suc{m'}$ in the first
 term becomes $\redm$ in the second term. $\AckA$ and $\AckB$ are 
 extensionally equal, because in all computations $m'$ is the predecessor of $m$. 
 However, by direct computation we find out that 
-$\AckA$ does \emph{not} satisfy the Global Trace condition, while $\AckB$ does
+$\AckA$ does \emph{not} satisfy the global trace condition, while $\AckB$ does
 satisfy it. 
 
 The reason is that the value of the term $u= \Suc{m'}$ is already stored in a 
@@ -1819,7 +1819,7 @@ First, it is a waste of time to recompute the value $u= \Suc{m'}$ if this value 
 already stored in $\redm$. Second, if we write $\ldots (\redm,n') \ldots$ instead of 
 $\ldots (\Suc{m'},n') \ldots$, then we use the variable $\redm$ as argument of our
 term. When we use a variable as argument, we add more connections and 
-more traces to our term, and it is more likely that the Global Trace algorithm finds 
+more traces to our term, and it is more likely that the global trace algorithm finds 
 some infinitely increasing trace and therefore proves that the map we defined is 
 total. Replacing  a term $u$ with a variable $\redm$, when this replacing is sound, 
-provides better code which is easier to prove total automatically.
+provides better code which is easier to prove totality.

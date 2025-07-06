@@ -24,18 +24,16 @@ abstract = {This paper is concerned with the study of λ-calculus with explicit 
 }
 
 @InProceedings{10.1007/BFb0014548,
-author="Ariola, Zena M.
-and Blom, Stefan",
-editor="Abadi, Mart{\'i}n
-and Ito, Takayasu",
-title="Cyclic lambda calculi",
-booktitle="Theoretical Aspects of Computer Software",
-year="1997",
-publisher="Springer Berlin Heidelberg",
-address="Berlin, Heidelberg",
-pages="77--106",
-abstract="We precisely characterize a class of cyclic lambda-graphs, and then give a sound and complete axiomatization of the terms that represent a given graph. The equational axiom system is an extension of lambda calculus with the letrec construct. In contrast to current theories, which impose restrictions on where the rewriting can take place, our theory is very liberal, e.g., it allows rewriting under lambda-abstractions and on cycles. As shown previously, the reduction theory is non-confluent. We thus introduce an approximate notion of confluence. Using this notion we define the infinite normal form or L{\'e}vy-Longo tree of a cyclic term. We show that the infinite normal form defines a congruence on the set of terms. We relate our cyclic lambda calculus to the traditional lambda calculus and to the infinitary lambda calculus. Since most implementations of non-strict functional languages rely on sharing to avoid repeating computations, we develop a variant of our calculus that enforces the sharing of computations and show that the two calculi are observationally equivalent. For reasoning about strict languages we develop a call-by-value variant of the sharing calculus. We state the difference between strict and non-strict computations in terms of different garbage collection rules. We relate the call-by-value calculus to Moggi's computational lambda calculus and to Hasegawa's calculus.",
-isbn="978-3-540-69530-1"
+author = {Zena M. Ariola and Stefan Blom},
+editor = {Mart{\'i}n Abadi and Takayasu Ito},
+title = {Cyclic lambda calculi},
+booktitle = {Theoretical Aspects of Computer Software},
+year = {1997},
+publisher = {Springer Berlin Heidelberg},
+address = {Berlin, Heidelberg},
+pages = {77--106},
+abstract = {We precisely characterize a class of cyclic lambda-graphs, and then give a sound and complete axiomatization of the terms that represent a given graph. The equational axiom system is an extension of lambda calculus with the letrec construct. In contrast to current theories, which impose restrictions on where the rewriting can take place, our theory is very liberal, e.g., it allows rewriting under lambda-abstractions and on cycles. As shown previously, the reduction theory is non-confluent. We thus introduce an approximate notion of confluence. Using this notion we define the infinite normal form or L{\'e}vy-Longo tree of a cyclic term. We show that the infinite normal form defines a congruence on the set of terms. We relate our cyclic lambda calculus to the traditional lambda calculus and to the infinitary lambda calculus. Since most implementations of non-strict functional languages rely on sharing to avoid repeating computations, we develop a variant of our calculus that enforces the sharing of computations and show that the two calculi are observationally equivalent. For reasoning about strict languages we develop a call-by-value variant of the sharing calculus. We state the difference between strict and non-strict computations in terms of different garbage collection rules. We relate the call-by-value calculus to Moggi's computational lambda calculus and to Hasegawa's calculus.},
+isbn = {978-3-540-69530-1}
 }
 
 @article{KENNAWAY199793,
@@ -48,40 +46,36 @@ year = {1997},
 issn = {0304-3975},
 doi = {https://doi.org/10.1016/S0304-3975(96)00171-5},
 url = {https://www.sciencedirect.com/science/article/pii/S0304397596001715},
-author = {J.R. Kennaway and J.W. Klop and M.R. Sleep and F.J. {de Vries}},
+author = {J.R. Kennaway and Jan Willem Klop and M.R. Sleep and F.J. {de Vries}},
 abstract = {In a previous paper we have established the theory of transfinite reduction for orthogonal term rewriting systems. In this paper we perform the same task for the lambda calculus. From the viewpoint of infinitary rewriting, the Böhm model of the lambda calculus can be seen as an infinitary term model. In contrast to term rewriting, there are several different possible notions of infinite term, which give rise to different Böhm-like models, which embody different notions of lazy or eager computation.}
 }
 
 %ARXIV
 @misc{Letrec,
-    title        = {{Expressibility in the Lambda Calculus with Letrec}},
-    author    = {{Clemens Grabmayer, Jan Rochel}},
-    year       = 2013,
-    doi         = {10.48550/arXiv.1208.2383},
-    url          = {https://arxiv.org/abs/1208.2383}
+ title = {Expressibility in the Lambda Calculus with Letrec},
+ author = {Clemens Grabmayer and Jan Rochel},
+ year = {2013},
+ doi = {10.48550/arXiv.1208.2383},
+ url = {https://arxiv.org/abs/1208.2383}
 }
 
 %ARXIV
 @misc{Letmu,
-    title        = {{Expressibility in the Lambda Calculus with mu}},
-    author    = {{Clemens Grabmayer, Jan Rochel}},
-    year       = 2013,
-    doi         = {10.48550/arXiv.1304.6284},
-    url          = {https://arxiv.org/abs/1304.6284}
+ title = {Expressibility in the Lambda Calculus with mu},
+ author = {Clemens Grabmayer and Jan Rochel},
+ year = {2013},
+ doi = {10.48550/arXiv.1304.6284},
+ url = {https://arxiv.org/abs/1304.6284}
 }
 
 @phdthesis{JanRochelPhd2016,
-  title        = {Unfolding Semantics of the Untyped lambda-Calculus with letrec},
-  author       = {Jan Rochel},
-  year         = 2016,
-  url              ={https://arxiv.org/abs/1610.05954},
-  school       = {Universiteit Utrecht},
-  type         = {PhD thesis}
+ title = {Unfolding Semantics of the Untyped lambda-Calculus with letrec},
+ author = {Jan Rochel},
+ year = {2016},
+ url ={https://arxiv.org/abs/1610.05954},
+ school = {Universiteit Utrecht},
+ type = {PhD thesis}
 }
-
-
-
-
 
 @string{springer = "Springer"}
 @string{entcs = "ENTCS"}
@@ -91,146 +85,131 @@ abstract = {In a previous paper we have established the theory of transfinite re
 @string{KEIO="Keio University"}
 
 @article{2021-Kuperberg-Pinault-Pous,
-  author       = {Denis Kuperberg, Laureline Pinault, Damien Pous},
-  title        = {Cyclic proofs, system {T}, and the power of contraction},
-  journal      = {Proceedings of the ACM on Programming Languages, 2021},
-   doi          = {10.1145/3434282},
-  url          = {https://hal.science/hal-02487175v2/document}
-  }
+ author = {Denis Kuperberg and Laureline Pinault and Damien Pous},
+ title = {Cyclic proofs, system {T}, and the power of contraction},
+ journal = {Proceedings of the ACM on Programming Languages, 2021},
+ doi = {10.1145/3434282},
+ url = {https://hal.science/hal-02487175v2/document}
+ }
   
 @article{2021-Anupam-Das,
-  author       = {Anupam Das},
-  title        = {A circular version of G{\"{o}}del's {T} and its abstraction complexity},
-  journal      = {CoRR},
-  volume       = {abs/2012.14421},
-  year         = {2020},
-  url          = {https://arxiv.org/abs/2012.14421},
-  eprinttype    = {arXiv},
-  }
+ author = {Anupam Das},
+ title = {A circular version of G{\"{o}}del's {T} and its abstraction complexity},
+ journal = {CoRR},
+ volume = {abs/2012.14421},
+ year = {2020},
+ url = {https://arxiv.org/abs/2012.14421},
+ eprinttype = {arXiv},
+}
   
 
 @article{BrotherstonSimpson2011,
-  author       = {James Brotherston and
-                  Alex Simpson},
-  title        = {Sequent calculi for induction and infinite descent},
-  journal      = {J. Log. Comput.},
-  volume       = {21},
-  number       = {6},
-  pages        = {1177--1216},
-  year         = {2011},
-  url          = {https://doi.org/10.1093/logcom/exq052},
-  doi          = {10.1093/LOGCOM/EXQ052},
-  timestamp    = {Wed, 17 May 2017 14:25:55 +0200},
-  biburl       = {https://dblp.org/rec/journals/logcom/BrotherstonS11.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author = {James Brotherston and Alex Simpson},
+ title = {Sequent calculi for induction and infinite descent},
+ journal = {J. Log. Comput.},
+ volume = {21},
+ number = {6},
+ pages = {1177--1216},
+ year = {2011},
+ url = {https://doi.org/10.1093/logcom/exq052},
+ doi = {10.1093/LOGCOM/EXQ052},
+ timestamp = {Wed, 17 May 2017 14:25:55 +0200},
+ biburl = {https://dblp.org/rec/journals/logcom/BrotherstonS11.bib},
+ bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 @phdthesis{BrotherstonPhd2006,
-  title        = {Sequent calculus proof systems for inductive definitions},
-  author       = {James Brotherston},
-  year         = 2006,
-  address      = {Laboratory for Foundations of Computer Science},
-  url              ={https://era.ed.ac.uk/bitstream/handle/1842/1458/brotherston\%20thesis.pdf?sequence=1&isAllowed=y},
-  school       = {University of Edinburgh},
-  type         = {PhD thesis}
+ title = {Sequent calculus proof systems for inductive definitions},
+ author = {James Brotherston},
+ year = {2006},
+ address = {Laboratory for Foundations of Computer Science},
+ url ={https://era.ed.ac.uk/bitstream/handle/1842/1458/brotherston\%20thesis.pdf?sequence=1&isAllowed=y},
+ school = {University of Edinburgh},
+ type = {PhD thesis}
 }
 
 @article{GoedelSystemT,
- author   = {Gilles Dowek},
-title        = {Gödel’s system {T} as a precursor of modern type theory},
-year       =  2006,
-url    = {https://inria.hal.science/hal-04046289/file/godel.pdf}
+ author = {Gilles Dowek},
+ title = {G\"{o}del’s system {T} as a precursor of modern type theory},
+ year = {2006},
+ url = {https://inria.hal.science/hal-04046289/file/godel.pdf}
 }
 
 @inproceedings{SCT,
-  author       = {Chin Soon Lee and
-                  Neil D. Jones and
-                  Amir M. Ben{-}Amram},
-  editor       = {Chris Hankin and
-                  Dave Schmidt},
-  title        = {The size-change principle for program termination},
-  booktitle    = {Conference Record of {POPL} 2001: The 28th {ACM} {SIGPLAN-SIGACT} Symposium on Principles of Programming Languages, London, UK, January 17-19, 2001},
-  pages        = {81--92},
-  publisher    = {{ACM}},
-  year         = {2001},
-  url          = {https://doi.org/10.1145/360204.360210},
-  doi          = {10.1145/360204.360210},
-  timestamp    = {Wed, 07 Jul 2021 17:30:33 +0200},
-  biburl       = {https://dblp.org/rec/conf/popl/LeeJB01.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author = {Chin Soon Lee and Neil D. Jones and Amir M. Ben{-}Amram},
+ editor = {Chris Hankin and Dave Schmidt},
+ title = {The size-change principle for program termination},
+ booktitle = {Conference Record of {POPL} 2001: The 28th {ACM} {SIGPLAN-SIGACT} Symposium on Principles of Programming Languages, London, UK, January 17-19, 2001},
+ pages = {81--92},
+ publisher = {{ACM}},
+ year = {2001},
+ url = {https://doi.org/10.1145/360204.360210},
+ doi = {10.1145/360204.360210},
+ timestamp = {Wed, 07 Jul 2021 17:30:33 +0200},
+ biburl = {https://dblp.org/rec/conf/popl/LeeJB01.bib},
+ bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 @inproceedings{DBLP:conf/fscd/000221,
-  author       = {Anupam Das},
-  editor       = {Naoki Kobayashi},
-  title        = {On the Logical Strength of Confluence and Normalisation for Cyclic
-                  Proofs},
-  booktitle    = {6th International Conference on Formal Structures for Computation
-                  and Deduction, {FSCD} 2021, July 17-24, 2021, Buenos Aires, Argentina
-                  (Virtual Conference)},
-  series       = {LIPIcs},
-  volume       = {195},
-  pages        = {29:1--29:23},
-  publisher    = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
-  year         = {2021},
-  url          = {https://doi.org/10.4230/LIPIcs.FSCD.2021.29},
-  doi          = {10.4230/LIPICS.FSCD.2021.29},
-  timestamp    = {Wed, 21 Aug 2024 22:46:00 +0200},
-  biburl       = {https://dblp.org/rec/conf/fscd/000221.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author = {Anupam Das},
+ editor = {Naoki Kobayashi},
+ title = {On the Logical Strength of Confluence and Normalisation for Cyclic Proofs},
+ booktitle = {6th International Conference on Formal Structures for Computation and Deduction, {FSCD} 2021, July 17-24, 2021, Buenos Aires, Argentina (Virtual Conference)},
+ series = {LIPIcs},
+ volume = {195},
+ pages = {29:1--29:23},
+ publisher = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
+ year = {2021},
+ url = {https://doi.org/10.4230/LIPIcs.FSCD.2021.29},
+ doi = {10.4230/LIPICS.FSCD.2021.29},
+ timestamp = {Wed, 21 Aug 2024 22:46:00 +0200},
+ biburl = {https://dblp.org/rec/conf/fscd/000221.bib},
+ bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 
 @inproceedings{DBLP:conf/lics/Curzi022,
-  author       = {Gianluca Curzi and
-                  Anupam Das},
-  editor       = {Christel Baier and
-                  Dana Fisman},
-  title        = {Cyclic Implicit Complexity},
-  booktitle    = {{LICS} '22: 37th Annual {ACM/IEEE} Symposium on Logic in Computer
-                  Science, Haifa, Israel, August 2 - 5, 2022},
-  pages        = {19:1--19:13},
-  publisher    = {{ACM}},
-  year         = {2022},
-  url          = {https://doi.org/10.1145/3531130.3533340},
-  doi          = {10.1145/3531130.3533340},
-  timestamp    = {Sun, 19 Jan 2025 13:30:31 +0100},
-  biburl       = {https://dblp.org/rec/conf/lics/Curzi022.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author       = {Gianluca Curzi and Anupam Das},
+ editor       = {Christel Baier and Dana Fisman},
+ title        = {Cyclic Implicit Complexity},
+ booktitle    = {{LICS} '22: 37th Annual {ACM/IEEE} Symposium on Logic in Computer Science, Haifa, Israel, August 2 - 5, 2022},
+ pages        = {19:1--19:13},
+ publisher    = {{ACM}},
+ year         = {2022},
+ url          = {https://doi.org/10.1145/3531130.3533340},
+ doi          = {10.1145/3531130.3533340},
+ timestamp    = {Sun, 19 Jan 2025 13:30:31 +0100},
+ biburl       = {https://dblp.org/rec/conf/lics/Curzi022.bib},
+ bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 
 @inproceedings{DBLP:conf/csl/Curzi023,
-  author       = {Gianluca Curzi and
-                  Anupam Das},
-  editor       = {Bartek Klin and
-                  Elaine Pimentel},
-  title        = {Non-Uniform Complexity via Non-Wellfounded Proofs},
-  booktitle    = {31st {EACSL} Annual Conference on Computer Science Logic, {CSL} 2023,
-                  February 13-16, 2023, Warsaw, Poland},
-  series       = {LIPIcs},
-  volume       = {252},
-  pages        = {16:1--16:18},
-  publisher    = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
-  year         = {2023},
-  url          = {https://doi.org/10.4230/LIPIcs.CSL.2023.16},
-  doi          = {10.4230/LIPICS.CSL.2023.16},
-  timestamp    = {Wed, 21 Aug 2024 22:46:00 +0200},
-  biburl       = {https://dblp.org/rec/conf/csl/Curzi023.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author = {Gianluca Curzi and Anupam Das},
+ editor = {Bartek Klin and Elaine Pimentel},
+ title = {Non-Uniform Complexity via Non-Wellfounded Proofs},
+ booktitle = {31st {EACSL} Annual Conference on Computer Science Logic, {CSL} 2023, February 13-16, 2023, Warsaw, Poland},
+ series = {LIPIcs},
+ volume = {252},
+ pages = {16:1--16:18},
+ publisher = {Schloss Dagstuhl - Leibniz-Zentrum f{\"{u}}r Informatik},
+ year = {2023},
+ url = {https://doi.org/10.4230/LIPIcs.CSL.2023.16},
+ doi = {10.4230/LIPICS.CSL.2023.16},
+ timestamp = {Wed, 21 Aug 2024 22:46:00 +0200},
+ biburl = {https://dblp.org/rec/conf/csl/Curzi023.bib},
+ bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
 @inproceedings{DBLP:conf/lics/Curzi023,
-  author       = {Gianluca Curzi and
-                  Anupam Das},
-  title        = {Computational expressivity of (circular) proofs with fixed points},
-  booktitle    = {38th Annual {ACM/IEEE} Symposium on Logic in Computer Science, {LICS}
-                  2023, Boston, MA, USA, June 26-29, 2023},
-  pages        = {1--13},
-  publisher    = {{IEEE}},
-  year         = {2023},
-  url          = {https://doi.org/10.1109/LICS56636.2023.10175772},
-  doi          = {10.1109/LICS56636.2023.10175772},
-  timestamp    = {Wed, 29 May 2024 16:05:22 +0200},
-  biburl       = {https://dblp.org/rec/conf/lics/Curzi023.bib},
-  bibsource    = {dblp computer science bibliography, https://dblp.org}
+ author = {Gianluca Curzi and Anupam Das},
+ title = {Computational expressivity of (circular) proofs with fixed points},
+ booktitle = {38th Annual {ACM/IEEE} Symposium on Logic in Computer Science, {LICS} 2023, Boston, MA, USA, June 26-29, 2023},
+ pages = {1--13},
+ publisher = {{IEEE}},
+ year = {2023},
+ url = {https://doi.org/10.1109/LICS56636.2023.10175772},
+ doi = {10.1109/LICS56636.2023.10175772},
+ timestamp = {Wed, 29 May 2024 16:05:22 +0200},
+ biburl = {https://dblp.org/rec/conf/lics/Curzi023.bib},
+ bibsource = {dblp computer science bibliography, https://dblp.org}
 }

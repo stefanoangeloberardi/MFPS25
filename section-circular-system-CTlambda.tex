@@ -24,7 +24,7 @@ As a consequence, all closed terms $\CTlambda$ are total functionals.
 \\
 
 By building over the $\N$-argument connection (Def. \ref{definition-connection})
-we now define the Global Trace Condition and the set of terms $\GTC$  and $\CTlambda$.
+we now define the global trace condition and the set of terms $\GTC$  and $\CTlambda$.
 Informally, GTC requires that all infinite branches have some trace of some argument
 $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 
@@ -60,7 +60,7 @@ $\CTlambda$ are all well-typed terms which are regular trees
 \end{enumerate}
 \end{definition}
 
-Global Trace Condition is decidable in polynomial space in the number of
+The global trace condition is decidable in polynomial space in the number of
 subterms of $t$, counted up to isomorphism, 
 because it is a particular case of the size change algorithm for program 
 termination (\cite{SCT}). 
@@ -93,7 +93,7 @@ we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split
 the typing rule for $\ap$ into two sub-cases. 
 \end{remark}
 
-We include now some examples of  terms in $\CTlambda$, i.e., 
+We include now some examples of terms in $\CTlambda$, i.e., 
 of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, 
 in particular they are left-finite, and by definition of $\CTlambda$ they are regular.
 
@@ -104,99 +104,92 @@ in particular they are left-finite, and by definition of $\CTlambda$ they are re
 %15:35 26/03/2025
 
 
+\subsection{Example: The sum map}
 
-\subsection{The sum map}
+\begin{Eg}[The sum map]\label{example-sum}
+The term $\Sum$ given in Example~\ref{example-sum-first} was well-typed and regular.
+The proof of $\ \vdash \Sum:\N,\goldNout \rightarrow \N$ has an unique infinite path
+and there is an infinite trace (consists of the sequence of $\goldNout$) following the path. 
+The infinite trace goes through progressing points (the rule instances of $\cond$-rule)
+infinite many times. Therefore it satisfies the global trace condition, and then $\Sum \in \CTlambda$. 
 
-The first example of terms in $\CTlambda$ is $\Sum$ that computes the sum on $\N$. 
-In this example, the type superscript $\N$ of variables $x^\N$, $y^\N$ is omitted.
+%% The first example is the sum map $\Sum$ that computes the sum up to an input numeral. 
 
-\begin{Eg}
-\label{example-sum}
-We set $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
-$\Sum$ is a regular term because it has finitely many subterms up to isomorphism: 
-\begin{center}
-  $\Sum$,
-  \quad
-  $\cond(x,\lambda y.\Succ(\Sum(x)(y)))$,
-  \quad
-  $x$,
-  \quad
-  $\lambda y.\Succ(\Sum(x)(y))$,
- \quad
-  $\Succ(\Sum(x)(y))$,
-  \quad
-  $\Sum(x)(y)$,
-  \quad
-  $\Sum(x)$,
-  \quad
-   y
-\end{center}
-$\Sum$ is well-typed by the following derivation.\footnote{Remark that without the 
-$\weak$-rule, the context of the top $\golddagger$ would be $x^\N, y^\N$ 
-while the context of the bottom $\golddagger$ would be $\emptyset$. 
-Without the $\weak$-rule, this particular proof would not be correct.}
-\[
-\infer[\lambda]{
-  \vdash \Sum:\N, 
-  %\goldN 
-  \goldN
-  \rightarrow \N 
-   \quad (\golddagger)
-}{
-  \infer[\cond]{
-    x : \N \vdash 
-    \cond(x,\lambda y.\Succ(\Sum(x)(y))): \goldN \rightarrow \N
-     \quad (\goldspadesuit)
-  }{
-    \infer[\var]{
-      x : \N \vdash x : \N
-    }{}
-    &
-    \infer[\lambda]{
-      x:\N \vdash \lambda y.\Succ(\Sum(x)(y)): \goldN \rightarrow \N  
-      %\quad (\goldspadesuit)
-    }{
-      \infer[\Succ]{
-        x:\N, y : \goldN 
-        \vdash \Succ(\Sum(x)(y)): \N  
-        % \quad (\goldspadesuit)
-      }{
-        \infer[\apvar]{
-          x:\N, y : \goldN 
-          \vdash \Sum(x)(y): \N
-        }{
-          \infer[\apvar]{
-            x:\N,  y : \N
-            \vdash \Sum(x): \goldN \rightarrow \N
-          }{
-            \infer[\weak]{
-              x:\N,  y : \N
-              \vdash \Sum: \N, \goldN \rightarrow  \N
-            }{
-              \infer*{\vdash \Sum: \N, \goldN \rightarrow \N 
-                \quad (\golddagger)}{}
-            }
-          }
-        }
-      }
-    }
-  }
-}
-\]
-In a computation we can represent this infinite tree by a finite cyclic graph
-by adding a back edge from the  $\golddagger$ in the top to the $\golddagger$ in the 
-bottom. 
+%% \begin{Eg}
+%% \label{example-sum}
+%% The term $\Sum$ is the term such that $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
+%% We have $\Sum\in\Reg$ because it has finitely many subterms up to isomorphism: 
+%% \begin{center}
+%%   $\Sum$,
+%%   \quad
+%%   $\cond(x,\lambda y.\Succ(\Sum(x)(y)))$,
+%%   \quad
+%%   $x$,
+%%   \quad
+%%   $\lambda y.\Succ(\Sum(x)(y))$,
+%%  \quad
+%%   $\Succ(\Sum(x)(y))$,
+%%   \quad
+%%   $\Sum(x)(y)$,
+%%   \quad
+%%   $\Sum(x)$,
+%%   \quad
+%%    y
+%% \end{center}
+%% It is well-typed by the following derivation.\footnote{Remark that without the 
+%% $\weak$-rule, the context of the top $\golddagger$ would be $x^\N, y^\N$ 
+%% while the context of the bottom $\golddagger$ would be $\emptyset$. 
+%% Without the $\weak$-rule, this particular proof would not be correct.}
+%% \[
+%% \infer[\lambda]{
+%%   \vdash \Sum:\N, 
+%%   \goldN 
+%%   \rightarrow \N 
+%%    \quad (\golddagger)
+%% }{
+%%   \infer[\cond]{
+%%     x : \N \vdash 
+%%     \cond(x,\lambda y.\Succ(\Sum(x)(y))): \goldN \rightarrow \N
+%%      \quad (\goldspadesuit)
+%%   }{
+%%     \infer[\var]{
+%%       x : \N \vdash x : \N
+%%     }{}
+%%     &
+%%     \infer[\lambda]{
+%%       x:\N \vdash \lambda y.\Succ(\Sum(x)(y)): \goldN \rightarrow \N  
+%%       %\quad (\goldspadesuit)
+%%     }{
+%%       \infer[\Succ]{
+%%         x:\N, y : \goldN 
+%%         \vdash \Succ(\Sum(x)(y)): \N  
+%%         % \quad (\goldspadesuit)
+%%       }{
+%%         \infer[\apvar]{
+%%           x:\N, y : \goldN 
+%%           \vdash \Sum(x)(y): \N
+%%         }{
+%%           \infer[\apvar]{
+%%             x:\N,  y : \N
+%%             \vdash \Sum(x): \goldN \rightarrow \N
+%%           }{
+%%             \infer[\weak]{
+%%               x:\N,  y : \N
+%%               \vdash \Sum: \N, \goldN \rightarrow  \N
+%%             }{
+%%               \infer*{\vdash \Sum: \N, \goldN \rightarrow \N 
+%%                 \quad (\golddagger)}{}
+%%             }
+%%           }
+%%         }
+%%       }
+%%     }
+%%   }
+%% }
+%% \]
+%% In a computation we can represent this infinite tree by a finite cyclic graph
+%% by adding a back edge from the  $\golddagger$ at the top to the $\golddagger$ at the bottom. 
 \end{Eg}
-
-We %colored in \bfColor{oldgold}{old gold} one sequence of atoms $\goldN$:
-outlined one trace (one sequence of connected $\N$-arguments)
-with $\goldN$. The outlined trace is the unique 
-infinite trace, it is cyclic and it is infinitely progressing in the unique infinite path
-of $\Sum$.
-We marked $\goldspadesuit$ the progress point of the unique infinite trace.
-The progress point is repeated infinitely many times in the unique infinite trace,
-therefore $\Sum \in \CTlambda$. 
-
 
 %
 %\begin{tikzpicture}
@@ -217,7 +210,7 @@ therefore $\Sum \in \CTlambda$.
 \begin{Eg}
 We define a term $\Iter$ of  $\CTlambda$ computing the iteration of maps on $\N$.
 The term $\Iter$ is a closed normal term of type $(\N \rightarrow \N), \N,\N \rightarrow \N$ such 
-that $\Iter(f,a,n)=f^n(a)$ for all numeral $n \in \Num$. 
+that $\Iter(f,a,n)=f^n(a)$ for all numerals $n \in \Num$. 
 Let $\Gamma = (f:\N \rightarrow \N, a:\N)$. We write $\approx$ for
 the existence of a common reduct in the context $\Gamma$. 
 We have to solve the following equations up to $\approx$:
@@ -328,7 +321,7 @@ the outlined infinite trace.
 
 
 \subsection{The Interval Map}
-A third example. We simulate lists with one type variable $\alpha$ 
+For the third example, we simulate lists with one type variable $\alpha$ 
 and two variables $\nil:\alpha$ and $\cons:\N,\alpha \rightarrow \alpha$. 
 We recursively define a notation for lists by $[]=\nil$,
 $a @ l=\cons(a,l)$ and $[a,\vec{a}] = a @ [\vec{a}]$. We add no elimination rules 
@@ -337,7 +330,7 @@ required in our example.
 
 \begin{Eg}
 We will define a term $\Interval$ with one argument $f:\N \rightarrow \N$ and 
-three arguments $a,x,y:\N$ (we skip all type superscripts), such that 
+three arguments $a,x,y:\N$, such that 
 \[
 \Interval(f,a,n,m) \  \approx \ [f^n(a), f^{n+1}(a), \ldots, f^{n+m}(a)] \  : \ \alpha
 \]
@@ -422,7 +415,6 @@ the outlined infinite trace.
 \label{figure-term-interval}
 
 \begin{center}
-  
   \begin{footnotesize}
 %\[
 %\infer[\lambda]
@@ -440,18 +432,18 @@ the outlined infinite trace.
        {\infer[\apvar]{\Gamma, x:\N 
 	           \vdash 
 	           \base:\alpha}
-             {\infer[]{\Gamma, x:\N 
+             {\infer*{\Gamma, x:\N 
 	           \vdash 
-	           \cons(\iter(x)):\alpha \rightarrow\N}{\ldots}}
+	           \cons(\iter(x)):\alpha \rightarrow\N}{}}
             {\ \ \ \ \ \ }  &
           \infer[\lambda]{\Gamma, x:\N 
 	           \vdash 
 	           \lambda y.j : \goldN\rightarrow\alpha}
              {\infer[\apnotvar]{\Gamma, x:\N, y:\goldN \vdash
                j : \alpha}
-            {\infer[]
+            {\infer*
                      {\Gamma, x:\N, y:\N 
-                          \vdash \iter(x):\N}{\ldots}
+                          \vdash \iter(x):\N}{}
                {\ \ \ \ \ \ }
                      {\infer[\apvar]{\Gamma, x:\N, y:\goldN 
                           \vdash \interval(\Succ(x))(y):\alpha}
@@ -459,10 +451,10 @@ the outlined infinite trace.
                           \vdash \interval(\Succ(x)):\goldN \rightarrow\alpha}
                               {\infer[\weak]{\Gamma, x:\N, y:\N 
                           \vdash \interval:\N,\goldN \rightarrow\alpha}
-                                {\infer[]{\Gamma 
+                                {\infer*{\Gamma 
                           \vdash \interval:\N,\goldN \rightarrow\alpha
                            \ \ \ (\golddagger)}
-              {\ldots} } {\ldots\ldots}  }}}
+              {} } & {\ldots}  }}}
              }
            }
          }
@@ -490,9 +482,9 @@ The nested substitution produces infinitely many pairwise different subterms
 $\iter(\Succ ^k(x))$ for all $k \in \N$. 
 We need $k$ steps to normalize each $\iter(\Succ ^k(x))$ to $f^k(x)$, 
 even if we allow to reduce infinitely many 
-$\beta, \cond$-redexes at the same time, because our reduction will consume one 
-$\Succ$  at the time. Thus, the total time is infinite, a limit process. 
-Besides, the normal form we obtain in this way not regular: it contains terms 
+$\beta$ and $\cond$-redexes at the same time, because our reduction will consume one 
+$\Succ$ at the time. Thus, the total number of reduction steps is infinite. 
+Besides, if we take the limit of this process, the normal form is not regular: it contains terms 
 $f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms. 
 
 %For this reason we consider normalization as part of the semantics for

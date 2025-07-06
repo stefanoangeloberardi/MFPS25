@@ -342,7 +342,8 @@
 \newcommand{\Tree}                      {{\tt Tree}}
 \newcommand{\N}                           {{N}}
 \newcommand{\Num}                      {{\tt Num}}
-\newcommand{\Nat}                        {{ \outline{\tt N}{white} }}
+%\newcommand{\Nat}                        {{ \outline{\tt N}{white} }}
+\newcommand{\Nat}                        {\mathbb{N}}
 \newcommand{\GTC}                       {{\tt GTC}}
 \newcommand{\Reg}                       {{\tt Reg}}
 \newcommand{\Type}                      {{\tt Type}}
@@ -392,17 +393,19 @@
 \newcommand{\ACK}{{\redM Ack}}
 \newcommand{\Cond}[2]{{\tt cond}(#1,#2)}
 \newcommand{\Suc}[1]{{\tt S}(#1)}
-\newcommand{\goldN}    
-      {{ \bf \contour{black}{\textcolor{oldgold}{\tt N}} }}
-\newcommand{\golddagger} 
-      {{ \bf \contour{black}{\textcolor{oldgold}{$\dagger$}} }}
+%\newcommand{\goldN}    
+%      {{ \bf \contour{black}{\textcolor{oldgold}{\N}} }}
+\newcommand{\goldN}{\bfColor{oldgold}{\mathit{N}}}
+\newcommand{\goldNout}{{\contour{black}{{\color{oldgold}{N}}}}}
+\newcommand{\golddagger}{{\contour{black}{{\color{oldgold}{$\dagger$}}}}}
 \newcommand{\goldspadesuit} 
       {{ \bf \contour{black}{\textcolor{oldgold}{$\spadesuit$}} }}
-\newcommand{\redN}{{\bfColor{red}{N}}}
+\newcommand{\redN}{{\bfColor{red}{\mathit{N}}}}
 \newcommand{\bluen}{{\bfColor{blue}{n}}}
 \newcommand{\redm}{{\bfColor{red}{m}}}
-\newcommand{\blueN}{{\bfColor{blue}{N}}}
-\newcommand{\redblueN}{{\bfColor{red}{N}\hspace{-1em}\bfColor{blue}{N}}}
+\newcommand{\blueN}{{\bfColor{blue}{\mathit{N}}}}
+\newcommand{\orangeN}{{\bfColor{orange}{\mathit{N}}}}
+\newcommand{\redblueN}{{\bfColor{red}{\mathit{N}}\hspace{-1em}\bfColor{blue}{\mathit{N}}}}
 
 %\newenvironment{claim}[1][Claim]{\begin{trivlist}\item[\hskip \labelsep {\bfseries #1}]}{\end{trivlist}}
 

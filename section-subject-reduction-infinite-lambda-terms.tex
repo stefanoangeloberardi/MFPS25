@@ -3,7 +3,7 @@
 %\newcommand{\xx}{\boldsymbol{x}}
 %%%%%%%%%%%%%%%
 
-\section{Subject Reduction for Well-Typed Infinite Lambda Terms}
+\section{Subject reduction for well-typed infinite lambda terms}
 \label{section-subject-reduction}
 
 We quickly quote the subject reduction properties for well-typed terms of $\LAMBDA$,
@@ -535,11 +535,11 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %  that satisfies the global trace condition, as we wished. 
 %\end{proof}
 
-Variable renaming preserves GTC. $\alpha$-conversion preserves regularity, because
-in Def. \ref{definition-alpha-conversion} 
-we assumed that equal bound variables are renamed by equal bound variables.
-Thus, $\alpha$-conversion maps isomorphic terms trees into isomorphic term trees,
-and preserves the finiteness of the set of subterms up to tree isomorphism.
+Variable renaming preserves GTC.
+The equality-preserving $\alpha$-conversion preserves regularity as we mentioned
+after Def. \ref{definition-alpha-conversion}. 
+Thus, the equality-preserving $\alpha$-conversion also preserves isomorphic relations of term trees, 
+and hence it preserves the finiteness of the set of subterms up to tree isomorphism.
 
 \begin{proposition}(Renaming and $\alpha$-conversion)
 \label{prop:renaming}
@@ -550,7 +550,7 @@ and preserves the finiteness of the set of subterms up to tree isomorphism.
     then $\Pi'::\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
     Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
   \item\label{prop:renaming2}
-    If $\Pi::\Gamma\vdash t:A$ and $t'$ is $\alpha$-equivalent to $t$,
+    If $\Pi::\Gamma\vdash t:A$ and $t' \sim_\alpha t$,
     then $\Pi'::\Gamma\vdash t':A$ for some $\Pi'$.
     Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
   \end{enumerate}

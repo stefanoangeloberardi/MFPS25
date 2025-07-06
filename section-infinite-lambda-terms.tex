@@ -3,8 +3,8 @@
 In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
 the subset $\Reg$ of circular terms, namely regular trees, of $\LAMBDA$, 
 the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
-we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy the
-Global Trace Condition also satisfy a termination result.
+we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy
+the global trace condition also satisfy a termination result.
 
 %They will be used to
 %give a semantics for finite circular notations for $\lambda$-terms.
@@ -93,7 +93,9 @@ First we introduce the types,
 and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 
 \begin{definition}(Types)
-We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables. 
+  We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables
+  \footnote{Type variables play a minor role in this paper.
+  They are used to provide some examples of our terms in Section~\ref{section-circular-system-CTlambda}.}. 
 \begin{enumerate}
 \item  
   The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
@@ -156,7 +158,9 @@ $x^T$, $0$, $\Succ(t)$, $\lambda x^T.t$, $\ap(t,u)$, $\cond(t,u)$, respectively.
 This denotation is unique up to term isomorphism.
 Conversely, each $v \in \LAMBDA$ is in one of the forms:
 $x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
+
 As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
+We often omit type superscripts of variables when they are clear from the context. 
 
 Now we define the regular terms of $\LAMBDA$.
 
@@ -181,9 +185,10 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 % for all $(i+1) \le n$ we have $t_{i+1}=t_i$ or $t_{i+1} \sqsubset_1 t_i$.
 
 \item
-When $t = \Succ ^n(0)$, namely $\Succ(\cdots \Succ(0))$ ($n$-times of $\Succ$), for some natural number $n \in \Nat$,
-we say that $t$ is a numeral. We write $\Num$ for the set of numerals.
-
+  When $t = \Succ^n(0)$, namely $\Succ(\cdots \Succ(0))$ ($n$-times of $\Succ$),
+  for some natural number $n \in \Nat$, we say that $t$ is a numeral.
+  We write $\Num$ for the set of numerals.
+  By abuse of notation, we abbreviate $\Succ^n(0)$ by $n$.
 \end{enumerate}
  
 \end{definition}
@@ -359,10 +364,8 @@ We write $\Judg$ for the set of all typing judgments.
 In fact a type assignment $x^T:T$ is a \emph{redundant information} for our
 variables (not for our terms), 
 since each variable already has its type superscript.
-However we write $x^T:T$ for uniformity with the notation $x:T$ 
-in use in Type Theory.
-
-
+However we write $x^T:T$ (or simply write $x:T$ abbreviating $x^T$ by $x$)
+for uniformity with the notation $x:T$ in use in type theory.
 
 %We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
 %and  $\Gamma \supseteqsim \Gamma'$ if and only if $\Gamma$, $\Gamma'$ are permutation
@@ -549,7 +552,7 @@ We will explain the rules for $\ap$ in more detail after the definition of GTC.
 %% %for the first argument of $t$. 
 %% %As we said, 
 %% We need to consider apart the case $t(x)$ of application of $t$ to a variable
-%% $x$, because in this case we will also check, using the Global Trace Condition, 
+%% $x$, because in this case we will also check, using the global trace condition, 
 %% whether the first argument of $t$ is infinitely decreasing in any infinite 
 %% computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
 %% a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
@@ -685,8 +688,9 @@ then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
 
 We have $\weak$-rule as a primitive rule, even if $\weak$ could be
 conditionally derived from the other rules. The reason is that it is simpler
-to write examples of regular terms when we use typing rules with $\weak$.
- 
+to write examples of regular terms when we use typing rules with $\weak$
+(see Example~\ref{example-sum-first} below).
+
 %Indeed, we use $\weak$-rule to remove bound variables no more in use when 
 %whenever we unfold a fixed point definition. Without $\weak$-rule, we would be 
 %forced to introduce more and more fresh names for bound variables in order to 
@@ -696,7 +700,7 @@ to write examples of regular terms when we use typing rules with $\weak$.
 %A last remark. In the $\weak$-rule, from the condition 
 %$\FV(\Gamma) \subseteq \FV(\Gamma')$
 %we can recover a unique map $\phi$ such that $\phi:\Gamma \rightarrow \Gamma'$.
-%We will use the information in $\phi$ to state the Global Trace condition for terms
+%We will use the information in $\phi$ to state the global trace condition for terms
 %of $\LAMBDA$.
 
 We say that two rule instances are equal if they have the same list of judgments. 
@@ -996,29 +1000,97 @@ then $A = A'$.
 %13:49 29/04/2024
 %12:20 27/03/2025
 
+We give a typical example $\Sum$ of our system. It is regular and well-typed.
+Moreover, as we will see later, it satisfies the global trace condition,
+and hence is in $\CTlambda$ (see Section~\ref{example-sum}). 
+
+\begin{Eg}\label{example-sum-first}
+The term $\Sum$ is the infinite term that satisfies $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
+It is regular because it has finitely many subterms up to isomorphism: 
+\begin{center}
+  $\SubTerm(\Sum) = \{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
+\end{center}
+It is well-typed by the following derivation with an infinite path
+\footnote{The sequence of the outlined $\goldNout$ is a trace, which will be defined
+in Section~\ref{section-trace-infinite-lambda-terms}, following the unique infinite path.}.
+\[
+\infer[\lambda]{
+  \vdash \Sum:\N, 
+  \goldNout 
+  \rightarrow \N 
+   \quad (\golddagger)
+}{
+  \infer[\cond]{
+    x : \N \vdash 
+    \cond(x,\lambda y.\Succ(\Sum(x)(y))): \goldNout \rightarrow \N
+     \quad (\goldspadesuit)
+  }{
+    \infer[\var]{
+      x : \N \vdash x : \N
+    }{}
+    &
+    \infer[\lambda]{
+      x:\N \vdash \lambda y.\Succ(\Sum(x)(y)): \goldNout \rightarrow \N  
+      %\quad (\goldspadesuit)
+    }{
+      \infer[\Succ]{
+        x:\N, y : \goldNout
+        \vdash \Succ(\Sum(x)(y)): \N  
+        % \quad (\goldspadesuit)
+      }{
+        \infer[\apvar]{
+          x:\N, y : \goldNout 
+          \vdash \Sum(x)(y): \N
+        }{
+          \infer[\apvar]{
+            x:\N,  y : \N
+            \vdash \Sum(x): \goldNout \rightarrow \N
+          }{
+            \infer[\weak]{
+              x:\N,  y : \N
+              \vdash \Sum: \N, \goldNout \rightarrow  \N
+            }{
+              \infer*{\vdash \Sum: \N, \goldNout \rightarrow \N 
+                \quad (\golddagger)}{}
+            }
+          }
+        }
+      }
+    }
+  }
+}
+\]
+
+We can represent this infinite tree by a finite cyclic graph
+by adding a back edge from the  $\golddagger$ at the top to the $\golddagger$ at the bottom.
+Note that the use of $\weak$-rule in this derivation makes this cyclic graph representation,
+namely, without $\weak$-rule, this particular proof would not be correct.
+%the context of the top $\golddagger$ would be $(x:\N, y:\N)$ 
+%while the context of the bottom $\golddagger$ is empty.
+\end{Eg}
+
 \subsection{Reduction rules}
 Our goal is to provide a set of well-formed terms for $\LAMBDA$ and interpret 
 them as partial functionals, a semantics for circular $\lambda$-terms.
 Some terms of $\LAMBDA$, those satisfying the global trace condition 
 (to be introduced later) will denote a subset of the total 
 functionals. Our first step is to provide reduction rules for $\LAMBDA$.
-
 %18:14 27/03/2024
 
 
 \begin{definition}(Reduction Rules for $\LAMBDA$)
-  Let $a$, $b$, $f$, $g$, $t$, and $u$ be in $\LAMBDA$.
-  We first define the binary relations $\reduces_\beta$ and $\reduces_\cond$ as follows.
-\begin{enumerate}
-\item
-$\reduces_\beta$: $(\lambda x^A.b)(a) \reduces_\beta b[a/x]$
-\item 
-$\reduces_\cond$:
-$\cond(f,g)(0) \reduces_\cond f$ and
-$\cond(f,g)(\Succ (t)) \reduces_\cond g(t)$.
-\end{enumerate}
+  Let $f$, $g$, $t$, and $u$ be terms in $\LAMBDA$.
+  We define the $\beta$-reduction relation $\reduces_\beta$
+  and the $\cond$-reduction relation $\reduces_\cond$ as follows.
+\begin{description}
+\item[$\beta$-reduction:]
+  $(\lambda x^A.t)(u) \reduces_\beta t[u/x]$, 
+\item[$\cond$-reduction:] 
+  $\cond(u,f)(0) \reduces_\cond u$ and 
+  $\cond(u,f)(\Succ (t)) \reduces_\cond f(t)$.
+\end{description}
 
-A \emph{redex} is a term in the shape of the term at the left-hand side of $\reduces_\beta$ or $\reduces_\cond$. 
+A \emph{$\beta$-redex} or \emph{$\cond$-redex} is a term in the shape of the term at the left-hand side of $\reduces_\beta$ or $\reduces_\cond$, respectively. 
 The \emph{one-step reduction relation} $\reduces$
 is the contraction of one $\beta$ or of one $\cond$ redex anywhere
 in the term, namely,
@@ -1043,15 +1115,14 @@ if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $
 A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
 
 We abbreviate \quotationMarks{$t$ is $0$-safe-normal} 
-with just \quotationMarks{$t$ is safe normal}.
+with just \quotationMarks{$t$ is safe-normal}.
 \end{definition}
 
 %09:19 24/04/2024
 %14:00 29/04/2024
 
 \begin{Eg}
-Let $u \sim \cond(0, (\lambda z.u)(z) )$, where we omitted the type superscript
-$\N$ of $z$. Then $u$ is $0$-safe-normal (safe-normal for short), 
+Let $u \sim \cond(0, (\lambda z.u)(z) )$. Then $u$ is safe-normal, 
 because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-hand side
 of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-redexes.
 Up to tree isomorphism, the tree form of $u$ includes the following branch:
@@ -1075,10 +1146,10 @@ therefore $u$ has no normal form.
 In order to produce the output of a computation we have
 to reduce closed terms of type $\N$ to a numeral. 
 We will define a subset $\CTlambda$ of
-$\LAMBDA$ and prove that if we repeat $0$-safe reductions 
+$\LAMBDA$ and prove that if we repeat $0$-safe-reductions 
 (those in the right-hand side of \emph{no} $\cond$) on any
 closed term of type $\N$ of $\CTlambda$ eventually we obtain a numeral. 
-We will in fact prove that the $0$-safe reduction relation is strongly normalizable on \emph{any} term
+We will in fact prove that the $0$-safe-reduction relation is strongly normalizable on \emph{any} term
 of $\CTlambda$. 
 
 %14:11 25/03/2025
@@ -1096,6 +1167,21 @@ to $1$ in $(n+1)$ steps.
 The final output is independent from $n$.
 \end{Eg}
 
+\begin{Eg}
+  This is an example of $0$-safe-reductions from a term $\Sum(m)(n)$ to
+  its normal form $m+n$. 
+  The initial term $\Sum(m)(n)$ is $\beta$-reduced to
+  $\cond(m,\lambda y.\Succ(\Sum(m)(y)))(n)$, and then
+  it is reduced to $\Succ(\Sum(m)(n-1))$ by $\cond$- and $\beta$-reductions (if $n>0$).
+  Then we repeat this: $\Succ(\Sum(m)(n-1))$ is reduced to 
+  $\Succ^2(\Sum(m)(n-2))$ and so forth.
+  After $n$-time repetitions we get $\Succ^n(\Sum(m)(0))$.
+  With three more reductions, we get $\Succ^n(m) = m+n$ and we stop.
+  Thus, the term $\Sum(m)(n)$ strongly normalizes (the reduction path is unique).
+  Note that we only use $0$-safe-reductions, and hence $\Sum(m)(n)$ is safe-normal.
+\end{Eg}
+
 We will exhibit meaningful terms of $\CTlambda$ without a normal form. 
 However, for those terms we will define \quotationMarks{a limit normal form},
 in a sense we will make precise.
+

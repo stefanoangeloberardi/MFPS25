@@ -32,9 +32,9 @@ To this aim, we need to define \emph{lists of argument types} and \emph{indexes 
 
 \begin{definition}(List of argument types)
 Let $J$ be a judgment.
-Then $J$ has the form $\Gamma \vdash \vec{B}\rightarrow \N$,
+Then $J$ has the form $\Gamma \vdash t:\vec{B}\rightarrow \N$,
 where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and $\vec{B}=B_{n+1}, \ldots, B_{n+m}$. 
-We define as follows.
+We define the following notions. 
 
 \begin{enumerate}
 \item
@@ -70,7 +70,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %An example of  atom connection for some instance of the $\weak$-rule.
 %\[
 %\infer[(\weak)]{
-%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3:\goldN
+%  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x_3:\bfColor{oldgold}{\N}
 %  \prove t : \bfColor{orange}{\N} \rightarrow \N
 %}{
 %  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} 
@@ -91,7 +91,7 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %  \prove f(a) : \bfColor{orange}{\N} \rightarrow \N
 %}{
 %  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
-%  \prove f : \goldN, \bfColor{orange}{\N} \rightarrow \N
+%  \prove f : \bfColor{oldgold}{\N}, \bfColor{orange}{\N} \rightarrow \N
 %  &
 %  x_1 : \bfColor{red}{\N}, x_2: \bfColor{blue}{\N} \prove a : \N
 %}
@@ -112,11 +112,11 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %\[
 %\infer[(\cond)]{
 %  {x_1} : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}
-%  \prove \cond(f,g) : \goldN \rightarrow \N
+%  \prove \cond(f,g) : \bfColor{oldgold}{\N} \rightarrow \N
 %}{
 %  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N} \prove f : \N
 %  &
-%  x_1:\bfColor{red}{\N}, x_2:\bfColor{blue}{\N} \prove g:\goldN \rightarrow \N
+%  x_1:\bfColor{red}{\N}, x_2:\bfColor{blue}{\N} \prove g:\bfColor{oldgold}{\N} \rightarrow \N
 %}
 %\]
 %\end{Eg}
@@ -129,9 +129,12 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 
 %15:19 24/03/2025
 
-Let $\Gamma$ be a context of length $n$.
-Suppose be given a typing rule $r$.
-We define a connection between the arguments of the conclusion $\Gamma \vdash t:\vec{B} 
+Let $r$ be an instance of a typing rule whose conclusion is $\Gamma \vdash t:\vec{B} \rightarrow \N$
+where the length of $\Gamma$ is $n$, 
+and premises $J_1,\ldots,J_k$ ($k=0,1,2$). 
+We define a \emph{connection} over $r$ that is a binary relation
+
+between the arguments of the conclusion $\Gamma \vdash t:\vec{B} 
 \rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
 \rightarrow \N$ of $r$. First, we informally discuss the cases requiring special care:
 application to a variable, binder, conditional.
@@ -255,22 +258,21 @@ No connection is defined for the rules $\var$, $0$.
 \end{definition}
 
 Below we include some examples. We draw two connected $\N$-arguments
-with the same color.  If we want to highlight a connection we also outline
-the $\N$-arguments. Occurrences of $\N$ in different color or outlined denote
+with the same color. If we want to highlight a connection we also outline
+the $\N$-arguments. Occurrences of $\N$ in the same color or outlined denote
 the same type, colors denote traces.
 
 
 \begin{Eg}\label{eg:3}%\rm
-Atom connection for $\apvar$, application to a variable $x$. $x$ in the node 
-conclusion is connected to two arguments in the node premise.
-
+Atom connection for $\apvar$, application to a variable. The outlined $\goldNout$ in the conclusion
+is connected to two $\goldNout$s in the premise.
 \[
 \infer[(\apvar)]{
-  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x  : \goldN
-  \prove f(x) : \bfColor{orange}{\N} \rightarrow \N
+  x_1 : \redN,{x_2} : \blueN, x  : \goldNout
+  \prove f(x) : \orangeN \rightarrow \N
 }{
-  x_1 : \bfColor{red}{\N},{x_2} : \bfColor{blue}{\N}, x  : \goldN
-  \prove f : \goldN, \bfColor{orange}{\N} \rightarrow \N
+  x_1 : \redN, {x_2} : \blueN, x  : \goldNout
+  \prove f : \goldNout, \orangeN \rightarrow \N
 }
 \]
 \end{Eg}
@@ -283,15 +285,15 @@ conclusion is connected to two arguments in the node premise.
 
 \begin{Eg}\label{eg:4}%\rm
 Atom connection for  $\lambda$-rule.
-We assume that the bound variable $x$ is  distinct from $x_1$, $x_2$.
-The first unnamed argument of $\lambda x.b$ (outlined)
-is connected with the last variable in the premise of the rule (outlined).
+%We assume that the bound variable $x$ is  distinct from $x_1$, $x_2$.
+The first unnamed argument $\goldNout$ of the conclusion
+is connected with the $\goldNout$ at the last of the premise's context. 
 \[
 \infer[(\ap)]{
-  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}
-  \prove \lambda x.b : \goldN \rightarrow \N
+  x_1: \redN, x_2: \blueN
+  \prove \lambda x.t : \goldNout \rightarrow \N
 }{
-  x_1: \bfColor{red}{\N}, x_2: \bfColor{blue}{\N}, x:\goldN \prove b : \N
+  x_1: \redN, x_2: \blueN, x:\goldNout \prove t : \N
 }
 \]
 \end{Eg}
