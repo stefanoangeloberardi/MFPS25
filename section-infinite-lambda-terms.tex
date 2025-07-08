@@ -218,9 +218,12 @@ However, $t$ is an infinite tree (it includes a proper subtree isomorphic to its
 %in this way has infinitely many subterms $x', x'', \ldots$, therefore it is not
 %regular, yet is it $\alpha$-equivalent to the regular term $t$.
 
-The binder relation is defined as for finite $\lambda$-calculus 
-(\cite{Barendregt1984-BARTLC}, \S 2.1.6 p. 24). 
-
+The binder relation is defined as for finite $\lambda$-calculus.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% I removed this quotation because I could not make it working Stefano 08/07/2025
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%(\cite{Barendregt1984}, \S 2.1.6 p. 24). 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{definition}(Binding relation)
 \label{definition-binder-relation}
 Let $t$ be a term.
@@ -241,7 +244,12 @@ The binding relation is a binary relation from a node occurrence of a bound vari
 
 We also introduce an $\alpha$-conversion relation, in order to avoid variable capture
 during substitution. With respect to the $\alpha$-conversion
-relation for finite $\lambda$-terms (\cite{Barendregt1984-BARTLC}, \S 2.1.11 p.26) 
+relation for finite $\lambda$-terms 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% I removed this quotation because I could not make it working Stefano 08/07/2025
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%(\cite{Barendregt1984}, \S 2.1.11 p.26) 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 we add the requirement that equal bound variables are renamed by equal bound variables. 
 In this way, we only consider $\alpha$-conversions 
 preserving the regularity of a term.
@@ -327,7 +335,7 @@ Otherwise it is $\Gamma$.
 
 \item
 \label{definition-context-lambda-08}
-  Let $\Gamma$ and $\Gamma'$ be $({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ and $({x'_1}^{A'_1}:A'_1, \ldots, x'_{n'}^{A'_{n'}}:A'_{n'})$, respectively. 
+  Let $\Gamma$ and $\Gamma'$ be $({x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_n)$ and $({x'_1}^{A'_1} :  A'_1, 	  \ldots,    {x'_{n'}}^{A'_{n'}} : A'_{n'})$, respectively. 
 We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
 $\phi$ is an injection from $\{1,\ldots,n\}$ to $\{1,\ldots,n'\}$
 and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
@@ -1010,9 +1018,11 @@ It is regular because it has finitely many subterms up to isomorphism:
 \begin{center}
   $\SubTerm(\Sum) = \{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
 \end{center}
-It is well-typed by the following derivation with an infinite path
-\footnote{The sequence of the outlined $\goldNout$ is a trace, which will be defined
-in Section~\ref{section-trace-infinite-lambda-terms}, following the unique infinite path.}.
+It is well-typed by the following derivation with an infinite path. In the path, we outline a 
+sequence of $\goldNout$ for a reason we will explain later\footnote{
+The sequence of the outlined $\goldNout$ is an infinitely progressing trace, 
+which will be defined in Section~\ref{section-trace-infinite-lambda-terms}, 
+following the unique infinite path.}.
 \[
 \infer[\lambda]{
   \vdash \Sum:\N, 
@@ -1156,8 +1166,11 @@ of $\CTlambda$.
 
 \begin{Eg}
 This is an example of $0$-safe-reductions from a term $v(n)$ to a normal form. 
-Assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$. There are only finitely 
-many reductions from $v(n)$, and they are all $0$-safe. The initial term $v(n)$ $\cond$-reduces to 
+Assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$. $v$ is normal (it is no
+$\cond$-redex).
+There are only finitely 
+many reductions from $v(n)$, and they are all $0$-safe. 
+The initial term $v(n)$ $\cond$-reduces to 
 $v(n-1)$, then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
 After $n$-time $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
 get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes (the reduction path is unique)
@@ -1170,7 +1183,7 @@ The final output is independent from $n$.
 \begin{Eg}
   This is an example of $0$-safe-reductions from a term $\Sum(m)(n)$ to
   its normal form $m+n$. 
-  The initial term $\Sum(m)(n)$ is $\beta$-reduced to
+  $\Sum$ is normal. The initial term $\Sum(m)(n)$ is $\beta$-reduced to
   $\cond(m,\lambda y.\Succ(\Sum(m)(y)))(n)$, and then
   it is reduced to $\Succ(\Sum(m)(n-1))$ by $\cond$- and $\beta$-reductions (if $n>0$).
   Then we repeat this: $\Succ(\Sum(m)(n-1))$ is reduced to 
@@ -1178,7 +1191,13 @@ The final output is independent from $n$.
   After $n$-time repetitions we get $\Succ^n(\Sum(m)(0))$.
   With three more reductions, we get $\Succ^n(m) = m+n$ and we stop.
   Thus, the term $\Sum(m)(n)$ strongly normalizes (the reduction path is unique).
-  Note that we only use $0$-safe-reductions, and hence $\Sum(m)(n)$ is safe-normal.
+  Note that we only used $0$-safe-reductions.
+  %%%%%%%%%%%%%%
+  %, and hence $\Sum(m)(n)$ is safe-normal. 
+  % %%%%%%%%%%%%%
+  % no, 0-safe normal means that all redexes have depth 1 or more, here is the opposite
+  % there are redexes and all have depth 0.
+  %%%%%%%%%%%%%%
 \end{Eg}
 
 We will exhibit meaningful terms of $\CTlambda$ without a normal form. 
