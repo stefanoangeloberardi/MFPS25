@@ -149,7 +149,7 @@ We first list connections for the rules: application, $\lambda$-abstraction, wea
 
 \begin{definition}(Connection in a proof of  $\LAMBDA$: application)
 \label{definition-connection-application}
-
+Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and $B = B_1 \rightarrow \ldots \rightarrow B_m \rightarrow a$, with $a=\N$ or $a$ variable type.
 \begin{enumerate}
 
 \item
@@ -162,7 +162,7 @@ for $j=1, \ldots, n$
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in the assumption, 
 \item
-the $i$-th named argument $x_j^{A_j}$ in the conclusion is connected to the first unnamed
+the $i$-th named argument $x_i^{A_i}$ in the conclusion is also connected to the first unnamed
 argument $A_i$ in the assumption,
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
@@ -205,7 +205,7 @@ is connected to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} \ldots \vdash f: A
 \rightarrow \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{$ \ldots \vnode3{x_j^{A_j}} \ldots \vdash a: A$}
+\AxiomC{$ \ \ \ \ \ \  \ \ \  \ldots \vnode3{x_j^{A_j}} \ldots \vdash a: A$}
 \BinaryInfC{$ \ldots \vnode5{x_j^{A_j}} \ldots  \vdash f(a) 
 : \ldots \rightarrow \vnode6{B_k} \rightarrow \ldots \rightarrow a  $}
 \end{prooftree}
@@ -214,8 +214,8 @@ is connected to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 %bent edges. Syntax: source/target/bending degree (can be negative)
 
 $
-\bentdirflowedges{node5/node1/45}   
-\bentdirflowedges{node5/node3/-30}  
+\bentdirflowedges{node5/node1/30}   
+\bentdirflowedges{node5/node3/30}  
 \bentdirflowedges{node6/node2/45}
 $    
 
@@ -226,43 +226,19 @@ Then:
 
 \begin{enumerate}
 \item
-Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$. 
- In this case
-for $j=1, \ldots, n$ 
-the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
-argument $x_j^{A_j}$ in the assumption.
+the first unnamed argument $A$ in the conclusion 
+is connected to the last named argument $x^A$ in the assumption,
+and for $k=1, \ldots, m$ the $(k+1)$-unnamed argument $B_k$ in the conclusion is
+connected to the $k$-unnamed argument $B_k$ in the assumption.
 
-\item
-for $k=1, \ldots, m$ the $k$-th unnamed argument $A$ in the conclusion 
-is connected to the last named argument $x^A$ in the assumption if $k=1$,
-and if $k>1$ to the $(k-1)$-unnamed argument $B_k$ in the assumption.
-
-\begin{prooftree}
-\def\extraVskip{2pt}
-\def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
-\ldots  \vnode4{x^{A} }
-\vdash
-v: \rightarrow \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{}
-\BinaryInfC{$ \ldots \vnode7{x_{j}^{A_{j}}}
-\vdash \lambda x^{A}.v : \vnode8{A }
-\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
-\end{prooftree}
-
-% DRAW EDGES
-%bent edges. Syntax: source/target/bending degree (can be negative)
-$
-\bentdirflowedges{node7/node1/60}  
-\bentdirflowedges{node8/node4/0}
-\bentdirflowedges{node9/node5/60}
-$    
+For named arguments we have two sub-cases, according if
+${x}^{A} \in \FV(\Gamma)$ or not.
 
 \item
 Suppose $x^A = {x_i}^{A_i}$ for some (unique) $i=1, \ldots, n$.
 In this case
 for $a=1, \ldots, i-1$, $b=i+1, \ldots, n$ 
-the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to: 
+the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to 
 the $a$-th named 
 argument $x_a^{A_b}$ and to the $(b-1)$-th 
 named argument $x_b^{A_b}$ in the assumption, respectively.
@@ -274,7 +250,7 @@ named argument $x_b^{A_b}$ in the assumption, respectively.
 \ldots \vnode3{x_{b-1}^{A_{b-1}}}  
 \ldots  \vnode4{x_i^{A_i} }
 \vdash
-v: \rightarrow \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
 \AxiomC{}
 \BinaryInfC{$ \ldots \vnode6{x_a^{A_a}} 
 \ldots x_i^{A_i} \ldots \vnode7{x_{b}^{A_{b}}}
@@ -292,6 +268,36 @@ $
 \bentdirflowedges{node8/node4/-45}
 \bentdirflowedges{node9/node5/60}
 $    
+\item
+Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$. 
+ In this case
+for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in the assumption.
+
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots  \vnode4{x^{A} }
+\vdash
+v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{}
+\BinaryInfC{$ \ldots \vnode7{x_{j}^{A_{j}}}
+\vdash \lambda x^{A}.v : \vnode8{A }
+\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node7/node1/60}  
+\bentdirflowedges{node8/node4/0}
+\bentdirflowedges{node9/node5/60}
+$    
+
+
 \end{enumerate}
 
 \item
@@ -302,7 +308,7 @@ Then:
 \item
 for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j'$-th named 
-argument $x_j^{A_j}$ in the assumption, provided $\phi(j') = j$.
+argument $x_{j'}^{A_{j'}}$ in the assumption, provided $\phi(j') = j$.
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-th unnamed argument $B_k$ in the assumption.
@@ -346,9 +352,11 @@ for $j=1, \ldots, n$
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in both assumptions.
 \item
-for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
-is connected to the $k$-unnamed argument $B_k$ in the second assumption,
-and if $k>1$ to the $(k-1)$-unnamed argument $B_k$ in the first assumption.
+the first unnamed argument $\N$ in the conclusion is connected to the 
+the first unnamed argument $\N$ in the second assumption,
+and for $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
+is connected to the $k$-unnamed argument $B_k$ in the first assumption,
+and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
 
 \begin{prooftree}
@@ -358,7 +366,7 @@ and if $k>1$ to the $(k-1)$-unnamed argument $B_k$ in the first assumption.
 \ldots 
 \vdash
 f :  \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{$
+\AxiomC{$  \ \ \ \ \ \  \ \ \  
 \ldots \vnode3{x_j^{A_j}} \ldots 
 \vdash
 g :  \vnode4{\tt N} \rightarrow
@@ -372,10 +380,10 @@ g :  \vnode4{\tt N} \rightarrow
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
-\bentdirflowedges{node6/node1/60} 
-\bentdirflowedges{node6/node3/60} 
+\bentdirflowedges{node6/node1/30} 
+\bentdirflowedges{node6/node3/30} 
 \bentdirflowedges{node7/node4/0}
-\bentdirflowedges{node8/node2/60}
+\bentdirflowedges{node8/node2/30}
 \bentdirflowedges{node8/node5/0}
 $    
 
