@@ -219,7 +219,7 @@ However, $t$ is an infinite tree (it includes a proper subtree isomorphic to its
 %regular, yet is it $\alpha$-equivalent to the regular term $t$.
 
 The binder relation is defined as for finite $\lambda$-calculus 
-(\cite{Barendregt1984-BARTLC}, \S 2.1.6 p. 24). 
+(\cite{Barendregt1984-BARTLC}, Section 2.1.6, p.24). 
 
 \begin{definition}(Binding relation)
 \label{definition-binder-relation}
@@ -1023,7 +1023,7 @@ in Section~\ref{section-trace-infinite-lambda-terms}, following the unique infin
   \infer[\cond]{
     x : \N \vdash 
     \cond(x,\lambda y.\Succ(\Sum(x)(y))): \goldNout \rightarrow \N
-     \quad (\goldspadesuit)
+    % \quad (\goldspadesuit)
   }{
     \infer[\var]{
       x : \N \vdash x : \N
@@ -1062,7 +1062,8 @@ in Section~\ref{section-trace-infinite-lambda-terms}, following the unique infin
 \]
 
 We can represent this infinite tree by a finite cyclic graph
-by adding a back edge from the  $\golddagger$ at the top to the $\golddagger$ at the bottom.
+by adding a back edge from the upper sequent with the sign $\golddagger$
+to the bottom sequent (with the sign $\golddagger$).
 Note that the use of $\weak$-rule in this derivation makes this cyclic graph representation,
 namely, without $\weak$-rule, this particular proof would not be correct.
 %the context of the top $\golddagger$ would be $(x:\N, y:\N)$ 
