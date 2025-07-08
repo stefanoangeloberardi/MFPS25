@@ -107,8 +107,16 @@ This change also answers this reviewer's comment:
 I left the following comments. Could you do them?
 
 [Section 3]
-> the description of connections between arguments is hard to read and unclear. One of the problems, besides general hardness to parse, is that the scope of definitions of objects is not obvious at all (e.g. u in item 2 is referring to the u defined by item 1, but t is changed to f).
-> the definition of connections takes up two pages of cumbersome formalism, it could be compressed and explained more efficiently. Keeping track of explicit indexes and doing the computations does not help the reader figure out what is encoded. Just giving a picture for each rule, showing the connections, would be clearer and would save a lot of space and effort.
+> the description of connections between arguments is hard to read and unclear. 
+One of the problems, besides general hardness to parse, is that the scope of definitions 
+of objects is not obvious at all (e.g. u in item 2 is referring to the u defined by item 1, 
+but t is changed to f).
+> the definition of connections takes up two pages of cumbersome formalism, 
+it could be compressed and explained more efficiently. 
+Keeping track of explicit indexes and doing the computations does not help the reader 
+figure out what is encoded. Just giving a picture for each rule, showing the connections, 
+would be clearer and would save a lot of space and effort.
+
 
 [Section 4. After Def 4.1]
 > page 9: you say that you believe that global trace condition is decidable quite fast for realistic lambda-terms. What do you mean by fast? What do you mean by realistic? What sustains this claim?

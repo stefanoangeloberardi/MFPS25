@@ -61,6 +61,35 @@
 %%%%%%%%%%%%%					copyright symbol is chosen - see Section 2 of
 %%%%%%%%%%		https://mirrors.concertpass.com/tex-archive/fonts/ccicons/ccicons.pdf
 
+%%%%%%          PROOFZILLA          %%%%%%%%%%%
+%%%% PACKAGES
+
+% Proof trees
+\usepackage{bussproofs}
+
+
+% Tikz is required to use proofzilla
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta} % additional arrow styles
+\usepackage{proofzilla}
+
+
+
+%%%%%%%%% MACROS %%%%%%%%%%%%%
+
+% Flow-related macros 
+% Define node style 
+\newemptyvertex{node}{}
+% Define edge styles: directed/undirected, color, arrow head etc
+\defedgetype{flow}{draw=blue}{}
+\defedgetype{dirflow}{-Latex,draw=blue}{}
+\defedgetype{flowtwo}{draw=red}{}
+\defedgetype{dirflowtwo}{-Latex,draw=red}{}
+
+
+% Additional, unnecessary macros (terms etc)
+%\input{hobn_macros}  
+%%%%%%      END PROOFZILLA      %%%%%%%%%%%
 
 \begin{document}
 %%%Note the beginning and end of the frontmatter section that starts here%%%%%
