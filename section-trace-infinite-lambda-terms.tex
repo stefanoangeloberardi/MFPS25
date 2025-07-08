@@ -223,17 +223,20 @@ $
 Suppose $\Gamma \vdash \lambda x^A.v$ is obtained by a rule $\lambda$
 from $\Gamma \setminus \{ {x}^{A} : A \} \vdash v : \N$.
 Then:
+
 \begin{enumerate}
 \item
+Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$. 
+ In this case
 for $j=1, \ldots, n$ 
-the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j'$-th named 
-argument $x_j^{A_j}$ in the assumption, with: if $x^A \not = {x_i}^{A_i}$ for all $i$ then
-$j'=j$,  if $x^A = {x_i}^{A_i}$ then $j \not = i$ and $j'=j$ if $j<i$ and $j' = j-1$ if $j>i$.
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in the assumption.
+
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $A$ in the conclusion 
 is connected to the last named argument $x^A$ in the assumption if $k=1$,
-and if $k>1$ to the $(k-1)$-unnamed argument in the assumption.
-\end{enumerate}
+and if $k>1$ to the $(k-1)$-unnamed argument $B_k$ in the assumption.
+
 \begin{prooftree}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
@@ -255,6 +258,15 @@ $
 \bentdirflowedges{node9/node5/60}
 $    
 
+\item
+Suppose $x^A = {x_i}^{A_i}$ for some (unique) $i=1, \ldots, n$.
+In this case
+for $a=1, \ldots, i-1$, $b=i+1, \ldots, n$ 
+the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to: 
+the $a$-th named 
+argument $x_a^{A_b}$ and to the $(b-1)$-th 
+named argument $x_b^{A_b}$ in the assumption, respectively.
+
 \begin{prooftree}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
@@ -270,6 +282,8 @@ v: \rightarrow \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a 
 \rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
 \end{prooftree}
 
+
+
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
@@ -278,6 +292,7 @@ $
 \bentdirflowedges{node8/node4/-45}
 \bentdirflowedges{node9/node5/60}
 $    
+\end{enumerate}
 
 \item
 Assume $\Gamma \vdash t : B$ is obtained by a rule $\weak$ from $\Gamma' \vdash t : B$, 
@@ -332,8 +347,8 @@ the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-
 argument $x_j^{A_j}$ in both assumptions.
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
-is connected to the $k$-unnamed argument $B_k$ in the first assumption,
-and if $k>1$ to the $(k-1)$-unnamed argument in the second assumption.
+is connected to the $k$-unnamed argument $B_k$ in the second assumption,
+and if $k>1$ to the $(k-1)$-unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
 
 \begin{prooftree}
