@@ -336,12 +336,61 @@ is connected to the $k$-unnamed argument $B_k$ in the first assumption,
 and if $k>1$ to the $(k-1)$-unnamed argument in the second assumption.
 \end{enumerate}
 
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots 
+\vdash
+f :  \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{$
+\ldots \vnode3{x_j^{A_j}} \ldots 
+\vdash
+g :  \vnode4{\tt N} \rightarrow
+\ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a$}
+\BinaryInfC{$ \ldots \vnode6{x_j^{A_j}} 
+\ldots 
+\vdash
+{\tt cond}(f,g) :   \vnode7{\tt N} \rightarrow \ldots \rightarrow \vnode8{B_k} \rightarrow \ldots \rightarrow a $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node6/node1/60} 
+\bentdirflowedges{node6/node3/60} 
+\bentdirflowedges{node7/node4/0}
+\bentdirflowedges{node8/node2/60}
+\bentdirflowedges{node8/node5/0}
+$    
+
+
 \item
 Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by a rule $\Succ$ from
 $\Gamma \vdash \Succ(u):\N$.
 Then for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in the assumption.
+
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots 
+\vdash
+t: {\tt N} $}
+\AxiomC{}
+\BinaryInfC{$ \ldots \vnode2{x_{j}^{A_{j}}}
+\vdash {\tt S}(t) : {\tt N}$}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node2/node1/60} 
+$    
+
 
 \end{enumerate}
 
