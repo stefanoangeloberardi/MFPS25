@@ -333,11 +333,11 @@ the outlined infinite trace.
 \subsection{The Interval Map}
 \label{subsection-interval}
 For the third example, we simulate lists with one type variable $\alpha$ 
-and two variables $\nil:\alpha$ and $\cons:\N,\alpha \rightarrow \alpha$. 
+and two variables $\nil:\alpha$ and $\cons:\N \rightarrow \alpha \rightarrow \alpha$. 
 We recursively define a notation for lists by $[]=\nil$,
-$a @ l=\cons(a,l)$ and $[a,\vec{a}] = a @ [\vec{a}]$. We add no elimination rules 
+and $[a,\vec{a}] = \cons(a)( [\vec{a}] )$. We add no elimination rules 
 for lists, though, only the variables $\nil$ and $\cons$. Elimination rules are not 
-required in our example.
+required in our example. Recall that $\approx$ denotes having a common reduct.
 
 \begin{Eg}
 Let $\Sigma = \{\nil:\alpha, \cons:\N,\alpha \rightarrow \alpha\}$. 
@@ -346,8 +346,7 @@ having one argument $f:\N \rightarrow \N$ and three arguments $a,x,y:\N$, such t
 \[
 \Interval(f,a,n,m) \  \approx \ [f^n(a), f^{n+1}(a), \ldots, f^{n+m}(a)] \  : \ \alpha
 \]
-for all numeral $n,m \in \Num$. We have to solve the recursive equations, where
-$\approx$ denotes having a common reduct:
+for all numeral $n,m \in \Num$. $\Interval$ will satisfy the following equations
 \begin{center}
   $\Interval(f,a,n,0) \approx [f^n(a)]$
   \quad
@@ -358,7 +357,8 @@ $\approx$ denotes having a common reduct:
 Assume $\iter = \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N$ is the term
 defined in the previous sub-section \ref{subsection-iterator}. 
 In particular, $\iter(n) \approx f^n(a) : \N$ for all $n \in \Num$.
-We solve the recursive equation for $\Interval$ with $\Interval = \lambda f,a.\interval$, where 
+We solve the equations above for $\Interval$ with 
+$\Interval = \lambda f. \lambda a.\interval$, where 
 \[
 \interval:\N,\N \rightarrow \alpha
 \]
@@ -366,21 +366,17 @@ is a term in the context $(f:\N\rightarrow\N, a:\N)$ defined by
 \[
 \interval 
 \ \ \ = \ \ \ 
-\lambda x.\cond (\base,  \lambda y.j),
+\lambda x.\cond (\base, \lambda y.\inductive),
 \]
-where the base case and the inductive case are
+where the base case $\base$ and the inductive case $\inductive$ are
 \[
 \base 
 \ \  = \ \   
 [\iter(x)]
-%\ \ \ =\ \ \ 
-%\cons(\iter(x),\nil)
 \ \ \  \ \ \ 
-j 
+\inductive
 \ \   =  \ \ 
 \iter(x) @ \interval(\Succ(x))(y)
-%\ \ \ = \ \ \  
-%\cons(\ \iter(x), \ \interval(\Succ(x))(y) \ )
 \]
 \end{Eg}
 
