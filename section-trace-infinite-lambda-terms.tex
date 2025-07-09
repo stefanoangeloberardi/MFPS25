@@ -7,8 +7,13 @@ and when its value decreases. The notion of trace is useful to analyse terminati
 If, in all infinite computations of a term, we are able to find some infinitely
 decreasing value, then no infinite computation can exist for this term. 
 The first step toward the notion of trace is defining a notion of \emph{connection} 
-between arguments of type $\N$ in a proof that evidences the well-typedness of $t$. 
-To this aim, we need to define \emph{lists of argument types} and \emph{indexes of atomic types} for a term.
+between arguments in a proof that evidences the well-typedness of $t$. 
+There are two kind of connections: stationary and progressing.
+In the case of arguments of type $\N$, a stationary connection 
+describe a case in which a value is stationary, and a progressing connection 
+a case in which a value is strictly decreasing.
+In order to define connection, we need to define \emph{lists of argument types} 
+and \emph{indexes of atomic types} for a term.
 
 %We sketch the notion of connection through an example.
 %Assume 
@@ -144,12 +149,18 @@ Assume $\theta$ is a node of a proof decorated with a sequent $\Gamma \vdash t:A
 and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ decorating
 $\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$decorating
 any premise $\theta'$ of $\theta$ we define
-the relation: ``$k',\theta'$ connected to $k,\theta$". The definition is by cases on $r$.
-We first list connections for the rules: application, $\lambda$-abstraction, weakening and $\var$.
+the relations: ``there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$"
+and ``there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$". 
+The definition is by cases on $r$.
+We first list the connections for the rules: application, $\lambda$-abstraction, $\var$
+and weakening. They are all stationary.
 
-\begin{definition}(Connection in a proof of  $\LAMBDA$: application)
-\label{definition-connection-application}
-Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and $B = B_1 \rightarrow \ldots \rightarrow B_m \rightarrow a$, with $a=\N$ or $a$ variable type.
+\begin{definition}(Stationary Connection in a proof of  $\LAMBDA$: 
+rules $\ap$, $\lambda$, $\var$, $\weak$)
+\label{definition-connection-lambda-calculus}
+Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and $B = B_1 \rightarrow \ldots \rightarrow B_m \rightarrow a$, with $a=\N$ or $a$ variable type. We define
+the following \emph{stationary} connections.
+
 \begin{enumerate}
 
 \item
@@ -344,11 +355,12 @@ No connection is defined for the rule $\var$.
 
 \end{definition}
 
-Now we list connections for $\cond, \Succ, 0$.
+Now we list the connections for $\cond, \Succ, 0$: \emph{one is progressing}, 
+all the others are stationary.
 
-\begin{definition}(Connection in a proof of  $\LAMBDA$: $\cond, \Succ, 0$)
+\begin{definition}(Stationary and Progressing Connections in a proof of  $\LAMBDA$: rules $\cond, \Succ, 0$)
 \label{definition-connection-cond}
-
+There is a unique progressing condition which is explicitly stated, all others are stationary.
 \begin{enumerate}
 \item
 Suppose $\Gamma \vdash \cond(f,g): \N \rightarrow B$ is obtained by a rule $\cond$ from
@@ -361,7 +373,8 @@ the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-
 argument $x_j^{A_j}$ in both assumptions.
 \item
 the first unnamed argument $\N$ in the conclusion is connected to the 
-the first unnamed argument $\N$ in the second assumption,
+the first unnamed argument $\N$ in the second assumption: \emph{this is the unique
+progressing connection}.
 and for $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-unnamed argument $B_k$ in the first assumption,
 and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
@@ -486,6 +499,7 @@ infinite unfolding of a tree. Formally, we define a trace as a (finite or infini
 in the graph $\Graph(\Pi)$.
 
 \begin{definition}(Trace for well-typed terms in $\LAMBDA$)
+\label{definition-progressing-trace}
 Assume $\Pi$ is any typing proof of $t \in \WTyped$.
 \begin{enumerate}
 \item
@@ -501,7 +515,9 @@ $k_i$ is an index of some $\N$-argument of $\theta_i$
 if $i$ and $i+1$ are indexes of $\tau$ then $(k_{i+1},\theta_{i+1})$ 
 is connected with $(k_i, \theta_i)$ in $\Pi$.
 \end{enumerate}
-
+$\tau$ is stationary (progressing) in $i \in [m,n-1]$ if and only if the connection 
+between $(k_i,\theta_i)$ and $(k_{i+1},\theta_{i+1})$ is stationary (progressing),
+respectively.
 \end{enumerate}
 \end{definition}
 
