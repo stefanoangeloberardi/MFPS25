@@ -119,15 +119,29 @@ would be clearer and would save a lot of space and effort.
 
 
 [Section 4. After Def 4.1]
-> page 9: you say that you believe that global trace condition is decidable quite fast for realistic lambda-terms. What do you mean by fast? What do you mean by realistic? What sustains this claim?
+> page 9: you say that you believe that global trace condition is decidable quite fast for realistic 
+lambda-terms. What do you mean by fast? What do you mean by realistic? What sustains this claim?
 
 [Section 4.2. The iterator example]
-> Example 4.2: I don't see what the equations up to ~ bring, you could just give directly the term for the iterator "it", it is even clearer than the sum case that you gave directly in the previous example. It would be more interesting to comment on whether it can be alternatively defined the other way by adding the last f inside instead of outside, by It=λf,a.cond(a,λx.It(f,f(a))(x))
+> Example 4.2: I don't see what the equations up to ~ bring, you could just give directly the term 
+for the iterator "it", it is even clearer than the sum case that you gave directly in the previous 
+example. It would be more interesting to comment on whether it can be alternatively defined the 
+other way by adding the last f inside instead of outside, by It=λf,a.cond(a,λx.It(f,f(a))(x))
 
 [Section 4.3. The interval map example]
-> Example 4.3: there are too many definitions of i: i is first defined as i=λx.cond(b, λy.i), but then you add i=c( it(x), i(S(x))(y) ), it does not seem to make sense. I suspect you just reused the name i instead of a different name, which is very unfortunate since the reader does not know which is which. Moreover, the definition λx.cond(b, λy.i) does not match the first unfolding in the proof, which is cond(b, i) instead of cond(b,λy.i). At this point I'm giving up trying to fix the example (which I'm convinced can be done, but this should not be up to the reader)
+> Example 4.3: there are too many definitions of i: i is first defined as i=λx.cond(b, λy.i), 
+but then you add i=c( it(x), i(S(x))(y) ), it does not seem to make sense. 
+I suspect you just reused the name i instead of a different name, 
+which is very unfortunate since the reader does not know which is which. 
+Moreover, the definition λx.cond(b, λy.i) does not match the first unfolding in the proof, 
+which is cond(b, i) instead of cond(b,λy.i). At this point I'm giving up trying to fix the 
+example (which I'm convinced can be done, but this should not be up to the reader)
 
-> page 10: in example 4.3, I cannot parse the sentence "We solve the recursive equation for I...". And again, you are very loose with your syntax: \f,a.i does not correspond to any term in you syntax, as well as c(a,l). As I understand, you are using tuples with terms that are actually "curried". Please be more clear about this.
+> page 10: in example 4.3, I cannot parse the sentence "We solve the recursive equation for I...". 
+And again, you are very loose with your syntax: \f,a.i 
+does not correspond to any term in you syntax, as well as c(a,l). 
+As I understand, you are using tuples with terms that are actually "curried". 
+Please be more clear about this.
 
 
 

@@ -23,7 +23,8 @@ on a closed term of type $\N$ strongly normalize to a numeral.
 As a consequence, all closed terms $\CTlambda$ are total functionals. 
 \\
 
-By building over the notion of progressing trace (Def. \ref{definition-progressing-trace})
+By building over the notion of trace progressing in an index $i$
+(Def. \ref{definition-progressing-trace})
 we now define the global trace condition and the set of terms $\GTC$  and $\CTlambda$.
 Informally, GTC requires that all infinite branches have some trace of some argument
 $\N$ passing infinitely many times through the right-hand side of a $\cond$.
@@ -33,18 +34,21 @@ $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 %\mbox{}
 % \linebreak 
 Assume $\Pi::\Gamma \vdash t :A$ is a typing proof, $\pi = (\theta_1, \ldots, \theta_n, \ldots)$ 
-is a path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
-is a trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
+is a possibly infinite path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
+is a possibly infinite trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
 Assume $i$ is an index of $\pi$.
 
 \begin{enumerate}
+%\item
+%$\tau$ is progressing in the index $i$ if and only if: $\theta_i$ is labeled by some $\cond$-rule
+%and by some judgment $\Gamma \vdash \cond(f,g):\N \rightarrow A$),
+%$\theta_{i+1}$ is the right child of $\theta_i$
+%labeled by the judgment $\Gamma \vdash g:\N \rightarrow A$,
+%and $k_i$ is the index of the first \emph{unnamed} argument of $\theta_i$.
+%Otherwise $\tau$ is not progressing in $i$.
 \item
-$\tau$ is progressing in the index $i$ if and only if: $\theta_i$ is labeled by some $\cond$-rule
-and by some judgment $\Gamma \vdash \cond(f,g):\N \rightarrow A$),
-$\theta_{i+1}$ is the right child of $\theta_i$
-labeled by the judgment $\Gamma \vdash g:\N \rightarrow A$,
-and $k_i$ is the index of the first \emph{unnamed} argument of $\theta_i$.
-Otherwise $\tau$ is not progressing in $i$.
+the trace $\tau$ is \emph{infinitely progressing} 
+if there are infinitely many indexes $i \in \dom(\tau)$ such that $\tau$ is progressing in $i$.
 
 \item
 $t$ satisfies the global trace condition if $t \in \WTyped$
@@ -64,8 +68,10 @@ The global trace condition is decidable in polynomial space in the number of
 subterms of $t$, counted up to isomorphism, 
 because it is a particular case of the size change algorithm for program 
 termination (\cite{SCT}). 
-%We believe that the global trace condition is decidable quite fast
-%for infinitary $\lambda$-terms describing realistic programs. 
+The global trace condition is decidable quite fast
+for infinitary $\lambda$-terms describing realistic programs 
+(\cite{10.1007/978-3-642-35182-2_25}, 
+Section 4.7 \quotationMarks{Experimental Results}). 
 
 %Another nice feature of the global trace condition is 
 %that for $t \in \GTC$ we require that for any proof $\Pi::\Gamma \prove t:A$ 
