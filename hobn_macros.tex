@@ -1,0 +1,390 @@
+
+%%%%%%%% COLORS and COMMENTS %%%%%%
+
+
+\newcommand{\red}[1]{{\color{red} {#1}}}
+\newcommand{\blue}[1]{{\color{blue} {#1}}}
+\newcommand{\brown}[1]{{\color{brown} {#1}}}
+\definecolor{ForestGreen}{RGB}{34,139,34}
+\newcommand{\green}[1]{{\color{ForestGreen} {#1}}}
+\newcommand{\black}[1]{{\color{black} {#1}}}
+\newcommand{\purple}[1]{{\color{purple} {#1}}}
+\newcommand{\orange}[1]{{\color{orange} {#1}}}
+
+%\newcommand{\blue}[1]{{ \color{blue}{#1}}}
+\newcommand{\pink}[1]{{\color{magenta}{#1}}}
+\newcommand{\violet}[1]{{\color{violet}{#1}}}
+\newcommand{\gray}[1]{{\color{gray}{#1}}}
+\newcommand{\cyan}[1]{{\color{cyan}{#1}}}
+
+
+
+%%%% GENERAL
+
+\newcommand{\ie}{\textit{i.e.}\xspace}
+\newcommand{\eg}{\textit{e.g.}\xspace}
+\newcommand{\ih}{\textit{i.h.}\xspace}
+\newcommand{\cf}{\textit{cf.}\xspace}
+
+\newcommand{\rv}{r.v.\xspace}
+\newcommand{\rvs}{r.v.s\xspace}
+\newcommand{\cpt}{CPT\xspace}
+\newcommand{\cpts}{CPTs\xspace}
+\newcommand{\BN}{Bayesian network\xspace}
+\newcommand{\BNs}{Bayesian networks\xspace}
+
+\newcommand{\name}{name\xspace}
+\newcommand{\names}{names\xspace}
+
+\newcommand{\pax}{probabilistic axiom\xspace}
+\newcommand{\paxs}{probabilistic axioms\xspace}
+
+\newcommand{\linear}{low-level\xspace}
+\newcommand{\basic}{\linear}
+\newcommand{\exponential}{multiset\xspace}
+
+%%
+\newcommand{\defeq}{\triangleq}
+
+%\newcommand{\grameq}{::=}
+%\newcommand{\grammarpipe}{\mathrel{\big |}}
+%\newcommand{\gpipe}{\grammarpipe}
+
+\newcommand{\eqalpha}{\equiv_\alpha}
+
+
+%%%%%%%%%  BAYESIAN NETWORKS, FACTORS
+
+\newcommand{\Pa}[1]{\mathsf{Pa}(#1)}
+
+\newcommand{\Val}[1]{\mathsf{Val}(#1)} %set of values of the RV #1
+
+\newcommand{\Proj}[3][]{#2\vert_{#3}^{#1}} %projection of a value #2 of a set of rv #1 to a subset of rv #3 
+
+\newcommand{\bn}{\mathcal{B}}
+\newcommand{\FProd}{\odot} %product of factor (corresponding to tensor product + some diagonalisations), infix notation
+\newcommand{\Fprod}{\FProd}
+\newcommand{\BigFProd}{\bigodot} %n-ary product of factor (corresponding to tensor product + some diagonalisations)
+
+\newcommand{\x}{\mathtt{x}}
+\newcommand{\y}{\mathtt{y}}
+\newcommand{\z}{\mathtt {z}}
+\newcommand{\w}{\mathtt {w}}
+
+\newcommand{\xs}{{\overline \x}}
+\newcommand{\ys}{{\overline \y}}
+\newcommand{\zs}{{\overline \z}}
+\newcommand{\ws}{{\overline \w}}
+
+
+%%% NAMES
+
+\newcommand{\Names}{\textsf{Names}}
+
+\newcommand{\XX}{\mathcal{X}}
+\newcommand{\YY}{\mathcal{Y}}
+\newcommand{\ZZ}{\mathcal{Z}}
+
+\newcommand{\nX}{\mathsf{X}}
+\newcommand{\nY}{\mathsf{Y}}
+\newcommand{\nZ}{\mathsf{Z}}
+\newcommand{\nW}{\mathsf{W}}
+\newcommand{\nD}{\mathsf{D}}
+\newcommand{\nS}{\mathsf{S}}
+\newcommand{\nR}{\mathsf{R}}
+\newcommand{\nO}{\mathsf{O}}
+\newcommand{\nB}{\mathsf{B}}
+\newcommand{\nU}{\mathsf{U}}
+
+%\newcommand{\X}{\nX}
+%\newcommand{\Y}{\nY}
+%\newcommand{\Z}{\nZ}
+%\newcommand{\W}{\nW}
+%\newcommand{\D}{\nD}
+%\newcommand{\R}{\nR}
+
+\newcommand{\Xb}{\nX^{\bv}}
+\newcommand{\Xt}{\nX^{\true}}
+\newcommand{\Xf}{\nX^{\false}}
+\newcommand{\Yb}{\nY^{\bv}}
+\newcommand{\Yt}{\nY^{\true}}
+\newcommand{\Yf}{\nY^{\false}}
+
+\newcommand{\bX}{\mathbb X}
+\newcommand{\bY}{\mathbb Y}
+\newcommand{\bZ}{\mathbb Z}
+\newcommand{\bS}{\mathbb S}
+\newcommand{\bE}{\mathbb E}
+\newcommand{\bC}{\mathbb C}
+\newcommand{\bW}{\mathbb W}
+\newcommand{\bJ}{\mathbb J}
+
+
+\newcommand{\Nm}[1]{\mathsf{Nm}(#1)}
+\newcommand{\ObsNm}[1]{\mathsf{ObsNm}(#1)}
+\newcommand{\MainNm}[1]{\mathsf{MainNm}(#1)}
+\newcommand{\PrivateNm}[1]{\mathsf{PrivateNm}(#1)}
+\newcommand{\PublicNm}[1]{\mathsf{PublicMainNm}(#1)}
+
+% Examples
+\newcommand{\Dry}{\textsf{Dry}}
+\newcommand{\Rain}{\textsf{Rain}}
+\newcommand{\Sprinkler}{\textsf{Sprinkler}}
+\newcommand{\Wet}{\textsf{Wet}}
+\newcommand{\Broken}{\textsf{B}}
+\newcommand{\User}{\textsf{U}}
+
+
+%%%%%%%  TYPES %%%%%%%%%%%%
+
+\newcommand{\iP}{P}
+\newcommand{\iQ}{Q}
+\newcommand{\iL}{L}
+\newcommand{\iK}{K}
+\newcommand{\iF}{F}
+
+\newcommand{\iZero}{\bar{0}}
+\newcommand{\iOne}{\bar{1}}
+\newcommand{\iTwo}{\bar{2}}
+
+
+\newcommand{\larrow}{\multimap}
+
+\newcommand{\One}{\mathsf{1}} %unit tensor
+\newcommand{\Zero}{\mathsf{0}} 
+%\newcommand{\Bottom}{\mathsf \perp} 
+
+\newcommand{\Real}{\mathbb{R}}
+\newcommand{\Nat}{\mathbb{N}}
+\newcommand{\bool}{\mathbf{B}}
+\newcommand{\Bool}{\bool}
+
+
+%%%% TERMS
+
+%\newcommand{\Bang}{\lambda^{\oc}_{\text{\tiny\textsf{BN}}}}
+\newcommand{\Bang}{\lambda^{\oc}_{\scriptscriptstyle\mathsf{BN}}}
+\newcommand{\low}{\mathsf{low}}
+\newcommand{\Low}{\lambda^{\scriptscriptstyle\mathsf{low}}_{\scriptscriptstyle\mathsf{BN}}}
+
+\newcommand{\tm}{t}
+\newcommand{\tmtwo}{u}
+\newcommand{\tmthree}{r}
+
+\newcommand{\tmu}{u}
+\newcommand{\tmr}{r}
+\newcommand{\tms}{s}
+
+\newcommand{\var}{x}
+\newcommand{\vartwo}{y}
+\newcommand{\varthree}{z}
+\newcommand{\vars}{\overline{x}}
+
+\newcommand{\val}{v}
+\newcommand{\valtwo}{w}
+
+\newcommand{\true}{\mathtt{t}}
+\newcommand{\false}{\mathtt{f}}
+\newcommand{\bv}{\mathtt {b}}
+\newcommand{\bvs}{\mathtt{\overline {b}}}
+
+\newcommand{\prob}{p}
+\newcommand{\dist}{d}
+\newcommand{\sample}[1]{\mathtt{sample} \ {#1}}
+\newcommand{\Bernoulli}[1]{\mathit{Bernoulli}_{#1}}
+\newcommand{\coin}[1]{\mathtt{brn}_{#1}}
+
+\newcommand{\der}{\mathtt{der}\; }
+
+\newcommand{\observe}[2]{\mathtt{obs}(#1=#2)}
+\newcommand{\obs}{\observe}
+\newcommand{\obst}[1]{\observe{#1}{\true}}
+\newcommand{\obsf}[1]{\observe{#1}{\false}}
+\newcommand{\obsb}[1]{\observe{#1}{\bv}}
+
+\newcommand{\pair}[2]{\langle #1, #2 \rangle}
+\newcommand{\pattern}[1]{\langle #1 \rangle}
+
+\newcommand{\letin}[3]{\mathtt{let} \; #1 = #2\; \mathtt{in} \; #3}
+\newcommand{\letp}[3]{\mathtt{let} \; \pattern{#1} = #2 \; \mathtt{in} \; #3}
+\newcommand{\leti}{\mathtt{let}\;}
+\newcommand{\inl}{\;\mathtt{in}\;}
+
+\newcommand{\tsc}{\mathbf{\mathtt{;}} \;} %semicolon separator
+
+\newcommand{\caseSym}{\scalebox{0.8}[1]{ $ \Rightarrow $ }}
+\newcommand{\case}[2]{\mathtt{case} \; #1 \; \mathtt{of} \; \{ #2 \} }
+
+\newcommand{\ite}[3]{\mathtt{if} (#1, #2, #3)}
+%\newcommand{\cons}[2]{#1\mathtt{::}#2}
+\newcommand{\isZ}[1]{\mathtt{isZero} \; #1}
+%\newcommand{\isE}[1]{\mathtt{isEmpty}(#1)}
+%\newcommand{\head}[1]{\mathtt{head}(#1)}
+%\newcommand{\tail}[1]{\mathtt{tail}(#1)}
+\newcommand{\pred}[1]{\mathtt{pred} \; #1}
+%\newcommand{\suc}[1]{\mathtt{succ}(#1)}
+%\newcommand{\fix}[2]{\mathtt{fix}\;#1.#2}
+
+\newcommand{\freevar}[1]{\langle #1 \rangle}
+\newcommand{\CPT}[1]{\mathtt{cnd}_{\freevar{#1}}}
+\newcommand{\CPTN}[2]{\mathtt{cnd}^{#1}_{\freevar{#2}}}
+
+%Examples
+\newcommand{\dry}{\textsf{dry}}
+\newcommand{\rain}{\textsf{rain}}
+\newcommand{\sprinkler}{\textsf{sprinkler}}
+\newcommand{\wet}{\textsf{wet}}
+\newcommand{\broken}{\textsf{broken}}
+\newcommand{\user}{\textsf{user}}
+
+\newcommand{\bias}{\textsf{bias}}
+\newcommand{\ctoss}{\textsf{coin}}
+\newcommand{\mycoin}{\CPT{\bias}}
+
+
+%%%% NORMAL FORMS GRAMMAR
+
+\newcommand{\gnf}{\mathsf{nf}}
+\newcommand{\glv}{\mathsf{lv}}
+\newcommand{\glp}{\mathsf{lp}}
+\newcommand{\glx}{\mathsf{lx}}
+\newcommand{\gprob}{\mathsf{pr}}
+
+%%%% CONTEXTS
+
+\newcommand{\hole}[1]{\llparenthesis #1 \rrparenthesis}
+%\newcommand{\ctxhole}{\hole{\cdot}}
+
+\newcommand{\cA}{\underline A}
+\newcommand{\cB}{\underline B}
+\newcommand{\cC}{\underline C}
+\newcommand{\cP}{\underline P}
+\newcommand{\cQ}{\underline Q}
+\newcommand{\cI}{\underline I}
+\newcommand{\cL}{\underline L}
+\newcommand{\cK}{\underline K}
+\newcommand{\cAp}[1]{\cA\hole{#1}}
+\newcommand{\cPp}[1]{\cP\hole{#1}}
+\newcommand{\cLp}[1]{\cL\hole{#1}}
+\newcommand{\cKp}[1]{\cK\hole{#1}}
+\newcommand{\cAnp}[2]{\cA_{#1}\hole{#2}}
+\newcommand{\cPnp}[2]{\cP_{#1}\hole{#2}}
+\newcommand{\cLnp}[2]{\cL_{#1}\hole{#2}}
+\newcommand{\cKnp}[2]{\cK_{#1}\hole{#2}}
+%\newcommand{\cLam}{\underline{\Lambda}}
+\newcommand{\cLamnp}[2]{\underline{\Lambda}_{#1}\hole{#2}}
+\newcommand{\cGamnp}[2]{\underline{\Gamma}_{#1}\hole{#2}}
+
+% evaluation contexts
+\newcommand{\evctx}{\mathsf{E}}
+
+% substitution contexts
+\newcommand{\sctx}{\mathsf{S}}
+%\newcommand{\eslist}{\sctx}
+\newcommand{\shole}[1]{\langle \mkern-5.5mu \langle #1 \rangle \mkern-5.5mu \rangle}
+%\newcommand{\eshole}[1]{\shole{#1}}
+%\newcommand{\sctxp}[1]{\sctx\holebag{#1}}
+\newcommand{\sctxp}[1]{\sctx\shole{#1}}
+
+
+%%%%%%  DERIVATIONS
+
+\newcommand{\systemBN}{\mathscr{B}}
+\newcommand{\systemBNb}{\mathscr{B}_{\oplus}}
+
+\newcommand{\tjudg}[3]{#1\vdash #2:#3}
+
+\newcommand{\demlow}{ \triangleright_\low }
+
+% Rules
+\newcommand{\isample}{\textsc{sample}\xspace}
+\newcommand{\icond}{\textsc{cond}\xspace}
+%\newcommand{\icoin}{\textsc{coin}\xspace}
+\newcommand{\ipair}{\textsc{tuple}\xspace}
+\newcommand{\ilet}{\textsc{let}\xspace}
+\newcommand{\ivar}{\textsc{var}\xspace}
+\newcommand{\iobs}{\textsc{obs}\xspace}
+%\newcommand{\iletp}{\textsc{letp}\xspace}
+\newcommand{\ibang}{\textsc{bang}\xspace}
+\newcommand{\ider}{\textsc{der}\xspace}
+\newcommand{\iapp}{\textsc{app}\xspace}
+\newcommand{\iabs}{\textsc{abs}\xspace}
+\newcommand{\iite}{\textsc{ite}\xspace}
+\newcommand{\iitet}{\textsc{itet}\xspace}
+\newcommand{\iitef}{\textsc{itef}\xspace}
+\newcommand{\iitex}{\textsc{itex}\xspace}
+
+\newcommand{\ovdash}[1]{\overset{\violet{#1}}{\vdash}}
+
+
+%%%%%%% SEMANTICS
+
+\newcommand{\Cpts}[1]{\mathsf{Cpts}(#1)}
+
+\newcommand{\sem}[1]{\llbracket {#1} \rrbracket}
+\newcommand{\den}[1]{{\sem{#1}}^\bullet}
+
+\newcommand{\ft}[2]{ \overset{#2}{#1} }
+\newcommand{\dmd}[1]{\, {\color{blue} \, \diamond \, #1} }
+\newcommand{\dft}[2]{\, {\color{blue} \, \diamond \, \overset{#2}{#1}} }
+\newcommand{\ftone}{ \mathbf{1} }
+
+\newcommand{\dmdC}[1]{ {\color{violet} \, \diamond \, \scriptstyle{#1}} }
+\newcommand{\dftC}[2]{ {\color{violet} \, \diamond \, \scriptstyle{#2}} }
+
+
+%%%%%%% REDUCTION
+
+
+%\newcommand{\isub}[2]{[#2 / #1]}
+\newcommand{\esub}[2]{[#1=#2]}
+
+\newcommand{\dB}{\mathsf{db}}
+\newcommand{\dS}{\mathsf{dsub}}
+\newcommand{\dbang}{\mathsf{der \oc}}
+\newcommand{\dpair}{\mathsf{dpm}}  
+
+
+\newcommand{\rrule}{\mathsf{r}}
+\newcommand{\Root}[1]{\mapsto_{#1}}
+
+
+%%%%%%%% FLOW %%%%%%%%
+
+\newcommand{\Up}[1]{(#1)^-}
+\newcommand{\Down}[1]{(#1)^+}
+\newcommand{\up}[1]{{#1}^\uparrow}
+\newcommand{\down}[1]{{#1}^\downarrow}
+
+
+\newcommand{\flow}[1]{\mathsf{Flow}(#1)}
+\newcommand{\Flows}[1]{\mathsf{Flows}(#1)}
+
+
+%%%% SPECIFIC FROM SECTIONS
+
+% evidence
+\newcommand{\e}{\mathtt e}
+\newcommand{\lessg}{\preceq}
+\newcommand{\skeleton}[1]{\widehat{#1}} 
+
+% cost 
+\newcommand{\Npaxs}[1]{\mathsf{Npaxs}(#1)}
+\newcommand{\BigO}[1]{\mathcal{O}(#1)}
+\newcommand{\Exp}[1]{\mathsf{exp}(#1)}
+
+% Beyond BN
+\newcommand{\nsub}[2]{ {[#2/ #1]} }
+\newcommand{\BigFMerge}[2]{\mathsf{Merge}_{#1}(#2)}
+\newcommand{\FMerge}[1]{\underset{\scriptsize #1}{\bowtie}}
+\newcommand{\ftr}{\mathbf{r}}
+
+% Subj reduction
+\newcommand{\tlet}{\mathtt{let}}
+
+
+%%%%
+\newcommand{\MaxNest}[1]{\mathsf{Nest}(#1)}
+\newcommand{\OutBoxes}[1]{\mathsf{OutBoxes}(#1)}
+\newcommand{\BoxStruct}[1]{\mathsf{BoxStruct}(#1)}
+ 

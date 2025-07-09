@@ -7,8 +7,13 @@ and when its value decreases. The notion of trace is useful to analyse terminati
 If, in all infinite computations of a term, we are able to find some infinitely
 decreasing value, then no infinite computation can exist for this term. 
 The first step toward the notion of trace is defining a notion of \emph{connection} 
-between arguments of type $\N$ in a proof that evidences the well-typedness of $t$. 
-To this aim, we need to define \emph{lists of argument types} and \emph{indexes of atomic types} for a term.
+between arguments in a proof that evidences the well-typedness of $t$. 
+There are two kind of connections: stationary and progressing.
+In the case of arguments of type $\N$, a stationary connection 
+describe a case in which a value is stationary, and a progressing connection 
+a case in which a value is strictly decreasing.
+In order to define connection, we need to define \emph{lists of argument types} 
+and \emph{indexes of atomic types} for a term.
 
 %We sketch the notion of connection through an example.
 %Assume 
@@ -32,8 +37,10 @@ To this aim, we need to define \emph{lists of argument types} and \emph{indexes 
 
 \begin{definition}(List of argument types)
 Let $J$ be a judgment.
-Then $J$ has the form $\Gamma \vdash t:\vec{B}\rightarrow \N$,
-where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and $\vec{B}=B_{n+1}, \ldots, B_{n+m}$. 
+Then $J$ has the form $\Gamma \vdash t:B$,
+where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and 
+$B = \vec{B}\rightarrow \N$ or $\vec{B}\rightarrow \alpha$ and 
+$\vec{B}=B_{1}, \ldots, B_{m}$. 
 We define the following notions. 
 
 \begin{enumerate}
@@ -42,14 +49,15 @@ The \emph{list of argument types} of the judgment $J$ is $\vec{C} = \vec{A},\vec
 where $\vec{A} = A_1,\ldots,A_n$.
 
 \item
-An element $A_i \in \vec{A}$ is called a \emph{named argument} of $J$, with name $x_i$.
+An element $A_i \in \vec{A}$ is called a \emph{named argument} of $J$, with index $i$.
     
 \item
-An element of $\vec{B}$ is called an \emph{unnamed argument} of $J$. 
+An element $B_j$ of $\vec{B}$ is called an \emph{unnamed argument} of $J$, with
+index $j$. 
 
 \item
 An \emph{index of an $\N$-argument} 
-of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
+of $t$ is any $A_i = \N$ and any $B_j = \N$.
 
 \end{enumerate}
 \end{definition}
@@ -128,175 +136,352 @@ of $t$ is any $j \in \{1, \ldots, n+m\}$ such that $C_j = \N$.
 %\subsection{A formal definition of connection}
 
 %15:19 24/03/2025
+%
+%Let $r$ be an instance of a typing rule whose conclusion is $\Gamma \vdash t:\vec{B} \rightarrow \N$
+%where the length of $\Gamma$ is $n$, 
+%and premises $J_1,\ldots,J_k$ ($k=0,1,2$). 
+%We define a \emph{connection} over $r$ that is a binary relation
+%between the arguments of the conclusion $\Gamma \vdash t:\vec{B} 
+%\rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
+%\rightarrow \N$ of $r$. 
 
-Let $r$ be an instance of a typing rule whose conclusion is $\Gamma \vdash t:\vec{B} \rightarrow \N$
-where the length of $\Gamma$ is $n$, 
-and premises $J_1,\ldots,J_k$ ($k=0,1,2$). 
-We define a \emph{connection} over $r$ that is a binary relation
+Assume $\theta$ is a node of a proof decorated with a sequent $\Gamma \vdash t:A$
+and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ decorating
+$\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$decorating
+any premise $\theta'$ of $\theta$ we define
+the relations: ``there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$"
+and ``there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$". 
+The definition is by cases on $r$.
+We first list the connections for the rules: application, $\lambda$-abstraction, $\var$
+and weakening. They are all stationary.
 
-between the arguments of the conclusion $\Gamma \vdash t:\vec{B} 
-\rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
-\rightarrow \N$ of $r$. First, we informally discuss the cases requiring special care:
-application to a variable, binder, conditional.
+\begin{definition}(Stationary Connection in a proof of  $\LAMBDA$: 
+rules $\ap$, $\lambda$, $\var$, $\weak$)
+\label{definition-connection-lambda-calculus}
+Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and $B = B_1 \rightarrow \ldots \rightarrow B_m \rightarrow a$, with $a=\N$ or $a$ variable type. We define
+the following \emph{stationary} connections.
 
 \begin{enumerate}
 
 \item
-\emph{Application to a term $u$}. 
-In this case, the first unnamed argument $A$ of the premise 
-$\Gamma \vdash t:A \rightarrow B$ in 
-the proof of $\Gamma \vdash t(u):B$ is connected to \emph{no} 
-unnamed argument type of the conclusion.
-In this case the connection must skip the index $n+1$
-of the first unnamed argument $A$ of the premise. As a consequence
-of the fact that we skip one unnamed argument, any argument number 
-$k \ge n+1$ of the conclusion $\Gamma \vdash t(u):B$
-corresponds to the argument number $k' = k+1$ of the premise. 
-
-\item
-\emph{Application to a term $u$, special case $u=x$}. 
-In this case we have an extra connection. 
-Namely, the free variable $x:A$ of index $i$ in the conclusion 
-$\Gamma \vdash f(x) : B$ (a \emph{named} argument) 
-is also connected to the argument number $n+1$, the 
-first unnamed argument $A$ of the premise, to which $x$ is sent.
-
-\item
-\emph{Binder $\lambda$}. Free and bound occurrences of the same variable
-have \quotationMarks{nothing to do} each other.
-Namely, if $x^A$ has index $i$ in the conclusion 
-$\Gamma \vdash \lambda x^A.t : A \rightarrow B$, 
-then $x^A$ is connected to \emph{no} argument type of the premise, because the 
-$\lambda$-rule has premise 
-$\Gamma \setminus \{x^A:A\}, x^A:A \vdash t : B$, 
-with the old name $x^A$ removed.
-As a consequence, the connection must skip the index $i$ of the conclusion,
-and any argument number $k=k'+1 \ge i+1$ of the conclusion 
-corresponds to the argument number $k' \ge i$ of the premise. 
-
-\item
-\emph{Conditional}.
-The first unnamed argument $\N$ of the conclusion 
-$\Gamma \vdash \cond(f,g):\N \rightarrow A$, having number $n+1$, 
-correspond to \emph{no} argument of the premise $\Gamma \vdash f:A$. 
-Thus, any argument number $k = k'+1 \ge n+2$ 
-of the conclusion corresponds to the argument 
-number $k' \ge n+1$ of the premise for $f$. 
-\end{enumerate}
-
-In the remaining cases an argument is connected to the same argument in the 
-premise. We also need some care in the case of a $\weak$-rule: the premise can
-have less free variables and taken in a different order. 
-In this case we use the map $\phi:\Gamma \rightarrow \Gamma'$ between contexts 
-(Def.\ref{definition-context-lambda}.\ref{definition-context-lambda-08}) 
-in order to relate the indexes of a free variable in the premise with its index in the 
-conclusion. 
-
-In order to define the connection relation, we have first to define for each $x \in \N$
-some map $\ins(\cdot,x):\N \rightarrow \N$ skipping the value $x \in \N$ in the codomain. 
-We define this family of maps with a single binary map $\ins:\N,\N \rightarrow \N$.
-
-\begin{definition}($\ins:\N,\N \rightarrow \N$)
-For all $k,x \in \N$: $\ins(k,x)=x$ if $x < k$ and $\ins(k,x)=x+1$ if $x \ge k$. 
-\end{definition}
-
-By definition unfolding, for all $k \in \N$, $\ins(k,\cdot)$ is the unique increasing 
-map such that $\ins(k,\N) = \N \setminus \{k\}$. 
-Informally speaking, we use $\ins(k,\cdot)$ to insert a \quotationMarks{hole} in the 
-connection corresponding to the argument number $k$ of the premise 
-$\Gamma' \vdash t':\vec{B'} \rightarrow \N$, when the argument in the same position
-in the conclusion is missing. 
-Using the maps $\ins(k,\cdot)$ and $\phi:\Gamma \rightarrow \Gamma'$ we 
-express the notion of connection through a formal definition.
-
-
-%The role of $\ins$ is describing the fact that
-%the first argument $A$ of $t:A \rightarrow B$ 
-%in the proof that $t(u):B$ is well-typed is
-%connected to no argument type of $t(u)$.
-
-\begin{definition}(Connection in a proof of  $\LAMBDA$)
-\label{definition-connection}
-Assume $\vec{A} = A_1, \ldots, A_n$, $\vec{A'} = A'_1, \ldots, A'_{n'}$,
-$\vec{B}=B_1, \ldots, B_m$, $\vec{B'}=B'_1, \ldots, B'_{m'}$,
-$\Gamma = \vec{x}:\vec{A}$,
-$\Gamma' = \vec{x'}:\vec{A'}$, and $\Pi$ is a typing proof.
-Suppose $\theta$, $\theta'$ are nodes of $\Pi$, with $\theta'$ premise of $\theta$
-and $\theta$ labeled $\Gamma \vdash t:\vec{B} \rightarrow \N$ and 
-$\theta'$ labeled $\Gamma' \vdash t':\vec{B'} \rightarrow \N$.
-
-
-For each $\N$-argument $k$ in $t$, for each $\N$-argument $k'$ in $t'$ we define 
-the relation: ``$k',\theta'$ connected to $k,\theta$". We require:
+Suppose $\Gamma \vdash f(x_i^{A_i}) : B$ is obtained by a rule $\apvar$ from
+$\Gamma \vdash f: A_i \rightarrow B$. 
+Then:
 \begin{enumerate}
-
 \item
-if $t=f(x_i^{A_i})$ is obtained by a rule $\apvar$ and $t'=f$ 
-then $k' = \ins(n+1,k)$ or $k'=n+1$ and $k=i$.
-
+for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in the assumption, 
 \item
-if $t=f(a)$ is obtained by a rule $\apnotvar$ (i.e., $a$ is not a variable) and $t'=f$ 
-then $k' = \ins(n+1,k)$. If $t'=a$ then $k'=k$ for  $k' \le n$.
-
+the $i$-th named argument $x_i^{A_i}$ in the conclusion is also connected to the first unnamed
+argument $A_i$ in the assumption,
 \item
-if $t=\cond(f,g)$ is obtained by a rule $\cond$ and $t'=f$ then $k = \ins(n+1,k')$. 
-If $t'=g$ then $k'=k$.
-
-\item
-if $t = \Succ(u)$ is obtained by a rule $\Succ$ then $k = k'$.
-
-\item
-if $t = \lambda x.v$ is obtained by a rule $\lambda$, then $k = k'$ if 
-$x \not \in \FV(\Gamma)$, and $k = \ins(i,k')$ if $x$ has index $i$ in $\Gamma$.
-
-\item
-If $t$ is obtained by a rule $\weak$ from $t'=t$, and 
-$\phi:\Gamma \rightarrow \Gamma'$ then we require $k = \phi(k')$ if $k \le n$
-and $k' = (k - n + n')$ if $k \ge (n+1)$.
+for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
+is connected to the $(k+1)$-unnamed argument $B_k$ in the assumption.
 \end{enumerate}
-No connection is defined for the rules $\var$, $0$.
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_i^{A_i}} \ldots \vnode2{x_j^{A_j}}  \ldots 
+\vdash f: \vnode3{A_i }
+\rightarrow \ldots \rightarrow \vnode4{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{}
+\BinaryInfC{$ \ldots, \vnode5{x_i^{A_i}} \ldots \vnode6{x_j^{A_j}} \ldots  \vdash f(x_i^{A_i}) 
+: \ldots \rightarrow \vnode7{B_k} \rightarrow \ldots \rightarrow a  $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node5/node1/60}   
+\bentdirflowedges{node5/node3/-45}  
+\bentdirflowedges{node6/node2/60}
+\bentdirflowedges{node7/node4/60}
+$    
+\item
+Suppose $\Gamma \vdash f(a) : B$ is obtained by a rule $\ap$ from
+$\Gamma \vdash f: A \rightarrow B$ and $\Gamma \vdash a: A$. 
+Then:
+\begin{enumerate}
+\item
+for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in both assumptions.
+\item
+for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
+is connected to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
+\end{enumerate}
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} \ldots \vdash f: A
+\rightarrow \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{$ \ \ \ \ \ \  \ \ \  \ldots \vnode3{x_j^{A_j}} \ldots \vdash a: A$}
+\BinaryInfC{$ \ldots \vnode5{x_j^{A_j}} \ldots  \vdash f(a) 
+: \ldots \rightarrow \vnode6{B_k} \rightarrow \ldots \rightarrow a  $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+
+$
+\bentdirflowedges{node5/node1/30}   
+\bentdirflowedges{node5/node3/30}  
+\bentdirflowedges{node6/node2/45}
+$    
+
+\item
+Suppose $\Gamma \vdash \lambda x^A.v$ is obtained by a rule $\lambda$
+from $\Gamma \setminus \{ {x}^{A} : A \} \vdash v : \N$.
+Then:
+
+\begin{enumerate}
+\item
+the first unnamed argument $A$ in the conclusion 
+is connected to the last named argument $x^A$ in the assumption,
+and for $k=1, \ldots, m$ the $(k+1)$-unnamed argument $B_k$ in the conclusion is
+connected to the $k$-unnamed argument $B_k$ in the assumption.
+
+For named arguments we have two sub-cases, according if
+${x}^{A} \in \FV(\Gamma)$ or not.
+
+\item
+Suppose $x^A = {x_i}^{A_i}$ for some (unique) $i=1, \ldots, n$.
+In this case
+for $a=1, \ldots, i-1$, $b=i+1, \ldots, n$ 
+the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to 
+the $a$-th named 
+argument $x_a^{A_b}$ and to the $(b-1)$-th 
+named argument $x_b^{A_b}$ in the assumption, respectively.
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_a^{A_a}} 
+\ldots \vnode3{x_{b-1}^{A_{b-1}}}  
+\ldots  \vnode4{x_i^{A_i} }
+\vdash
+v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{}
+\BinaryInfC{$ \ldots \vnode6{x_a^{A_a}} 
+\ldots x_i^{A_i} \ldots \vnode7{x_{b}^{A_{b}}}
+\vdash \lambda x_i^{A_i}.v : \vnode8{A_i }
+\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
+\end{prooftree}
+
+
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node6/node1/60}   
+\bentdirflowedges{node7/node3/60}  
+\bentdirflowedges{node8/node4/-45}
+\bentdirflowedges{node9/node5/60}
+$    
+\item
+Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$. 
+ In this case
+for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in the assumption.
+
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots  \vnode4{x^{A} }
+\vdash
+v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{}
+\BinaryInfC{$ \ldots \vnode7{x_{j}^{A_{j}}}
+\vdash \lambda x^{A}.v : \vnode8{A }
+\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node7/node1/60}  
+\bentdirflowedges{node8/node4/0}
+\bentdirflowedges{node9/node5/60}
+$    
+
+
+\end{enumerate}
+
+\item
+Assume $\Gamma \vdash t : B$ is obtained by a rule $\weak$ from $\Gamma' \vdash t : B$
+where $\Gamma' = {x'_1}^{A'_1}:A_1, \ldots, {x'_{n'}}^{A'_{n'}}:A'_{n'}$. Assume
+$\phi:\Gamma' \rightarrow \Gamma$ is the map associated to the rule\footnote{
+We recall that $\phi:[1,n'] \rightarrow [1,n]$, 
+and for all $a = 1, \ldots, n'$, the value $\phi(a) \in [1,n]$ is the unique value 
+such that ${x'_{a}}^{A'_{a}} = x_{\phi(a)}^{A_{\phi(a)}}$
+(Def. \ref{definition-context-lambda}.\ref{definition-context-lambda-08}).}.
+Then:
+\begin{enumerate}
+\item
+for $j=1, \ldots, n$ and $a = 1, \ldots, n'$,
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $a$-th named 
+argument ${x'}_{a}^{A'_{a}}$ in the assumption if and only if $j = \phi(a)$
+(i.e., if and only if  $x_j^{A_j} = {x'}_{a}^{A'_{a}}$).
+
+\item
+for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
+is connected to the $k$-th unnamed argument $B_k$ in the assumption.
+\end{enumerate}
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{{x'}_{a}^{{A'}_{a}}} \ldots 
+\vdash t: \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{}
+\BinaryInfC{$ \ldots, \vnode3{x_{\phi(a)}^{A_{\phi(a)}}} \ldots \vdash t 
+: \ldots \rightarrow \vnode4{B_k} \rightarrow \ldots \rightarrow a  $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node3/node1/60}   
+\bentdirflowedges{node4/node2/60}  
+$    
+
+\end{enumerate}
+
+No connection is defined for the rule $\var$.
+
 \end{definition}
 
-Below we include some examples. We draw two connected $\N$-arguments
-with the same color. If we want to highlight a connection we also outline
-the $\N$-arguments. Occurrences of $\N$ in the same color or outlined denote
-the same type, colors denote traces.
+Now we list the connections for $\cond, \Succ, 0$: \emph{one is progressing}, 
+all the others are stationary.
+
+\begin{definition}(Stationary and Progressing Connections in a proof of  $\LAMBDA$: rules $\cond, \Succ, 0$)
+\label{definition-connection-cond}
+There is a unique progressing condition which is explicitly stated, all others are stationary.
+\begin{enumerate}
+\item
+Suppose $\Gamma \vdash \cond(f,g): \N \rightarrow B$ is obtained by a rule $\cond$ from
+$\Gamma \vdash f: B$ and $\Gamma \vdash g: \N \rightarrow B$.
+Then:
+\begin{enumerate}
+\item
+for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in both assumptions.
+\item
+the first unnamed argument $\N$ in the conclusion is connected to the 
+the first unnamed argument $\N$ in the second assumption: \emph{this is the unique
+progressing connection}.
+and for $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
+is connected to the $k$-unnamed argument $B_k$ in the first assumption,
+and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
+\end{enumerate}
+
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots 
+\vdash
+f :  \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
+\AxiomC{$  \ \ \ \ \ \  \ \ \  
+\ldots \vnode3{x_j^{A_j}} \ldots 
+\vdash
+g :  \vnode4{\tt N} \rightarrow
+\ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a$}
+\BinaryInfC{$ \ldots \vnode6{x_j^{A_j}} 
+\ldots 
+\vdash
+{\tt cond}(f,g) :   \vnode7{\tt N} \rightarrow \ldots \rightarrow \vnode8{B_k} \rightarrow \ldots \rightarrow a $}
+\end{prooftree}
+
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node6/node1/30} 
+\bentdirflowedges{node6/node3/30} 
+\bentdirflowedges{node7/node4/0}
+\bentdirflowedges{node8/node2/30}
+\bentdirflowedges{node8/node5/0}
+$    
 
 
-\begin{Eg}\label{eg:3}%\rm
-Atom connection for $\apvar$, application to a variable. The outlined $\goldNout$ in the conclusion
-is connected to two $\goldNout$s in the premise.
-\[
-\infer[(\apvar)]{
-  x_1 : \redN,{x_2} : \blueN, x  : \goldNout
-  \prove f(x) : \orangeN \rightarrow \N
-}{
-  x_1 : \redN, {x_2} : \blueN, x  : \goldNout
-  \prove f : \goldNout, \orangeN \rightarrow \N
-}
-\]
-\end{Eg}
+\item
+Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by a rule $\Succ$ from
+$\Gamma \vdash \Succ(u):\N$.
+Then for $j=1, \ldots, n$ 
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
+argument $x_j^{A_j}$ in the assumption.
 
 
-%Remark that the last variable in the conclusion of the rule
-%is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
-%in the premise, and with the variable with the same name in the premise: there are
-%two connections.
+\begin{prooftree}
+\def\extraVskip{2pt}
+\def\ScoreOverhang{0pt}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
+\ldots 
+\vdash
+t: {\tt N} $}
+\AxiomC{}
+\BinaryInfC{$ \ldots \vnode2{x_{j}^{A_{j}}}
+\vdash {\tt S}(t) : {\tt N}$}
+\end{prooftree}
 
-\begin{Eg}\label{eg:4}%\rm
-Atom connection for  $\lambda$-rule.
-%We assume that the bound variable $x$ is  distinct from $x_1$, $x_2$.
-The first unnamed argument $\goldNout$ of the conclusion
-is connected with the $\goldNout$ at the last of the premise's context. 
-\[
-\infer[(\ap)]{
-  x_1: \redN, x_2: \blueN
-  \prove \lambda x.t : \goldNout \rightarrow \N
-}{
-  x_1: \redN, x_2: \blueN, x:\goldNout \prove t : \N
-}
-\]
-\end{Eg}
+% DRAW EDGES
+%bent edges. Syntax: source/target/bending degree (can be negative)
+$
+\bentdirflowedges{node2/node1/60} 
+$    
+
+
+\end{enumerate}
+
+No connection is defined for the rule $0$.
+
+\end{definition}
+
+%Below we include some examples. We draw two connected $\N$-arguments
+%with the same color. If we want to highlight a connection we also outline
+%the $\N$-arguments. Occurrences of $\N$ in the same color or outlined denote
+%the same type, colors denote traces.
+%
+%
+%\begin{Eg}\label{eg:3}%\rm
+%Atom connection for $\apvar$, application to a variable. The outlined $\goldNout$ in the conclusion
+%is connected to two $\goldNout$s in the premise.
+%\[
+%\infer[(\apvar)]{
+%  x_1 : \redN,{x_2} : \blueN, x  : \goldNout
+%  \prove f(x) : \orangeN \rightarrow \N
+%}{
+%  x_1 : \redN, {x_2} : \blueN, x  : \goldNout
+%  \prove f : \goldNout, \orangeN \rightarrow \N
+%}
+%\]
+%\end{Eg}
+%
+%
+%%Remark that the last variable in the conclusion of the rule
+%%is in connection with the first unnamed argument of $f$ (colored in \bfColor{oldgold}{old gold}) 
+%%in the premise, and with the variable with the same name in the premise: there are
+%%two connections.
+%
+%\begin{Eg}\label{eg:4}%\rm
+%Atom connection for  $\lambda$-rule.
+%%We assume that the bound variable $x$ is  distinct from $x_1$, $x_2$.
+%The first unnamed argument $\goldNout$ of the conclusion
+%is connected with the $\goldNout$ at the last of the premise's context. 
+%\[
+%\infer[(\ap)]{
+%  x_1: \redN, x_2: \blueN
+%  \prove \lambda x.t : \goldNout \rightarrow \N
+%}{
+%  x_1: \redN, x_2: \blueN, x:\goldNout \prove t : \N
+%}
+%\]
+%\end{Eg}
 
 
 
@@ -314,6 +499,7 @@ infinite unfolding of a tree. Formally, we define a trace as a (finite or infini
 in the graph $\Graph(\Pi)$.
 
 \begin{definition}(Trace for well-typed terms in $\LAMBDA$)
+\label{definition-progressing-trace}
 Assume $\Pi$ is any typing proof of $t \in \WTyped$.
 \begin{enumerate}
 \item
@@ -329,7 +515,9 @@ $k_i$ is an index of some $\N$-argument of $\theta_i$
 if $i$ and $i+1$ are indexes of $\tau$ then $(k_{i+1},\theta_{i+1})$ 
 is connected with $(k_i, \theta_i)$ in $\Pi$.
 \end{enumerate}
-
+$\tau$ is stationary (progressing) in $i \in [m,n-1]$ if and only if the connection 
+between $(k_i,\theta_i)$ and $(k_{i+1},\theta_{i+1})$ is stationary (progressing),
+respectively.
 \end{enumerate}
 \end{definition}
 

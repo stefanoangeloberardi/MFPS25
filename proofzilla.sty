@@ -1,0 +1,919 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%												%
+%	PROOFZILLA package by Matteo Acclavio		%
+%	-----------------------------------------	%
+%	graphs and diagrams for proof theorists		%
+%					V.0.1.6						%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\def\proofzillaVersion{0.1.6 }
+\ProvidesPackage{proofzilla}[\proofzillaVersion]
+
+\ProcessOptions
+\RequirePackage[]{tikz}
+%\RequirePackage{txfonts}
+%\RequirePackage{stmaryrd}
+
+\usetikzlibrary{calc}
+%\usetikzlibrary{fit}
+\usetikzlibrary{arrows}
+%\usetikzlibrary{decorations.markings}
+%\usetikzlibrary{decorations.pathmorphing}
+%\usetikzlibrary{shapes.geometric}
+\usetikzlibrary{positioning}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%	additional commands for   %%%%%%%%
+%%%%%%%%  correctly compile in arXiv  %%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\makeatletter
+\def\pgfsys@hboxsynced#1{%
+	{%
+		\pgfsys@beginscope%
+		\setbox\pgf@hbox=\hbox{%
+			\hskip\pgf@pt@x%
+			\raise\pgf@pt@y\hbox{%
+				\pgf@pt@x=0pt%
+				\pgf@pt@y=0pt%
+				\pgflowlevelsynccm%
+				\pgfsys@hbox#1}%
+			\hss%
+		}%
+		\wd\pgf@hbox=0pt%
+		\ht\pgf@hbox=0pt%
+		\dp\pgf@hbox=0pt%
+		\box\pgf@hbox%
+		\pgfsys@endscope%
+	}%
+}
+%\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%		Symbols 		%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%\providecommand{\cneg}[1]{\bar#1}
+%\providecommand{\lbox}{\Box}
+%\providecommand{\ldia}{\Diamond}
+%\providecommand{\lbot}{\bot}
+%\providecommand{\ltop}{\top}
+%\providecommand{\lone}{\mathsf{1}}
+%\providecommand{\lzero}{\mathsf{0}}
+%%\providecommand{\oc}{!}
+%%\providecommand{\wn}{?}
+%\providecommand{\ltens}{\mathop\otimes}
+%\providecommand{\lpar}{\mathop\bindnasrepma}
+%\providecommand{\lplus}{\mathop\oplus}
+%\providecommand{\lwith}{\mathop\binampersand}
+%\providecommand{\limp}{\multimap}
+%\providecommand{\lseq}{\triangleleft}
+%\providecommand{\lcoseq}{\triangleright}
+%\providecommand{\lunit}{\circ}
+%
+%\AtBeginDocument{
+%	\@ifpackageloaded{cmll}{
+%		\renewcommand{\lpar}{\parr}
+%		\renewcommand{\lwith}{\with}
+%	}{}
+%}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%	 Graphs		 %%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%												%
+%		Thanks to Lutz Strassburger for the 	%
+%	vertex and edge macros which have lead to	% 
+%		to the ones in this package				%
+%												%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+%%%%%%%%%%%		vertices 		%%%%%%%%%%%%%%
+%#1		= vertex name
+%#2		= vertex label
+%#3		= node optional commands
+%##1	= vertex number
+\gdef\newvertex#1#2#3{%
+	\expandafter\def\csname v#1\endcsname##1{%
+		\mathord{%
+			\tikz[remember picture,baseline=(#1##1.base)]%
+			\node[inner sep=0pt,#3](#1##1){$#2\strut$};
+		}
+	}
+}
+
+%#1		= vertex name
+%#2		= node options
+%##1	= vertex number
+%##2	= vertex label
+\gdef\newemptyvertex#1#2{%
+	\expandafter\def\csname v#1\endcsname##1##2{%
+		\mathord{%
+			\tikz[remember picture,baseline=(#1##1.base)]%
+			\node[inner sep=0pt,#2](#1##1){$##2\strut$};
+		}
+	}
+}
+
+
+
+%%%%%%%%%%%		vertices numbers 	%%%%%%%%%%%%%%
+
+\gdef\vnum#1{
+	\mathord{%
+		\tikz[remember picture,baseline=(num#1.base)]%
+		\node[inner sep=0pt](num#1){$#1\strut$};
+	}
+}
+
+
+%%%%%%%%%%%			edges		%%%%%%%%%%%%%%
+
+%#1	=	name
+%#2	=	list of edge style
+%#3	=	edge's "to" options
+\gdef\defedgetype#1#2#3{%
+	\expandafter\def\csname #1edge\endcsname##1##2{
+		\tikz[overlay,remember picture,draw,fill,opacity=1] \draw[#2] (##1) to [#3]  (##2);
+	}
+	%draw edges from list of the shape {source/target,...}
+	\expandafter\def\csname #1edges\endcsname##1{%
+		\foreach \aaa/\bbb in {##1} { \csname #1edge\endcsname{\aaa}{\bbb}}%
+	}
+	%draw all edges form the vertices in #1={v,w,...} to #2={x,y,...}
+	\expandafter\def\csname multi#1edges\endcsname##1##2{%
+		\foreach \aaa in {##1}\foreach\bbb in {##2} { \csname #1edge\endcsname{\aaa}{\bbb}}%
+	}
+%	special edge
+	\expandafter\def\csname spec#1edge\endcsname##1##2##3{
+		\tikz[overlay,remember picture,draw,fill,opacity=1] \draw[#2] (##1) to [#3,##3]  (##2);
+	}
+%	bent edges form a list of the shape {source/target/bend left value,...}
+	\expandafter\def\csname bent#1edges\endcsname##1{%
+		\foreach \aaa/\bbb/\ccc in {##1} { 
+			\tikz[overlay,remember picture,draw,fill,opacity=1] \draw[#2] (\aaa) to [bend left = \ccc]  (\bbb);
+		}%
+	}
+%	labelled edge
+	\expandafter\def\csname #1ledge\endcsname##1##2##3{
+		\tikz[overlay,remember picture,draw,fill,opacity=1] \draw[#2] (##1) to [#3] 
+		node[midway,fill=white,inner sep=1pt]{\scriptsize$##3$}  (##2);
+	}
+	%
+%	draw ledges from list of the shape {source/target/label,...}
+	\expandafter\def\csname #1ledges\endcsname##1{%
+		\foreach \aaa/\bbb/\ccc in {##1} { \csname #1ledge\endcsname{\aaa}{\bbb}{\ccc}}	
+	}	%
+	%
+%	draw ledges with same label #2 from list of the shape {source/target,...}
+	\expandafter\def\csname #1sameledges\endcsname##1##2{%
+		\foreach \aaa/\bbb in {##1} { \csname #1ledge\endcsname{\aaa}{\bbb}{##2}}
+	}	%
+%	special ledge
+		\expandafter\def\csname spec#1ledge\endcsname##1##2##3##4{
+		\tikz[overlay,remember picture,draw,fill,opacity=1] \draw[#2] (##1) to [#3,##4] 
+		node[midway,fill=white,inner sep=1pt]{\scriptsize$##3$} (##2);
+	}	%
+}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%	Combinatorial Proofs 		%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%--------	colors
+
+\definecolor{cographcolor}{rgb}{1,0,0}
+\definecolor{linkcolor}{rgb}{0,0,1}
+\definecolor{skewcolor}{rgb}{1,0,1}
+\definecolor{arenacolor}{rgb}{0.5,0.0,0.13}
+\definecolor{modcolor}{rgb}{0,0.25,0.16}
+
+
+%--------	difine standard edges
+
+\defedgetype{graph}		{draw,thick}{}
+\defedgetype{G}			{draw,thick}{}
+\defedgetype{dirgraph}	{>=stealth,->,draw, thick}{}
+\defedgetype{D}			{>=stealth,->,draw, thick}{}
+\defedgetype{cograph}	{draw=cographcolor}{}
+\defedgetype{R}			{draw=cographcolor}{}
+\defedgetype{dircograph}{>=stealth,->,draw,draw=cographcolor}{}
+\defedgetype{DR}		{>=stealth,->,draw,draw=cographcolor}{}
+\defedgetype{matching}	{draw=linkcolor,thick}{}
+\defedgetype{B}			{draw=linkcolor,thick}{}
+\defedgetype{doubleB}	{draw=linkcolor,thick,double distance=1pt}{}
+\defedgetype{dB}		{draw=linkcolor,thick,double distance=1pt}{}
+\defedgetype{skew}		{>=stealth,->,draw=skewcolor,densely dotted}{}
+\defedgetype{S}			{>=stealth,->,draw=skewcolor,densely dotted}{}
+\defedgetype{doubleS}	{>=stealth,->,draw=skewcolor,densely dotted,double distance=1.5pt}{}
+\defedgetype{dS}		{>=stealth,->,draw=skewcolor,densely dotted,double distance=1.5pt}{}
+\defedgetype{arena}		{>=stealth,->,draw=arenacolor}{}
+\defedgetype{A}			{>=stealth,->,draw=arenacolor}{}
+\defedgetype{mod}		{>=stealth,->,thin,draw=modcolor,decorate,decoration={coil,aspect=0,amplitude=1pt, segment length=5pt,post length=2.5pt}}{}
+\defedgetype{M}			{>=stealth,->,thin,draw=modcolor,decorate,decoration={coil,aspect=0,amplitude=1pt, segment length=5pt,post length=2.5pt}}{}
+\defedgetype{link}		{draw=linkcolor,dashed,thick}{}
+\defedgetype{L}			{draw=linkcolor,dashed,thick}{}
+
+
+
+%--------	define vertices
+\def\newvertices#1#2{
+	\newvertex{#1}{#1}{}
+	\newvertex{n#1}{\cneg #1}{}
+}
+
+
+%\newvertices{a}{a}{}
+%\newvertices{b}{b}{}
+%\newvertices{c}{c}{}
+%\newvertices{d}{d}{}
+%\newvertices{e}{e}{}
+%\newvertices{f}{f}{}
+%\newvertices{g}{g}{}
+%\newvertices{h}{h}{}
+%\newvertices{i}{i}{}
+%\newvertices{j}{j}{}
+%\newvertices{k}{k}{}
+%\newvertices{l}{l}{}
+%\newvertices{m}{m}{}
+%\newvertices{n}{n}{}
+%\newvertices{o}{o}{}
+%\newvertices{p}{p}{}
+%\newvertices{q}{q}{}
+%\newvertices{r}{r}{}
+%\newvertices{s}{s}{}
+%\newvertices{t}{t}{}
+%\newvertices{u}{u}{}
+%\newvertices{v}{v}{}
+%\newvertices{w}{w}{}
+%\newvertices{x}{x}{}
+%\newvertices{y}{y}{}
+%\newvertices{z}{z}{}
+%
+%
+%
+%\newvertices{A}{A}{}
+%\newvertices{B}{B}{}
+%\newvertices{C}{C}{}
+%\newvertices{D}{D}{}
+%\newvertices{E}{E}{}
+%\newvertices{F}{F}{}
+%\newvertices{G}{G}{}
+%\newvertices{H}{H}{}
+%\newvertices{I}{I}{}
+%\newvertices{J}{J}{}
+%\newvertices{K}{K}{}
+%\newvertices{L}{L}{}
+%\newvertices{M}{M}{}
+%\newvertices{N}{N}{}
+%\newvertices{O}{O}{}
+%\newvertices{P}{P}{}
+%\newvertices{Q}{Q}{}
+%\newvertices{R}{R}{}
+%\newvertices{S}{S}{}
+%\newvertices{T}{T}{}
+%\newvertices{U}{U}{}
+%\newvertices{V}{V}{}
+%\newvertices{W}{W}{}
+%\newvertices{X}{X}{}
+%\newvertices{Y}{Y}{}
+%\newvertices{Z}{Z}{}
+%
+%\newvertex{lbox}{\lbox}{}
+%\newvertex{ldia}{\ldia}{}
+%\newvertex{oc}{\oc}{}
+%\newvertex{wn}{\wn}{}
+%\newvertex{jump}{\circ}{color=linkcolor}
+%\newvertex{lbot}{\lbot}{}
+%\newvertex{ltop}{\ltop}{}
+%\newvertex{lone}{\lone}{}
+%\newvertex{lzero}{\lzero}{}
+%\newvertex{hid}{}{}
+
+%--------- module vertex
+\newemptyvertex{mod}{draw,rounded corners=5,inner sep=1pt}
+
+
+%--------- cut shades
+\newcommand{\cutshade}[2]{
+	\tikz[overlay,remember picture] 
+	\draw[fill=gray,opacity=0.2,rounded corners=5](#1.south west) rectangle (#2.north east);
+}
+
+
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%		Proof nets 		%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\newif\ifpswiresdec\pswiresdecfalse
+%\newif\ifinteractionnetax\interactionnetaxfalse
+%\newif\ifinteractionnetcut\interactionnetcutfalse
+%
+%
+%%%%%%%%%%%%%%%%%	gates shape	%%%%%%%%%%%%%%%%%%%
+%\def\gateD{12pt}
+%
+%%--------- new anchors for rectangle
+%\let\pgf@anchor@rectangle@O\pgf@anchor@rectangle@south
+%\let\pgf@anchor@rectangle@I\pgf@anchor@rectangle@north
+%\let\pgf@anchor@rectangle@C\pgf@anchor@rectangle@center
+%
+%
+%%--------- new anchors for circle
+%\let\pgf@anchor@circle@O\pgf@anchor@circle@south
+%\let\pgf@anchor@circle@I\pgf@anchor@circle@north
+%\let\pgf@anchor@circle@C\pgf@anchor@circle@center
+%
+%
+%%--------- new anchors commands
+%\def\useanchor#1#2{\csname pgf@anchor@#1@#2\endcsname}
+%
+%\def\pgfaddtoshape#1#2{%
+%	\begingroup
+%	\def\pgf@sm@shape@name{#1}%
+%	\let\anchor\pgf@sh@anchor
+%	#2%
+%	\endgroup
+%}
+%
+%%--------- new anchors for triangle
+%\pgfaddtoshape{isosceles triangle}{%
+%	\anchor{R}{
+%		\pgf@process{\useanchor{isosceles triangle}{left corner}}%
+%    	\pgf@xa=\pgf@x%
+%    	\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{lower side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{L}{
+%		\pgf@process{\useanchor{isosceles triangle}{right corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{lower side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{i}{
+%		\pgf@process{\useanchor{isosceles triangle}{right corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{L}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{ii}{
+%		\pgf@process{\useanchor{isosceles triangle}{L}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{lower side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{iii}{
+%		\pgf@process{\useanchor{isosceles triangle}{R}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{lower side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{iv}{
+%		\pgf@process{\useanchor{isosceles triangle}{left corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{isosceles triangle}{R}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{O}{%
+%		\useanchor{isosceles triangle}{apex}%
+%	}
+%	\anchor{I}{%
+%		\useanchor{isosceles triangle}{lower side}%
+%	}
+%}
+%
+%
+%%--------- new anchors for trapezium
+%\pgfaddtoshape{trapezium}{%
+%	\anchor{R}{
+%		\pgf@process{\useanchor{trapezium}{top right corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{top side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{L}{
+%		\pgf@process{\useanchor{trapezium}{top left corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{top side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{i}{
+%		\pgf@process{\useanchor{trapezium}{top left corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{L}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{ii}{
+%		\pgf@process{\useanchor{trapezium}{L}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{top side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{iii}{
+%		\pgf@process{\useanchor{trapezium}{R}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{top side}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{iv}{
+%		\pgf@process{\useanchor{trapezium}{top right corner}}%
+%		\pgf@xa=\pgf@x%
+%		\pgf@ya=\pgf@y%
+%		\pgf@process{\useanchor{trapezium}{R}}%
+%		\advance\pgf@x by \pgf@xa%
+%		\advance\pgf@y by \pgf@ya%
+%		\pgf@x=.5\pgf@x%
+%		\pgf@y=.5\pgf@y%
+%	}
+%	\anchor{O}{%
+%		\useanchor{trapezium}{south}%
+%	}
+%	\anchor{I}{%
+%		\useanchor{trapezium}{north}%
+%	}
+%}
+%
+%
+%
+%
+%
+%%--------- gates styles
+%\newcommand\notsotiny{\@setfontsize\notsotiny\@vipt\@viipt}
+%
+%\tikzstyle{psnode}=[font=\notsotiny]
+%
+%\tikzstyle{basicpsgate}=[
+%	execute at begin node=\notsotiny,
+%	draw, 
+%	minimum size= \gateD,
+%	shape border uses incircle,
+%	inner sep=0pt,	
+%	text centered,
+%]
+%
+%\newif\ifgatestriangle\gatestriangletrue
+%\newif\ifgatecornersround\gatecornersroundfalse
+%
+%\gdef\setgatesshape{
+%	\ifgatecornersround
+%		\tikzstyle{gatecorners} =[ rounded corners=2pt,]
+%	\else
+%		\tikzstyle{gatecorners} =[ draw ]
+%	\fi
+%	\ifgatestriangle
+%		\tikzstyle{psgate}=[
+%			basicpsgate,
+%			shape = isosceles triangle, 
+%			isosceles triangle apex angle = 90,
+%			gatecorners,
+%		]
+%		\tikzstyle{psDgate}=[psgate, shape border rotate=-90	]
+%		\tikzstyle{psUgate}=[psgate, shape border rotate=90		]
+%		\tikzstyle{psLgate}=[psgate, shape border rotate=180	]
+%		\tikzstyle{psRgate}=[psgate, shape border rotate=0		]
+%	\else
+%		\tikzstyle{psgate}=[
+%			basicpsgate,
+%			shape = trapezium, 
+%			trapezium angle=110, 
+%			gatecorners,
+%			shape border rotate=90
+%		]
+%		\tikzstyle{psDgate}=[psgate, shape border rotate=0	]
+%		\tikzstyle{psUgate}=[psgate, shape border rotate=180		]
+%		\tikzstyle{psLgate}=[psgate, shape border rotate=-90	]
+%		\tikzstyle{psRgate}=[psgate, shape border rotate=90		]
+%	\fi
+%}
+%\setgatesshape
+%
+%
+%\tikzstyle{psCgate}=[psgate,circle,inner sep=1pt		]
+%
+%
+%
+%	
+%
+%%%%%%%%%%%%%%%%	gates commands	%%%%%%%%%%%%%%%
+%%#1	= gate name
+%%#2 = gate label
+%%#3 = gate options
+%%##1= gate occurrence
+%
+%%-------- 	create gates (all four orientations)
+%\gdef\newgate#1#2#3{%
+%	\expandafter\def\csname G#1\endcsname##1{%
+%		\tikz[remember picture,baseline=(G#1##1.O)]{
+%			\node[psDgate,#3] (G#1##1) {$#2$};
+%		}
+%	}
+%	\expandafter\def\csname uG#1\endcsname##1{%
+%		\tikz[remember picture,baseline=(uG#1##1.I)]{
+%			\node[psUgate,#3] (uG#1##1) {$#2$};
+%		}
+%	}
+%	\expandafter\def\csname lG#1\endcsname##1{%
+%		\tikz[remember picture,baseline=(lG#1##1.left corner)]{
+%			\node[psLgate,#3] (lG#1##1) {$#2$};
+%		}
+%	}
+%	\expandafter\def\csname rG#1\endcsname##1{%
+%		\tikz[remember picture,baseline=(rG#1##1.right corner)]{
+%			\node[psRgate,#3] (rG#1##1) {$#2$};
+%		}
+%	}
+%}
+%
+%
+%%-------- 	proof structures input/outputs flating labels
+%
+%\newcommand{\psnode}[2][]{
+%	\tikz[remember picture,baseline=(node#1#2)]
+%		\node[psnode, inner sep=1pt] (node#1#2){$#1$};
+%}
+%
+%\newcommand{\pslnode}[2]{
+%	\tikz[remember picture,baseline=(node#1#2)]
+%	\node[psnode, inner sep=1pt] (node#1#2){$#1$};
+%}
+%
+%\newcommand{\psanode}[2][]{
+%	\tikz[remember picture,baseline=(node#2)]
+%		\node[psnode, inner sep=1pt] (node#2){$#1$};
+%}
+%
+%
+%\newcommand{\pshang}[2][]{
+%	\tikz[remember picture,baseline=(hang#1#2)]{
+%	\node[psnode, inner sep=0pt] (hang#1#2){};
+%	\draw (hang#1#2) circle (.8pt);
+%	}
+%}
+%
+%
+%%%%%%%%%%%%%			wires 			%%%%%%%%%%%%
+%
+%
+%%-------- 	directed/indirected
+%\gdef\psundirectedwires{\tikzstyle{psedge}=[overlay,remember picture,draw,fill,opacity=1,>=stealth]}
+%\gdef\psdirectedwires{\tikzstyle{psedge}=[overlay,remember picture,draw,fill,opacity=1,>=stealth,->]}
+%
+%\psundirectedwires
+%
+%
+%%%-------- 	ingoing/outoing angle
+%
+%\gdef\lefttorightps{
+%	\def\wireoutangle{0}
+%	\def\wireinangle{180}
+%}
+%\gdef\topdownps{
+%	\def\wireoutangle{-90}
+%	\def\wireinangle{90}
+%}
+%
+%\topdownps
+%
+%%--------	proof structures wires
+%%#1 = where the wire exit 
+%%#2 = where the wire enter
+%%#3 = looseness (default=1)
+%\gdef\pswire#1#2#3{
+%	\tikz[psedge] \draw (#1) to [out=\wireoutangle, in=\wireinangle, looseness=#3] (#2);
+%}
+%
+%
+%
+%%--------	proof structures labelled wires
+%%#1 = where the wire exit 
+%%#2 = where the wire enter
+%%#3 = looseness (default=1)
+%%#4 = label
+%\gdef\pslwire#1#2#3#4{
+%	\ifpswiresdec
+%		\tikz[psedge] \draw (#1) to [out=\wireoutangle, in=\wireinangle, looseness=#3] node[midway,fill=white,inner sep=1pt,psnode]{$#4$} (#2);
+%	\else
+%		\tikz[psedge] \draw (#1) to [out=\wireoutangle, in=\wireinangle, looseness=#3] (#2);
+%	\fi	
+%}
+%
+%
+%%-------- 	multiple wires commands
+%
+%\gdef\pswires#1{
+%	\ifpswiresdec
+%		\foreach \aaa/\bbb/\ccc in {#1} {\pslwire{\aaa}{\bbb}{1}{\ccc}}
+%	\else
+%		\foreach \aaa/\bbb in {#1} {\pswire{\aaa}{\bbb}{1}}
+%	\fi
+%}
+%
+%\gdef\psbentwires#1{
+%	\ifpswiresdec
+%		\foreach \aaa/\bbb/\ccc/\ddd in {#1} {\pslwire{\aaa}{\bbb}{\ccc}{\ddd}}
+%	\else
+%		\foreach \aaa/\bbb/\ccc in {#1} {\pswire{\aaa}{\bbb}{\ccc}}
+%	\fi
+%}
+%
+%
+%
+%
+%
+%\gdef\psowire#1#2#3#4{
+%	\tikz[overlay,remember picture,draw,fill,opacity=1,>=stealth] 
+%	\draw[decoration={markings,mark=at position #4 with {\arrow{>}}},postaction={decorate}] (#1) to [out=\wireoutangle, in=\wireinangle, looseness=#3] (#2);
+%}
+%
+%\gdef\psowires#1{
+%	\foreach \aaa/\bbb/\ccc/\ddd in {#1}{ \psowire{\aaa}{\bbb}{\ccc}{\ddd} }
+%}
+%
+%
+%%%%%%%%%%%%%		axioms / cuts		%%%%%%%%%%%%
+%
+%
+%%--------	default label for axioms and cut
+%\def\axsym{\mathsf{ax}}
+%\def\cutsym{\mathsf{cut}}
+%
+%
+%
+%
+%
+%%--------	setup ax- and cut-gates labels
+%%#1	= axiom label
+%%#2	= cut label
+%\newcommand{\nointeractionnetsyntax}{
+%	\interactionnetaxfalse
+%	\interactionnetcutfalse
+%}
+%
+%\newcommand{\changeaxsymbol}[1]{\def\axsym{#1}}
+%\newcommand{\changecutsymbol}[1]{\def\cutsym{#1}}
+%
+%\newcommand{\interactionnetcuts}[1]{
+%	\interactionnetaxtrue
+%}
+%
+%\newcommand{\interactionnetsyntax}[1]{
+%	\interactionnetcuttrue
+%	\interactionnetaxtrue
+%}
+%
+%
+%%--------	axioms
+%
+%\gdef\psaxiom#1#2#3#4{%
+%	\tikz[psedge]{
+%		\ifinteractionnetax
+%			\draw (#1) to [out=\wireinangle, in=\wireinangle, looseness=#3] 
+%			node[midway,draw,inner sep=0pt,remember picture] (ax#4) {} 
+%			(#2) ;%
+%		\else
+%			\draw(#1) to [out=\wireinangle, in=\wireinangle, looseness=#3]  
+%			node[midway,draw,circle,inner sep=1pt, fill=white,minimum size=\gateD,psnode,remember picture] (ax#4) {$\axsym$}  
+%			(#2); %
+%		\fi
+%	}
+%}
+%\gdef\psaxioms#1{\foreach \aaa/\bbb/\ddd in {#1} {\psaxiom{\aaa}{\bbb}{1}{\ddd}}}
+%\gdef\psbentaxioms#1{\foreach \aaa/\bbb/\ccc in {#1} {\psaxiom{\aaa}{\bbb}{\ccc}{\ddd}}}
+%
+%
+%
+%%--------	cuts
+%\gdef\pscut#1#2#3{%
+%	\tikz[psedge]{
+%		\ifinteractionnetcut
+%			\draw (#1) to [out=\wireoutangle, in=\wireoutangle, looseness=#3]  (#2);%
+%		\else
+%			\draw (#1) to [out=\wireoutangle, in=\wireoutangle, looseness=#3, dotted] node[midway,draw,circle,inner sep=1pt,fill=white,minimum size=\gateD,psnode] {$\cutsym$}  (#2) ;%
+%		\fi
+%	}
+%}
+%\gdef\pscuts#1{\foreach \aaa/\bbb in {#1} {\pscut{\aaa}{\bbb}{1}}}
+%\gdef\psbentcuts#1{\foreach \aaa/\bbb/\ccc in {#1} {\pscut{\aaa}{\bbb}{\ccc}}}
+%
+%%--------	jumps
+%
+%\tikzstyle{jumpstyle}=[densely dotted]
+%
+%
+%\gdef\cheangejumpstyle#1{
+%	\tikzstyle{jumpstyle}=[#1]
+%}
+%
+%\gdef\psjump#1#2#3{%
+%	\tikz[psedge, jumpstyle]{
+%		\draw(#1) to [out=\wireinangle, in=\wireinangle, looseness=#3] (#2) ;
+%	}
+%}
+%\gdef\psjumps#1{\foreach \aaa/\bbb in {#1} {\psjump{\aaa}{\bbb}{1}}}
+%\gdef\psbentjumps#1{\foreach \aaa/\bbb/\ccc in {#1} {\psjump{\aaa}{\bbb}{\ccc}}}
+%
+%
+%%%%%%%%%%%%%			gates			%%%%%%%%%%%%
+%
+%
+%\newgate{tens}{\ltens}{}
+%\newgate{par}{\lpar}{}
+%\newgate{with}{\lwith}{}
+%\newgate{plus}{\lplus}{}
+%
+%\newgate{one}{\lone}{psCgate}
+%\newgate{bot}{\lbot}{psCgate}
+%\newgate{top}{\ltop}{psCgate}
+%\newgate{zero}{\lzero}{psCgate}
+%
+%\newgate{wnC}{\wn\mathsf c}{}
+%\newgate{wnD}{\wn\mathsf d}{}
+%\newgate{wnwn}{\!\!\wn\wn\mathsf d}{}
+%\newgate{wnW}{\wn\mathsf w}{}
+%\newgate{wn}{\wn}{}
+%
+%\newgate{ocC}{\oc\mathsf c}{}
+%\newgate{ocD}{\oc\mathsf d}{}
+%\newgate{ocW}{\oc\mathsf w}{}
+%\newgate{ococ}{\!\oc\oc\mathsf d}{}
+%\newgate{oc}{\oc}{}
+%
+%\newgate{Dup}{\partial}{}
+%\newgate{Er}{\epsilon}{psCgate}
+%
+%\newgate{dup}{\partial}{fill=black}
+%\newgate{er}{\epsilon}{psCgate,fill=black}
+%
+%
+%%--------	Boxes
+%\def\auxportsym{\wn}
+%
+%\gdef\boxYin#1{\tikz[remember picture]\node(boxYin#1){\vphantom{=}};}
+%\gdef\boxYang#1{\tikz[remember picture]\node(boxYang#1){\vphantom{=}};}
+%
+%
+%\tikzset{
+%	boxcenter/.style={
+%		inner sep=0pt,
+%		reset transform,
+%		fit={(\pgf@pathminx,\pgf@pathminy) (\pgf@pathmaxx,\pgf@pathmaxy)}
+%	},
+%	reset transform/.code={\pgftransformreset}
+%}
+%
+%\newcommand{\psBox}[4][D]{
+%	\tikz[psedge,remember picture,overlay]{
+%		\draw (boxYin#2) rectangle (boxYang#2) 
+%		node[boxcenter] (boxcenter#2) {};
+%		\node[ps#1gate,anchor=lower side] at (boxcenter#2.#3) (box#2main){$\oc$};
+%		\edef\auxindex{0}
+%		\foreach \pos in {#4}{
+%			\pgfmathparse{int(\auxindex+1)}
+%			\xdef\auxindex{\pgfmathresult}
+%%			\node[psnode,fill=white] at (boxcenter#2.\pos) (box#2aux\pos)		{$\auxportsym$};
+%			\node[psnode,fill=white] at (boxcenter#2.\pos) (box#2aux\auxindex){$\auxportsym$};
+%		}
+%	}
+%}
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%		Handsome proof nets		%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%\gdef\hpnsym{\bullet}
+%
+%
+%
+%\gdef\hpnvertex#1#2#3{%
+%	\expandafter\def\csname H#1\endcsname##1{%
+%		\mathord{%
+%			\tikz[remember picture,baseline=(H#1##1.base)]%
+%			\node[inner sep=0pt](H#1##1){$\strut#2\strut$};
+%			%			myname is H#1##1
+%		}
+%	}
+%	%	new macro fror $\backslash$ H#1
+%}
+%
+%%#1 = name
+%%#2 = number vertices of graph
+%%#3 = edges of the graph
+%\gdef\hpngate#1#2#3{
+%	\hpnvertex{#1In}{\hpnsym}{}
+%	\hpnvertex{#1Out}{\hpnsym}{}
+%	
+%	\expandafter\def\csname HG#1\endcsname##1{%
+%		\begin{array}{c}
+%			\foreach \vvv in {1,...,#2}{
+%				\ifnum \vvv > 1  \;\; \fi
+%				\csname H#1In\endcsname{##1\vvv}
+%			}
+%			\\[.5em]
+%			\csname H#1Out\endcsname##1
+%		\end{array}
+%		\foreach \vvv in {1,...,#2}{
+%			\cographedge{H#1In##1\vvv}{H#1Out##1}{}
+%		}
+%		\foreach \aaa/\bbb/\ccc in {#3}{
+%			\ifnum \ccc=0 
+%			\cographedge{H#1In##1\aaa}{H#1In##1\bbb}{}
+%			\else
+%			\speccographedge{H#1In##1\aaa}{H#1In##1\bbb}{looseness= \ccc}
+%			\fi
+%		}
+%	}
+%}
+%
+%\gdef\hpnaxiom#1#2#3{\bentmatchingedges{#1}{#2}{#3}}
+%\gdef\hpnaxioms#1{\foreach \aaa/\bbb/\ccc in {#1} \hpnaxiom{\aaa}{\bbb}{\ccc}}
+%
+%\gdef\hpncut#1#2#3{\bentmatchingedges{#1}{#2}{#3}}
+%\gdef\hpncuts{\foreach \aaa/\bbb/\ccc in {#1} \hpncut{\aaa}{\bbb}{\ccc}}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%		String Diagrams			%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%	Work In Progress	%%%%%%%%%%%%% 
+
+%%--------	variable inputs Gate
+%\gdef\newGate#1#2#3#4#5{%
+%	\expandafter\def\csname Gate#1\endcsname##1{%
+%		\tikz[remember picture,baseline=(Gate#1##1.center)]{
+%			\node (Gate#1##1) {};
+%			\@tempcnta=#4\relax
+%			\foreach \aaa in {1,2,...,#4}{
+%				\@tempcnta=#4\relax
+%				\advance\@tempcnta by 1
+%				\node at  ($(Gate#1##1) + (2\gateW*\aaa/\@tempcnta,0) - (\gateW,0)$) (Gate#1##1P\aaa) {};
+%			}
+%			\drawTriaGateate{Gate#1##1}{#3}{#2}
+%		}
+%	}
+%} 
+
+
