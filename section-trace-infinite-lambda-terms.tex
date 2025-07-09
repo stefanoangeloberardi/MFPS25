@@ -301,25 +301,32 @@ $
 \end{enumerate}
 
 \item
-Assume $\Gamma \vdash t : B$ is obtained by a rule $\weak$ from $\Gamma' \vdash t : B$, 
-and $\phi:\Gamma' \rightarrow \Gamma$.
+Assume $\Gamma \vdash t : B$ is obtained by a rule $\weak$ from $\Gamma' \vdash t : B$
+where $\Gamma' = {x'_1}^{A'_1}:A_1, \ldots, {x'_{n'}}^{A'_{n'}}:A'_{n'}$. Assume
+$\phi:\Gamma' \rightarrow \Gamma$ is the map associated to the rule\footnote{
+We recall that $\phi:[1,n'] \rightarrow [1,n]$, 
+and for all $a = 1, \ldots, n'$, the value $\phi(a) \in [1,n]$ is the unique value 
+such that ${x'_{a}}^{A'_{a}} = x_{\phi(a)}^{A_{\phi(a)}}$
+(Def. \ref{definition-context-lambda}.\ref{definition-context-lambda-08}).}.
 Then:
 \begin{enumerate}
 \item
-for $j=1, \ldots, n$ 
-the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j'$-th named 
-argument $x_{j'}^{A_{j'}}$ in the assumption, provided $\phi(j') = j$.
+for $j=1, \ldots, n$ and $a = 1, \ldots, n'$,
+the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $a$-th named 
+argument $x_{a}^{A'_{a}}$ in the assumption if and only if $j = \phi(a)$.
+
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-th unnamed argument $B_k$ in the assumption.
 \end{enumerate}
+
 \begin{prooftree}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_{\phi(j)}^{A_j}} \ldots 
+\AxiomC{$ \ldots \vnode1{x_{a}^{A_{a}}} \ldots 
 \vdash t: \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
 \AxiomC{}
-\BinaryInfC{$ \ldots, \vnode3{x_j^{A_j}} \vdash t 
+\BinaryInfC{$ \ldots, \vnode3{x_{\phi(a)}^{A_{\phi(a)}}} \ldots \vdash t 
 : \ldots \rightarrow \vnode4{B_k} \rightarrow \ldots \rightarrow a  $}
 \end{prooftree}
 
