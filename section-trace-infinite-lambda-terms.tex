@@ -313,7 +313,8 @@ Then:
 \item
 for $j=1, \ldots, n$ and $a = 1, \ldots, n'$,
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $a$-th named 
-argument $x_{a}^{A'_{a}}$ in the assumption if and only if $j = \phi(a)$.
+argument ${x'}_{a}^{A'_{a}}$ in the assumption if and only if $j = \phi(a)$
+(i.e., if and only if  $x_j^{A_j} = {x'}_{a}^{A'_{a}}$).
 
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
@@ -323,7 +324,7 @@ is connected to the $k$-th unnamed argument $B_k$ in the assumption.
 \begin{prooftree}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_{a}^{A_{a}}} \ldots 
+\AxiomC{$ \ldots \vnode1{{x'}_{a}^{{A'}_{a}}} \ldots 
 \vdash t: \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
 \AxiomC{}
 \BinaryInfC{$ \ldots, \vnode3{x_{\phi(a)}^{A_{\phi(a)}}} \ldots \vdash t 
