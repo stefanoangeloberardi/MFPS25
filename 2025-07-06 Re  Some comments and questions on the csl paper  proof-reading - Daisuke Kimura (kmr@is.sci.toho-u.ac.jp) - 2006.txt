@@ -1,0 +1,269 @@
+﻿ Re: Some comments and questions on the csl paper: proof-reading
+Oggetto:
+Re: Some comments and questions on the csl paper: proof-reading
+Mittente:
+Daisuke Kimura <kmr@is.sci.toho-u.ac.jp>
+Data:
+06/07/2025, 20:06
+A:
+Stefano Berardi <stefano.berardi@unito.it>
+CC:
+Koji Nakazawa <knak@sqlab.jp>
+Received:
+via dmail-2007f.18 for stefano; Sun, 6 Jul 2025 20:06:15 +0200 (CEST)
+X-MailScanner-From:
+stefano.berardi+caf_=stefano=di.unito.it@unito.it
+X-SpamCheck:
+not spam (whitelisted), SpamAssassin (not cached, score=-3.801, required 3, autolearn=not spam, AWL 1.79, BAYES_00 -1.90, RCVD_IN_DNSWL_NONE -0.00, RCVD_IN_RP_CERTIFIED -3.00, RCVD_IN_RP_RNBL 1.31, RCVD_IN_RP_SAFE -2.00, SPF_PASS -0.00)
+X-AntiVirus:
+Email Clean
+X-dipinfo-MailScanner-ID:
+566I6CbA026421
+X-dipinfo-MailScanner-Information:
+Please contact Department of Computer Science technical staff for more information
+Received:
+from mail-ed1-f49.google.com (mail-ed1-f49.google.com [209.85.208.49]) by mail.di.unito.it (INFO-DIP) with ESMTPS id 566I6CbA026421 (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL userCertificateDN=smtp.gmail.com ) for <stefano@di.unito.it>; Sun, 6 Jul 2025 20:06:12 +0200 (CEST)
+DKIM-Filter:
+OpenDKIM Filter v2.11.0 mail.di.unito.it 566I6CbA026421
+Authentication-Results:
+di.unito.it; dkim=pass (2048-bit key) header.d=is-sci-toho-u-ac-jp.20230601.gappssmtp.com header.i=@is-sci-toho-u-ac-jp.20230601.gappssmtp.com header.b="qg4hQ9bv"
+Received:
+by mail-ed1-f49.google.com with SMTP id 4fb4d7f45d1cf-607cf70b00aso4631743a12.2 for <stefano@di.unito.it>; Sun, 06 Jul 2025 11:06:11 -0700 (PDT)
+ARC-Seal:
+i=2; a=rsa-sha256; t=1751825171; cv=pass; d=google.com; s=arc-20240605; b=IQVW6uIOhprdqtmD1QBK3whpDeNOIseSZSDh5GCgjsOs1X9EPJKzTrggv+kSbSVUr7 TE1NeQ4aTbP0LCPdtDBNrfeY26OsYlQg1G2vTilan1DNtJLRX5Rd7Lw3hZh9kbG4C+RV x4N0xjWB56IyNro0ruQOuRAP161sljQcE2GSkZph5fb1ij7En1fzMTGh5/g8LAv6BFDs QDKzPqQw482+GpdhT8hQrYWqeblJlNSSgP7Urzs2JZlzsRWfqlwSgoMa7MyFjWSF0tCR nvWh/1mfOgHSRUnjuIBQ7fT8DkeJfcttV4G1sBk1/Oek2lfpNdptNQ9y54L5xeHfp3xL reGg==
+ARC-Message-Signature:
+i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605; h=content-transfer-encoding:in-reply-to:from:references:cc:to :content-language:subject:user-agent:mime-version:date:message-id :dkim-signature:delivered-to; bh=3QmsH9pjaX5KZcfrXK/BkZQ6+s9ZGs8J/vu5OvmgAog=; fh=UeSnEcfo1q7QbwvE/CMhfVorXYiUdMhSr0VxzUXCXnU=; b=fZsZ17S/64FTIPAr/TOd2hQA4jV3/ZooilTjwPRMB17JK60oGjYn4NprsgA/zTEbCT TTLdKfqjRw1vMEk1yYcWVMETPoNzIX6UgvThCOt2Arx0yzWs+HppIly+kq2ioSJ3Aazx q9qXP/PN0jdNTbcQIvGpheCfUfizgHtKfC0vO+U+11NFYF6w2gmpIKAEor2KgMK0wrXS GrCdYx1q/88epUj7Q8/CW/r5XakYBg6owovKxNlSHRJAvM7ieHMAENCSkJcVAEEpnLXZ bFjyyS1rNf/yL3FRiXgMBsJmZ8WGi1RwEvUsJKVa2Ear5IjFOFW0QYg7zgzMvvbi/z2n DDjw==; darn=di.unito.it
+ARC-Authentication-Results:
+i=2; mx.google.com; dkim=pass header.i=@is-sci-toho-u-ac-jp.20230601.gappssmtp.com header.s=20230601 header.b=qg4hQ9bv; spf=pass (google.com: domain of kmr@is.sci.toho-u.ac.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=kmr@is.sci.toho-u.ac.jp; dara=neutral header.i=@unito.it
+X-Google-DKIM-Signature:
+v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20230601; t=1751825171; x=1752429971; h=content-transfer-encoding:in-reply-to:from:references:cc:to :content-language:subject:user-agent:mime-version:date:message-id :dkim-signature:delivered-to:x-forwarded-for:x-forwarded-to :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to; bh=3QmsH9pjaX5KZcfrXK/BkZQ6+s9ZGs8J/vu5OvmgAog=; b=WVjvFXxIlPxWluVE+s8l2kSs2DkeTIjiJH8s907nWMcnwgZnHYSn/rKh1s3pMLhddl Wf/jZAIM8RIuOGOyqVB+NJjQHIZr9T8/K9275/fpNFzBvJZIS2ITpoyl/5QOiqFGL2bZ 68LI2zjWI5eeoJPdmBk+cpyWaEpx0oWhm9i5zFbvvS3fpdE8nMFL/iXXo607kI1hliMm e4UmaD9CN2SEu1OViPmK25DOit4ilf76yT3zSEu4K90G/bi0xQKsbxl7P0qIi6NbJKZt 5C1DtJ76ofPLDrkue+E2SdXqYP9ALM6PTB0kJPDwNHnhC0lReBCoEYhD+b+UqF8oaBY3 vxyg==
+X-Forwarded-Encrypted:
+i=2; AJvYcCUKMl1NLDlWZh9ITc3XCT5p4Ba4C7Z3c+WpIJ50pcYzT7L818tPCngojDDflxbJmegXJJIgLXhk@di.unito.it
+X-Gm-Message-State:
+AOJu0YzoDgEdShjcF5J4HzSS5CWDyPEwJm+cme+51jAR4oeTThkC9Dwm wddnG0bju7lRf1OzHiNXvaj5kvSC1pmeeRMtTNre3nA+y4CWQWzuCo/NfLI89RZAeuI7gvbu1rM btqURoeSqhj5syqW6qUTuqJoYBjSpDItNPz8vjkPNvCg6L71pN0iRzDf4UAqZ2Uj2zI1Q/u0555 2VAoOJ6TQ=
+X-Received:
+by 2002:a17:907:7e9d:b0:ae0:e065:ddfb with SMTP id a640c23a62f3a-ae4107d2471mr579798566b.18.1751825171333; Sun, 06 Jul 2025 11:06:11 -0700 (PDT)
+X-Forwarded-To:
+stefano@di.unito.it
+X-Forwarded-For:
+stefano.berardi@unito.it stefano@di.unito.it
+Delivered-To:
+stefano.berardi@unito.it
+Received:
+by 2002:a17:906:c107:b0:ade:4038:3253 with SMTP id do7csp6717484ejc; Sun, 6 Jul 2025 11:06:09 -0700 (PDT)
+X-Received:
+by 2002:a05:6000:1448:b0:3a5:1cc5:aa6f with SMTP id ffacd0b85a97d-3b49aa9941dmr4509340f8f.34.1751825168754; Sun, 06 Jul 2025 11:06:08 -0700 (PDT)
+ARC-Seal:
+i=1; a=rsa-sha256; t=1751825168; cv=none; d=google.com; s=arc-20240605; b=BaQJj6ge4Lkwh4J2EbfIsJsSRKAXRI/l/DZ0Mlg9NZsSRszEt/2ZIH8bjxx05OPpil Ylof/uUCYvfod7jmWL+tMxsqTWhiMtTkjV4GqBQput4UBEhD9U1YA6i2pldKS1L2Qquw +nhoYQqFCTm9ijL7bdyJB877XbB5tUN0AHQ4sD9PE5vfyv+B7olHVk5fRuRX/FYrq3mH hLTsckrE2bDi4FHqqveJD1NdSLAfesw6itHlSFzOOw8QBbDGBjGehE56QM4GD0sOnaRr XnC1cqpNeO+dZ4lJ5WQb5gOcd7J7q/r9s+GPSrFdNi8nPw+Wid2iTOKlxz3jlW3Svfjf ATRg==
+ARC-Message-Signature:
+i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605; h=content-transfer-encoding:in-reply-to:from:references:cc:to :content-language:subject:user-agent:mime-version:date:message-id :dkim-signature; bh=3QmsH9pjaX5KZcfrXK/BkZQ6+s9ZGs8J/vu5OvmgAog=; fh=JlGEBBPpqd7AAfyfCPlapL9cNmlIzh5WQmUQ6a2h/IU=; b=aH45mwRlTeQ7QGSS704nMuPhHrg4HOSR1Y8z6NOUw6+aNuPsb/t+S56DpkwIRwui7u 51keWMrFhIIMUNEzJWsr+n2p9yzd8hM9j4vQTlNksQHFaRqUw75dbdHlrka/EBmCZ/Do l9TLNOyx7zHE6ldc4LDlHZO39k7gviUeXn0AnFbrZreI+4gzsMKuiVbkcIaPi614fssd VLJ6RNtSmLxC0VEppdrLLz9xRof/LoypNN9GwJ28l7morERWz70s4nl76luhykmmbnCh ROzhK1TjNDfRceazkX/VFswB6nwlD7W4+/3LI81gGu/pSQNg6usbBNjCVnmjWNoeFAV9 ORMA==; dara=google.com
+ARC-Authentication-Results:
+i=1; mx.google.com; dkim=pass header.i=@is-sci-toho-u-ac-jp.20230601.gappssmtp.com header.s=20230601 header.b=qg4hQ9bv; spf=pass (google.com: domain of kmr@is.sci.toho-u.ac.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=kmr@is.sci.toho-u.ac.jp; dara=neutral header.i=@unito.it
+Received:
+from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41]) by mx.google.com with SMTPS id d2e1a72fcca58-74ce33ea611sor4346542b3a.1.2025.07.06.11.06.08 for <stefano.berardi@unito.it> (Google Transport Security); Sun, 06 Jul 2025 11:06:08 -0700 (PDT)
+Received-SPF:
+pass (google.com: domain of kmr@is.sci.toho-u.ac.jp designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results:
+mx.google.com; dkim=pass header.i=@is-sci-toho-u-ac-jp.20230601.gappssmtp.com header.s=20230601 header.b=qg4hQ9bv; spf=pass (google.com: domain of kmr@is.sci.toho-u.ac.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=kmr@is.sci.toho-u.ac.jp; dara=neutral header.i=@unito.it
+DKIM-Signature:
+v=1; a=rsa-sha256; c=relaxed/relaxed; d=is-sci-toho-u-ac-jp.20230601.gappssmtp.com; s=20230601; t=1751825167; x=1752429967; darn=unito.it; h=content-transfer-encoding:in-reply-to:from:references:cc:to :content-language:subject:user-agent:mime-version:date:message-id :from:to:cc:subject:date:message-id:reply-to; bh=3QmsH9pjaX5KZcfrXK/BkZQ6+s9ZGs8J/vu5OvmgAog=; b=qg4hQ9bvo6v3shFhS5SdNYKq1z44wEqz/Ov+8Giz9X+/oKJDZ7/O38Gcn2rhiLm2Zj olMRAPp0TB1vc6h5Vhrykg30WHMrEHYHcyLJEex58CfNBgQQ/xdwKGaVButl//ac4eOv hD5R5sN07HrENI/eADm4N1fjQaAfkObpt8BXehzStPhUemqrnWBoSjBrMLHoNHKLp88h L76H+2jH7DMISoH/I/x+db+QU7dnd6hf1kj4oDAoMtDWAIqot1mWbS7TP0XLTfyh5Kwq Hfuq535/uc4nIjXfs/c7s5PjaGTtLt2Q+rrSOKv8tUpJ9FknpMtxPs6zuG7dFsWCGnKv YHVQ==
+X-Gm-Gg:
+ASbGncsyDbxZ5zOkW8spR0riqamtzfE9smg5+UPOBXwwB0L+nNwUNjOCrlgBuX0lhVy ypV3mYCF15TWr5bPuqmpGEC2g0x3y9vlTLqqLHaolZXJPfvcuMZNKkvP/nLTgYOP+M498issB49 kvjepn4rulVrUHN9Hvl9R2aPt2rghwHhRu5Hd3HRbRbWzd1W5MHdIsc/Wn5fOiXDB8PixJRKnw2 zM7KlHFSeDDKretPa/eLal4zKBkub/S08EP+5jWcWd0dwk+JHqN2i5Kkd0iHm9+/JhzGpCUg2ra J2IZ/jbCYTu7tEP3P+1zGTvNhTeLOomMHxC9n2VSllTbmE2L0ma9vxCytEt1sV8JtwUeB8tI3PS Y5wH6lkFoAw5nrI19P+LxQXlGP+6z3qRXiUbE5Ew=
+X-Google-Smtp-Source:
+AGHT+IGFKZSWJmLNeLhqDc7D8R/h/3r1gYkretxuPmVFtefH0jVgc3EOMN2EEZ0UPiU+ZWWiIilqNg==
+X-Received:
+by 2002:a05:6a20:734e:b0:220:2327:e6c2 with SMTP id adf61e73a8af0-225b85f3ec6mr14871456637.15.1751825167032; Sun, 06 Jul 2025 11:06:07 -0700 (PDT)
+Received:
+from ?IPV6:2400:4051:d5e1:7a00:1eb:58c4:cbc8:ffc9? ([2400:4051:d5e1:7a00:1eb:58c4:cbc8:ffc9]) by smtp.gmail.com with ESMTPSA id d2e1a72fcca58-74ce417de60sm7505035b3a.95.2025.07.06.11.06.05 (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128); Sun, 06 Jul 2025 11:06:06 -0700 (PDT)
+ID-Messaggio:
+<891893c5-79d2-4993-98f5-aab286277582@is.sci.toho-u.ac.jp>
+Versione-MIME:
+1.0
+Agente-Utente:
+Mozilla Thunderbird
+Content-Language:
+en-US
+Referenze:
+<bc154d3a-ff25-4359-aae6-d6c81f4ce331@is.sci.toho-u.ac.jp> <158663e9-fb0f-435c-8a7a-c305e6b7ac3b@di.unito.it> <1cd3f5ac-158a-4726-9799-7fae12b66cfa@di.unito.it> <7ca8b4a1-c5a3-4f43-b2ce-d032d66842dd@is.sci.toho-u.ac.jp> <6dfe0da6-587a-4f76-a236-80372b6747a0@is.sci.toho-u.ac.jp> <f518b47d-c35f-4ac2-a001-c8e5e90ea887@di.unito.it>
+In-Reply-To:
+<f518b47d-c35f-4ac2-a001-c8e5e90ea887@di.unito.it>
+Content-Type:
+text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding:
+8bit
+
+
+
+I almost reflected the reviewers' comments to the latest version & git-pushed.
+I'll not update the files until next Friday (a bit busy).
+
+I splitted the Sum example at Sec 4.1 into (i) its well-typedness + regularity part, (ii) its reduction part (newly added), and (iii) it's in CT-λ part.
+Put (i) at Example 2.2, (ii) at Example 2.5, (iii) at Example 4.1. They work as a running example. I think it would be helpful for readers.
+
+This change also answers this reviewer's comment:
+> page 9: finally in example 4.1 the need for the weakening rule is made clear. Why not present this example earlier in the paper and refer to it here?
+
+
+I left the following comments. Could you do them?
+
+[Section 3]
+> the description of connections between arguments is hard to read and unclear. One of the problems, besides general hardness to parse, is that the scope of definitions of objects is not obvious at all (e.g. u in item 2 is referring to the u defined by item 1, but t is changed to f).
+> the definition of connections takes up two pages of cumbersome formalism, it could be compressed and explained more efficiently. Keeping track of explicit indexes and doing the computations does not help the reader figure out what is encoded. Just giving a picture for each rule, showing the connections, would be clearer and would save a lot of space and effort.
+
+[Section 4. After Def 4.1]
+> page 9: you say that you believe that global trace condition is decidable quite fast for realistic lambda-terms. What do you mean by fast? What do you mean by realistic? What sustains this claim?
+
+[Section 4.2. The iterator example]
+> Example 4.2: I don't see what the equations up to ~ bring, you could just give directly the term for the iterator "it", it is even clearer than the sum case that you gave directly in the previous example. It would be more interesting to comment on whether it can be alternatively defined the other way by adding the last f inside instead of outside, by It=λf,a.cond(a,λx.It(f,f(a))(x))
+
+[Section 4.3. The interval map example]
+> Example 4.3: there are too many definitions of i: i is first defined as i=λx.cond(b, λy.i), but then you add i=c( it(x), i(S(x))(y) ), it does not seem to make sense. I suspect you just reused the name i instead of a different name, which is very unfortunate since the reader does not know which is which. Moreover, the definition λx.cond(b, λy.i) does not match the first unfolding in the proof, which is cond(b, i) instead of cond(b,λy.i). At this point I'm giving up trying to fix the example (which I'm convinced can be done, but this should not be up to the reader)
+
+> page 10: in example 4.3, I cannot parse the sentence "We solve the recursive equation for I...". And again, you are very loose with your syntax: \f,a.i does not correspond to any term in you syntax, as well as c(a,l). As I understand, you are using tuples with terms that are actually "curried". Please be more clear about this.
+
+
+
+Best,
+Daisuke
+
+
+
+On 7/3/25 17:54, Stefano Berardi wrote:
+> ok so I wait saturday and I will have a new look to the paper
+>
+> stefano
+>
+> Il 02/07/2025 19:16, Daisuke Kimura ha scritto:
+>>
+>> I updated the draft and git-pushed.
+>> Koji also checked sec.2, and I reflected his comments.
+>>
+>> >> Introduction:
+>> >> I think it's better add table of contents at the last of introduction, like
+>> >> "Section 2 defines our infinite lambda-terms and typing rules. Section 3 ...".
+>> > ok, can you do it?
+>>
+>> I did it.
+>>
+>>
+>> >> Definition 2.2:
+>> >> The current definition of 〜 (label-preserving bijection) is not enough
+>> >> because we have ap(x,y)〜ap(y,x) and λx.λy.z〜λy.λx.z, which would be unexpected.
+>> >> A label-preserving tree isomorphism will be ok.
+>> > indeed this is what I planned to write. the word "bijection" is too weak and it is a mistake. we should also define which label-preserving tree isomorphism we consider. it should preserve root and child, left-child and right-child relation, besides preserving all labels.
+>> > could you modify this point?
+>>
+>> I did it. I also added a reason of considering 〜 (before Def 2.3).
+>>
+>>
+>>
+>> >> Definition 2.5, item 2:
+>> ...
+>> >     the generalmost version for 〜α can destroy regularity, by inserting infinitely many bound variable through renaming. since beta-reduction requires substution and substitution requires 〜α, then beta-reduction can destroy regularity.
+>> >     Perhaps it not strictly required in our paper, but I would prefer that we can compute a regular term while preserving regularity. In this way if we start from a term having a finite graph representation then we we reduce we still have a term with a finite graph representation.
+>>
+>> I see, but the def 2.5 has not been changed yet.
+>> I'll do it in the next update (it will be saturday).
+>>
+>>
+>>
+>> >> Sec 2.2., the second paragraph (above Definition 2.7):
+>> >> The explanation of ap_v would be hard to understand for readers
+>> >> because, until this point, neither GTC nor computation has been explained.
+>> > you could announce that we will explain ap_v in a moment, and then move the explanation after GTC
+>>
+>> I did it. The explanation is put after the definition of GTC (remark 4.2).
+>>
+>>
+>> >> What does Stat (the set of judgments) stand for?
+>> >> I think it would be natural to use Judg, Jgmt or something.
+>> > the word Stat was from a previous version, use Judg instead. It should be enough to change the macro.
+>>
+>> I did it.
+>>
+>>
+>>
+>> Daisuke
+>>
+>>
+>>
+>> On 7/2/25 21:39, Daisuke Kimura wrote:
+>>>
+>>>  > do you think you have time for the remaining changes? otherwise I will do them.
+>>>
+>>> Oh, sorry, I didn't reply. Now I'm doing it.
+>>>
+>>>
+>>> Daisuke
+>>>
+>>>
+>>> On 7/2/25 21:16, Stefano Berardi wrote:
+>>>>
+>>>> Dear Daisuke,
+>>>>
+>>>> do you think you have time for the remaining changes? otherwise I will do them.
+>>>>
+>>>> Stefano
+>>>>
+>>>> Il 28/06/2025 08:17, Stefano Berardi ha scritto:
+>>>>>
+>>>>> Il 28/06/2025 01:34, Daisuke Kimura ha scritto:
+>>>>>> Dear Stefano and Koji,
+>>>>>>
+>>>>>> I did some minor fixes of section 1 and 2 & git-pushed.
+>>>>>>
+>>>>>> I have questions and comments.
+>>>>>>
+>>>>>> Introduction:
+>>>>>> I think it's better add table of contents at the last of introduction, like
+>>>>>> "Section 2 defines our infinite lambda-terms and typing rules. Section 3 ...".
+>>>>>
+>>>>> ok, can you do it?
+>>>>>
+>>>>>
+>>>>>> Definition 2.2:
+>>>>>> The current definition of 〜 (label-preserving bijection) is not enough
+>>>>>> because we have ap(x,y)〜ap(y,x) and λx.λy.z〜λy.λx.z, which would be unexpected.
+>>>>>> A label-preserving tree isomorphism will be ok.
+>>>>>
+>>>>> indeed this is what I planned to write. the word "bijection" is too weak and it is a mistake. we should also define which label-preserving tree isomorphism we consider. it should preserve root and child, left-child and right-child relation, besides preserving all labels.
+>>>>>
+>>>>> could you modify this point?
+>>>>>
+>>>>>
+>>>>>> Definition 2.5, item 2:
+>>>>>> I don't see the intention of "equality preserving" (What are equal labels)?
+>>>>>
+>>>>> it means that if some lambda x. is renamed to lambda y. then all lambda x. are renamed to lambda y. to put otherwise, there is a function phi:Var--->Var from variables to variables. phi is applied to binder and to bound variables, and replaces lambda x. with lambda phi(x), and any bound variable x with phi(x).
+>>>>>
+>>>>> could you re-define the relation 〜α in this way?
+>>>>>
+>>>>>
+>>>>>> I think the relation 〜α can be defined by the existence of an α-conversion map by item 1. Why do you need the additional equality preserving condition? (I may be missing something)
+>>>>>
+>>>>>     the generalmost version for 〜α can destroy regularity, by inserting infinitely many bound variable through renaming. since beta-reduction requires substution and substitution requires 〜α, then beta-reduction can destroy regularity.
+>>>>>
+>>>>>     Perhaps it not strictly required in our paper, but I would prefer that we can compute a regular term while preserving regularity. In this way if we start from a term having a finite graph representation then we we reduce we still have a term with a finite graph representation.
+>>>>>
+>>>>>
+>>>>>> Sec 2.2., the second paragraph (above Definition 2.7):
+>>>>>> The explanation of ap_v would be hard to understand for readers
+>>>>>> because, until this point, neither GTC nor computation has been explained.
+>>>>>
+>>>>>
+>>>>> you could announce that we will explain ap_v in a moment, and then move the explanation after GTC
+>>>>>
+>>>>>
+>>>>>> What does Stat (the set of judgments) stand for?
+>>>>>> I think it would be natural to use Judg, Jgmt or something.
+>>>>>
+>>>>>
+>>>>> the word Stat was from a previous version, use Judg instead. It should be enough to change the macro.
+>>>>>
+>>>>>
+>>>>>> Best,
+>>>>>> Daisuke
+>>>>>
+>>>>> See you soon Stefano
+>>>>>
+>>>>>
