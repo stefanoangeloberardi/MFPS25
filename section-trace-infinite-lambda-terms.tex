@@ -180,6 +180,7 @@ for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion
 is connected to the $(k+1)$-unnamed argument $B_k$ in the assumption.
 \end{enumerate}
 \begin{prooftree}
+\RightLabel{$\apvar$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_i^{A_i}} \ldots \vnode2{x_j^{A_j}}  \ldots 
@@ -199,7 +200,7 @@ $
 \bentdirflowedges{node7/node4/60}
 $    
 \item
-Suppose $\Gamma \vdash f(a) : B$ is obtained by a rule $\ap$ from
+Suppose $\Gamma \vdash f(a) : B$ is obtained by a rule $\apnotvar$ from
 $\Gamma \vdash f: A \rightarrow B$ and $\Gamma \vdash a: A$. 
 Then:
 \begin{enumerate}
@@ -212,6 +213,7 @@ for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion
 is connected to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
 \begin{prooftree}
+\RightLabel{$\apnotvar$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} \ldots \vdash f: A
@@ -255,6 +257,7 @@ argument $x_a^{A_b}$ and to the $(b-1)$-th
 named argument $x_b^{A_b}$ in the assumption, respectively.
 
 \begin{prooftree}
+\RightLabel{$\lambda$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_a^{A_a}} 
@@ -288,6 +291,7 @@ argument $x_j^{A_j}$ in the assumption.
 
 
 \begin{prooftree}
+\RightLabel{$\lambda$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
@@ -333,6 +337,7 @@ is connected to the $k$-th unnamed argument $B_k$ in the assumption.
 \end{enumerate}
 
 \begin{prooftree}
+\RightLabel{$\weak$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{{x'}_{a}^{{A'}_{a}}} \ldots 
@@ -374,13 +379,14 @@ argument $x_j^{A_j}$ in both assumptions.
 \item
 the first unnamed argument $\N$ in the conclusion is connected to the 
 the first unnamed argument $\N$ in the second assumption: \emph{this is the unique
-progressing connection}.
-and for $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
+progressing connection}, in {\color{red} \bf red}.
+For $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-unnamed argument $B_k$ in the first assumption,
 and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
 
 \begin{prooftree}
+\RightLabel{$\cond$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
@@ -403,7 +409,7 @@ g :  \vnode4{\tt N} \rightarrow
 $
 \bentdirflowedges{node6/node1/30} 
 \bentdirflowedges{node6/node3/30} 
-\bentdirflowedges{node7/node4/0}
+\dirflowrededges{node7/node4}
 \bentdirflowedges{node8/node2/30}
 \bentdirflowedges{node8/node5/0}
 $    
@@ -418,6 +424,7 @@ argument $x_j^{A_j}$ in the assumption.
 
 
 \begin{prooftree}
+\RightLabel{$\Succ$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
