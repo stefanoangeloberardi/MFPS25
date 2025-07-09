@@ -23,7 +23,8 @@ on a closed term of type $\N$ strongly normalize to a numeral.
 As a consequence, all closed terms $\CTlambda$ are total functionals. 
 \\
 
-By building over the notion of progressing trace (Def. \ref{definition-progressing-trace})
+By building over the notion of trace progressing in an index $i$
+(Def. \ref{definition-progressing-trace})
 we now define the global trace condition and the set of terms $\GTC$  and $\CTlambda$.
 Informally, GTC requires that all infinite branches have some trace of some argument
 $\N$ passing infinitely many times through the right-hand side of a $\cond$.
@@ -33,18 +34,21 @@ $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 %\mbox{}
 % \linebreak 
 Assume $\Pi::\Gamma \vdash t :A$ is a typing proof, $\pi = (\theta_1, \ldots, \theta_n, \ldots)$ 
-is a path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
-is a trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
+is a possibly infinite path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
+is a possibly infinite trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
 Assume $i$ is an index of $\pi$.
 
 \begin{enumerate}
+%\item
+%$\tau$ is progressing in the index $i$ if and only if: $\theta_i$ is labeled by some $\cond$-rule
+%and by some judgment $\Gamma \vdash \cond(f,g):\N \rightarrow A$),
+%$\theta_{i+1}$ is the right child of $\theta_i$
+%labeled by the judgment $\Gamma \vdash g:\N \rightarrow A$,
+%and $k_i$ is the index of the first \emph{unnamed} argument of $\theta_i$.
+%Otherwise $\tau$ is not progressing in $i$.
 \item
-$\tau$ is progressing in the index $i$ if and only if: $\theta_i$ is labeled by some $\cond$-rule
-and by some judgment $\Gamma \vdash \cond(f,g):\N \rightarrow A$),
-$\theta_{i+1}$ is the right child of $\theta_i$
-labeled by the judgment $\Gamma \vdash g:\N \rightarrow A$,
-and $k_i$ is the index of the first \emph{unnamed} argument of $\theta_i$.
-Otherwise $\tau$ is not progressing in $i$.
+the trace $\tau$ is \emph{infinitely progressing} 
+if there are infinitely many indexes $i \in \dom(\tau)$ such that $\tau$ is progressing in $i$.
 
 \item
 $t$ satisfies the global trace condition if $t \in \WTyped$
@@ -64,8 +68,10 @@ The global trace condition is decidable in polynomial space in the number of
 subterms of $t$, counted up to isomorphism, 
 because it is a particular case of the size change algorithm for program 
 termination (\cite{SCT}). 
-%We believe that the global trace condition is decidable quite fast
-%for infinitary $\lambda$-terms describing realistic programs. 
+The global trace condition is decidable quite fast
+for infinitary $\lambda$-terms describing realistic programs 
+(\cite{10.1007/978-3-642-35182-2_25}, 
+Section 4.7 \quotationMarks{Experimental Results}). 
 
 %Another nice feature of the global trace condition is 
 %that for $t \in \GTC$ we require that for any proof $\Pi::\Gamma \prove t:A$ 
@@ -210,11 +216,13 @@ infinite many times. Therefore it satisfies the global trace condition, and then
 
 \begin{Eg}
 We define a term $\Iter$ of  $\CTlambda$ computing the iteration of maps on $\N$.
+We write $\approx$ for
+the existence of a common reduct.
 The term $\Iter$ is a closed normal term of type $(\N \rightarrow \N), \N,\N \rightarrow \N$ such 
-that $\Iter(f,a,n)=f^n(a)$ for all numerals $n \in \Num$. 
-Let $\Gamma = (f:\N \rightarrow \N, a:\N)$. We write $\approx$ for
-the existence of a common reduct in the context $\Gamma$. 
-We have to solve the following equations up to $\approx$:
+that $\Iter(f,a,n) \approx f^n(a)$ for all numerals $n \in \Num$. 
+Let $\Gamma = (f:\N \rightarrow \N, a:\N)$. 
+We have to solve the following equations for terms in the context $\Gamma$
+and up to $\approx$:
 
 \begin{enumerate}
 \item
@@ -224,12 +232,12 @@ $\Iter(f,a,\Succ (t)) \approx f(\Iter(f,a,t))$
 \end{enumerate}
 
 where $f$, $a$ abbreviate $f^{\N\rightarrow\N}$ and $a^\N$.
-We solve the equations above with $\Iter \sim \lambda f, a.\iter$
-where $\sim$ is the term isomorphism and
+We solve the equations above with the closed term $\Iter = \lambda f. \lambda a.\iter$
+where 
 $$
-\iter \sim \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N
+\iter = \cond (a)(\lambda x.f(\iter(x))):\N \rightarrow \N
 $$ 
-%is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 \end{Eg}
 
 \begin{proposition}[The iterator $\Iter$ is a term of $\CTlambda$]
@@ -260,7 +268,7 @@ hence $\Iter \in \CTlambda$.
 The proof of $\Gamma \vdash \iter: \N \rightarrow \N$ 
 includes a type inference from the term $\iter$ to itself.
 We draw the type inference in the picture below and we outline
-with $\goldN$ the unique infinitely progressing trace
+with $\goldNout$ the unique infinitely progressing trace
 (the infinite traces of $f:\N \rightarrow \N$ and $a:\N$ do no progress). 
 If we want a finite cyclic graph notation we add a back edge from the 
 $\golddagger$ on the top to the $\golddagger$ in the bottom.
@@ -277,7 +285,7 @@ the outlined infinite trace.
 {
     \infer[\cond]{ %opening: \infer[\cond]
       \Gamma 
-      \vdash \iter: \goldN \rightarrow \N 
+      \vdash \iter: \goldNout \rightarrow \N 
         \quad (\goldspadesuit, \golddagger)
      }{ 
          \infer[\var]{
@@ -288,10 +296,10 @@ the outlined infinite trace.
         {\infer[\lambda] %opening: \infer[\lambda]
          {
          \Gamma
-          \vdash \lambda x.f(\iter(x)):\goldN \rightarrow \N
+          \vdash \lambda x.f(\iter(x)):\goldNout \rightarrow \N
          }{
          \infer[\ap]{ %opening: \infer[\ap]
-           \Gamma, x:\goldN
+           \Gamma, x:\goldNout
           \vdash f(\iter(x)):\N
            }{
           \infer[\var]{
@@ -299,13 +307,13 @@ the outlined infinite trace.
       \vdash f:\N \rightarrow \N}{}
            {\ \ \ \ \ \ \ \ \ \ \ \ }
            {\infer[\apvar] %opening: \infer[\apvar]
-            {\Gamma, x:\goldN
+            {\Gamma, x:\goldNout
         \vdash \iter(x): \N 
              }{
           \infer[\weak]{\Gamma, x:\N
-                                 \vdash \iter: \goldN \rightarrow \N}
+                                 \vdash \iter: \goldNout \rightarrow \N}
                                 {\infer*{\Gamma
-                                 \vdash \iter: \goldN \rightarrow \N
+                                 \vdash \iter: \goldNout \rightarrow \N
                                   \ \ \ ( \golddagger)}{}
              }
            }
@@ -402,7 +410,7 @@ $\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 
 The proof above includes a type inference from the term $\interval$ to itself.
 We draw the type inference in the figure \ref{figure-term-interval}
-and we outline with $\goldN$ the unique infinitely progressing trace. 
+and we outline with $\goldNout$ the unique infinitely progressing trace. 
 If we want a graph notation, we add a back edge from the 
 top $\golddagger$ to the bottom $\golddagger$. We need the $\weak$-rule
 to remove the variables $x$, $y$ which are no more used in the top $\golddagger$
@@ -424,12 +432,12 @@ the outlined infinite trace.
 %   {\Sigma,f:\N\rightarrow\N \vdash \lambda a.\interval:\N,\N,\goldN   
 %      \rightarrow\alpha}
    {\infer[\lambda]  
-     {\Gamma \vdash \interval:\N,\goldN\rightarrow\alpha 
+     {\Gamma \vdash \interval:\N,\goldNout\rightarrow\alpha 
        \ \ \ (\golddagger) }
        {\infer[\cond]{\Gamma, x:\N 
 	\vdash 
 	\cond (\base,  \inductive )
-	:\goldN\rightarrow\alpha \ \ \ (\goldspadesuit) } 
+	:\goldNout\rightarrow\alpha \ \ \ (\goldspadesuit) } 
        {\infer[\apvar]{\Gamma, x:\N 
 	           \vdash 
 	           \base:\alpha}
@@ -439,21 +447,21 @@ the outlined infinite trace.
             {\ \ \ \ \ \ }  &
           \infer[\lambda]{\Gamma, x:\N 
 	           \vdash 
-	           \lambda y.j : \goldN\rightarrow\alpha}
-             {\infer[\apnotvar]{\Gamma, x:\N, y:\goldN \vdash
+	           \lambda y.j : \goldNout\rightarrow\alpha}
+             {\infer[\apnotvar]{\Gamma, x:\N, y:\goldNout \vdash
                j : \alpha}
             {\infer*
                      {\Gamma, x:\N, y:\N 
                           \vdash \iter(x):\N}{}
                {\ \ \ \ \ \ }
-                     {\infer[\apvar]{\Gamma, x:\N, y:\goldN 
+                     {\infer[\apvar]{\Gamma, x:\N, y:\goldNout 
                           \vdash \interval(\Succ(x))(y):\alpha}
                          {\infer[\apnotvar]{\Gamma, x:\N, y:\N 
-                          \vdash \interval(\Succ(x)):\goldN \rightarrow\alpha}
+                          \vdash \interval(\Succ(x)):\goldNout \rightarrow\alpha}
                               {\infer[\weak]{\Gamma, x:\N, y:\N 
-                          \vdash \interval:\N,\goldN \rightarrow\alpha}
+                          \vdash \interval:\N,\goldNout \rightarrow\alpha}
                                 {\infer*{\Gamma 
-                          \vdash \interval:\N,\goldN \rightarrow\alpha
+                          \vdash \interval:\N,\goldNout \rightarrow\alpha
                            \ \ \ (\golddagger)}
               {} } & {\ldots}  }}}
              }
