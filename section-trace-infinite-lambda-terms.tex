@@ -14,6 +14,7 @@ describe a case in which a value is stationary, and a progressing connection
 a case in which a value is strictly decreasing.
 In order to define connection, we need to define \emph{lists of argument types} 
 and \emph{indexes of atomic types} for a term.
+In the following we use $\Atom$ for an atomic type, namely $\N$ or a type variable. 
 
 %We sketch the notion of connection through an example.
 %Assume 
@@ -35,29 +36,28 @@ and \emph{indexes of atomic types} for a term.
 %
 %Below is the formal definition of argument types for a term.
 
-\begin{definition}(List of argument types)
+\begin{definition}[List of argument types]
 Let $J$ be a judgment.
 Then $J$ has the form $\Gamma \vdash t:B$,
 where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and 
-$B = \vec{B}\rightarrow \N$ or $\vec{B}\rightarrow \alpha$ and 
-$\vec{B}=B_{1}, \ldots, B_{m}$. 
+$B = \vec{B}\rightarrow \Atom$ and
+$\vec{B}=B_{1}, \ldots, B_{m}$ and $\vec{A} = A_1,\ldots,A_n$. 
 We define the following notions. 
-
 \begin{enumerate}
 \item
-The \emph{list of argument types} of the judgment $J$ is $\vec{C} = \vec{A},\vec{B}$,
-where $\vec{A} = A_1,\ldots,A_n$.
+The \emph{list of argument types} of the judgment $J$ is $\vec{A},\vec{B}$ (concatenation of $\vec{A}$ and $\vec{B}$).
 
 \item
 An element $A_i \in \vec{A}$ is called a \emph{named argument} of $J$, with index $i$.
+We also write $x_i^{A_i}$ for the named argument $A_i$ with its name $x_i$.
     
 \item
-An element $B_j$ of $\vec{B}$ is called an \emph{unnamed argument} of $J$, with
+An element $B_j \in \vec{B}$ is called an \emph{unnamed argument} of $J$, with
 index $j$. 
 
 \item
 An \emph{index of an $\N$-argument} 
-of $t$ is any $A_i = \N$ and any $B_j = \N$.
+of $J$ is an index $k$ with $C_k = \N$, where $\vec{C} = \vec{A},\vec{B}$.
 
 \end{enumerate}
 \end{definition}
@@ -155,17 +155,16 @@ The definition is by cases on $r$.
 We first list the connections for the rules: application, $\lambda$-abstraction, $\var$
 and weakening. They are all stationary.
 
-\begin{definition}(Stationary Connection in a proof of  $\LAMBDA$: 
-rules $\ap$, $\lambda$, $\var$, $\weak$)
+\begin{definition}[Stationary connections for $\ap$, $\lambda$, $\var$, $\weak$]
 \label{definition-connection-lambda-calculus}
-Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and $B = B_1 \rightarrow \ldots \rightarrow B_m \rightarrow a$, with $a=\N$ or $a$ variable type. We define
-the following \emph{stationary} connections.
-
+Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and
+$B = \vec{B} \rightarrow \Atom$, where $\vec{B} = B_1,\ldots,B_m$.
+We define the following \emph{stationary} connections.
 \begin{enumerate}
 
 \item
-Suppose $\Gamma \vdash f(x_i^{A_i}) : B$ is obtained by a rule $\apvar$ from
-$\Gamma \vdash f: A_i \rightarrow B$. 
+Suppose $\Gamma \vdash f(x_i^{A_i}) : \vec{B}\rightarrow\Atom$ is obtained by the rule $\apvar$ from
+$\Gamma \vdash f: A_i,\vec{B}\rightarrow\Atom$. 
 Then:
 \begin{enumerate}
 \item
@@ -177,74 +176,71 @@ the $i$-th named argument $x_i^{A_i}$ in the conclusion is also connected to the
 argument $A_i$ in the assumption,
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
-is connected to the $(k+1)$-unnamed argument $B_k$ in the assumption.
+is connected to the $(k+1)$-th unnamed argument $B_k$ in the assumption.
 \end{enumerate}
-\begin{prooftree}
+These are depicted as follows:
+\begin{center}
 \RightLabel{$\apvar$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_i^{A_i}} \ldots \vnode2{x_j^{A_j}}  \ldots 
-\vdash f: \vnode3{A_i }
-\rightarrow \ldots \rightarrow \vnode4{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{}
-\BinaryInfC{$ \ldots, \vnode5{x_i^{A_i}} \ldots \vnode6{x_j^{A_j}} \ldots  \vdash f(x_i^{A_i}) 
-: \ldots \rightarrow \vnode7{B_k} \rightarrow \ldots \rightarrow a  $}
-\end{prooftree}
-
+\AxiomC{$ \ldots \vnode1{x_i^{A_i}} \ldots \vnode2{x_j^{A_j}} \ldots \vdash
+  f: \vnode3{A_i},\vnode4{\vec{B}} \rightarrow \Atom$}
+\UnaryInfC{$ \ldots, \vnode5{x_i^{A_i}} \ldots \vnode6{x_j^{A_j}} \ldots  \vdash f(x_i^{A_i}) 
+  : \vnode7{\vec{B}} \rightarrow \Atom$}
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
-\bentdirflowedges{node5/node1/60}   
-\bentdirflowedges{node5/node3/-45}  
+\bentdirflowedges{node5/node1/60}
+\bentdirflowedges{node5/node3/-30}
 \bentdirflowedges{node6/node2/60}
-\bentdirflowedges{node7/node4/60}
-$    
+\bentdirflowedges{node7/node4/45}
+$
+\DisplayProof,
+\quad
+\end{center}
+where the arrow from $\vec{B}$ to $\vec{B}$ means that each lower $B_k\in\vec{B}$ is connected to upper $B_k$. 
 \item
-Suppose $\Gamma \vdash f(a) : B$ is obtained by a rule $\apnotvar$ from
-$\Gamma \vdash f: A \rightarrow B$ and $\Gamma \vdash a: A$. 
+Suppose $\Gamma \vdash f(b) : \vec{B}\rightarrow\Atom$ is obtained by the rule $\apnotvar$ from
+$\Gamma \vdash f: B,\vec{B}\rightarrow\Atom$ and $\Gamma \vdash b: B$. 
 Then:
 \begin{enumerate}
 \item
 for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
-argument $x_j^{A_j}$ in both assumptions.
+argument $x_j^{A_j}$ in both assumptions,
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
-is connected to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
+is connected to the $(k+1)$-th unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
 \begin{prooftree}
 \RightLabel{$\apnotvar$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_j^{A_j}} \ldots \vdash f: A
-\rightarrow \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{$ \ \ \ \ \ \  \ \ \  \ldots \vnode3{x_j^{A_j}} \ldots \vdash a: A$}
-\BinaryInfC{$ \ldots \vnode5{x_j^{A_j}} \ldots  \vdash f(a) 
-: \ldots \rightarrow \vnode6{B_k} \rightarrow \ldots \rightarrow a  $}
+\AxiomC{$ \ldots \vnode1{x_j^{A_j}} \ldots \vdash f: B,\vnode2{\vec{B}} \rightarrow \Atom$}
+\AxiomC{$\hspace{5ex} \ldots \vnode3{x_j^{A_j}} \ldots \vdash b: B$}
+\BinaryInfC{$ \ldots \vnode5{x_j^{A_j}} \ldots  \vdash f(b) 
+: \vnode6{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
-
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
-
 $
 \bentdirflowedges{node5/node1/30}   
 \bentdirflowedges{node5/node3/30}  
-\bentdirflowedges{node6/node2/45}
+\bentdirflowedges{node6/node2/0}
 $    
 
 \item
-Suppose $\Gamma \vdash \lambda x^A.v$ is obtained by a rule $\lambda$
-from $\Gamma \setminus \{ {x}^{A} : A \} \vdash v : \N$.
-Then:
-
+Suppose $\Gamma \vdash \lambda x^{A}.v:A,\vec{B}\rightarrow\Atom$ is obtained by the rule $\lambda$
+from $\Gamma \setminus \{ x^A : A \}, x^A:A \vdash v : \vec{B}\rightarrow\Atom$.
+Then we define the connections of this case as follows:
 \begin{enumerate}
 \item
-the first unnamed argument $A$ in the conclusion 
+The first unnamed argument $A$ in the conclusion 
 is connected to the last named argument $x^A$ in the assumption,
 and for $k=1, \ldots, m$ the $(k+1)$-unnamed argument $B_k$ in the conclusion is
 connected to the $k$-unnamed argument $B_k$ in the assumption.
 
-For named arguments we have two sub-cases, according if
+For named arguments we have two sub-cases, according to whether
 ${x}^{A} \in \FV(\Gamma)$ or not.
 
 \item
@@ -255,7 +251,6 @@ the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to
 the $a$-th named 
 argument $x_a^{A_b}$ and to the $(b-1)$-th 
 named argument $x_b^{A_b}$ in the assumption, respectively.
-
 \begin{prooftree}
 \RightLabel{$\lambda$}
 \def\extraVskip{2pt}
@@ -264,23 +259,19 @@ named argument $x_b^{A_b}$ in the assumption, respectively.
 \ldots \vnode3{x_{b-1}^{A_{b-1}}}  
 \ldots  \vnode4{x_i^{A_i} }
 \vdash
-v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+v: \vnode5{\vec{B}} \rightarrow \Atom$}
 \AxiomC{}
 \BinaryInfC{$ \ldots \vnode6{x_a^{A_a}} 
-\ldots x_i^{A_i} \ldots \vnode7{x_{b}^{A_{b}}}
-\vdash \lambda x_i^{A_i}.v : \vnode8{A_i }
-\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
+\ldots x_i^{A_i} \ldots \vnode7{x_{b}^{A_{b}}} \ldots
+\vdash \lambda x_i^{A_i}.v : \vnode8{A_i }, \vnode9{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
-
-
-
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
 \bentdirflowedges{node6/node1/60}   
 \bentdirflowedges{node7/node3/60}  
-\bentdirflowedges{node8/node4/-45}
-\bentdirflowedges{node9/node5/60}
+\bentdirflowedges{node8/node4/0}
+\bentdirflowedges{node9/node5/0}
 $    
 \item
 Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$. 
@@ -288,8 +279,6 @@ Suppose $x^A \not = {x_i}^{A_i}$ for all $i=1, \ldots, n$.
 for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in the assumption.
-
-
 \begin{prooftree}
 \RightLabel{$\lambda$}
 \def\extraVskip{2pt}
@@ -297,26 +286,23 @@ argument $x_j^{A_j}$ in the assumption.
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
 \ldots  \vnode4{x^{A} }
 \vdash
-v: \ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a $}
+v: \vnode5{\vec{B}} \rightarrow \Atom$}
 \AxiomC{}
-\BinaryInfC{$ \ldots \vnode7{x_{j}^{A_{j}}}
-\vdash \lambda x^{A}.v : \vnode8{A }
-\rightarrow \ldots \rightarrow \vnode9{B_k} \rightarrow \ldots \rightarrow a $}
+\BinaryInfC{$ \ldots \vnode7{x_{j}^{A_{j}}} \ldots
+\vdash \lambda x^{A}.v : \vnode8{A}, \vnode9{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
-
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
 \bentdirflowedges{node7/node1/60}  
 \bentdirflowedges{node8/node4/0}
-\bentdirflowedges{node9/node5/60}
-$    
-
-
+\bentdirflowedges{node9/node5/30}
+$
 \end{enumerate}
 
 \item
-Assume $\Gamma \vdash t : B$ is obtained by a rule $\weak$ from $\Gamma' \vdash t : B$
+Assume $\Gamma \vdash t : \vec{B}\rightarrow\Atom$ is obtained by the rule $\weak$
+from $\Gamma' \vdash t : \vec{B}\rightarrow\Atom$
 where $\Gamma' = {x'_1}^{A'_1}:A_1, \ldots, {x'_{n'}}^{A'_{n'}}:A'_{n'}$. Assume
 $\phi:\Gamma' \rightarrow \Gamma$ is the map associated to the rule\footnote{
 We recall that $\phi:[1,n'] \rightarrow [1,n]$, 
@@ -329,62 +315,58 @@ Then:
 for $j=1, \ldots, n$ and $a = 1, \ldots, n'$,
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $a$-th named 
 argument ${x'}_{a}^{A'_{a}}$ in the assumption if and only if $j = \phi(a)$
-(i.e., if and only if  $x_j^{A_j} = {x'}_{a}^{A'_{a}}$).
+(i.e., if and only if  $x_j^{A_j} = {x'}_{a}^{A'_{a}}$),
 
 \item
 for $k=1, \ldots, m$ the $k$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-th unnamed argument $B_k$ in the assumption.
 \end{enumerate}
-
 \begin{prooftree}
 \RightLabel{$\weak$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
 \AxiomC{$ \ldots \vnode1{{x'}_{a}^{{A'}_{a}}} \ldots 
-\vdash t: \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
+\vdash t: \vnode2{\vec{B}} \rightarrow \Atom$}
 \AxiomC{}
 \BinaryInfC{$ \ldots, \vnode3{x_{\phi(a)}^{A_{\phi(a)}}} \ldots \vdash t 
-: \ldots \rightarrow \vnode4{B_k} \rightarrow \ldots \rightarrow a  $}
+: \vnode4{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
 
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
 \bentdirflowedges{node3/node1/60}   
-\bentdirflowedges{node4/node2/60}  
-$    
-
-\end{enumerate}
-
+\bentdirflowedges{node4/node2/30}
+$
+\item
 No connection is defined for the rule $\var$.
-
+\end{enumerate}
 \end{definition}
 
 Now we list the connections for $\cond, \Succ, 0$: \emph{one is progressing}, 
 all the others are stationary.
 
-\begin{definition}(Stationary and Progressing Connections in a proof of  $\LAMBDA$: rules $\cond, \Succ, 0$)
+\begin{definition}[Stationary and progressing connections for $\cond, \Succ, 0$]
 \label{definition-connection-cond}
 There is a unique progressing condition which is explicitly stated, all others are stationary.
 \begin{enumerate}
 \item
-Suppose $\Gamma \vdash \cond(f,g): \N \rightarrow B$ is obtained by a rule $\cond$ from
-$\Gamma \vdash f: B$ and $\Gamma \vdash g: \N \rightarrow B$.
-Then:
+Suppose $\Gamma \vdash \cond(f,g): \N,\vec{B} \rightarrow \Atom$ is obtained by the rule $\cond$ from
+$\Gamma \vdash f: \vec{B} \rightarrow \Atom$ and $\Gamma \vdash g: \N,\vec{B} \rightarrow \Atom$.
+Then we define the connections of this case as follows:
 \begin{enumerate}
 \item
-for $j=1, \ldots, n$ 
+For $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in both assumptions.
 \item
-the first unnamed argument $\N$ in the conclusion is connected to the 
+The first unnamed argument $\N$ in the conclusion is connected to the 
 the first unnamed argument $\N$ in the second assumption: \emph{this is the unique
 progressing connection}, in {\color{red} \bf red}.
 For $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-unnamed argument $B_k$ in the first assumption,
 and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \end{enumerate}
-
 \begin{prooftree}
 \RightLabel{$\cond$}
 \def\extraVskip{2pt}
@@ -392,37 +374,29 @@ and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
 \ldots 
 \vdash
-f :  \ldots \rightarrow \vnode2{B_k} \rightarrow \ldots \rightarrow a $}
-\AxiomC{$  \ \ \ \ \ \  \ \ \  
-\ldots \vnode3{x_j^{A_j}} \ldots 
-\vdash
-g :  \vnode4{\tt N} \rightarrow
-\ldots \rightarrow \vnode5{B_k} \rightarrow \ldots \rightarrow a$}
+f :  \vnode2{\vec{B}} \rightarrow \Atom$}
+\AxiomC{$\hspace{5ex} \ldots \vnode3{x_j^{A_j}} \ldots \vdash g :  \vnode4{\N},\vnode5{\vec{B}} \rightarrow \Atom$}
 \BinaryInfC{$ \ldots \vnode6{x_j^{A_j}} 
 \ldots 
 \vdash
-{\tt cond}(f,g) :   \vnode7{\tt N} \rightarrow \ldots \rightarrow \vnode8{B_k} \rightarrow \ldots \rightarrow a $}
+\cond(f,g) : \vnode7{\N}, \vnode8{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
-
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
-\bentdirflowedges{node6/node1/30} 
+\bentdirflowedges{node6/node1/10}
 \bentdirflowedges{node6/node3/30} 
 \dirflowrededges{node7/node4}
 \bentdirflowedges{node8/node2/30}
 \bentdirflowedges{node8/node5/0}
 $    
 
-
 \item
-Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by a rule $\Succ$ from
+Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by the rule $\Succ$ from
 $\Gamma \vdash \Succ(u):\N$.
 Then for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
-argument $x_j^{A_j}$ in the assumption.
-
-
+argument $x_j^{A_j}$ in the assumption. hoge
 \begin{prooftree}
 \RightLabel{$\Succ$}
 \def\extraVskip{2pt}
@@ -440,12 +414,12 @@ t: {\tt N} $}
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
 \bentdirflowedges{node2/node1/60} 
-$    
-
-
+$
+\item
+  No connection is defined for the rule $0$.
 \end{enumerate}
 
-No connection is defined for the rule $0$.
+
 
 \end{definition}
 
@@ -503,9 +477,9 @@ graph $\Graph(\Pi)$ whose nodes are all pairs $(k,\theta)$, with $\theta$ node o
 $k$ index of some $\N$-argument of  the judgment labeling $\theta$. 
 A trace represents the movement of an input information through the 
 infinite unfolding of a tree. Formally, we define a trace as a (finite or infinite) path 
-in the graph $\Graph(\Pi)$.
+in $\Graph(\Pi)$.
 
-\begin{definition}(Trace for well-typed terms in $\LAMBDA$)
+\begin{definition}[Trace for well-typed terms]
 \label{definition-progressing-trace}
 Assume $\Pi$ is any typing proof of $t \in \WTyped$.
 \begin{enumerate}

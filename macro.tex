@@ -300,6 +300,7 @@
 \newcommand{\struct}          { {\tt struct} }
 \newcommand{\Iter}              { {\tt It} }
 \newcommand{\iter}               { {\tt it} }
+\newcommand{\Rec}               { {\tt rec} }
 \newcommand{\Interval}       { {\tt Iv} }
 \newcommand{\interval}        { {\tt iv} }
 \newcommand{\Succ}             { {\tt S} }
@@ -317,11 +318,12 @@
 \newcommand{\GlobalTraceCondition}  { {\tt GlTrCon} }
 \newcommand{\Sum}              { {\tt Sum} }
 \newcommand{\safeReduces} {\mathbin{\reduces_\safe}}
-\newcommand{\nsafeReduces}[1] {\mathbin{\reduces_{#1,\safe}}}
-\newcommand{\nsafeReducesL}[1] {\mathbin{\mapsfrom_{#1,\safe}}}
-\newcommand{\nsafeReducesAstL}[1] {\mathbin{\mapsfrom_{#1,\safe}^*}}
+\newcommand{\nsafeReduces}[1] {\mathbin{\reduces_{#1\text{-}\safe}}}
+\newcommand{\nsafeReducesL}[1] {\mathbin{\mapsfrom_{#1\text{-}\safe}}}
+\newcommand{\nsafeReducesAstL}[1] {\mathbin{\mapsfrom_{#1\text{-}\safe}^*}}
 \newcommand{\safeReducesAst} {\mathbin{\reduces_\safe^*}}
-\newcommand{\nsafeReducesAst}[1] {\mathbin{\reduces_{#1,\safe}^*}}
+\newcommand{\safeReducesPlus} {\mathbin{\reduces_\safe^+}}
+\newcommand{\nsafeReducesAst}[1] {\mathbin{\reduces_{#1\text{-}\safe}^*}}
 \newcommand{\nsafePReduces}[1] {\mathbin{\Rightarrow_{#1}}}
 \newcommand{\nsafePReducesL}[1] {\mathbin{\Leftarrow_{#1}}}
 \newcommand{\nsafePReducesMany}[2] {\mathbin{\Rightarrow_{#1}^{#2}}}
@@ -370,7 +372,8 @@
 \newcommand{\quotationMarks} [1]     {{\textquotedblleft#1\textquotedblright}}
 \newcommand{\lexicographic} [1]   {{ <^{#1}_{\mbox{\tiny lex}}} }
 \newcommand{\trunk}                     {{\tt trunk}}
-
+\newcommand{\Atom}{U}
+\newcommand{\ls}{\ell}
 
 \newcommand\Restrict[2]{#1_{#2}}
 \newcommand\simIndex[1]{\sim^{#1}_{{\tt idx}}}
@@ -397,7 +400,7 @@
 %\newcommand{\goldN}    
 %      {{ \bf \contour{black}{\textcolor{oldgold}{\N}} }}
 \newcommand{\goldN}{\bfColor{oldgold}{\mathit{N}}}
-\newcommand{\goldNout}{{\contour{black}{{\color{oldgold}{N}}}}}
+\newcommand{\goldNout}{{\contour{black}{{\color{oldgold}{{\it N}}}}}}
 \newcommand{\golddagger}{{\contour{black}{{\color{oldgold}{$\dagger$}}}}}
 \newcommand{\goldspadesuit} 
       {{ \bf \contour{black}{\textcolor{oldgold}{$\spadesuit$}} }}

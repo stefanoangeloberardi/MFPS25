@@ -6,7 +6,7 @@
 \section{Subject reduction for well-typed infinite lambda terms}
 \label{section-subject-reduction}
 
-We quickly quote the subject reduction properties for well-typed terms of $\LAMBDA$,
+We quickly quote the subject reduction property for well-typed terms of $\LAMBDA$,
 and the fact that the global trace condition is preserved by subterms, substitution
 and reductions. We skip proofs for reason of space, but they are just an exercice.
 %We first introduce some auxiliary notations for proofs of them.
@@ -434,7 +434,7 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %%
 %
 
-\begin{lemma}(Inversion Lemma)\label{lem:inversion}
+\begin{lemma}[Inversion Lemma]\label{lem:inversion}
   \begin{enumerate}
   \item\label{lem:inversion1}
     If $\Pi::\Gamma\vdash f(a):A$ and $\Pi$ satisfies the global trace condition, then
@@ -484,8 +484,7 @@ and reductions. We skip proofs for reason of space, but they are just an exercic
 %\end{proof}
 %
 
-\begin{theorem}[Subject reduction]
-\label{theorem-subject-reduction}
+\begin{theorem}[Subject reduction]\label{theorem-subject-reduction}
   Assume that $\Pi_t::\Gamma\vdash t:A$, $\Pi_t$ satisfies the global trace condition, and $t\reduces u$.
   Then there exists $\Pi_u$ such that $\Pi_u::\Gamma\vdash u:A$ and $\Pi_u$ satisfies the global trace condition. 
 \end{theorem}
@@ -541,7 +540,7 @@ after Def. \ref{definition-alpha-conversion}.
 Thus, the equality-preserving $\alpha$-conversion also preserves isomorphic relations of term trees, 
 and hence it preserves the finiteness of the set of subterms up to tree isomorphism.
 
-\begin{proposition}(Renaming and $\alpha$-conversion)
+\begin{proposition}[Renaming and $\alpha$-conversion]
 \label{prop:renaming}
   \begin{enumerate}
   \item\label{prop:renaming1}

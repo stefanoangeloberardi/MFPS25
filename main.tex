@@ -1,82 +1,114 @@
-%%%	 Use this file as a template for your submission to your conference, and to prepare
-%%%	the final version of your paper, if accepted, for the conference Proceedings. 
-%%%	You can use it "as is" for your initial submission, but alterations may be required if
-%%%	there is a preliminary Proceedings for distribution at the meeting, and additional changes
-%%%	are mandatory for the final version for publication in the official conference Proceedings. 
-%%%. 	If you are preparing your paper in final form for the conference proceedings, 
-%%%. 	add the option "final" to \documentclass{entics} below
-\documentclass[twoside,11pt]{entics} 
-\usepackage{enticsmacro}
-\usepackage{graphicx}
-\usepackage[all]{xy}
+%\documentclass[a4paper,anonymous]{lipics-v2021}
+\documentclass[a4paper]{lipics-v2021}
+%%% Options
+% a4paper/letterpaper: for A4 paper format/for US-letter"
+% UKenglish/USenglish: for british hyphenation rules/for american hyphenation rules
+% numberwithinsect: for section-numbered lemmas etc.
+% cleveref: for enabling cleveref support
+% autoref: for enabling autoref support
+% anonymous: for anonymousing the authors (e.g. for double-blind review)
+% thm-restate: for enabling thm-restate support
+% authorcolumns: for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors)
+% pdfa: for producing a PDF according the PDF/A standard
+
+\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{Extending to Binders the Global Trace Condition for Cyclic Lambda-Calculus}
+%\titlerunning{Extending to Binders the GTC for Cyclic $\lambda$-Calculus} %TODO optional, please use if title is longer than one line
+
+\author
+    {Stefano Berardi}
+    {Computer Science Department, Turin University, Torino, Italy}
+    {} % (Optional) email address
+    {} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+\author
+    {Ugo de' Liguoro}
+    {Computer Science Department, Turin University, Torino, Italy}
+    {} % (Optional) email address
+    {} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+\author
+    {Daisuke Kimura}
+    {Department of Information Science, Toho University, Japan}
+    {} % (Optional) email address
+    {} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+\author
+    {Koji Nakazawa}
+    {Graduate School of Informatics, Nagoya University, Japan}
+    {} % (Optional) email address
+    {} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+\author
+    {Makoto Tatsuta}
+    {National Institute of Informatics/Sokendai, Tokyo, Japan}
+    {} % (Optional) email address
+    {} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+    
+\authorrunning{S.\,Berardi and U.\,de'\,Liguoro and D.\,Kimura and K.\,Nakazawa and M.\,Tatsuta}
+% First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Stefano\,Berardi and Ugo\,de'\,Liguoro and Daisuke\,Kimura and Koji\,Nakazawa and Makoto\,Tatsuta}
+% Please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\ccsdesc[100]{Theory of computation}
+% Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+
+\keywords{Cyclic proofs, Cyclic terms, Fixed-point definition, global trace condition, Lambda calculus, Infinitary lambda calculus}
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+%\supplement{} %optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{We thank Prof. Anupam Das for a valuable scientific correspondence about global trace condition for cyclic terms.} %optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Access}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
 %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%MY PACKAGES
 %%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage[all]{xy}
 \usepackage{amssymb,amsmath,graphicx,color}
 \usepackage{mymath,proof,latexsym}
 \usepackage{xcolor}
 \usepackage[pdftex,outline]{contour}
-%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%
-%\usepackage{url}
-\sloppy
-% The following is enclosed to allow easy detection of differences in
-% ascii coding.
-% Upper-case    A B C D E F G H I J K L M N O P Q R S T U V W X Y Z
-% Lower-case    a b c d e f g h i j k l m n o p q r s t u v w x y z
-% Digits        0 1 2 3 4 5 6 7 8 9
-% Exclamation   !           Double quote "          Hash (number) #
-% Dollar        $           Percent      %          Ampersand     &
-% Acute accent  '           Left paren   (          Right paren   )
-% Asterisk      *           Plus         +          Comma         ,
-% Minus         -           Point        .          Solidus       /
-% Colon         :           Semicolon    ;          Less than     <
-% Equals        =3D           Greater than >          Question mark ?
-% At            @           Left bracket [          Backslash     \
-% Right bracket ]           Circumflex   ^          Underscore    _
-% Grave accent  `           Left brace   {          Vertical bar  |
-% Right brace   }           Tilde        ~
-%% A couple of exemplary definitions:
-%
-%%\newcommand{\Nat}{{\mathbb N}}
-%%\newcommand{\Real}{{\mathbb R}}
-%
-%%%%Fill in the following%%%%
-%%%%%%%%%	Your Corresponding Editor will provide the following information:
-%\def\conf{MFPS 2025} 	%%Fill in the acronym for your conference (with year)
-%\volume{NN}			%Fill in the ENTICS volume number here
-%\def\volu{NN}			% and here
-%\def\papno{nn}			%Fill in your paper number here
-%%%%%%%%Please fill in the following information:
-\def\lastname{Berardi,  de' Liguoro, Kimura, Nakazawa, Tatsuta} 
-%Lastnames appear in the running header 
-%									on odd pages. If more than three authors, use et al
-\def\runtitle{Global Trace Condition for Cyclic Simply Typed lambda-Calculus} 
-%Short title appears in the running header on even pages. 
-%%
-\def\copynames{S. Berardi,  U. de' Liguoro, D. Kimura, K. Nakazawa, M. Tatsuta}    
-%% Fill in the first initial and last name of the authors
-%%%%%%%%%%%%%%%%%%%		claiming Creative Commons copyright here. 
-%\def\CCB{CC@symbol}		%%%%%%	Also, be sure the correct Creative Commons 
-%%%%%%%%%%%%%					copyright symbol is chosen - see Section 2 of
-%%%%%%%%%%		https://mirrors.concertpass.com/tex-archive/fonts/ccicons/ccicons.pdf
-
-%%%%%%          PROOFZILLA          %%%%%%%%%%%
-%%%% PACKAGES
-
-% Proof trees
 \usepackage{bussproofs}
-
-
-% Tikz is required to use proofzilla
-\usepackage{tikz}
+\usepackage{tikz} % Tikz is required to use proofzilla
 \usetikzlibrary{arrows.meta} % additional arrow styles
 \usepackage{proofzilla}
-
-
-
-%%%%%%%%% MACROS %%%%%%%%%%%%%
-
+%% PROOFZILLA SETTINGS %%%%%%%%%%%
 % Flow-related macros 
 % Define node style 
 \newemptyvertex{node}{}
@@ -85,42 +117,18 @@
 \defedgetype{dirflow}{-Latex,draw=blue}{}
 \defedgetype{flowtwo}{draw=red}{}
 \defedgetype{dirflowtwo}{-Latex,draw=red}{}
-
 %%%%% HERE CHANGE THE DEFINITION OF EDGES TO CHANGE THE COLOR  AND OTHER ATRIBUTES %%%%%%
 \defedgetype{dirflowblue}{-Latex,draw=blue}{}
 \defedgetype{dirflowred}{-Latex,draw=red}{}
-
 % Additional, unnecessary macros (terms etc)
 %\input{hobn_macros}  
-%%%%%%      END PROOFZILLA      %%%%%%%%%%%
+%% END PROOFZILLA SETTINGS %%%%%%%%%%%
 
 \begin{document}
-%%%Note the beginning and end of the frontmatter section that starts here%%%%%
-\begin{frontmatter}
-  %\title{$\CTlambda$, a cyclic simply typed lambda-calculus with fixed-points\thanksref{ALL}} 						%%Title here and the
-  \title{Extending to Binders the Global Trace Condition for Cyclic Lambda-Calculus\thanksref{ALL}} 
- \thanks[ALL]{We thank Prof. Anupam Das for a valuable scientific correspondence about 
- global trace condition for cyclic terms.}   %%Text of \thanks[ALL} here..
- %%%%%%%%%%%%%%%%%%%%%%%%%%%%			This Thanks is optional.
-  %%%%Now the author(s) names(s)%%%%%
-  \author{Stefano Berardi$^{\tt a}$}	%%Note NO SPACE between 
-   \author{Ugo de' Liguoro$^{\tt a}$}		%last name and \thanksref{...} 
-    \author{Daisuke Kimura$^{\tt b}$}
-      \author{Koji Nakazawa$^{\tt c}$}
-       \author{Makoto Tatsuta$^{\tt d}$}
-    %%%Next come the addresses%%%%
-   \address[a]{Computer Science Department, Turin University, Torino, Italy}  							
-   \address[b]{Department of Information Science, Toho University, Japan} 
-   \address[c]{Graduate School of Informatics, Nagoya University, Japan}
-   \address[d]{National Institute of Informatics/Sokendai, Tokyo, Japan}
- 
-   %%%Note: if both authors share same institution, only list the address once, after the second 
-   %%%author. 
-   %%%There also is a link from the first author to the co-author's address to show how to list 
-   %%%affiliations to more than one institution, when needed. 
- 
-   
-\begin{abstract} 
+
+\maketitle
+
+\begin{abstract}
 Circular syntaxes for infinitary lambda-terms
 were considered for instance by Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries.
 They allow to intepret lambda-terms written in fixed-point style 
@@ -132,7 +140,7 @@ A sufficient, decidable and quite broad condition for reducing such
 infinitary lambda-terms to a numeral can be obtained
 by adapting the global trace condition (GTC) to simply typed 
 circular lambda-terms with conditional operator. 
-GTC was originally proposed by J. Brotherston and A. Simpson
+GTC was originally proposed by Brotherston and Simpson
 as a correctness condition for infinitary proofs.
 Several people, including Das, Kuperberg, Pinault, Pous,
 proved that GTC implies normalization to a numeral:
@@ -149,17 +157,10 @@ the extended GTC retains the termination properties of the original GTC.
 %Namely, we prove that the extended GTC implies normalization to some numeral, 
 %for all closed infinitary terms of type N and
 %for all reductions sequences not reducing inside the 
-%predecessor clause for the conditional operator.
+%predecessor clause for the conditional operator.  
 \end{abstract}
-\begin{keyword}
-  Cyclic proofs, Cyclic terms, Fixed-point definition, global trace condition,
-  Lambda calculus, Infinitary lambda calculus
-\end{keyword}
-\end{frontmatter}
-
 
 \input{macro}
-
 
 % Section 1
 \input{section-introduction}
@@ -167,7 +168,6 @@ the extended GTC retains the termination properties of the original GTC.
 
 % Section 2
 \input{section-infinite-lambda-terms}
-
 
 % Section 3
 \input{section-trace-infinite-lambda-terms}
@@ -192,12 +192,9 @@ the extended GTC retains the termination properties of the original GTC.
 % Section 8
 \input{section-conclusion}
 
-
-\newpage
-\bibliographystyle{./entics}
 \bibliography{cyclic}
 
-% Section 9: Appendix is not part of the MFCS25 submission
 \input{section-appendix}
 
 \end{document}
+

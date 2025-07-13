@@ -92,7 +92,7 @@ We define the syntax of our infinite $\lambda$-calculus.
 First we introduce the types, 
 and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 
-\begin{definition}(Types)
+\begin{definition}[Types]
   We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables
   \footnote{Type variables play a minor role in this paper.
   They are used to provide some examples of our terms in Section~\ref{section-circular-system-CTlambda}.}. 
@@ -113,7 +113,7 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 Terms of our system are possibly infinite binary trees, with each node labeled by 
 some connective on $\lambda$-terms with its arity (number of children) $0$, $1$, or $2$.
 
-\begin{definition}(Variables and terms)
+\begin{definition}[Variables and terms]
 We fix a countable set $\{x,y,\ldots\}$ of variable names. 
 \begin{enumerate}
 \item
@@ -166,7 +166,7 @@ Now we define the regular terms of $\LAMBDA$.
 
 %11:55 22/04/2024
 
-\begin{definition}(Regular terms of $\LAMBDA$)
+\begin{definition}[Regular terms of $\LAMBDA$]
 %\mbox{}
 \begin{enumerate}
 
@@ -198,15 +198,14 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 
 The set $\Num$ is the representation of the set $\Nat$ of natural numbers inside $\LAMBDA$. 
 
-\begin{Eg}
+\begin{example}
 \label{example-regular-infinite}
 An example of a regular term and an infinite tree: the term defined by the isomorphism
 $t \sim \cond(0,\lambda x^N.t(x))$. 
 Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$, up to term isomorphism.
 Thus, $t$ is a regular term.
 However, $t$ is an infinite tree (it includes a proper subtree isomorphic to itself). 
-\end{Eg}
-
+\end{example}
 
 %Regular terms have \emph{finitely many} distinct variables, 
 %even if each variable can occur infinitely many times in the tree,
@@ -225,7 +224,7 @@ The binder relation is defined as for finite $\lambda$-calculus.
 (\cite{Barendregt1984}, \S 2.1.6 p. 24). 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{definition}(Binding relation)
+\begin{definition}[Binding relation]
 \label{definition-binder-relation}
 Let $t$ be a term.
 \begin{enumerate}
@@ -234,7 +233,7 @@ An occurrence of a variable $x^T$ in $t$ is any node of $t$ labeled $x^T$.
 \item
 An occurrence of a variable $x^T$ in $t$ is said to be \emph{free} if there is no node labeled $\lambda x^T$
 in the path from the root of $t$ to the occurrence. 
-$\FV(t)$ is the (finite or infinite) set of variables having at least one free occurence in $t$.
+$\FV(t)$ is the set of variables having at least one free occurence in $t$.
 \item
 An occurrence of $x^T$ in $t$ is said to be \emph{bound} if it is not free. If an occurrence is bound, then
 the node labeled $\lambda x^T$ closest to the occurrence is called the \emph{binder} of
@@ -256,7 +255,7 @@ In this way, we only consider $\alpha$-conversions
 preserving the regularity of a term.
 
 
-\begin{definition}(Equality-preserving $\alpha$-conversion)
+\begin{definition}[Equality-preserving $\alpha$-conversion]
 \label{definition-alpha-conversion}
 Let $t$ and $u$ be terms.
 \begin{enumerate}
@@ -300,7 +299,7 @@ define contexts and typing judgments.
 %13:32 22/04/2024
 %11:17 29/04/2024
 
-\begin{definition}(Contexts and typing jugdments for $\LAMBDA$)
+\begin{definition}[Contexts and typing jugdments for $\LAMBDA$]
 \label{definition-context-lambda}
 \begin{enumerate}
 
@@ -373,7 +372,7 @@ We write $\Judg$ for the set of all typing judgments.
 In fact a type assignment $x^T:T$ is a \emph{redundant information} for our
 variables (not for our terms), 
 since each variable already has its type superscript.
-However we write $x^T:T$ (or simply write $x:T$ abbreviating $x^T$ by $x$)
+However we write $x^T:T$ (or simply write $x:T$)
 for uniformity with the notation $x:T$ in use in type theory.
 
 %We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
@@ -572,20 +571,12 @@ We will explain the rules for $\ap$ in more detail after the definition of GTC.
 %% the typing rule for $\ap$ into two sub-cases. 
 
 
-\begin{definition}(Typing rules of $\LAMBDA$)
+\begin{definition}[Typing rules of $\LAMBDA$]
 %Assume $\Gamma = {x_1}^{A_1}:A_1, \ldots, x_n^{A_n}:A_1$ is a context. 
-Let $p=0,1,2$.
 %$\Delta = y_1:B_1, \ldots, y_n:B_m$ are sequents of length $n$, $m$ respectively. Suppose
 %$f:\{1, \ldots, n\} \rightarrow \{1, \ldots, m\}$ is any injection, compatible with types
 %in $\Gamma$, $\Delta$: we assume $A_i = B_{f(i)}$ for all $1 \le i \le n$.
-
-\begin{enumerate}
-%\item
-%$\struct_f$-rule.
-%If $t: \Gamma \vdash T$ then $t[ y_{f(1)}/x_1, \ldots,  y_{f(p)}/x_p]:\Delta \vdash T$
-\item
 We list the typing rules for $\LAMBDA$.
-
 \begin{enumerate}
 \item
 $\weak$-rule (for Weakening + Exchange).
@@ -666,11 +657,10 @@ then $\Gamma \vdash \cond(a,f) : \N \rightarrow A$.
 
 %11:56 29/04/2024
 
-
 An instance of a typing rule $r$ is a list $(J_1,\ldots,J_p,J)$ of typing judgments $(p=0,1,2)$,
-where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$"}, and we draw it as:
- \[
-  \infer[r]{
+where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$''}, and we draw it as:
+\raisebox{-5pt}{\scalebox{0.7}{
+  $\infer[r]{
     J
   }{
     J_1
@@ -678,11 +668,10 @@ where \emph{``$J$ is obtained from $J_1, \ldots, J_p$ by applying the rule $r$"}
     \cdots
     &
     J_p
-  }.
-  \]
-  The judgments $J_1,\ldots,J_p$ are called the \emph{premises} of $r$,
-  and $J$ is called the \emph{conclusion} of $r$. 
-\end{enumerate}
+  }$}}.
+The judgments $J_1,\ldots,J_p$ are called the \emph{premises} of $r$,
+and $J$ is called the \emph{conclusion} of $r$. 
+
 
 The set $\Rule$ of rule instances for $\LAMBDA$ is defined by
 \[
@@ -692,8 +681,8 @@ The set $\Rule$ of rule instances for $\LAMBDA$ is defined by
 \end{definition}
 
 We note that, when $x^A \not \in \FV(\Gamma)$, the $\lambda$-rule becomes:
-if $\Gamma, x^A:A \vdash b: B$
-then $ \Gamma  \vdash \lambda x^A.b :A \rightarrow B$.
+if $\Gamma, x^A:A \vdash t: B$
+then $ \Gamma  \vdash \lambda x^A.t :A \rightarrow B$.
 
 We have $\weak$-rule as a primitive rule, even if $\weak$ could be
 conditionally derived from the other rules. The reason is that it is simpler
@@ -715,8 +704,7 @@ to write examples of regular terms when we use typing rules with $\weak$
 We say that two rule instances are equal if they have the same list of judgments. 
 Any rule instance different from $\weak$ can be uniquely recovered from its conclusion.
 
-\begin{proposition}(Rules and subterms)
-\label{proposition-rules-subterms}
+\begin{proposition}(Rules and subterms)\label{proposition-rules-subterms}
 Assume $r, r' \in \Rule$ are not instances of the $\weak$-rule 
 and have the same conclusion $\Gamma \vdash t:A$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -775,7 +763,7 @@ From the typing rules we define the proofs that a term is well-typed.
 
 %DI QUI 17:35 11/06/2025 
 
-\begin{definition}(Proofs of $\LAMBDA$)
+\begin{definition}[Proofs of $\LAMBDA$]
 Assume $\Pi=(T,\phi, \psi)$ is a binary tree $T$ with each node $l \in T$ 
 labeled by a judgment $\phi(l) \in \Judg$ and by a rule $\psi(l) \in \Rule$. 
 We denote the root of $T$ with $\nil$
@@ -784,7 +772,6 @@ and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$
 
 Let $J$ be a judgment. 
 Then we write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
-
 \begin{enumerate}
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
@@ -793,7 +780,6 @@ Then we write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
   and $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
   then the rule instance $r = \psi(l) \in \Rule$ labeling $l$ is $(J_1,\ldots,J_p,J_0)$.
 \end{enumerate}
-
 \end{definition}
 
 %
@@ -825,15 +811,14 @@ For this reason, we say that a term $t$
 is well-typed if $\Pi ::\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
 condition, \emph{left-finiteness}, used to remove some non-sensical proofs like above.
 
-\begin{definition}(Well-typed term of $\LAMBDA$)
+\begin{definition}[Well-typed term of $\LAMBDA$]
 %\mbox{}
 \begin{enumerate}
 
 \item
-A path $\pi$ in a proof $\Pi=(T,\phi,\psi)$ is any finite non-empty 
-or infinite sequence of nodes of $T$,
-with first node of $\pi$ the root of $T$, 
-and each other node of $\pi$ a child of the previous node in $\pi$.
+A path $\pi$ in a proof $\Pi=(T,\phi,\psi)$ is non-empty sequence of nodes for $T$,
+where its first node is the root of $T$, 
+and each other node is a child of the previous one in $\pi$.
 
 \item
 A path is \emph{left-finite} if only finitely many nodes of $\pi$
@@ -863,9 +848,9 @@ $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 
 \begin{proposition}
 Well-typed terms are closed by well-typed substitution:
-if $\Pi_1:: x^U:U, \Gamma \vdash t:A$ and $\Pi_2:: \Gamma \vdash u:U$
-are left-finite proofs,
-then $\Pi::\Gamma \vdash t[u/x^U]:A$ for some left-finite proof $\Pi$.
+if $\Pi_1:: x:U, \Gamma \vdash t:A$ and $\Pi_2:: \Gamma \vdash u:U$
+are left-finite,
+then $\Pi::\Gamma \vdash t[u/x]:A$ for some left-finite proof $\Pi$.
 \end{proposition}
 
 %
@@ -878,7 +863,7 @@ We can prove the \emph{uniqueness} of type for a well-typed term.
 
 %12:25 13/06/2025
 
-\begin{proposition}(Uniqueness of Typing)
+\begin{proposition}[Uniqueness of Typing]
 \label{proposition-left-finite-unique}
 If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two left-finite proofs,
 then $A = A'$.
@@ -1011,86 +996,75 @@ then $A = A'$.
 
 We give a typical example $\Sum$ of our system. It is regular and well-typed.
 Moreover, as we will see later, it satisfies the global trace condition,
-and hence is in $\CTlambda$ (see Section~\ref{example-sum}). 
+and hence is in $\CTlambda$ (see Example~\ref{example-sum}). 
 
-\begin{Eg}\label{example-sum-first}
-The term $\Sum$ is the infinite term that satisfies $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
-It is regular because it has finitely many subterms up to isomorphism: 
+\begin{example}\label{example-sum-first}
+Let $\Sum$ be an infinite term that satisfies $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
+It is regular because the set $\SubTerm(\Sum)$ is finite: 
 \begin{center}
-  $\SubTerm(\Sum) = \{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
+  $\{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
 \end{center}
-It is well-typed by the following derivation with an infinite path. In the path, we outline a 
-sequence of $\goldNout$ for a reason we will explain later\footnote{
-The sequence of the outlined $\goldNout$ is an infinitely progressing trace, 
+It is well-typed by the derivation of Figure~\ref{fig:sum-proof} with a unique infinite path (say $\pi$).
+In $\pi$, we put arrows to specify a sequence of $\N$s for a reason we will explain later
+\footnote{The sequence of $\N$s passed through by arrows is an infinitely progressing trace (with progressing points specified by the red arrow), 
 which will be defined in Section~\ref{section-circular-system-CTlambda}, 
-following the unique infinite path.}.
-\[
-\infer[\lambda]{
-  \vdash \Sum:\N, 
-  \goldNout 
-  \rightarrow \N 
-   \quad (\golddagger)
-}{
-  \infer[\cond]{
-    x : \N \vdash 
-    \cond(x,\lambda y.\Succ(\Sum(x)(y))): \goldNout \rightarrow \N
-    % \quad (\goldspadesuit)
-  }{
-    \infer[\var]{
-      x : \N \vdash x : \N
-    }{}
-    &
-    \infer[\lambda]{
-      x:\N \vdash \lambda y.\Succ(\Sum(x)(y)): \goldNout \rightarrow \N  
-      %\quad (\goldspadesuit)
-    }{
-      \infer[\Succ]{
-        x:\N, y : \goldNout
-        \vdash \Succ(\Sum(x)(y)): \N  
-        % \quad (\goldspadesuit)
-      }{
-        \infer[\apvar]{
-          x:\N, y : \goldNout 
-          \vdash \Sum(x)(y): \N
-        }{
-          \infer[\apvar]{
-            x:\N,  y : \N
-            \vdash \Sum(x): \goldNout \rightarrow \N
-          }{
-            \infer[\weak]{
-              x:\N,  y : \N
-              \vdash \Sum: \N, \goldNout \rightarrow  \N
-            }{
-              \infer*{\vdash \Sum: \N, \goldNout \rightarrow \N 
-                \quad (\golddagger)}{}
-            }
-          }
-        }
-      }
-    }
-  }
-}
-\]
-
-We can represent this infinite tree by a finite cyclic graph
-by adding a back edge from the upper sequent with the sign $\golddagger$
-to the bottom sequent (with the sign $\golddagger$).
-Note that the use of $\weak$-rule in this derivation makes this cyclic graph representation,
-namely, without $\weak$-rule, this particular proof would not be correct.
+following the path $\pi$.}.
+This infinite tree is represented by a finite cyclic graph
+adding a back edge from the upper sequent with $(\dagger)$
+to the bottom sequent with $(\dagger)$.
+Note that the use of $\weak$-rule works for this cyclic graph representation,
+namely, without $\weak$, this particular proof would be incorrect.
 %the context of the top $\golddagger$ would be $(x:\N, y:\N)$ 
 %while the context of the bottom $\golddagger$ is empty.
-\end{Eg}
 
-\subsection{Reduction rules}
+\begin{figure}[t]
+  \begin{prooftree}
+    \AxiomC{}
+    \UnaryInfC{$x : \N \vdash x : \N$}
+    \AxiomC{$\vdots$}
+    \noLine
+    \UnaryInfC{$\vdash \Sum: \N\rightarrow\vnode8{\N}\rightarrow\N$\quad ($\dagger$)}
+    \RightLabel{$\weak$}
+    \UnaryInfC{$x:\N, y : \vnode7{\N} \vdash \Sum: \N\rightarrow\N\rightarrow\N$}
+    \RightLabel{$\apvar$}
+    \UnaryInfC{$x:\N, y : \vnode6{\N} \vdash \Sum(x): \N\rightarrow\N$}
+    \RightLabel{$\apvar$}
+    \UnaryInfC{$x:\N, y : \vnode5{\N} \vdash \Sum(x)(y): \N$}
+    \RightLabel{$\Succ$}
+    \UnaryInfC{$x:\N, y : \vnode4{\N} \vdash \Succ(\Sum(x)(y)): \N$}
+    \RightLabel{$\lambda$}
+    \UnaryInfC{$x:\N \vdash \lambda y.\Succ(\Sum(x)(y)): \vnode3{\N} \rightarrow \N$}
+    \RightLabel{$\cond$}    
+    \BinaryInfC{$x : \N \vdash \cond(x,\lambda y.\Succ(\Sum(x)(y))): \vnode2{\N} \rightarrow \N$}
+    \RightLabel{$\lambda$}
+    \UnaryInfC{$\vdash \Sum:\N \rightarrow \vnode1{\N} \rightarrow \N$\quad ($\dagger$)}
+  \end{prooftree}
+  $
+  \bentdirflowedges{node1/node2/0}
+  \dirflowrededges{node2/node3}
+  \bentdirflowedges{node3/node4/0}
+  \bentdirflowedges{node4/node5/0}
+  \bentdirflowedges{node5/node6/0}
+  \bentdirflowedges{node6/node7/0}
+  \bentdirflowedges{node7/node8/0}
+  $    
+  \caption{Typing of $\Sum$}\label{fig:sum-proof}
+\end{figure}
+
+\end{example}
+
 Our goal is to provide a set of well-formed terms for $\LAMBDA$ and interpret 
 them as partial functionals, a semantics for circular $\lambda$-terms.
-Some terms of $\LAMBDA$, those satisfying the global trace condition 
-(to be introduced later) will denote a subset of the total 
-functionals. Our first step is to provide reduction rules for $\LAMBDA$.
+The well-typedness condition is not enough for our purpose,
+since meaningless terms like $t \sim \Succ(t):\N$ are still included. 
+The global trace condition (to be introduced later) will be a reasonable condition for our goal. 
+%to denote a subset of the total functionals. 
+
+\subsection{Reduction rules}
+This subsection provides reduction rules for $\LAMBDA$.
 %18:14 27/03/2024
 
-
-\begin{definition}(Reduction Rules for $\LAMBDA$)
+\begin{definition}[Reduction Rules for $\LAMBDA$]
   Let $f$, $g$, $t$, and $u$ be terms in $\LAMBDA$.
   We define the $\beta$-reduction relation $\reduces_\beta$
   and the $\cond$-reduction relation $\reduces_\cond$ as follows.
@@ -1125,82 +1099,68 @@ if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $
 (i.e. of $\cond$-depth $\le n$).
 %We call \emph{unsafe} a reduction inside any $\cond(f,g)$.
 A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
-
 We abbreviate \quotationMarks{$t$ is $0$-safe-normal} 
-with just \quotationMarks{$t$ is safe-normal}.
+with just \quotationMarks{$t$ is safe-normal} and write $\safeReduces$ instead of $\nsafeReduces{0}$.
 \end{definition}
 
 %09:19 24/04/2024
 %14:00 29/04/2024
 
-\begin{Eg}
-Let $u \sim \cond(0, (\lambda z.u)(z) )$. Then $u$ is safe-normal, 
-because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-hand side
-of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-redexes.
-Up to tree isomorphism, the tree form of $u$ includes the following branch:
-\begin{center}
-  $u$, 
-  \quad
-  $(\lambda z.u)(z)$, 
-  \quad
-  $\lambda z.u$, 
- \quad
-  $u$, 
- \quad $\ldots$
-\end{center}
-This infinite branch is cyclic,
-and includes infinitely many $\beta$-redexes.
-%all isomorphic to the same term $(\lambda z.u)(z)$. 
-It takes infinitely many $\beta$-reductions to normalize $t$,
-therefore $u$ has no normal form.
-\end{Eg}
+%% \begin{example}
+%% Let $u \sim \cond(0, (\lambda z.u)(z) )$. Then $u$ is safe-normal, 
+%% because all redexes in $u$ are of the form  $(\lambda z.u)(z)$ and are in the right-hand side
+%% of a $\cond$. However $u$ has infinitely many nodes which are $\beta$-redexes.
+%% Up to tree isomorphism, the tree form of $u$ includes the following branch:
+%% \begin{center}
+%%   $u$, 
+%%   \quad
+%%   $(\lambda z.u)(z)$, 
+%%   \quad
+%%   $\lambda z.u$, 
+%%  \quad
+%%   $u$, 
+%%  \quad $\ldots$
+%% \end{center}
+%% This infinite branch is cyclic,
+%% and includes infinitely many $\beta$-redexes.
+%% %all isomorphic to the same term $(\lambda z.u)(z)$. 
+%% It takes infinitely many $\beta$-reductions to normalize $t$,
+%% therefore $u$ has no normal form.
+%% \end{example}
 
-In order to produce the output of a computation we have
-to reduce closed terms of type $\N$ to a numeral. 
-We will define a subset $\CTlambda$ of
-$\LAMBDA$ and prove that if we repeat $0$-safe-reductions 
-(those in the right-hand side of \emph{no} $\cond$) on any
-closed term of type $\N$ of $\CTlambda$ eventually we obtain a numeral. 
-We will in fact prove that the $0$-safe-reduction relation is strongly normalizable on \emph{any} term
-of $\CTlambda$. 
+%% In order to produce the output of a computation we have
+%% to reduce closed terms of type $\N$ to a numeral. 
+%% We will define a subset $\CTlambda$ of
+%% $\LAMBDA$ and prove that if we repeat $0$-safe-reductions 
+%% (those in the right-hand side of \emph{no} $\cond$) on any
+%% closed term of type $\N$ of $\CTlambda$ eventually we obtain a numeral. 
+%% We will in fact prove that the $0$-safe-reduction relation is strongly normalizable on \emph{any} term
+%% of $\CTlambda$. 
 
 %14:11 25/03/2025
 
-\begin{Eg}
-This is an example of $0$-safe-reductions from a term $v(n)$ to a normal form. 
-Assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$. $v$ is normal (it is no
-$\cond$-redex).
-There are only finitely 
-many reductions from $v(n)$, and they are all $0$-safe. 
-The initial term $v(n)$ $\cond$-reduces to 
-$v(n-1)$, then we loop: $v(n-1)$ $\cond$-reduces to $v(n-2)$ and so forth.
-After $n$-time $\cond$-reductions we get $v(0)$. With one last $\cond$-reduction we 
-get $1$ and we stop. Thus, the term $v(n)$ strongly normalizes (the reduction path is unique)
-to $1$ in $(n+1)$ steps.
+\begin{example}
+For an example of safe-reductions from a term to a normal form, 
+assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$.
+$v$ is normal (it is no $\cond$-redex).
+There is a unique safe-reduction sequence
+$v(n) \safeReduces v(n-1) \safeReduces \cdots \safeReduces v(0) \safeReduces 1$. 
+Thus, $v(n)$ strongly normalizes by $\safeReduces$ to $1$ in $(n+1)$ steps.
 %$v(n)$ has a unique reduction path,
 %having length $(n+1)$ and terminating in $1$.
-The final output is independent from $n$.
-\end{Eg}
+The output is independent from $n$.
+\end{example}
 
-\begin{Eg}
-  This is an example of $0$-safe-reductions from a term $\Sum(m)(n)$ to
-  its normal form $m+n$. 
-  $\Sum$ is normal. The initial term $\Sum(m)(n)$ is $\beta$-reduced to
-  $\cond(m,\lambda y.\Succ(\Sum(m)(y)))(n)$, and then
-  it is reduced to $\Succ(\Sum(m)(n-1))$ by $\cond$- and $\beta$-reductions (if $n>0$).
-  Then we repeat this: $\Succ(\Sum(m)(n-1))$ is reduced to 
-  $\Succ^2(\Sum(m)(n-2))$ and so forth.
-  After $n$-time repetitions we get $\Succ^n(\Sum(m)(0))$.
-  With three more reductions, we get $\Succ^n(m) = m+n$ and we stop.
-  Thus, the term $\Sum(m)(n)$ strongly normalizes (the reduction path is unique).
-  Note that we only used $0$-safe-reductions.
-  %%%%%%%%%%%%%%
-  %, and hence $\Sum(m)(n)$ is safe-normal. 
-  % %%%%%%%%%%%%%
-  % no, 0-safe normal means that all redexes have depth 1 or more, here is the opposite
-  % there are redexes and all have depth 0.
-  %%%%%%%%%%%%%%
-\end{Eg}
+\begin{example}
+This is an example of safe-reductions from a term $\Sum(m)(n)$ to
+its normal form $m+n$. 
+$\Sum$ is normal.
+We have $\Sum(m)(n) \safeReduces \cond(m,\lambda y.\Succ(\Sum(m)(y)))(n) \safeReduces \Succ(\Sum(m)(n-1))$.
+Hence there is unique $0$-safe-reduction sequence 
+$\Sum(m)(n) \safeReducesAst \Succ(\Sum(m)(n-1)) \safeReducesAst \cdots \safeReducesAst \Succ^n(\Sum(m)(0)) \safeReducesAst \Succ^n(m) = m+n$.
+Thus, the term $\Sum(m)(n)$ strongly normalizes by $\safeReduces$.
+Note that we only used safe-reductions.
+\end{example}
 
 We will exhibit meaningful terms of $\CTlambda$ without a normal form. 
 However, for those terms we will define \quotationMarks{a limit normal form},

@@ -14,31 +14,26 @@ We will prove that closed terms of $\GTC$ define a set of total functionals:
 they include all functionals of G\"{o}del's system $\systemT$,
 and we conjecture they define exactly this set of functionals.
 
-We are particulary interested to the set $\CTlambda$ of regular terms of $\GTC$, namely
-to a set of terms defined by $\CTlambda = \GTC \cap \Reg$.
-The reason for this interest is that $\CTlambda$ is a decidable subset of $\Reg$
-and that all terms of $\CTlambda$ (actually, of $\Reg$) can be represented by finite graphs.
+We are particulary interested in terms in the set $\CTlambda = \GTC \cap \Reg$, namely
+regular terms that safisfies the global trace condition.
+The reason is that $\CTlambda$ is a decidable subset of $\Reg$
+and that its terms can be represented by finite graphs.
 For the terms of $\CTlambda$ we will prove that all reduction strategies
 %, church-rosser for the \quotationMarks{safe} part of a term, 
 on a closed term of type $\N$ strongly normalize to a numeral.
-As a consequence, all closed terms $\CTlambda$ are total functionals. 
-\\
+As a consequence, all closed terms of $\CTlambda$ are total functionals. 
 
-By building over the notion of trace progressing in an index $i$
-(Def. \ref{definition-progressing-trace})
+By building over the notion of trace progressing in an index $i$,
 we now define the global trace condition and the set of terms $\GTC$  and $\CTlambda$.
-Informally, GTC requires that all infinite branches have some trace of some argument
+Informally, the global trace condition requires that all infinite branches have some trace of some argument
 $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 
-\begin{definition}($\GTC$ and $\CTlambda$)
-\label{definition-global-trace-condition}
-%\mbox{}
-% \linebreak 
-Assume $\Pi::\Gamma \vdash t :A$ is a typing proof, $\pi = (\theta_1, \ldots, \theta_n, \ldots)$ 
-is a possibly infinite path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
-is a possibly infinite trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
-Assume $i$ is an index of $\pi$.
-
+\begin{definition}[$\GTC$ and $\CTlambda$]\label{definition-global-trace-condition}
+  Assume $\Pi::\Gamma \vdash t :A$ is a typing proof.
+%% $\pi$ 
+%% is a possibly infinite path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
+%% is a possibly infinite trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
+%% Assume $i$ is an index of $\pi$.
 \begin{enumerate}
 %\item
 %$\tau$ is progressing in the index $i$ if and only if: $\theta_i$ is labeled by some $\cond$-rule
@@ -48,20 +43,19 @@ Assume $i$ is an index of $\pi$.
 %and $k_i$ is the index of the first \emph{unnamed} argument of $\theta_i$.
 %Otherwise $\tau$ is not progressing in $i$.
 \item
-the trace $\tau$ is \emph{infinitely progressing} 
+A trace $\tau$ of a path $\pi$ in $\Pi$ is \emph{infinitely progressing} 
 if there are infinitely many indexes $i \in \dom(\tau)$ such that $\tau$ is progressing in $i$.
 
 \item
 $t$ satisfies the global trace condition if $t \in \WTyped$
-and for some typing proof $\Pi$ of $t$, for all infinite paths $\pi$ of $\Pi$,
-there is some infinitely progressing path $\tau$ in $\pi$. $\GTC$ is the set of 
+and for all infinite paths $\pi$ of $\Pi$,
+there is some infinitely progressing trace $\tau$ of $\pi$.
+$\GTC$ is the set of 
 well-typed terms $t \in \LAMBDA$ satisfying the global trace condition.
 
 \item
-$\CTlambda = \GTC \cap \Reg$: the cyclic $\lambda$-terms of 
-$\CTlambda$ are all well-typed terms which are regular trees 
-(having finitely many subtrees),  and which satisfy the global trace condition.
-
+  The set $\CTlambda$ is defined by $\GTC \cap \Reg$, namely $\CTlambda$ is the set of regular terms
+  that satisfy the global trace condition. 
 \end{enumerate}
 \end{definition}
 
@@ -73,6 +67,11 @@ The global trace condition is decidable quite fast
 for infinitary $\lambda$-terms describing realistic programs 
 (\cite{10.1007/978-3-642-35182-2_25}, 
 Section 4.7 \quotationMarks{Experimental Results}). 
+
+Note that, for any $t\in\CTlambda$, the $0$-safe level of $t$ is finite, since
+any infinite path in $\Pi::\Gamma\vdash t:A$ for some $\Pi$ must pass through a $\cond$-rule
+by the global trace condition.
+This fact is technically important to show properties of terms in $\CTlambda$. 
 
 %Another nice feature of the global trace condition is 
 %that for $t \in \GTC$ we require that for any proof $\Pi::\Gamma \prove t:A$ 
@@ -97,12 +96,10 @@ a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
 it helps to automatically discover a part of the terminating functions.
 Remark that we introduced a unique \emph{term notation $\ap$} for application: 
 we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
-the typing rule for $\ap$ into two sub-cases. 
+the typing rule for $\ap$ into two subcases. 
 \end{remark}
 
-We include now some examples of terms in $\CTlambda$, i.e., 
-of cyclic $\lambda$-terms. We recall that they have to satisfy $\GTC$, 
-in particular they are left-finite, and by definition of $\CTlambda$ they are regular.
+We now give some examples of terms in $\CTlambda$. 
 
 %18:05 03/06/2024
 
@@ -110,20 +107,18 @@ in particular they are left-finite, and by definition of $\CTlambda$ they are re
 %21:25 25/03/2025
 %15:35 26/03/2025
 
-
-\subsection{Example: The sum map}
-
-\begin{Eg}[The sum map]\label{example-sum}
+\begin{example}[The sum map]\label{example-sum}
 The term $\Sum$ given in Example~\ref{example-sum-first} was well-typed and regular.
-The proof of $\ \vdash \Sum:\N,\goldNout \rightarrow \N$ has an unique infinite path
-and there is an infinite trace (consists of the sequence of outlined $\goldNout$) 
+The proof for $\ \vdash \Sum:\N \rightarrow \N \rightarrow \N$ in Figure~\ref{fig:sum-proof} 
+has an unique infinite path
+and there is an infinite trace (consists of the sequence of $\N$ passed through by arrows) 
 following the path. 
 The infinite trace goes through progressing points (the rule instances of $\cond$-rule)
 infinite many times. Therefore it satisfies the global trace condition, and then $\Sum \in \CTlambda$. 
 
 %% The first example is the sum map $\Sum$ that computes the sum up to an input numeral. 
 
-%% \begin{Eg}
+%% \begin{example}
 %% \label{example-sum}
 %% The term $\Sum$ is the term such that $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
 %% We have $\Sum\in\Reg$ because it has finitely many subterms up to isomorphism: 
@@ -197,7 +192,7 @@ infinite many times. Therefore it satisfies the global trace condition, and then
 %% \]
 %% In a computation we can represent this infinite tree by a finite cyclic graph
 %% by adding a back edge from the  $\golddagger$ at the top to the $\golddagger$ at the bottom. 
-\end{Eg}
+\end{example}
 
 %
 %\begin{tikzpicture}
@@ -209,302 +204,54 @@ infinite many times. Therefore it satisfies the global trace condition, and then
 %  \draw (0,5) -- +(0:2cm);
 %\end{tikzpicture}
 
+\begin{example}[The recursor]\label{example:recursor}
 
-
-%10:43 16/04/2024
-
-\subsection{The Iterator}
-\label{subsection-iterator}
-\begin{Eg}
-We define a term $\Iter$ of  $\CTlambda$ computing the iteration of maps on $\N$.
-We write $\approx$ for
-the existence of a common reduct.
-The term $\Iter$ is a closed normal term of type $(\N \rightarrow \N), \N,\N \rightarrow \N$ such 
-that $\Iter(f,a,n) \approx f^n(a)$ for all numerals $n \in \Num$. 
-Let $\Gamma = (f:\N \rightarrow \N, a:\N)$. 
-We have to solve the following equations for terms in the context $\Gamma$
-and up to $\approx$:
-
-\begin{enumerate}
-\item
-$\Iter(f,a,0) \approx a$ 
-\item
-$\Iter(f,a,\Succ (t)) \approx f(\Iter(f,a,t))$
-\end{enumerate}
-
-where $f$, $a$ abbreviate $f^{\N\rightarrow\N}$ and $a^\N$.
-We solve the equations above with the closed term $\Iter = \lambda f. \lambda a.\iter$
-where 
-$$
-\iter = \cond (a)(\lambda x.f(\iter(x))):\N \rightarrow \N
-$$ 
-is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
-\end{Eg}
-
-\begin{proposition}[The iterator $\Iter$ is a term of $\CTlambda$]
-\label{proposition-iterator-in-CT-lambda}
-$\iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$, 
-hence $\Iter \in \CTlambda$.
-\end{proposition}
-
-%\begin{proof}
-%The term $\Iter$ is well-typed and regular by definition. 
-%We check the global trace condition. 
-%\\
-%We follow the unique infinite trace $\tau$ of the last unnamed argument $\N$ of $\Iter$ 
-%in the unique infinite path $\pi$ of $\Iter$. 
-%The trace $\tau$ moves from  $\Iter = \lambda f. \lambda a.\iter$
-% to the first unnamed argument of the subterm $\lambda a.\iter$, 
-%then to $a:\N$ in the context of $\iter = \cond (a, \lambda x.f(\iter(x)))$.
-%Then the infinite path $\pi$ and moves in this order to:
-% $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$
-%In the meanwhile, $\tau$ progresses from $\cond$ to the second argument $\lambda x.f(\iter(x))$
-%of $\cond$, then moves to $x$ in the context of $f(\iter(x))$,
-%then to $x$ in the context $\iter(x)$, and eventually to $x$ in the context of $\iter$.
-%%10:30 24/03/24
-%In this moment the infinite path $\pi$ loops from $\iter$ to $\iter$. At each loop the trace $\tau$ 
-%progresses once. We conclude that $\tau$ infinitely progresses.
-%\end{proof}
-
-The proof of $\Gamma \vdash \iter: \N \rightarrow \N$ 
-includes a type inference from the term $\iter$ to itself.
-We draw the type inference in the picture below and we outline
-with $\goldNout$ the unique infinitely progressing trace
-(the infinite traces of $f:\N \rightarrow \N$ and $a:\N$ do no progress). 
-If we want a finite cyclic graph notation we add a back edge from the 
-$\golddagger$ on the top to the $\golddagger$ in the bottom.
-We mark $\goldspadesuit$ the progress point, which is cyclically repeated in 
-the outlined infinite trace. 
-\[
-%\infer[\lambda]{ %opening: \infer[\lambda]
-%  \vdash \Iter:(\N \rightarrow \N), \N, \goldN \rightarrow \N
-% }{
-%  \infer[\lambda]{ %opening: \infer[\lambda]
-%  f:\N \rightarrow \N
-%  \vdash \lambda a.\iter:\N, \goldN \rightarrow \N
-%  }
-{
-    \infer[\cond]{ %opening: \infer[\cond]
-      \Gamma 
-      \vdash \iter: \goldNout \rightarrow \N 
-        \quad (\goldspadesuit, \golddagger)
-     }{ 
-         \infer[\var]{
-       \Gamma 
-      \vdash a:\N}{}
-     &
-        {\ \ \ \ \ \ }
-        {\infer[\lambda] %opening: \infer[\lambda]
-         {
-         \Gamma
-          \vdash \lambda x.f(\iter(x)):\goldNout \rightarrow \N
-         }{
-         \infer[\ap]{ %opening: \infer[\ap]
-           \Gamma, x:\goldNout
-          \vdash f(\iter(x)):\N
-           }{
-          \infer[\var]{
-       \Gamma, x:\N 
-      \vdash f:\N \rightarrow \N}{}
-           {\ \ \ \ \ \ \ \ \ \ \ \ }
-           {\infer[\apvar] %opening: \infer[\apvar]
-            {\Gamma, x:\goldNout
-        \vdash \iter(x): \N 
-             }{
-          \infer[\weak]{\Gamma, x:\N
-                                 \vdash \iter: \goldNout \rightarrow \N}
-                                {\infer*{\Gamma
-                                 \vdash \iter: \goldNout \rightarrow \N
-                                  \ \ \ ( \golddagger)}{}
-             }
-           }
-          }
-        }%closing: \infer[\apvar]
-      }%closing: \infer[\ap]
-    }%closing: \infer[\lambda]
-   }%closing: \infer[\cond]
- }%closing: \infer[\lambda]
-%}%closing: \infer[\lambda]
-\]
-
-
-
-
-\subsection{The Interval Map}
-\label{subsection-interval}
-For the third example, we simulate lists with one type variable $\alpha$ 
-and two variables $\nil:\alpha$ and $\cons:\N \rightarrow \alpha \rightarrow \alpha$. 
-We recursively define a notation for lists by $[]=\nil$,
-and $[a,\vec{a}] = \cons(a)( [\vec{a}] )$. We add no elimination rules 
-for lists, though, only the variables $\nil$ and $\cons$. Elimination rules are not 
-required in our example. Recall that $\approx$ denotes having a common reduct.
-
-\begin{Eg}
-Let $\Sigma = \{\nil:\alpha, \cons:\N,\alpha \rightarrow \alpha\}$. 
-We will define a term $\Interval$ in the context $\Sigma$,
-having one argument $f:\N \rightarrow \N$ and three arguments $a,x,y:\N$, such that 
-\[
-\Interval(f,a,n,m) \  \approx \ [f^n(a), f^{n+1}(a), \ldots, f^{n+m}(a)] \  : \ \alpha
-\]
-for all numeral $n,m \in \Num$. $\Interval$ will satisfy the following equations
+We define the term $\Rec(a,f):\N\rightarrow A$ for $a:A$ and $f:A,\N \rightarrow A$
+that is the recursor for $a$ and $f$, namely
+it computes
 \begin{center}
-  $\Interval(f,a,n,0) \approx [f^n(a)]$
-  \quad
-  and
-  \quad
-  $\Interval(f,a,n,\Succ (m))  \approx f^n(a) @ \Interval(f,a,\Succ(n),m)$.
+  $\Rec(a,f)(0) \reduces a$ \quad and \quad $\Rec(a,f)(\Succ(t)) \reduces f(\Rec(a,f)t)(t)$.
 \end{center}
-Assume $\iter = \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N$ is the term
-defined in the previous sub-section \ref{subsection-iterator}. 
-In particular, $\iter(n) \approx f^n(a) : \N$ for all $n \in \Num$.
-We solve the equations above for $\Interval$ with 
-$\Interval = \lambda f. \lambda a.\interval$, where 
-\[
-\interval:\N,\N \rightarrow \alpha
-\]
-is a term in the context $(f:\N\rightarrow\N, a:\N)$ defined by 
-\[
-\interval 
-\ \ \ = \ \ \ 
-\lambda x.\cond (\base, \lambda y.\inductive),
-\]
-where the base case $\base$ and the inductive case $\inductive$ are
-\[
-\base 
-\ \  = \ \   
-[\iter(x)]
-\ \ \  \ \ \ 
-\inductive
-\ \   =  \ \ 
-\iter(x) @ \interval(\Succ(x))(y)
-\]
-\end{Eg}
+We define $\Rec(a,f) = g$, where $g$ is defined by the equation $g = \cond(a,\lambda x.f(g(x))(x))$.
+Note that $g$ is regular and is in $\GTC$ by the following proof with $\Gamma=(f:A,\N \rightarrow A,a:A)$.
+The arrows specifies the unique infinitely progressing trace of the unique infinite path repeating from $(\dagger)$ on the bottom to
+$(\dagger)$ on the top. 
+If we want a finite cyclic graph notation we add a back edge between the judgments with $(\dagger)$ signs. 
+The red arrow is the progress point, which is cyclically repeated in the infinite trace.
+Hence $\Rec(a,f) \in \CTlambda$.
+\begin{prooftree}
+  \AxiomC{}
+  \RightLabel{$\var$}
+  \UnaryInfC{$\Gamma \vdash a:A$}
+  \AxiomC{}
+  \RightLabel{$\var$}  
+  \UnaryInfC{$\Gamma,x:\N \vdash f: A \rightarrow \N \rightarrow A$}
+  \AxiomC{$\vdots$}
+  \noLine
+  \UnaryInfC{$\Gamma \vdash g:\vnode7{\N}\rightarrow A$}
+  \RightLabel{$\weak$}  
+  \UnaryInfC{$\Gamma,x:\N \vdash g:\vnode6{\N}\rightarrow A$}
+  \RightLabel{$\apvar$}  
+  \UnaryInfC{$\Gamma,x:\vnode5{\N} \vdash g(x):A$}
+  \BinaryInfC{$\Gamma,x:\vnode4{\N} \vdash f(g(x)):\N \rightarrow A$}
+  \RightLabel{$\apvar$}
+  \UnaryInfC{$\Gamma,x:\vnode3{\N} \vdash f(g(x))(x):A$}
+  \UnaryInfC{$\Gamma \vdash \lambda x.f(g(x))(x):\vnode2{\N} \rightarrow A$}
+  \RightLabel{$\cond$}
+  \BinaryInfC{$\Gamma \vdash g: \vnode1{\N} \rightarrow A$\quad$(\dagger)$}
+\end{prooftree}
+$
+\dirflowrededges{node1/node2}
+\bentdirflowedges{node2/node3/0}
+\bentdirflowedges{node3/node4/0}
+\bentdirflowedges{node4/node5/0}
+\bentdirflowedges{node5/node6/0}
+\bentdirflowedges{node6/node7/0}
+$    
 
-\begin{proposition}[The interval map $\Interval$ is a term of $\CTlambda$]
- \label{proposition-interval-in-CT-lambda}
-$\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
-\end{proposition}
+Note that $\CTlambda$ contains G\"{o}del's $\systemT$ since it has expressive power of the numerals and the recursor. 
+Moreover the computational properties of $\Rec(a,f)$ displayed above are satisfied only by the $0$-safe-reductions. 
+\end{example}  
 
-%\begin{proof}
-%The term $\Interval$ is well-typed and regular by definition. We check the global trace condition.
-%Any infinite path $\pi$ either moves to $\iter$, for which we already checked the global trace condition,
-%or cyclically moves from $\interval$ to $\interval$.
-%We follow the unique infinite 
-%trace $\tau$ of the last unnamed argument $\N$ of $\Interval$ inside this infinite path.
-%The trace $\tau$ moves to the last unnamed argument $\N$ of  
-%$\interval:\N,\N \rightarrow \N$, then to the last unnamed argument of
-%$\cond (\ [\iter(x)],  \  \lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
-%In this step $\tau$ progresses, and moves to 
-%the first unnamed argument of $\lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$,
-%then to $y:\N$ in the context of $\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
-%After one $\apvar$ rule, the trace $\tau$ reaches the unique unnamed argument of 
-%$(\lambda x.\interval)(\Succ(x))$, then the last unnamed argument $\tau$ of $\interval$. 
-%From $\interval$ the trace $\tau$ loops. Each time $\tau$ moves from $\interval$ to $\interval$
-%then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
-%\end{proof}
-%14:27 24/04/2024
 
-The proof above includes a type inference from the term $\interval$ to itself.
-We draw the type inference in the figure \ref{figure-term-interval}
-and we outline with $\goldNout$ the unique infinitely progressing trace. 
-If we want a graph notation, we add a back edge from the 
-top $\golddagger$ to the bottom $\golddagger$. We need the $\weak$-rule
-to remove the variables $x$, $y$ which are no more used in the top $\golddagger$
-and do not occur in the bottom $\golddagger$. 
-We mark $\goldspadesuit$ the progress point which is cyclically repeated in 
-the outlined infinite trace. 
-\\
-
-% TYPING PROOF 
-\begin{figure}
-\label{figure-term-interval}
-
-\begin{center}
-  \begin{footnotesize}
-%\[
-%\infer[\lambda]
-% {\Sigma\vdash \Interval:(\N \rightarrow \N),\N,\N,\goldN\rightarrow\alpha}
-% {\infer[\lambda]
-%   {\Sigma,f:\N\rightarrow\N \vdash \lambda a.\interval:\N,\N,\goldN   
-%      \rightarrow\alpha}
-   {\infer[\lambda]  
-     {\Gamma \vdash \interval:\N,\goldNout\rightarrow\alpha 
-       \ \ \ (\golddagger) }
-       {\infer[\cond]{\Gamma, x:\N 
-	\vdash 
-	\cond (\base,  \inductive )
-	:\goldNout\rightarrow\alpha \ \ \ (\goldspadesuit) } 
-       {\infer[\apvar]{\Gamma, x:\N 
-	           \vdash 
-	           \base:\alpha}
-             {\infer*{\Gamma, x:\N 
-	           \vdash 
-	           \cons(\iter(x)):\alpha \rightarrow\N}{}}
-            {\ \ \ \ \ \ }  &
-          \infer[\lambda]{\Gamma, x:\N 
-	           \vdash 
-	           \lambda y.j : \goldNout\rightarrow\alpha}
-             {\infer[\apnotvar]{\Gamma, x:\N, y:\goldNout \vdash
-               j : \alpha}
-            {\infer*
-                     {\Gamma, x:\N, y:\N 
-                          \vdash \iter(x):\N}{}
-               {\ \ \ \ \ \ }
-                     {\infer[\apvar]{\Gamma, x:\N, y:\goldNout 
-                          \vdash \interval(\Succ(x))(y):\alpha}
-                         {\infer[\apnotvar]{\Gamma, x:\N, y:\N 
-                          \vdash \interval(\Succ(x)):\goldNout \rightarrow\alpha}
-                              {\infer[\weak]{\Gamma, x:\N, y:\N 
-                          \vdash \interval:\N,\goldNout \rightarrow\alpha}
-                                {\infer*{\Gamma 
-                          \vdash \interval:\N,\goldNout \rightarrow\alpha
-                           \ \ \ (\golddagger)}
-              {} } & {\ldots}  }}}
-             }
-           }
-         }
-       }  
-    }
-%   }
-%\]
-  \end{footnotesize}
-
-\mbox{Figure \ref{figure-term-interval}}
-\end{center}
-
-\end{figure}
-%15:50 26/03/2025
-
-The term $\interval$ is an example of how difficult it is to completely normalize
-an infinite term, and how complex can be the normal form. 
-We have infinitely many nested $\beta$-reductions in
-$\interval$, one for each $\interval(\Succ (x)) \equiv (\lambda x.\ldots)(\Succ (x))$. 
-Suppose we remove all of them in a single step, producing a substitution
-$[\Succ (x)/x]$. $\beta$-redexes are nested, therefore 
-inside the $\beta$-redex number $k$ we obtain a subterm $\iter[\Succ (x)/x]
-\ldots[\Succ (x)/x]$, with the substitution of $x$ nested $k$ times. 
-The result is $\iter[\Succ ^k(x)/x]$.
-The nested substitution produces infinitely many pairwise different subterms 
-$\iter(\Succ ^k(x))$ for all $k \in \N$. 
-We need $k$ steps to normalize each $\iter(\Succ ^k(x))$ to $f^k(x)$, 
-even if we allow to reduce infinitely many 
-$\beta$ and $\cond$-redexes at the same time, because our reduction will consume one 
-$\Succ$ at the time. Thus, the total number of reduction steps is infinite. 
-Besides, if we take the limit of this process, the normal form is not regular: it contains terms 
-$f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms. 
-
-%For this reason we consider normalization as part of the semantics for
-%our cyclic graph-notation, except for closed terms of type $\N$, 
-%in this case normalization is the computation of the output.
-
-%These infinite subterms are of a particulary simple form, though. 
-%They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
-%to the result.
-
-%In conclusion, $\Interval$ is some term of $\CTlambda$ which can be safely 
-%normalized, but which cannot be fully normalized in finite time, not even if we 
-%allow infinite parallel reductions without any "safety" restriction. The normal form 
-%is produced \emph{only in the limit} and it is \emph{not regular}. If we allow to 
-%reduce infinitely many nested existing $\beta$-redexes in one step, also the 
-%intermediate steps of the infinite reduction of $\Interval$ are not regular.
 

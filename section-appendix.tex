@@ -1,6 +1,6 @@
 \section{Appendix}
-We include here all proofs for the statements of our paper and one more example,
-the Ackermann function.
+We include here all proofs for the statements of our paper and two more examples,
+the interval map and the Ackermann function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTION 1
@@ -21,8 +21,7 @@ the Ackermann function.
 %\end{proposition}
 
 %08:56 19/06/2024
-\begin{proof}(Uniqueness of Typing, 
-Prop. \ref{proposition-left-finite-unique})
+\begin{proof}(Uniqueness of Typing, Prop. \ref{proposition-left-finite-unique})
 By induction on the sum of the length of the leftmost branch in $\Pi$ and $\Pi'$. These lengths 
 are finite because $\Pi$ and $\Pi'$ are assumed to be left-finite. Let $r$ be the last rule of $\Pi$ 
 and $r'$ be the last rule of $\Pi'$.
@@ -41,7 +40,6 @@ Assume  $r \not = \weak$ and $r' \not = \weak$. Then both $r$ and $r'$ are the t
 $h=0,1,2$ the proof $\Pi$ has premises $\Pi_1, \ldots, \Pi_h$,
 and the proof $\Pi'$ has premises $\Pi'_1, \ldots, \Pi'_h$ for the same $h$. 
 We distinguish one case for each possible label of the root of $t$.
-
 \begin{enumerate}
 \item
 Assume $t = x^T$. Then $r=r'=\var$-rule and $A = A' = T$.
@@ -71,7 +69,6 @@ Assume $t = \cond(f,g)$. Then $r=r'=\cond$-rule and $\Pi_1::\Gamma \vdash f:A$
 and $\Pi'_1::\Gamma' \vdash f:A'$ by definition of $\cond$-rule with conclusion
 $A$. By induction hypothesis on $\Pi_1$ and
 $\Pi'_1$ we deduce that $A = A'$.
-
 \end{enumerate}
 \end{enumerate}
 \end{proof}
@@ -860,8 +857,7 @@ contradicting point \ref{lemma-prec-order-01} above.
 
 
 
-\begin{proof}(Trace assignment, Prop.
-\ref{prop:trace_assign-finiteness})
+\begin{proof}(Trace assignment, Prop.\ref{prop:trace_assign-finiteness})
 %%%%%%%%%%%%%%%%%%%
 % checked 11:04 03/04/2025
 %%%%%%%%%%%%%%%%%%%
@@ -927,8 +923,7 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 %
 %\end{lemma}
 
-\begin{proof}(Total terms and Finiteness for Safe-Reductions, 
-Lemma \ref{lem:total_value-finiteness})
+\begin{proof}(Total terms and Finiteness for Safe-Reductions, Lemma \ref{lem:total_value-finiteness})
 \begin{enumerate}
 %%%%%%%%%%%%%%%%%%%%%
 % checked 11:49 03/04/2025
@@ -936,7 +931,7 @@ Lemma \ref{lem:total_value-finiteness})
 \item
 %\label{lem:total_value-finiteness1}
   We show \emph{point \ref{lem:total_value-finiteness1}}  by induction on the type $A$ of $t$. 
-  We assume that $t:A$ and $t \reduces ^*u$.
+  We assume that $t:A$ and $t \safeReducesAst u$.
   and $t$ is total, in order to prove that $u$ is total.
   By the subject reduction property, $u$ has type $A$.
 \begin{enumerate}
@@ -945,20 +940,20 @@ Lemma \ref{lem:total_value-finiteness})
   By the assumption, $t$ is total.
   By definition of $t$ total for $T$ atomic, all infinite 
   reductions from $t$ only include finitely many safe-reductions, for all $n \in \N$.
-  In particular, all infinite reductions $\sigma: t \reduces \ldots \reduces 
-  u \reduces u_1 \reduces u_2 \ldots$ 
+  In particular, all infinite reductions $\sigma: t \safeReduces \ldots \safeReduces 
+  u \safeReduces u_1 \safeReduces u_2 \ldots$ 
   passing through $u$ only include finitely many safe-reductions. We conclude that
   all infinite reductions 
-  $\sigma': u \reduces u_1 \reduces u_2 \ldots$  from $u$
+  $\sigma': u \safeReduces u_1 \safeReduces u_2 \ldots$  from $u$
   only include finitely many safe-reductions. 
   From $u:A =\N,\alpha$ we conclude that  $u$ is total.
   
 \item
   We show the \emph{induction case}, namely when $A = (A_1\rightarrow A_2)$.
   Take any arbitrary total term $a:A_1$ in order to prove that $u(a):A_2$ is total. 
-  Then we have $t(a) \reduces^{*} u(a)$ and 
+  Then we have $t(a) \safeReducesAst u(a)$ and 
   $t(a):A_2$ is total by the assumption that $t$ is total.
-  Hence $u(a)$ is total by $t(a) \reduces^{*} u(a)$ and the induction hypothesis on $A_2$,
+  Hence $u(a)$ is total by $t(a) \safeReducesAst u(a)$ and the induction hypothesis on $A_2$,
   for all total terms $a:A_1$. 
   We conclude that $u:A_1\rightarrow A_2$ is total. 
 \end{enumerate}
@@ -968,37 +963,34 @@ Lemma \ref{lem:total_value-finiteness})
 If $f:A \rightarrow B$, $a:A$ are total  terms, then $f(a)$  is total by definition of total.
 
 \item
-%\label{lem:total_value-finiteness3}
+%\label{lem:total_value-finiteness2bis}
 We prove that $x^T:T$ is total and that 
 if $t:T$ is total then $t$ is finite for safe-reductions.
 We argue by principal induction on $T$.
-
 \begin{enumerate}
 \item
 In order to prove that $x^T:T$ is total we prove a little more, namely
 that for all types $\vec{A} = A_1, \ldots, A_n$, 
-all total $\vec{a}:\vec{A}$, if $T = \vec{A} \rightarrow U$ then $x(\vec{a}):U$
+all total $\vec{a}:\vec{A}$, if $T = \vec{A} \rightarrow T'$ then $x(\vec{a}):T'$
 is total. The thesis will follows by taking $\vec{a} = \nil$. 
-We argue by secondary induction on $U$. 
-
+We argue by secondary induction on $T'$. 
 \begin{enumerate}
 \item
-Assume $U$ is atomic. Every reduction on $x(\vec{a}):U$
+Assume $T'$ is atomic. Every reduction on $x(\vec{a}):T'$
 takes place in $\vec{a}$. By definition of total
-for an atomic type we have to prove that in all infinite reduction sequences from $x(\vec{a}):U$ 
+for an atomic type we have to prove that in all infinite reduction sequences from $x(\vec{a}):T'$ 
 there are only finitely many safe-reduction. 
 Since each $a_i$ in $\vec{a}$ is total, by principal induction hypothesis on $A_i$ 
 only finitely many safe-reductions are possible from $a_i$. 
 All reductions on $x(\vec{a})$ take place on $\vec{a}$, therefore
 only finitely many safe-reductions are possible. 
 \item
-Assume $U = A_1 \to A_2$. By definition of total
+Assume $T' = A_1 \to A_2$. By definition of total
 for an arrow type we have to prove that for all total $a$ we have  $x(\vec{a},a):A_2$ total.
 This follows by secondary induction hypothesis on $A_2$.
 \end{enumerate}
 
 \item
-%\label{lem:total_value-finiteness4}
 \emph{We assume that  $t:T$ is total in order to prove that $t$ is finite for safe-reductions},
 for all $n \in \N$.
 \begin{enumerate}
@@ -1010,36 +1002,36 @@ the variable
 $x^{A_1}:A_1$ is total, therefore $t(x):A_2$ is total and by induction hypothesis on $A_2$
 any infinite reduction sequence from $t(x)$ only includes finitely many safe-reductions. 
 Any infinite reduction sequence 
-$\sigma: t = t_0 \reduces_1 t_1 \reduces_1 t_2 \reduces_1 \ldots$  from $t$ 
+$\sigma: t = t_0 \safeReduces t_1 \safeReduces t_2 \safeReduces \ldots$  from $t$ 
 can be raised to an infinite reduction sequence 
-$\tau: t(x) = t_0(x) \reduces_1 t_1(x) \reduces_1 t_2(x) \reduces_1 \ldots$ from $t(x)$
+$\tau: t(x) = t_0(x) \safeReduces t_1(x) \safeReduces t_2(x) \safeReduces \ldots$ from $t(x)$
 while preserving the fact that a reduction is safe, because $t$ occurs in no $\cond$ in $t(x)$.
 We conclude that $\sigma$ only includes finitely many safe-reductions. 
 \end{enumerate}
 \end{enumerate}
 
-\item  
-%\label{lem:total_value-finiteness5}
-Assume $U=\N, \alpha$ is any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow U$ is a term
-whose all free variables are $\vec{x}:\vec{B}$.
-Assume that for all total $\vec{u}:\vec{B}$, $\vec{a}:\vec{A}$ the term 
-$t[\vec{u}]\vec{a}: U$ is \emph{finite for safe-reductions}. We have to prove that
-$t[\vec{x}]$ is \emph{total by substitution}.
-We assume that  $\vec{u}:\vec{B}$ and we have to prove that $t[\vec{u}]$ is total.
-We argue by induction on the number $|\vec{A}|$ of elements of $\vec{A}$.
-\begin{enumerate}
-\item
-  In the \emph{base case} $|\vec{A}| = 0$, the thesis $t[\vec{u}]$ is equal to the assumption.
-\item
-  We show the \emph{induction case}. Let $\vec{A} = A_0,\vec{A'}$.
-  Take arbitrary totals $\vec{u}:\vec{B}$, $\vec{a'}:\vec{A'}$, and $a_0:A_0$. 
-  By the assumption, we have that $t[\vec{u}]a_0\vec{a'}: U$ is total  for all 
-  vector of total terms $\vec{a'}$. 
-  Then $t[\vec{u}]a_0:\vec{A'}\rightarrow U$ is total for all total $a_0:A_0$
-  by the induction hypothesis on $\vec{A'}\rightarrow U$.
-  By definition of total we deduce that $t[\vec{u}] : A_0,\vec{A'}\rightarrow U$ is total.
-\end{enumerate}
-We conclude that $t[\vec{x}]$ is total by substitution, as we wished to show.
+%% \item  
+%% %\label{lem:total_value-finiteness3}
+%% Assume $U=\N, \alpha$ is any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow U$ is a term
+%% whose all free variables are $\vec{x}:\vec{B}$.
+%% Assume that for all total $\vec{u}:\vec{B}$, $\vec{a}:\vec{A}$ the term 
+%% $t[\vec{u}]\vec{a}: U$ is \emph{finite for safe-reductions}. We have to prove that
+%% $t[\vec{x}]$ is \emph{total by substitution}.
+%% We assume that  $\vec{u}:\vec{B}$ and we have to prove that $t[\vec{u}]$ is total.
+%% We argue by induction on the number $|\vec{A}|$ of elements of $\vec{A}$.
+%% \begin{enumerate}
+%% \item
+%%   In the \emph{base case} $|\vec{A}| = 0$, the thesis $t[\vec{u}]$ is equal to the assumption.
+%% \item
+%%   We show the \emph{induction case}. Let $\vec{A} = A_0,\vec{A'}$.
+%%   Take arbitrary totals $\vec{u}:\vec{B}$, $\vec{a'}:\vec{A'}$, and $a_0:A_0$. 
+%%   By the assumption, we have that $t[\vec{u}]a_0\vec{a'}: U$ is total  for all 
+%%   vector of total terms $\vec{a'}$. 
+%%   Then $t[\vec{u}]a_0:\vec{A'}\rightarrow U$ is total for all total $a_0:A_0$
+%%   by the induction hypothesis on $\vec{A'}\rightarrow U$.
+%%   By definition of total we deduce that $t[\vec{u}] : A_0,\vec{A'}\rightarrow U$ is total.
+%% \end{enumerate}
+%% We conclude that $t[\vec{x}]$ is total by substitution, as we wished to show.
 \end{enumerate}
 \end{proof}
 
@@ -1083,7 +1075,6 @@ We have to prove that for some $u' \in \LAMBDA$
 we have $t' R u'$ and $u \reduces^{+} u'$ and besides that
 if $t \reduces   t'$ is safe then some step in
 $u \reduces^{+} u'$ is safe, too.
-\\
 
 The assumption $t R u$ unfolds to: for some $a, b,w  \in \LAMBDA$,
 some variable $y$, 
@@ -1093,7 +1084,6 @@ we have that $(t = w[x/y][a/x])$ and $(u = w[x/y][b/x])$ and
 $x \not \in \FV(w,a,b)$. If we set $v=w[x/y]$ we have
 $(t = v[a/x])$ and $(u = v[b/x])$ and
 $x \not \in \FV(a,b)$.
-\\
 
 The assumption $t \reduces t'$ implies that for some unique redex 
 $r \sqsubseteq t$, for some context $C[\cdot]$
@@ -1108,10 +1098,7 @@ Assume $\pi$ is the position of $r$ in $t$. If $r \reduces r'$ is safe, then
 $\pi$ crosses no right-hand side of any $\cond$.
 We argue by cases on $\pi$.
 Either $\pi$ is some position of $v$ or it is not.
-
-
 \begin{enumerate}
-
 \item
 \emph{Assume that $\pi$ is \emph{not} the position of a node of $v$}. 
 Then there is some free occurrence of $x$ in $v$, with position $\theta$, 
@@ -1183,7 +1170,6 @@ because the type of $r_2$ is the type of an argument of $r_1$.
 Therefore $r_1$, $r_2$ have two different types and $a$ cannot have both types.
 Thus, if $s_1=x$ then $r_2,s_2$ start with the same symbol, and if
 $s_2=x$ then $r_1,s_1$ start with the same symbol.
-
 \begin{enumerate}
 \item
 \emph{Sub-case: $s_1=x$ and $r_2,s_2$ start with the same symbol}. 
@@ -1320,8 +1306,7 @@ safe, too.
   and some \emph{total} trace-compatible assignment $\rho$ for $\pi$.
   Now we will define such $\pi$.
   
-  By case \ref{lem:total_value-finiteness3} of Lemma~\ref{lem:total_value-finiteness},
-  if $t[\vec{x}]$ is \emph{not} total by substitution, then 
+  If $t[\vec{x}]$ is \emph{not} total by substitution, then 
   there exist total terms $\vec{a}:\vec{A}$ and $\vec{d}:\vec{D}$ for which there is
   an infinite reduction $\sigma$ from $t[\vec{d}]\vec{a}$ having infinitely many safe  
   reductions.
@@ -1365,22 +1350,16 @@ safe, too.
   Next, assume that $(l_i,\vec{d_i},\vec{a_i})$ is already constructed.
   Then we define $(l_{i+1},\vec{d_{i+1}},\vec{a_{i+1}})$ by the case analysis on
   the last rule for the node $l_i$ in $\Pi$. 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % APPARENTLY THE CASE $\struct(f)$ CAN BE SIMPLIFIED TO WEAKENING-Stefano
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
 \begin{enumerate}
-
 \item
 %WEAK
   The case of $\weak$ happens when
   $\Label(\Pi,l_{i+1}) = \Gamma \vdash t_{i+1}:\vec{A_i}\rightarrow U$
   is the premise of a $\weak$-rule, with conclusion
   $\Delta \vdash t_{i}:\vec{A_i}\rightarrow U$. We have:
-
 \begin{enumerate}
 \item
  $t_i = t_{i+1}$. 
@@ -1464,11 +1443,7 @@ safe, too.
   $t_i[\vec{d_i}]\vec{a_i} = f[\vec{d_i}](u[\vec{d_i}])\vec{a_i}:U$ 
   with infinitely many safe-reductions.
   We argue by cases on the statement: \emph{$u[\vec{d_i}]:B$ is total}.
-
-
 %11:04 05/06/2024
-
-
 \begin{enumerate}
 \item
   We first consider the subcase: \emph{$u[\vec{d_i}]:B$ is total}.
@@ -1486,8 +1461,7 @@ safe, too.
 \item
   Next we consider the subcase that \emph{$u[\vec{d_i}]:B$ is not total}.
   Let $B = \vec{C}\rightarrow U$.
-  By lemma \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness3}
-  there is a sequence of values $\vec{c}:\vec{C}$ and an infinite reductions from 
+  Then there is a sequence of values $\vec{c}:\vec{C}$ and an infinite reductions from 
   $u[\vec{d_i}]\vec{c}: U$ with infinitely many safe-reductions.
   Define $l_{i+1}= l_i \conc (2)$ taking the second premise of the rule,
   and define $\vec{d_{i+1}} = \vec{d_i}$ and $\vec{a_{i+1}} = \vec{c}$. 
@@ -1568,7 +1542,6 @@ safe, too.
   many safe-reductions. This requires some care because, as we pointed out,
   reduction and substitution do not commute for infinite $\lambda$-terms.
   We argue by case.
-
 \begin{enumerate}
 \item
  Suppose all reductions in the infinite reduction $\sigma$ 
@@ -1631,7 +1604,6 @@ safe, too.
   with infinitely many safe-reductions,
   where $\vec{a_i} = a,\vec{b}$. 
   We argue by case.
-
 \begin{enumerate}
 \item
   \emph{Suppose the reduction sequence $\sigma$ never contracts the leftmost $\cond$.}
@@ -1666,9 +1638,7 @@ safe, too.
   After this $\cond$-reduction we have a reduction sequence 
   with infinitely many safe-reductions.
   We prove our thesis by subcases, according if $a'' = 0$ or $a'' = \Succ(a')$.
-   
 %19:37 05/09/2024
-
 \begin{enumerate}
 \item
   \emph{Suppose $a'' = 0$}.
@@ -1701,7 +1671,6 @@ safe, too.
   This is fine because in the second premise of a $\cond$ 
   the trace progresses and, indeed, we have $a' \prec a$, 
   because $a \reduces^{*}  a'' = \Succ(a')$.
-
   \end{enumerate}
  \end{enumerate}
 \end{enumerate}
@@ -1725,7 +1694,7 @@ and a trace-compatible assignment, as we wished to show.
 %\end{proposition}
 
 
-\begin{proof}(Closed Safe-Normal terms of Type $\N$, 
+\begin{proof}(Closed safe-normal terms of type $\N$, 
 Prop. \ref{proposition-closed-safe-normal-term-N})
 %%%%%%%%%%%%%%%%%%%%%
 % checked 09:56 03/04/2025
@@ -1736,7 +1705,6 @@ We assume that $t \in \GTC$ in order to prove that $t$ is sound.
 We argue by  induction on the size of the $0$-safe level of $t$ (the set of $0$-safe subterms
 of $t$): this size is finite because $t \in \GTC$. 
 We consider one case for each possible first symbol of $t$.
-
 \begin{enumerate}
 \item
 $t =x$. Then $t$ is open.
@@ -1787,6 +1755,385 @@ Then $t$ is sound by the previous point and the only possibility left is that $t
 a numeral.
 \end{enumerate}
 \end{proof}
+
+
+\subsection{The Iterator}\label{subsection-iterator}
+%10:43 16/04/2024
+\begin{example}[The iterator]\label{example:iterator}
+We define a term $\Iter$ of  $\CTlambda$ computing the iteration of maps on $\N$.
+We write $\approx$ for
+the existence of a common reduct.
+The term $\Iter$ is a closed normal term of type $(\N \rightarrow \N), \N,\N \rightarrow \N$ such 
+that $\Iter(f,a,n) \approx f^n(a)$ for all numerals $n \in \Num$. 
+Let $\Gamma = (f:\N \rightarrow \N, a:\N)$. 
+We have to solve the following equations for terms in the context $\Gamma$
+and up to $\approx$:
+\begin{center}
+  $\Iter(f,a,0) \approx a$
+  \hspace{5ex}
+  and
+  \hspace{5ex}  
+  $\Iter(f,a,\Succ (t)) \approx f(\Iter(f,a,t))$,
+\end{center}
+where $f$ and $a$ abbreviate $f^{\N\rightarrow\N}$ and $a^\N$, respectively.
+We solve the equations above with the closed term $\Iter = \lambda f. \lambda a.\iter$,
+where 
+\begin{center}
+$\iter = \cond (a)(\lambda x.f(\iter(x))):\N \rightarrow \N$
+\end{center}
+is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
+\end{example}
+
+\begin{proposition}[$\Iter$ is in $\CTlambda$]
+\label{proposition-iterator-in-CT-lambda}
+$\iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$, 
+hence $\Iter \in \CTlambda$.
+\end{proposition}
+
+%\begin{proof}
+%The term $\Iter$ is well-typed and regular by definition. 
+%We check the global trace condition. 
+%\\
+%We follow the unique infinite trace $\tau$ of the last unnamed argument $\N$ of $\Iter$ 
+%in the unique infinite path $\pi$ of $\Iter$. 
+%The trace $\tau$ moves from  $\Iter = \lambda f. \lambda a.\iter$
+% to the first unnamed argument of the subterm $\lambda a.\iter$, 
+%then to $a:\N$ in the context of $\iter = \cond (a, \lambda x.f(\iter(x)))$.
+%Then the infinite path $\pi$ and moves in this order to:
+% $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$
+%In the meanwhile, $\tau$ progresses from $\cond$ to the second argument $\lambda x.f(\iter(x))$
+%of $\cond$, then moves to $x$ in the context of $f(\iter(x))$,
+%then to $x$ in the context $\iter(x)$, and eventually to $x$ in the context of $\iter$.
+%%10:30 24/03/24
+%In this moment the infinite path $\pi$ loops from $\iter$ to $\iter$. At each loop the trace $\tau$ 
+%progresses once. We conclude that $\tau$ infinitely progresses.
+%\end{proof}
+
+The proof of $\Gamma \vdash \iter: \N \rightarrow \N$ 
+includes a type inference from the term $\iter$ to itself.
+We draw the type inference in the picture below and we draw arrows to specify the unique infinitely progressing trace. 
+If we want a finite cyclic graph notation we add a back edge from the 
+$(\dagger)$ on the top to the $(\dagger)$ at the bottom.
+The red arrow is the progress point, which is cyclically repeated in the infinite trace. 
+%% \[
+%% %\infer[\lambda]{ %opening: \infer[\lambda]
+%% %  \vdash \Iter:(\N \rightarrow \N), \N, \goldN \rightarrow \N
+%% % }{
+%% %  \infer[\lambda]{ %opening: \infer[\lambda]
+%% %  f:\N \rightarrow \N
+%% %  \vdash \lambda a.\iter:\N, \goldN \rightarrow \N
+%% %  }
+%% {
+%%     \infer[\cond]{ %opening: \infer[\cond]
+%%       \Gamma 
+%%       \vdash \iter: \goldNout \rightarrow \N 
+%%         \quad (\goldspadesuit, \golddagger)
+%%      }{ 
+%%          \infer[\var]{
+%%        \Gamma 
+%%       \vdash a:\N}{}
+%%      &
+%%         {\ \ \ \ \ \ }
+%%         {\infer[\lambda] %opening: \infer[\lambda]
+%%          {
+%%          \Gamma
+%%           \vdash \lambda x.f(\iter(x)):\goldNout \rightarrow \N
+%%          }{
+%%          \infer[\ap]{ %opening: \infer[\ap]
+%%            \Gamma, x:\goldNout
+%%           \vdash f(\iter(x)):\N
+%%            }{
+%%           \infer[\var]{
+%%        \Gamma, x:\N 
+%%       \vdash f:\N \rightarrow \N}{}
+%%            {\ \ \ \ \ \ \ \ \ \ \ \ }
+%%            {\infer[\apvar] %opening: \infer[\apvar]
+%%             {\Gamma, x:\goldNout
+%%         \vdash \iter(x): \N 
+%%              }{
+%%           \infer[\weak]{\Gamma, x:\N
+%%                                  \vdash \iter: \goldNout \rightarrow \N}
+%%                                 {\infer*{\Gamma
+%%                                  \vdash \iter: \goldNout \rightarrow \N
+%%                                   \ \ \ ( \golddagger)}{}
+%%              }
+%%            }
+%%           }
+%%         }%closing: \infer[\apvar]
+%%       }%closing: \infer[\ap]
+%%     }%closing: \infer[\lambda]
+%%    }%closing: \infer[\cond]
+%%  }%closing: \infer[\lambda]
+%% %}%closing: \infer[\lambda]
+%% \]
+\begin{prooftree}
+  \AxiomC{}
+  \RightLabel{$\var$}
+  \UnaryInfC{$\Gamma \vdash a:\N$}
+  \AxiomC{}
+  \RightLabel{$\var$}  
+  \UnaryInfC{$\Gamma, x:\N \vdash f:\N \rightarrow \N$}
+  \AxiomC{$\vdots$}
+  \noLine
+  \UnaryInfC{$\Gamma, \vdash \iter: \vnode6{\N}\rightarrow\N$\quad($\dagger$)}
+  \RightLabel{$\weak$}
+  \UnaryInfC{$\Gamma, x:\vnode5{\N}\vdash \iter: \N\rightarrow\N$}
+  \RightLabel{$\apvar$}    
+  \UnaryInfC{$\Gamma, x:\vnode4{\N}\vdash \iter(x): \N$}
+  \RightLabel{$\apnotvar$}  
+  \BinaryInfC{$\Gamma, x:\vnode3{\N} \vdash f(\iter(x)):\N$}
+  \RightLabel{$\lambda$}  
+  \UnaryInfC{$\Gamma\vdash \lambda x.f(\iter(x)):\vnode2{\N} \rightarrow \N$}
+  \RightLabel{$\cond$}
+  \BinaryInfC{$\Gamma \vdash \iter: \vnode1{\N} \rightarrow \N$ \quad ($\dagger$)}
+\end{prooftree}
+$
+\dirflowrededges{node1/node2}
+\bentdirflowedges{node2/node3/0}
+\bentdirflowedges{node3/node4/0}
+\bentdirflowedges{node4/node5/0}
+\bentdirflowedges{node5/node6/0}
+$    
+
+
+\subsection{The Interval Map}\label{subsection-interval}
+
+For this example, we simulate the type of natural number lists
+with one fixed type variable $\alpha$
+and two special variables $\nil:\alpha$ and $\cons:\N \rightarrow \alpha \rightarrow \alpha$. 
+We use the symbol $\ls$ for a term of type $\alpha$. 
+We define some auxiliary notations by $[]=\nil$,
+$a::\ls = \cons(a)(\ls)$, and
+$[a_1,a_2,\ldots,a_n] = a_1::(a_2::\cdots (a_n::\nil))$.
+We have no additional elimination rules for lists, since 
+they are not required in our example.
+Recall that $\approx$ denotes having a common reduct.
+In this example, we think that the context
+$(\nil:\alpha, \cons:\N,\alpha \rightarrow \alpha)$
+is always implicitly assumed. 
+
+\begin{example}\label{example:interval}
+We will define a term $\Interval$ having arguments
+$f$, $a$, $x$, and $y$ such that 
+\[
+\Interval(f^{\N\rightarrow\N},a^{\N},m^{\N},n^{\N})\ \approx \ [f^m(a), f^{m+1}(a), \ldots, f^{m+n}(a)] \  : \ \alpha
+\]
+for all numeral $m,n \in \Num$.
+The term $\Interval$ will satisfy the following equations
+\begin{center}
+  $\Interval(f,a,m,0) \approx [f^m(a)]$
+  \quad
+  and
+  \quad
+  $\Interval(f,a,m,\Succ(n))  \approx f^m(a)::\Interval(f,a,\Succ(m),n)$.
+\end{center}
+We use the iterator $\iter = \cond (a, \lambda x.f(\iter(x))):\N \rightarrow \N$ defined in Example \ref{example:iterator}. 
+In particular, $\iter(n) \approx f^n(a) : \N$ for all $n \in \Num$.
+We solve the equations above for $\Interval$ with 
+$\Interval = \lambda f^{\N\rightarrow\N}. \lambda a^\N.\interval$,
+where $\interval$ is a regular term of type $\N,\N\rightarrow\alpha$
+under $\Gamma = (f:\N\rightarrow\N,a:\N)$ defined by
+\begin{center}
+  $\interval 
+  = 
+  \lambda x^\N.\cond (\base_x, \lambda y^\N.\inductive_{x,y})$, 
+  \quad
+  $\base_x
+  = 
+  [\iter(x)]$, 
+  \hspace{3ex}
+  and
+  \hspace{3ex}  
+  $\inductive_{x,y}
+  = 
+  \iter(x) :: \interval(\Succ(x))(y)$, 
+\end{center}
+with the base case $\base:\alpha$ and the inductive case $\inductive:\N\rightarrow\alpha$. 
+
+
+\end{example}
+
+\begin{proposition}[The interval map $\Interval$ is a term of $\CTlambda$]
+ \label{proposition-interval-in-CT-lambda}
+$\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
+\end{proposition}
+
+%\begin{proof}
+%The term $\Interval$ is well-typed and regular by definition. We check the global trace condition.
+%Any infinite path $\pi$ either moves to $\iter$, for which we already checked the global trace condition,
+%or cyclically moves from $\interval$ to $\interval$.
+%We follow the unique infinite 
+%trace $\tau$ of the last unnamed argument $\N$ of $\Interval$ inside this infinite path.
+%The trace $\tau$ moves to the last unnamed argument $\N$ of  
+%$\interval:\N,\N \rightarrow \N$, then to the last unnamed argument of
+%$\cond (\ [\iter(x)],  \  \lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
+%In this step $\tau$ progresses, and moves to 
+%the first unnamed argument of $\lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$,
+%then to $y:\N$ in the context of $\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
+%After one $\apvar$ rule, the trace $\tau$ reaches the unique unnamed argument of 
+%$(\lambda x.\interval)(\Succ(x))$, then the last unnamed argument $\tau$ of $\interval$. 
+%From $\interval$ the trace $\tau$ loops. Each time $\tau$ moves from $\interval$ to $\interval$
+%then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
+%\end{proof}
+%14:27 24/04/2024
+\begin{proof}
+This proposition is shown by checking the derivation for $\interval$
+displayed in Figure \ref{figure-term-interval} satisfies
+the global trace condition. 
+In the derivation, $\Gamma_{x^\N}$ is $\Gamma$ with $x:\N$ and the double line indicates that some trivial inference rules are applied.
+The infinite paths of the derivation are
+(i) the paths in the two derivations of $\Gamma,_{x^\N}\vdash \iter(x):\N$, and
+(ii) the path repeating from the bottom judgment with the sign $(\dagger)$ to the upper judgment with the sign $(\dagger)$.
+The paths (i) are already checked to have progressing traces,
+and the path (ii) has a progressing trace indicated by the sequence of arrows, whose progressing point is the red arrow.
+Hence $\interval$ is in $\CTlambda$, and so is $\Interval$. 
+\end{proof}
+
+%% On the role of the $\weak$-rule, 
+%% if we want a graph notation, we add a back edge from the 
+%% upper $(\dagger)$ to the bottom $(\dagger)$.
+%% The $\weak$-rule is used to remove the variables $x$ and $y$ from the context,
+%% since they are no more used in the top $(\dagger)$
+%% and do not occur in the bottom $(\dagger)$. 
+
+% TYPING PROOF 
+\begin{figure}
+\begin{center}
+  %% \begin{footnotesize}
+  %%   %\[
+  %%   %\infer[\lambda]
+  %%   % {\Sigma\vdash \Interval:(\N \rightarrow \N),\N,\N,\goldN\rightarrow\alpha}
+  %%   % {\infer[\lambda]
+  %%   %   {\Sigma,f:\N\rightarrow\N \vdash \lambda a.\interval:\N,\N,\goldN   
+  %%   %      \rightarrow\alpha}
+  %%   {\infer[\lambda]  
+  %%     {\Gamma \vdash \interval:\N,\goldNout\rightarrow\alpha 
+  %%       \ \ \ (\golddagger) }
+  %%     {\infer[\cond]{\Gamma, x:\N 
+  %%         \vdash 
+  %%         \cond (\base,  \inductive )
+  %%         :\goldNout\rightarrow\alpha \ \ \ (\goldspadesuit) } 
+  %%       {\infer[\apvar]{\Gamma, x:\N 
+  %%           \vdash 
+  %%           \base:\alpha}
+  %%         {\infer*{\Gamma, x:\N 
+  %%             \vdash 
+  %%             \cons(\iter(x)):\alpha \rightarrow\N}{}}
+  %%         {\ \ \ \ \ \ }  &
+  %%         \infer[\lambda]{\Gamma, x:\N 
+  %%           \vdash 
+  %%           \lambda y.j : \goldNout\rightarrow\alpha}
+  %%               {\infer[\apnotvar]{\Gamma, x:\N, y:\goldNout \vdash
+  %%                   j : \alpha}
+  %%                 {\infer*
+  %%                   {\Gamma, x:\N, y:\N 
+  %%                     \vdash \iter(x):\N}{}
+  %%                   {\ \ \ \ \ \ }
+  %%                   {\infer[\apvar]{\Gamma, x:\N, y:\goldNout 
+  %%                       \vdash \interval(\Succ(x))(y):\alpha}
+  %%                     {\infer[\apnotvar]{\Gamma, x:\N, y:\N 
+  %%                         \vdash \interval(\Succ(x)):\goldNout \rightarrow\alpha}
+  %%                       {\infer[\weak]{\Gamma, x:\N, y:\N 
+  %%                           \vdash \interval:\N,\goldNout \rightarrow\alpha}
+  %%                         {\infer*{\Gamma 
+  %%                             \vdash \interval:\N,\goldNout \rightarrow\alpha
+  %%                             \ \ \ (\golddagger)}
+  %%                           {} } & {\ldots}  }}}
+  %%                 }
+  %%               }
+  %%       }
+  %%     }  
+  %%   }
+  %%   %   }
+  %%   %\]
+  %% \end{footnotesize}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+  \begin{scriptsize}
+    \begin{prooftree}
+      \def\extraVskip{2pt}
+      \def\ScoreOverhang{0pt}
+      \AxiomC{$\vdots$}
+      \noLine
+      \UnaryInfC{$\Gamma_{x^\N} \vdash \iter(x): \N$}
+      \doubleLine
+      \UnaryInfC{$\Gamma_{x^\N} \vdash \base_x:\alpha$}
+      \AxiomC{$\vdots$}
+      \noLine
+      \UnaryInfC{$\Gamma_{x^\N} \vdash \iter(x): \N$}
+      \AxiomC{$\vdots$}
+      \noLine
+      \UnaryInfC{$\Gamma \vdash \interval: \N,\vnode8{\N}\rightarrow\alpha$ \hspace{3ex} ($\dagger$)}
+      \RightLabel{$\weak$}
+      \UnaryInfC{$\Gamma_{x^\N}, y:\N \vdash \interval: \N,\vnode7{\N}\rightarrow\alpha$}
+      \AxiomC{$\vdots$}
+      \noLine
+      \UnaryInfC{$\Gamma_{x^\N}, y:\N \vdash \Succ(x): \N$}
+      \RightLabel{$\apnotvar$}
+      \BinaryInfC{$\Gamma_{x^\N}, y:\N \vdash \interval(\Succ(x)): \vnode6{\N}\rightarrow\alpha$}
+      \RightLabel{$\apvar$}
+      \UnaryInfC{$\Gamma_{x^\N},y:\vnode5{\N} \vdash \interval(\Succ(x))(y): \alpha$}
+      \doubleLine
+      \BinaryInfC{$\Gamma_{x^\N},y:\vnode4{\N} \vdash \inductive_{x,y}: \alpha$}
+      \RightLabel{$\lambda$}
+      \UnaryInfC{$\Gamma_{x^\N} \vdash \lambda y.\inductive_{x,y}: \vnode3{\N} \rightarrow \alpha$}
+      \RightLabel{$\cond$}      
+      \BinaryInfC{$\Gamma_{x^\N} \vdash \cond(\base_x,\lambda y.\inductive_{x,y}):\vnode2{\N} \rightarrow \alpha$}
+      \UnaryInfC{$\Gamma \vdash \interval:\N,\vnode1{\N}\rightarrow\alpha$ \hspace{3ex} ($\dagger$)}
+    \end{prooftree}
+    % DRAW EDGES
+    %bent edges. Syntax: source/target/bending degree (can be negative)
+    $
+    \bentdirflowedges{node1/node2/0}
+%    \bentdirflowedges{node2/node3/0}
+    \dirflowrededges{node2/node3/0}
+    \bentdirflowedges{node3/node4/0}
+    \bentdirflowedges{node4/node5/0}
+    \bentdirflowedges{node5/node6/0}
+    \bentdirflowedges{node6/node7/0}
+    \bentdirflowedges{node7/node8/0}
+    $    
+  \end{scriptsize}
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+  \caption{Typing of $\interval$}
+  \label{figure-term-interval}
+\end{center}
+
+\end{figure}
+%15:50 26/03/2025
+
+The term $\interval$ is an example of how difficult it is to completely normalize
+an infinite term, and how complex can be the normal form. 
+We have infinitely many nested $\beta$-reductions in
+$\interval$, one for each $\interval(\Succ (x)) \equiv (\lambda x.\cond (\base_x, \lambda y^\N.\inductive_{x,y}))(\Succ(x))$.
+Suppose we remove all of them in a single step, producing a substitution
+$[\Succ (x)/x]$. $\beta$-redexes are nested, therefore 
+inside the $\beta$-redex number $k$ we obtain a subterm $\iter[\Succ (x)/x]
+\ldots[\Succ (x)/x]$, with the substitution of $x$ nested $k$ times. 
+The result is $\iter[\Succ ^k(x)/x]$.
+The nested substitution produces infinitely many pairwise different subterms 
+$\iter(\Succ ^k(x))$ for all $k \in \N$. 
+We need $k$ steps to normalize each $\iter(\Succ ^k(x))$ to $f^k(x)$, 
+even if we allow to reduce infinitely many 
+$\beta$ and $\cond$-redexes at the same time, because our reduction will consume one 
+$\Succ$ at the time. Thus, the total number of reduction steps is infinite. 
+Besides, if we take the limit of this process, the normal form is not regular: it contains terms 
+$f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms. 
+
+%For this reason we consider normalization as part of the semantics for
+%our cyclic graph-notation, except for closed terms of type $\N$, 
+%in this case normalization is the computation of the output.
+
+%These infinite subterms are of a particulary simple form, though. 
+%They are obtained by the repeating $k$ times the assignment $z:=f(z)$, then applying $z:=I$ once
+%to the result.
+
+%In conclusion, $\Interval$ is some term of $\CTlambda$ which can be safely 
+%normalized, but which cannot be fully normalized in finite time, not even if we 
+%allow infinite parallel reductions without any "safety" restriction. The normal form 
+%is produced \emph{only in the limit} and it is \emph{not regular}. If we allow to 
+%reduce infinitely many nested existing $\beta$-redexes in one step, also the 
+%intermediate steps of the infinite reduction of $\Interval$ are not regular.
 
 
 
