@@ -205,6 +205,25 @@ author = {J.R. Kennaway and Jan Willem Klop and M.R. Sleep and F.J. {de Vries}}
  bibsource = {dblp computer science bibliography, https://dblp.org}
 }
 
+
+
+@book{Barendregt1984,
+author = {Hendrik Barendregt},
+editor = {John Bairwise},
+title = {The Lambda Calculus: Its Syntax and Semantics},
+publisher = {Elsevier Science Pub. Co.},
+series = {Studies in Logic and the Foundations of Mathematics},
+volume = {103},
+year = {1984}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 	IMPLEMENTATION CYCLIC PROOFS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% It works fast on realistic examples. This counter-balances the negative 
+% impression produced by the PSPACE-completeness of the algorithm.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 @inproceedings{10.1007/978-3-642-35182-2_25,
 author="James Brotherston and Nikos Gorogiannis and Rasmus Petersen",
 editor="Jhala, Ranjit and Igarashi, Atsushi",
@@ -217,16 +236,97 @@ pages="350--367",
 isbn="978-3-642-35182-2"
 }
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% I could not add this quotation to the bibliography, it is ignored Stefano 08/07/2025
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-
-@book{Barendregt1984,
-author = {Hendrik Barendregt},
-editor = {John Bairwise},
-title = {The Lambda Calculus: Its Syntax and Semantics},
-publisher = {Elsevier Science Pub. Co.},
-series = {Studies in Logic and the Foundations of Mathematics},
-volume = {103},
-year = {1984}
+@inproceedings{10.1145/3018610.3018623,
+author = {Rowe, Reuben N. S. and Brotherston, James},
+title = {Automatic cyclic termination proofs for recursive procedures in separation logic},
+year = {2017},
+isbn = {9781450347051},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3018610.3018623},
+doi = {10.1145/3018610.3018623},
+abstract = {We describe a formal verification framework and tool implementation, based upon cyclic proofs, for certifying the safe termination of imperative pointer programs with recursive procedures. Our assertions are symbolic heaps in separation logic with user defined inductive predicates; we employ explicit approximations of these predicates as our termination measures. This enables us to extend cyclic proof to programs with procedures by relating these measures across the pre- and postconditions of procedure calls. We provide an implementation of our formal proof system in the Cyclist theorem proving framework, and evaluate its performance on a range of examples drawn from the literature on program termination. Our implementation extends the current state-of-the-art in cyclic proof-based program verification, enabling automatic termination proofs of a larger set of programs than previously possible.},
+booktitle = {Proceedings of the 6th ACM SIGPLAN Conference on Certified Programs and Proofs},
+pages = {53–65},
+numpages = {13},
+keywords = {Termination, Separation logic, Proof Certificates, Imperative programming, Explicit approximation, Cyclic proof, Automated proof search},
+location = {Paris, France},
+series = {CPP 2017}
 }
+
+@article{10.1145/3632888,
+author = {Cohen, Liron and Jabarin, Adham and Popescu, Andrei and Rowe, Reuben N. S.},
+title = {The Complex(ity) Landscape of Checking Infinite Descent},
+year = {2024},
+issue_date = {January 2024},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+volume = {8},
+number = {POPL},
+url = {https://doi.org/10.1145/3632888},
+doi = {10.1145/3632888},
+abstract = {Cyclic proof systems, in which induction is managed implicitly, are a promising approach to automatic verification. The soundness of cyclic proof graphs is ensured by checking them against a trace-based Infinite Descent property. Although the problem of checking Infinite Descent is known to be PSPACE-complete, this leaves much room for variation in practice. Indeed, a number of different approaches are employed across the various cyclic proof systems described in the literature. In this paper, we study criteria for Infinite Descent in an abstract, logic-independent setting. We look at criteria based on B\"{u}chi automata encodings and relational abstractions, and determine their parameterized time complexities in terms of natural dimensions of cyclic proofs: the numbers of vertices of the proof-tree graphs, and the vertex width—an upper bound on the number of components (e.g., formulas) of a sequent that can be simultaneously tracked for descent. We identify novel algorithms that improve upon the parameterised complexity of the existing algorithms. We implement the studied criteria and compare their performance on various benchmarks.},
+journal = {Proc. ACM Program. Lang.},
+month = jan,
+articleno = {46},
+numpages = {33},
+keywords = {cyclic proof, infinite descent, size-change termination, complexity, algorithms, B\"{u}chi automata}
+}
+
+@InProceedings{10.1007/978-3-031-90643-5_18,
+author="Cohen, Liron
+and Rowe, Reuben N. S.
+and Shaked, Matan",
+editor="Gurfinkel, Arie
+and Heule, Marijn",
+title="Cyclone: A Heterogeneous Tool for Verifying Infinite Descent",
+booktitle="Tools and Algorithms for the Construction and Analysis of Systems",
+year="2025",
+publisher="Springer Nature Switzerland",
+address="Cham",
+pages="336--354",
+abstract="The Infinite Descent property underpins key verification techniques, such as size-change program termination and cyclic proofs. Deciding whether the Infinite Descent property holds of a given program or cyclic deduction is PSPACE-complete, with several exponential time algorithms in the literature. In this paper, we consider algorithms with better time complexity but which are (necessarily) incomplete. Concretely, we formulate and evaluate a number of alternative algorithms for semi-deciding Infinite Descent. Our aim is to improve average runtime performance by utilising more efficient algorithms for specific subclasses of input. We present Cyclone, a tool integrating these algorithms with an existing (complete) decision procedure. We evaluate Cyclone on a large suite of examples harvested from the Cyclist theorem prover, finding that the incomplete algorithms achieve extremely high coverage and afford substantial runtime improvement in practice. We thus believe that the Cyclone tool will foster broader adoption of techniques based on Infinite Descent and expand their practical applications.",
+isbn="978-3-031-90643-5"
+}
+
+@inproceedings{10.1145/3453483.3454087,
+author = {Itzhaky, Shachar and Peleg, Hila and Polikarpova, Nadia and Rowe, Reuben N. S. and Sergey, Ilya},
+title = {Cyclic program synthesis},
+year = {2021},
+isbn = {9781450383912},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3453483.3454087},
+doi = {10.1145/3453483.3454087},
+abstract = {We describe the first approach to automatically synthesizing heap-manipulating programs with auxiliary recursive procedures. Such procedures occur routinely in data structure transformations (e.g., flattening a tree into a list) or traversals of composite structures (e.g., n-ary trees). Our approach, dubbed cyclic program synthesis, enhances deductive program synthesis with a novel application of cyclic proofs. Specifically, we observe that the machinery used to form cycles in cyclic proofs can be reused to systematically and efficiently abduce recursive auxiliary procedures. We develop the theory of cyclic program synthesis by extending Synthetic Separation Logic (SSL), a logical framework for deductive synthesis of heap-manipulating programs from Separation Logic specifications. We implement our approach as a tool called Cypress, and showcase it by automatically synthesizing a number of programs manipulating linked data structures using recursive auxiliary procedures and mutual recursion, many of which were beyond the reach of existing program synthesis tools.},
+booktitle = {Proceedings of the 42nd ACM SIGPLAN International Conference on Programming Language Design and Implementation},
+pages = {944–959},
+numpages = {16},
+keywords = {Separation Logic, Program Synthesis, Cyclic Proofs},
+location = {Virtual, Canada},
+series = {PLDI 2021}
+}
+
+@article{Brotherston2020,
+author = {Tellez, G. and Brotherston J.},
+title = {Automatically Verifying Temporal Properties of Pointer Programs with Cyclic Proof}, 
+journal = {J. Autom. Reason. 64(3)},
+pages = {555-57},
+year = {2020},
+doi = {https://doi.org/10.1007/s10817-019-09532-0}
+}
+
+@article{Stratulat_2021,
+   title={E-Cyclist: Implementation of an Efficient Validation of FOLID Cyclic Induction Reasoning},
+   volume={342},
+   ISSN={2075-2180},
+   url={http://dx.doi.org/10.4204/EPTCS.342.11},
+   DOI={10.4204/eptcs.342.11},
+   journal={Electronic Proceedings in Theoretical Computer Science},
+   publisher={Open Publishing Association},
+   author={Stratulat, Sorin},
+   year={2021},
+   month=sep, pages={129–135} }
+
+
+

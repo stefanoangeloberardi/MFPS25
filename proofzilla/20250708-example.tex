@@ -24,6 +24,12 @@
 \defedgetype{flowtwo}{draw=red}{}
 \defedgetype{dirflowtwo}{-Latex,draw=red}{}
 
+\defedgetype{dirflowblue}{-Latex,draw=blue}{}
+
+% First define an edge type TYPE, then use the command \TYPEedges
+\defedgetype{dirflowred}{-Latex,draw=red,    % -Latex = straight edge, draw=edge color
+-{Latex[length=6pt, width=4pt]},                     % length/width for edge head
+line width=1pt}{}                                              % edge width
 
 % Additional, unnecessary macros (terms etc)
 \input{hobn_macros}  
@@ -173,7 +179,7 @@ g :  \vnode4{\tt N} \rightarrow
 $
 \bentdirflowedges{node6/node1/60} 
 \bentdirflowedges{node6/node3/60} 
-\bentdirflowedges{node7/node4/0}
+\dirflowrededges{node7/node4}
 \bentdirflowedges{node8/node2/60}
 \bentdirflowedges{node8/node5/0}
 $    
