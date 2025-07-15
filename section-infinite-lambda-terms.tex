@@ -1,3 +1,5 @@
+% !TEX root = main.tex
+
 \section{The set of infinite lambda-terms}\label{section-infinite-lambda}
 
 In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
@@ -104,9 +106,9 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
   We write $\Type$ for the set of simples types.
 \item
   We abbreviate $A_1 \rightarrow (A_2 \rightarrow \cdots (A_n \rightarrow B))$
-  with $A_1,A_2,\ldots,A_n \rightarrow B$ and also, more shortly,  
+  with $A_1,A_2,\ldots,A_n \rightarrow B$ and 
   with $\vec{A} \rightarrow B$ when $\vec{A} = A_1, \ldots, A_n$.
-  In particular, we write $A^n \rightarrow B$ when $A_1,\ldots,A_n$ are the same type $A$. 
+  We write $A^n \rightarrow B$ when $A_1,\ldots,A_n$ are the same type $A$. 
 \end{enumerate}
 \end{definition}
 
@@ -140,28 +142,33 @@ with labeling the restriction of the labeling of $t$ to the nodes of $u$.
 An immediate subterm is an immediate sub-tree.
 \end{definition}
 
-We define a tree isomorphism between two possibly infinite trees by
-a bijection on nodes that preserves root, edges, and the children-order of corresponding parent nodes. 
-We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
-if and only if there is some label-preserving tree isomorphism between $t$ and $u$.
-We may identify two isomorphic terms when we are interested in the shape of these terms,
-but, in general, we do not identify them because we need to distinguish different occurrences
-of redexes (defined later), which may have the same shape in an infinite term. 
-
-We often write a term by its (possibly infinite) one-line denotation,
-namely, a term with the root labeled $x^T$, $0$,
-$\Succ$ with a child $t$,
-$\lambda x^T$ with a child $t$,
-$\ap$ with (left and right) children $t$ and $u$,
-$\cond$ with children $t$ and $u$ is denoted by
-$x^T$, $0$, $\Succ(t)$, $\lambda x^T.t$, $\ap(t,u)$, $\cond(t,u)$, respectively. 
-This denotation is unique up to term isomorphism.
-Conversely, each $v \in \LAMBDA$ is in one of the forms:
-$x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some $t, u \in \LAMBDA$.
-
+%%%%%%%%%%%%%%%%%
+%% PERHAPS THE REMARKS ABOUT ISOMORPHISMS ARE PEDANTIC
+%%%%%%%%%%%%%%%%%
+%We define a tree isomorphism between two possibly infinite trees by
+%a bijection on nodes that preserves root, edges, 
+%and the children-order of corresponding parent nodes.
+%We write $t \sim u$ and read \quotationMarks{$t$ and $u$ are isomorphic terms}
+%if and only if there is some label-preserving tree isomorphism between $t$ and $u$.
+%In general, we do not identify two isomorphic terms because 
+%we need to distinguish different occurrences
+%of redexes (defined later), which may have the same shape in an infinite term. 
+%%%%%%%%%%%%%%%%%
+%We often write a term by its (possibly infinite) one-line denotation,
+%namely, a term with the root labeled $x^T$, $0$,
+%$\Succ$ with a child $t$,
+%$\lambda x^T$ with a child $t$,
+%$\ap$ with (left and right) children $t$ and $u$,
+%$\cond$ with children $t$ and $u$ is denoted by
+%$x^T$, $0$, $\Succ(t)$, $\lambda x^T.t$, $\ap(t,u)$, $\cond(t,u)$, respectively. 
+%This denotation is unique up to term isomorphism.
+%Conversely, 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Each $v \in \LAMBDA$ is in one of the forms:
+$x^T, 0, \lambda x^T.t$, $\ap(t,u)$, $\Succ(t)$, $\cond(t,u)$ for some possibly infinite
+$t, u \in \LAMBDA$.
 As usual, we abbreviate $\ap(t,u)$ with $t(u)$.
 We often omit type superscripts of variables when they are clear from the context. 
-
 Now we define the regular terms of $\LAMBDA$.
 
 %11:55 22/04/2024
@@ -171,12 +178,12 @@ Now we define the regular terms of $\LAMBDA$.
 \begin{enumerate}
 
 \item
-We write $\SubTerm(t) = \{\,u \mid \mbox{$u$ subterm of $t$}\,\}/\!\sim$ 
-for the set of subterms of $t$, with isomorphic terms identified. 
+We write $\SubTerm(t) = \{\,u \mid \mbox{$u$ subterm of $t$}\,\}$ %/\!\sim$ 
+for the set of subterms of $t$. %, with isomorphic terms identified. 
 
 \item
-$\Reg$ is the set of terms $t \in \LAMBDA$ such that $\SubTerm(t)$ is finite
-(up to term isomorphism there are only finitely many subterms of $t$).
+$\Reg$ is the set of terms $t \in \LAMBDA$ such that $\SubTerm(t)$ is finite.
+%(up to term isomorphism there are only finitely many subterms of $t$).
 We call the terms of $\Reg$ the \emph{regular terms}.
 
 %\item
@@ -200,11 +207,12 @@ The set $\Num$ is the representation of the set $\Nat$ of natural numbers inside
 
 \begin{example}
 \label{example-regular-infinite}
-An example of a regular term and an infinite tree: the term defined by the isomorphism
-$t \sim \cond(0,\lambda x^N.t(x))$. 
-Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$, up to term isomorphism.
+An example of a regular term and an infinite tree: the term defined by %the isomorphism
+$t = \cond(0,\lambda x^N.t(x))$. 
+Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$. %, up to term isomorphism.
 Thus, $t$ is a regular term.
-However, $t$ is an infinite tree (it includes a proper subtree isomorphic to itself). 
+However, $t$ is an infinite tree (it includes a proper subtree %isomorphic 
+equal to itself). 
 \end{example}
 
 %Regular terms have \emph{finitely many} distinct variables, 

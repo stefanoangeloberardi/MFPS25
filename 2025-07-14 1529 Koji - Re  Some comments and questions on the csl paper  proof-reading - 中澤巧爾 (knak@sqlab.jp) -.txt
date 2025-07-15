@@ -1,0 +1,424 @@
+﻿ Re: Some comments and questions on the csl paper: proof-reading
+Oggetto:
+Re: Some comments and questions on the csl paper: proof-reading
+Mittente:
+中澤巧爾 <knak@sqlab.jp>
+Data:
+14/07/2025, 15:29
+A:
+Stefano Berardi <stefano.berardi@unito.it>
+CC:
+Daisuke Kimura <kmr@is.sci.toho-u.ac.jp>
+Received:
+via dmail-2007f.18 for stefano; Mon, 14 Jul 2025 15:29:56 +0200 (CEST)
+X-MailScanner-From:
+stefano.berardi+caf_=stefano=di.unito.it@unito.it
+X-SpamCheck:
+not spam (whitelisted), SpamAssassin (not cached, score=-3.809, required 3, autolearn=not spam, AWL 1.78, BAYES_00 -1.90, RCVD_IN_DNSWL_NONE -0.00, RCVD_IN_RP_CERTIFIED -3.00, RCVD_IN_RP_RNBL 1.31, RCVD_IN_RP_SAFE -2.00, SPF_PASS -0.00)
+X-AntiVirus:
+Email Clean
+X-dipinfo-MailScanner-ID:
+56EDTqQc014618
+X-dipinfo-MailScanner-Information:
+Please contact Department of Computer Science technical staff for more information
+Received:
+from mail-ej1-f51.google.com (mail-ej1-f51.google.com [209.85.218.51]) by mail.di.unito.it (INFO-DIP) with ESMTPS id 56EDTqQc014618 (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL userCertificateDN=smtp.gmail.com ) for <stefano@di.unito.it>; Mon, 14 Jul 2025 15:29:52 +0200 (CEST)
+DKIM-Filter:
+OpenDKIM Filter v2.11.0 mail.di.unito.it 56EDTqQc014618
+Authentication-Results:
+di.unito.it; dkim=pass (1024-bit key) header.d=sqlab.jp header.i=@sqlab.jp header.b="MgpuMEHR"
+Received:
+by mail-ej1-f51.google.com with SMTP id a640c23a62f3a-adfb562266cso750520266b.0 for <stefano@di.unito.it>; Mon, 14 Jul 2025 06:29:51 -0700 (PDT)
+ARC-Seal:
+i=2; a=rsa-sha256; t=1752499791; cv=pass; d=google.com; s=arc-20240605; b=Wt6SdZYa4l+yHxBA/4e11vWoPzpR/9hZVO+BoNY6r7l/JHH96Ja8uvvifY38N2amIo 1t0IETLNBXEbV0Sr1LBf4zZIIVi2PR9VYSvyfUCpzQlQEPYLMaayaAFFGnyxmBvHGQg/ 9Lowk3KeQ81yn20qQyF+K7DARRkc5JwNXJxTEjZmjTKlzIkCdOdj+PxZK1aMtO5gfhi3 6o0r0JaWtq2qvYB07Ubo0z9s74P9ePyZYX1UpUYyC8Dj9GsQ4lR+PV4UPFp8WXVlF/Qj kj/Da5qsHObC07BQGSpTqyE+MUty2KQ/MY0xToxk1ShHAxw9PfWXyd4XgGiFUUvjbxCA S0mg==
+ARC-Message-Signature:
+i=2; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605; h=content-transfer-encoding:cc:to:subject:message-id:date:from :reply-to:in-reply-to:references:mime-version:dkim-signature :delivered-to; bh=bOTUMLfUVUpNkn1CnBMqJTFT+tik4W22iG+WFOudlkI=; fh=RUrYf9xdW3zce0HZDLUMf+dCsc8zW53RCuJcTTdGHsc=; b=SHgX+5WNVlOItbq5Yo3AGwyZMvrMk+ItouBgAkUpzU7V2GPhXnJymEyuuo+OH0F7rv 3el1zH1jfpLOTwxpeV2xGMfPiwy3cMrC1GPciTOzVaqKoPpSXZapd7tmI1nsESLw3ARU 4w4+WrwKabHckXmXXxXHGcM5D9u8DBoZQj3tDXk2PkxX496RvnGW6zmdsWGxgY5rmAOF SXusgOiwYZugV+msZtpHU4MNj7bSpajPBi9DaGq3y3nP5E22+dL9PDfUXIES00/zdu0o d1mY/yKcgQX/wOY8SZW9Q9dcv3rx135TxmuEutoFVnEGluV1qrhD7GZ2klNZQbKXs1d/ sHKQ==; darn=di.unito.it
+ARC-Authentication-Results:
+i=2; mx.google.com; dkim=pass header.i=@sqlab.jp header.s=google header.b=MgpuMEHR; spf=pass (google.com: domain of knak@sqlab.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=knak@sqlab.jp; dara=neutral header.i=@unito.it
+X-Google-DKIM-Signature:
+v=1; a=rsa-sha256; c=relaxed/relaxed; d=1e100.net; s=20230601; t=1752499791; x=1753104591; h=content-transfer-encoding:cc:to:subject:message-id:date:from :reply-to:in-reply-to:references:mime-version:dkim-signature :delivered-to:x-forwarded-for:x-forwarded-to:x-gm-message-state:from :to:cc:subject:date:message-id:reply-to; bh=bOTUMLfUVUpNkn1CnBMqJTFT+tik4W22iG+WFOudlkI=; b=K8PaLO5vMYFjcx4QRY0S3fKqs7S6rDddLU4ko/YCtfsDibBJWo6LuotlKGRaxrZmoJ h/ryTTiyamoECGInPuEMiGCOabtR+onx1YlUielebl1qTJx8heN2d+eUymfZA8ASYRq7 keXfE8pgLTBgT445Kc0SK8fRTLlUP7q48uCUYKhnWFkt31+zWXWyc6/qwSsLx9bXGfQD K1BZOG3sFPkAhCZn01zKrnb4HN57O1SIu9Ot5galiEpIOxz4G8Lf1JXcT7nrqNkkOmQ0 nEVCE5u8cAA435rxyREMStWCBVWAi5ks1AKzHwyiodK8x0fvYiEsxamJdR21Yge9bsJU qVPA==
+X-Forwarded-Encrypted:
+i=2; AJvYcCURvgo/bwT9dDmSpgrm5BPMNPzO5Ip0DjfGtc6YEXqeIB15ie87voTMz7R0/DC+BQr2AjO1nozH@di.unito.it
+X-Gm-Message-State:
+AOJu0YyHKTbleWAS7pTDdghuu2focqA97B6+PmNmF3VpCZoP/IDnD2MQ v5kLGnOFZd/deaiCpB1F9WZMyIGrCu8/8CHqG3c3naK+1+m+/lFAj7P3BMHH6Jfuxs70rpemPDS jG+dbNpvgH4gZ10SgtObhQzP6eUoWfXaZft+MNWicgaAA5eYskHvqu9EGRUQ34R0AvyJdrewWda dLMMgN4c4=
+X-Received:
+by 2002:a17:907:390a:b0:ae9:8cb4:2fe8 with SMTP id a640c23a62f3a-ae98cb435b4mr705629266b.37.1752499790926; Mon, 14 Jul 2025 06:29:50 -0700 (PDT)
+X-Forwarded-To:
+stefano@di.unito.it
+X-Forwarded-For:
+stefano.berardi@unito.it stefano@di.unito.it
+Delivered-To:
+stefano.berardi@unito.it
+Received:
+by 2002:a17:907:7210:b0:ade:4038:3253 with SMTP id dr16csp1372709ejc; Mon, 14 Jul 2025 06:29:48 -0700 (PDT)
+X-Received:
+by 2002:a5d:588f:0:b0:3a5:2ef8:34f9 with SMTP id ffacd0b85a97d-3b5f188ea1fmr11167764f8f.27.1752499788493; Mon, 14 Jul 2025 06:29:48 -0700 (PDT)
+ARC-Seal:
+i=1; a=rsa-sha256; t=1752499788; cv=none; d=google.com; s=arc-20240605; b=lW7v1duaxdhWdpAXidGvPbThDa3XBdVa9b8ZUjUvZp9/SoRkM33J/tpE9NDWSZed0X 1d3W+z5JXLGik16qPf71bMqGCUSDceFPaopvu9rH7X4vM7KeYn7RJwQWQmS/5HidtOYI CXpgqkJuVeTlZlq8VnCkJV4Fd8y41lTGx0wdrpzDVgT+Tp+IFf4aYG/Ye/4SOA2X/Nm1 VdFliSzTO/0BxFx1qWNE5yyfTJz/lx+Qq1iusp/9w9Yz/Fib58chZXZA3WlaDuT9JL0w BXC2hcFD5Ra3r8sOVIWDIZ7TB0keliyLPNgZSyEOH4iTsAGy1RkAvF8/EE3Z8K8am4T7 SiHg==
+ARC-Message-Signature:
+i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20240605; h=content-transfer-encoding:cc:to:subject:message-id:date:from :reply-to:in-reply-to:references:mime-version:dkim-signature; bh=bOTUMLfUVUpNkn1CnBMqJTFT+tik4W22iG+WFOudlkI=; fh=y3ElhKsdwIpZmQ1ujYR5A5TKPvZIaaCuVk+AhDck+o8=; b=OyBX3E1epA7+JNfTy5/U2PNoRxBDPR6dGDgG2KpVjXfqxqEyPSSRwPejAIxDZqPdQc AOFcw2knIAUn4Eptn2k7tLDpCCTjWeiiFNqZF5e7qzBQRUuvDQZvY9sGoBN1GdcOfxpT 2/T5AqjVwMHPYWT37bGXi4AkmrBRXRNvRFlEVHl1u0Akk0fmhrsfbkzfPcrNVr70ajc1 M466Y14+x/3uBxaL4qPy1AiNE4CzTAUKALPYceoQMZVNcCY0LdA2gei0WQQUyGRd5qBT KkjfCmCEZ1Wds7yoY2P6P/M+OPaNA8xM56LpivGylg5Mp0uxi7Uztr6etuFnr8J0ftXH f+6A==; dara=google.com
+ARC-Authentication-Results:
+i=1; mx.google.com; dkim=pass header.i=@sqlab.jp header.s=google header.b=MgpuMEHR; spf=pass (google.com: domain of knak@sqlab.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=knak@sqlab.jp; dara=neutral header.i=@unito.it
+Received:
+from mail-sor-f41.google.com (mail-sor-f41.google.com. [209.85.220.41]) by mx.google.com with SMTPS id 5614622812f47-4141c39e362sor3067887b6e.16.2025.07.14.06.29.47 for <stefano.berardi@unito.it> (Google Transport Security); Mon, 14 Jul 2025 06:29:47 -0700 (PDT)
+Received-SPF:
+pass (google.com: domain of knak@sqlab.jp designates 209.85.220.41 as permitted sender) client-ip=209.85.220.41;
+Authentication-Results:
+mx.google.com; dkim=pass header.i=@sqlab.jp header.s=google header.b=MgpuMEHR; spf=pass (google.com: domain of knak@sqlab.jp designates 209.85.220.41 as permitted sender) smtp.mailfrom=knak@sqlab.jp; dara=neutral header.i=@unito.it
+DKIM-Signature:
+v=1; a=rsa-sha256; c=relaxed/relaxed; d=sqlab.jp; s=google; t=1752499787; x=1753104587; darn=unito.it; h=content-transfer-encoding:cc:to:subject:message-id:date:from :reply-to:in-reply-to:references:mime-version:from:to:cc:subject :date:message-id:reply-to; bh=bOTUMLfUVUpNkn1CnBMqJTFT+tik4W22iG+WFOudlkI=; b=MgpuMEHRAQmR2oGomu7CNpOQxOqZBDaECCxvA/8Z8wHcqm1Y2Sd1+AGGGeZI3OY11J nAkw8N/fpvEkVKgZZCm8jWrOFClf4UMbSGcBb5P1hQUILDSAQO2bhBzSHBdraGi7JlsK 9jjc9kiv8Xt/2o3Gq25k/lB9NIizxDgMuhYiM=
+X-Gm-Gg:
+ASbGncut+RJ22k6sVpmn9ZxOyXfEnfOdKL7KeTGJobMbJx2XHg5sE0wNMa/myjpDKnN cAJNdRGoEYtFVP3jThi7x2pD2blxbR3GxEK9bkrCWK1rWCdbCUJK+zbSiF+bnnnu8rsABr9uVdR zRoF4wC4XWrRAq3Vm9uJuWa5nbOCVbnOE+qYIy0+ikNMPcaiuyZZfpKOj5JEwtl+3QJ+WXFzbL8 4TWAJQTJirB0cVSIpSiPx01syCFpBBYb1SjUzRM
+X-Google-Smtp-Source:
+AGHT+IEqe/k039Li9wqMn5Or6JTTnfPdiai8Chq7Gm6SWvWvlWV0Z06YquGZrNJRpjB6Rr4kTSpZfC/sS8p4h89ccnQ=
+X-Received:
+by 2002:a05:6808:15a4:b0:40a:a3c0:43d9 with SMTP id 5614622812f47-41537d480b8mr8513392b6e.17.1752499786456; Mon, 14 Jul 2025 06:29:46 -0700 (PDT)
+Versione-MIME:
+1.0
+Referenze:
+<bc154d3a-ff25-4359-aae6-d6c81f4ce331@is.sci.toho-u.ac.jp> <158663e9-fb0f-435c-8a7a-c305e6b7ac3b@di.unito.it> <1cd3f5ac-158a-4726-9799-7fae12b66cfa@di.unito.it> <7ca8b4a1-c5a3-4f43-b2ce-d032d66842dd@is.sci.toho-u.ac.jp> <6dfe0da6-587a-4f76-a236-80372b6747a0@is.sci.toho-u.ac.jp> <f518b47d-c35f-4ac2-a001-c8e5e90ea887@di.unito.it> <891893c5-79d2-4993-98f5-aab286277582@is.sci.toho-u.ac.jp> <b7f8bc7d-d32e-471d-9e09-8b564d480858@di.unito.it> <9fad4f94-f857-4013-8322-38670700a41d@is.sci.toho-u.ac.jp> <90da6b7f-b59d-438d-ae41-3de9d8006db0@di.unito.it> <0b6413a8-2e7d-4c75-9d23-e1578b4c047d@is.sci.toho-u.ac.jp> <09d48add-6b5c-4a78-920c-39f9f3199397@di.unito.it>
+In-Reply-To:
+<09d48add-6b5c-4a78-920c-39f9f3199397@di.unito.it>
+Rispondi-a:
+knak@i.nagoya-u.ac.jp
+X-Gm-Features:
+Ac12FXxHdXWpo6LvgJQ1Y9lQYfK1vthLL15B-jAdGPr1YcY-elOtJv7gEiV9w_U
+ID-Messaggio:
+<CAPt33RFmxaiLZq9gDye6CiCTDusJ6khzX1fUDpcLeh5DJm5N8Q@mail.gmail.com>
+Content-Type:
+text/plain; charset="UTF-8"
+Content-Transfer-Encoding:
+8bit
+X-MIME-Autoconverted:
+from quoted-printable to 8bit by mail.di.unito.it id 56EDTqQc014618
+
+Dear Stefano and Daisuke,
+
+> >     the unique infinite path is up-right-left cyclically, with terms  f, cond(x,f(Sx)), f(Sx), f, cyclically. The term f is left-finite. Indeed, if you move definitively left in the unique infinite branch,  you should cycle through f, but this is impossible, because moving left from f you find in this order f, cond(x,f(Sx)), x and you stop.
+
+In my understanding of Definition 11, the well-typedness of a term
+requires that there is no infinite path
+that chooses infinitely many left branches. Then, the term f \sim
+lambda x.cond(x,f(S(x)) is not left-finite
+since the only infinite path includes left-childs at the rule ap_{neg
+v} for f(S(x)). At the same time, this
+infinite path has a trace that includes infinitely many progressing
+point at cond(x,f(S(x)).
+Hence, I believe that term f is not left-finite but GTC. Or do I
+misunderstand some definition?
+
+By the way, I do not consider it serious problem that GTC does not
+imply well-typedness.
+I thought that GTC implied well-typedness (and Daisuke also claimed
+that :-)), and (honestly speaking)
+I couldn't get why we had to consider the notion of well-typedness, so
+I just wanted to confirm that it
+was not. Now I have got the necessity of the well-typedness. There
+would be no problem if we simply
+impose the well-typedness to define GTC and CT-lambda (as it is in the
+current manuscript.)
+
+Therefore, I believe this work should be submitted to CSL. (and the
+example in the section 6.2 should
+be corrected, because it is not left-finite and hence not a CT-lambda term.)
+
+Best regards,
+Koji
+
+2025年7月14日(月) 20:59 Stefano Berardi <stefano.berardi@unito.it>:
+> >
+> > Dear Daisuke, Koji, I suggest we submit now, we can withdraw in a week if we think the paper is not ready yet. We have to submit today or tomorrow, I would submit today
+> >
+> > Il 13/07/2025 16:59, Daisuke Kimura ha scritto:
+> >
+> > Dear Stefano and Koji,
+> >
+> > I updated to use the class file using lipics for CSL submission.
+> > It changes the layout and currently we have 17 pages (excluding bib and appendix).
+> > I git-pushed.
+> >
+> > Several changes, I did:
+> > - moved the interval example to appendix.
+> > - added a new example: recursor (after the sum example).
+> >   This is to say CTlambda contains Godel's T.
+> > - moved the iterator example to appendix (for the page limitation).
+> > - rewrote proof figures to use proofzilla.
+> >   Thanks for your explanation.
+> > - reflected Koji's comments.
+> >
+> > Koji also suggested:
+> > The global trace condition may not imply the left-finiteness.
+> > The term f = λx.cond(x,f(Sx)) would be a counter-example.
+> > What do you think?
+> >
+> >     Dear koji,
+> >
+> >     the unique infinite path is up-right-left cyclically, with terms  f, cond(x,f(Sx)), f(Sx), f, cyclically. The term f is left-finite. Indeed, if you move definitively left in the unique infinite branch,  you should cycle through f, but this is impossible, because moving left from f you find in this order f, cond(x,f(Sx)), x and you stop.
+> >
+> >     There is a general reason for GTC ===> left-finite. Take any path moving definitively to the left in all forks. Then, definitively, whenever we reach some cond(t,u) we move to t and all traces in the pat do not progress. Therefore all traces in all paths moving definitively to the left in all forks are definitively not progressing.
+> >
+> >     What do you about submitting the paper to CSL? Stefano
+> >
+> >
+> >
+> > Maybe I have no time until Wednesday.
+> > I'll be back from Thursday.
+> >
+> >
+> > Best,
+> > Daisuke
+> >
+> >
+> > On 7/10/25 14:42, Stefano Berardi wrote:
+> >
+> >
+> > Il 10/07/2025 02:10, Daisuke Kimura ha scritto:
+> >
+> > From my side, I'll do the following things on 11(Fri) and 12(Sat).
+> > - Checking your updates. I'll tell you my remarks (if I have).
+> >   I didn't know the proofzilla package, it's interesting 🙂
+> >
+> >
+> >
+> >      This is the first time I am using it, I still miss many commands. It is a suggestion from Ugo. He convinced me that proofzilla is mandatory for pictures on connections between types in a proof.
+> >
+> >
+> > - Changing the style file to LIPIcs for submitting CSL. This will change the layout.
+> >
+> >
+> >      Ok so we know the exact number of pages
+> >
+> >
+> >   I agree to move the interval example to the appendix. I'll do it.
+> >
+> >
+> >      Thanks
+> >
+> >
+> > - Reflection of Koji's comments (I received them from him).
+> >
+> >
+> >
+> >      Thank you Koji. I postponed vacations this year (my daughter needs help with her daughter), so until July, 24 I will be working. There is time to submit an abstract to CSL 26 until July, 15 if we decide to do it we have time to improve the paper until July, 21.
+> >
+> >      Stefano
+> >
+> >
+> > - Fixing typos.
+> > Best,
+> > Daisuke
+> >
+> >
+> > On 7/10/25 00:57, Stefano Berardi wrote:
+> >
+> >
+> >      Dear Daisuke,
+> >
+> >      I found out why I could not update the bibliography. It was silly, I was using a command for Bibtex including the command MakeIndex. This latter fails because currenty we have no index. If I use bibtex with the bib file, then Latex with the main file I can compile the bibliography. The updated bibliography currently has 18 items.
+> >
+> >      I answer to your comments below. I wait for your new remarks. If you think we may submit to CSL I will make a last reading for consistency. By the way, we have to reduce the paper to 15 pages: I think we will have to move the Interval example to the Appendix.
+> > - Checking your      Below are my answers.
+> >
+> >
+> > Il 06/07/2025 20:06, Daisuke Kimura ha scritto:
+> >
+> > [Section 3]
+>> > > the description of connections between arguments is hard to read and unclear. One of the problems, besides general hardness to parse, is that the scope of definitions of objects is not obvious at all (e.g. u in item 2 is referring to the u defined by item 1, but t is changed to f).
+>> > > the definition of connections takes up two pages of cumbersome formalism, it could be compressed and explained more efficiently. Keeping track of explicit indexes and doing the computations does not help the reader figure out what is encoded. Just giving a picture for each rule, showing the connections, would be clearer and would save a lot of space and effort.
+> >
+> >
+> > As I said in a previous message, I rewrote the section giving a picture for each rule showing the connections, with blue arrows for stationary and red arrow for progressing.
+> >
+> >
+> > [Section 4. After Def 4.1]
+>> > > page 9: you say that you believe that global trace condition is decidable quite fast for realistic lambda-terms. What do you mean by fast? What do you mean by realistic? What sustains this claim?
+> >
+> >
+> > I added a reference to this claim (a Brotherston paper of APLAS 2012), then I asked Reuben Rowe if he knows more.
+> >
+> >
+> > [Section 4.2. The iterator example]
+>> > > Example 4.2: I don't see what the equations up to ~ bring, you could just give directly the term for the iterator "it", it is even clearer than the sum case that you gave directly in the previous example. It would be more interesting to comment on whether it can be alternatively defined the other way by adding the last f inside instead of outside, by It=λf,a.cond(a,λx.It(f,f(a))(x))
+> >
+> >
+> >
+> > I agree that ~ is pedantic, I write = now.
+> >
+> >
+> > [Section 4.3. The interval map example]
+>> > > Example 4.3: there are too many definitions of i: i is first defined as i=λx.cond(b, λy.i), but then you add i=c( it(x), i(S(x))(y) ), it does not seem to make sense. I suspect you just reused the name i instead of a different name, which is very unfortunate since the reader does not know which is which. Moreover, the definition λx.cond(b, λy.i) does not match the first unfolding in the proof, which is cond(b, i) instead of cond(b,λy.i). At this point I'm giving up trying to fix the example (which I'm convinced can be done, but this should not be up to the reader)
+> >
+> >
+> >
+> >      Possibly you were reading an old copy? I changed the names in the example in order to make them different at first sight.
+> >
+> >
+>> > > page 10: in example 4.3, I cannot parse the sentence "We solve the recursive equation for I...". And again, you are very loose with your syntax: \f,a.i does not correspond to any term in you syntax, as well as c(a,l). As I understand, you are using tuples with terms that are actually "curried". Please be more clear about this.
+> >
+> >
+> >      I reformulated the sentence and I wrote t(u)(v) everywhere. Except for cond(f,g), because in this case cond is not a term but a constructor.
+> >
+> >      Best, Stefano
+> >
+> >
+> > Best,
+> > Daisuke
+> >
+> >
+> >
+> > On 7/3/25 17:54, Stefano Berardi wrote:
+> >
+> > ok so I wait saturday and I will have a new look to the paper
+> >
+> > stefano
+> >
+> > Il 02/07/2025 19:16, Daisuke Kimura ha scritto:
+> >
+> >
+> > I updated the draft and git-pushed.
+> > Koji also checked sec.2, and I reflected his comments.
+> >
+>>> > >> Introduction:
+>>> > >> I think it's better add table of contents at the last of introduction, like
+>>> > >> "Section 2 defines our infinite lambda-terms and typing rules. Section 3 ...".
+>> > > ok, can you do it?
+> >
+> > I did it.
+> >
+> >
+>>> > >> Definition 2.2:
+>>> > >> The current definition of 〜 (label-preserving bijection) is not enough
+>>> > >> because we have ap(x,y)〜ap(y,x) and λx.λy.z〜λy.λx.z, which would be unexpected.
+>>> > >> A label-preserving tree isomorphism will be ok.
+>> > > indeed this is what I planned to write. the word "bijection" is too weak and it is a mistake. we should also define which label-preserving tree isomorphism we consider. it should preserve root and child, left-child and right-child relation, besides preserving all labels.
+>> > > could you modify this point?
+> >
+> > I did it. I also added a reason of considering 〜 (before Def 2.3).
+> >
+> >
+> >
+>>> > >> Definition 2.5, item 2:
+> > ...
+>> > >     the generalmost version for 〜α can destroy regularity, by inserting infinitely many bound variable through renaming. since beta-reduction requires substution and substitution requires 〜α, then beta-reduction can destroy regularity.
+>> > >     Perhaps it not strictly required in our paper, but I would prefer that we can compute a regular term while preserving regularity. In this way if we start from a term having a finite graph representation then we we reduce we still have a term with a finite graph representation.
+> >
+> > I see, but the def 2.5 has not been changed yet.
+> > I'll do it in the next update (it will be saturday).
+> >
+> >
+> >
+>>> > >> Sec 2.2., the second paragraph (above Definition 2.7):
+>>> > >> The explanation of ap_v would be hard to understand for readers
+>>> > >> because, until this point, neither GTC nor computation has been explained.
+>> > > you could announce that we will explain ap_v in a moment, and then move the explanation after GTC
+> >
+> > I did it. The explanation is put after the definition of GTC (remark 4.2).
+> >
+> >
+>>> > >> What does Stat (the set of judgments) stand for?
+>>> > >> I think it would be natural to use Judg, Jgmt or something.
+>> > > the word Stat was from a previous version, use Judg instead. It should be enough to change the macro.
+> >
+> > I did it.
+> >
+> >
+> >
+> > Daisuke
+> >
+> >
+> >
+> > On 7/2/25 21:39, Daisuke Kimura wrote:
+> >
+> >
+> >  > do you think you have time for the remaining changes? otherwise I will do them.
+> >
+> > Oh, sorry, I didn't reply. Now I'm doing it.
+> >
+> >
+> > Daisuke
+> >
+> >
+> > On 7/2/25 21:16, Stefano Berardi wrote:
+> >
+> >
+> > Dear Daisuke,
+> >
+> > do you think you have time for the remaining changes? otherwise I will do them.
+> >
+> > Stefano
+> >
+> > Il 28/06/2025 08:17, Stefano Berardi ha scritto:
+> >
+> >
+> > Il 28/06/2025 01:34, Daisuke Kimura ha scritto:
+> >
+> > Dear Stefano and Koji,
+> >
+> > I did some minor fixes of section 1 and 2 & git-pushed.
+> >
+> > I have questions and comments.
+> >
+> > Introduction:
+> > I think it's better add table of contents at the last of introduction, like
+> > "Section 2 defines our infinite lambda-terms and typing rules. Section 3 ...".
+> >
+> >
+> > ok, can you do it?
+> >
+> >
+> > Definition 2.2:
+> > The current definition of 〜 (label-preserving bijection) is not enough
+> > because we have ap(x,y)〜ap(y,x) and λx.λy.z〜λy.λx.z, which would be unexpected.
+> > A label-preserving tree isomorphism will be ok.
+> >
+> >
+> > indeed this is what I planned to write. the word "bijection" is too weak and it is a mistake. we should also define which label-preserving tree isomorphism we consider. it should preserve root and child, left-child and right-child relation, besides preserving all labels.
+> >
+> > could you modify this point?
+> >
+> >
+> > Definition 2.5, item 2:
+> > I don't see the intention of "equality preserving" (What are equal labels)?
+> >
+> >
+> > it means that if some lambda x. is renamed to lambda y. then all lambda x. are renamed to lambda y. to put otherwise, there is a function phi:Var--->Var from variables to variables. phi is applied to binder and to bound variables, and replaces lambda x. with lambda phi(x), and any bound variable x with phi(x).
+> >
+> > could you re-define the relation 〜α in this way?
+> >
+> >
+> > I think the relation 〜α can be defined by the existence of an α-conversion map by item 1. Why do you need the additional equality preserving condition? (I may be missing something)
+> >
+> >
+> >     the generalmost version for 〜α can destroy regularity, by inserting infinitely many bound variable through renaming. since beta-reduction requires substution and substitution requires 〜α, then beta-reduction can destroy regularity.
+> >
+> >     Perhaps it not strictly required in our paper, but I would prefer that we can compute a regular term while preserving regularity. In this way if we start from a term having a finite graph representation then we we reduce we still have a term with a finite graph representation.
+> >
+> >
+> > Sec 2.2., the second paragraph (above Definition 2.7):
+> > The explanation of ap_v would be hard to understand for readers
+> > because, until this point, neither GTC nor computation has been explained.
+> >
+> >
+> >
+> > you could announce that we will explain ap_v in a moment, and then move the explanation after GTC
+> >
+> >
+> > What does Stat (the set of judgments) stand for?
+> > I think it would be natural to use Judg, Jgmt or something.
+> >
+> >
+> >
+> > the word Stat was from a previous version, use Judg instead. It should be enough to change the macro.
+> >
+> >
+> > Best,
+> > Daisuke
+> >
+> >
+> > See you soon Stefano
+> >
+> >
+
+
+-- 中澤 巧爾 (NAKAZAWA Koji) 名古屋大学大学院情報科学研究科 情報システム学専攻 mail: knak@i.nagoya-u.ac.jp
+

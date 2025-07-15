@@ -7,24 +7,24 @@ with conditional on zero, in the style for instance of
 Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
 (\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}).
 
-The types of $\LAMBDA$ are simple types obtained from the atomic type $\N$.
-The terms of $\LAMBDA$  are all well-typed possibly infinite trees representing expressions 
+The types of $\LAMBDA$ are all simple types obtained from the atomic type $\N$
+and type variables.
+The terms of $\LAMBDA$  are all possibly infinite trees representing expressions 
 defined with $0$, $\Succ $, $\ap$ (application), 
 variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining 
-maps), and $\cond$, the arithmetic conditional (i.e., the test on zero, with predecessor include). 
-We will use infinite terms of $\LAMBDA$ in order to describe
-a simplified functional language
-with fixed point, like the functional language considered by Clemens Grabmayer, Jan Rochel 
-(\cite{Letrec,Letmu,JanRochelPhd2016}).
+maps), and $\cond$, the arithmetic conditional (i.e., the test on zero, with predecessor included). 
+We imagine that the infinite terms of $\LAMBDA$ describe
+a simplified functional language with fixed point, like the functional language considered by
+ Clemens Grabmayer, Jan Rochel (\cite{Letrec,Letmu,JanRochelPhd2016}).
 As usual, we add reduction rules with the goal of transforming closed terms of type $\N$ 
 into notations for natural numbers. Thus, 
 the closed terms of $\LAMBDA$ can be interpreted as partial functionals on $\N$.
 In the general case a reduction on a closed terms of type $\N$ can continue forever,
-this is why without further condition we only obtain partial functionals.
+this is why without further conditions we only obtain partial functionals.
 
 %19:42 19/04/2024
 
-In this paper we will consider regular terms, namely, possibly infinite $\lambda$-terms 
+In this paper we will mainly consider regular terms, namely, possibly infinite $\lambda$-terms 
 having a finite number of distinct subterms. This is the frame we work in.
 We introduce a set of terms we call $\CTlambda$, consisting of all 
 regular terms satisfying a condition called Global Trace Condition (GTC).
@@ -42,7 +42,7 @@ Our contribution is to extend these circular versions of G\"{o}del system $\syst
 we hope to provide a circular syntax more familiar to researchers working in the
 field of Type Theory. % We call $\CTlambda$ our extended circular syntax.
 
-We will prove for $\CTlambda$ (with binders) a result only
+We will prove for $\CTlambda$ (with binders) a result which was only
 known for the \emph{algebraic} circular syntax for system $\systemT$:
 that reductions not in the second argument of any $\cond$ (conditional)
 strongly normalizes, and that they always reduce closed normal terms of type 
@@ -61,13 +61,13 @@ first symbol of each immediate subterm eventually stabilizes, and so forth, recu
 
 The notion of limit reduction in $\CTlambda$
 could be considered similar to the notion of limit reduction for finite $\lambda$-terms obtained
-through B\"{o}hm trees. 
+through B\"{o}hm trees (\cite{Barendregt1984}, Def. 10.1.4). 
 However, we stress that there is an important difference: 
 in $\CTlambda$ no \quotationMarks{undefined} subterm is required
 in order to represent the limit of a reduction, while B\"{o}hm trees 
 can have undefined subtrees. 
 
-In Section~\ref{section-infinite-lambda}, we introduce
+This is the plan of the paper. In Section~\ref{section-infinite-lambda}, we introduce
 the set $\LAMBDA$ of our infinite $\lambda$-calculus,
 including its types, terms, typing rules, and reduction rules.
 Section~\ref{section-trace-infinite-lambda-terms} and Section~\ref{section-circular-system-CTlambda}
@@ -77,9 +77,10 @@ for terms of $\LAMBDA$ with GTC.
 Section~\ref{section-finite-safe-reductions} introduces the notion of $n$-safe-reductions
 that compute finite approximations of the limit normal forms of infinite reductions, 
 and also shows that any closed $\CTlambda$ term of type $\N$ is reduced to a numeral
-by a finite number of the $0$-safe-reductions. 
+by reducing in any way with $0$-safe-reductions. 
 Section~\ref{section-comparison} compares our work with some related work. 
-Section~\ref{section-conclusion} concludes the current paper, mentioning our plan in the future. 
+Section~\ref{section-conclusion} concludes the current paper, mentioning our plan 
+for further works. 
 
 
 %14:57 17/04/2024
