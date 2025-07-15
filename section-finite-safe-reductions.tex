@@ -1,3 +1,4 @@
+% !TEX root = main.tex
 \section{Terms with the global trace condition are finite for safe-reductions}
 \label{section-finite-safe-reductions}
 
@@ -8,11 +9,13 @@ only finitely many \quotationMarks{$0$-safe} (safe) reduction steps:
 from some point on, all reduction steps are \quotationMarks{unsafe},
 that is, they occur in the right-hand side of some $\cond$.
     
-From this, we will prove that in $\GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on ,
+From this, we will prove that for all $t \in \GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
-no matter how we reduce within the $n$-safe level of a term, 
-eventually no reductions are left, therefore we obtained some $n$-safe-normal 
-form. In the case the term is closed of type $\N$, then any $n$-safe-normal form is a numeral.
+no matter how we reduce within the $n$-safe level of a term in $\GTC$, 
+eventually no reductions are left in the $n$-safe level, 
+therefore we obtained some $n$-safe-normal 
+form. In the case the term is closed of type $\N$, 
+we also prove that any $n$-safe-normal form is a numeral.
 
 We introduce the property of being \quotationMarks{finite for $n$-safe-reductions}.
 
@@ -35,6 +38,8 @@ we abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
 We have to prove that all terms in $\GTC$ are finite for safe-reductions. 
 We define total well-typed terms by induction on the type, 
 as in Tait's normalization proof.
+
+%18:11 15/07/2025
 
 %We recall that $u \in \LAMBDA$ is \emph{finite for safe-reduction} 
 %if and only if all infinite reduction sequences from $t$ include only finitely many "safe" reduction steps
@@ -89,7 +94,7 @@ Then we define $u \prec t$ by $t \reduces^{*} \Succ(u)$.
 
 \begin{example}
 If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
-If $t \sim \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
+If $t  = \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
 well-founded from $t$.
 \end{example}
 
@@ -106,9 +111,9 @@ then any $\prec$-decreasing sequence from $t$ terminates.
   We have the following claims.
   \begin{enumerate}
   \item\label{lemma-prec-order-01}
-    There is no infinite sequence 
-    $t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$
-    for well-typed $t$ of type $\N$ and $t$ is \emph{finite for safe-reductions}.
+    If $t$ is of type $\N$ and $t$ is \emph{finite for safe-reductions}
+    then there is no infinite sequence 
+    $t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$.
 
   \item\label{lemma-prec-order-02}
     $\prec$ is well-founded on total terms of type $\N$.
@@ -146,11 +151,14 @@ then any $\prec$-decreasing sequence from $t$ terminates.
 %\end{enumerate}
 %\end{proof}
 
+
+
 We are preparing for our main theorem: any $t \in \GTC$ is total, 
 which is shown by using proof by contradiction. Assuming that some $t\in\GTC$ is not total,
 we construct a sequence of non-total subterms of $t$ and their evidences (total assignments)
 that are compatible with traces and their progress points.
-Then, considering a trace taken by $t\in\GTC$, there is an infinitely decreasing sequence for $\prec$,
+Then, considering a trace taken by $t\in\GTC$, we will be able to define 
+an infinitely decreasing sequence for $\prec$,
 contradicting Lemma \ref{lemma-prec-order}.
 
 \begin{definition}[Trace-compatible assignment]\label{definition-trace-compatible}
@@ -1031,38 +1039,40 @@ and for all terms which satisfy the global trace condition.
 In the next subsection we check that $0$-safe-normalization of a closed $t \in \CTlambda$
 of type $\N$ produces a numeral.
 
+%18:58 15/07/2025
+
 \subsection{Closed safe-normal terms of $\CTlambda$ of type $\N$ are numeral}
 This property is not straightforward. 
-There are closed normal terms of type $\N$ in $\LAMBDA \setminus \CTlambda$, 
-even regular terms, which are not numerals.
-An example is $t = \cond(0, \lambda x^N.1)(t)$ (\cite{2021-Anupam-Das}, Remark 44, page 33). 
+There are regular closed normal terms of type $\N$ which are not numerals.
+An example is $t = \cond(0, \lambda x^N.1)(t)$ 
+(\cite{2021-Anupam-Das}, Remark 44). 
 There is a proof $\Pi::\ \vdash t: \N$, and $\N$ is the unique type of $t$. 
 $t$ is regular: the subterms of $t$ are
 $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
 $t$ is normal, because $t$ is neither $0$ nor a successor, 
 therefore $t$ cannot be reduced. However $t$ is not a numeral.
-$t \not \in \GTC$, hence $t \not \in \CTlambda$, because
-the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, with all nodes 
-labeled by the judgment $\vdash t: \N$. The path $\pi$ is 
+We have $t \not \in \GTC$, hence $t \not \in \CTlambda$, because
+the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, 
+%with all nodes labeled by the judgment $\vdash t: \N$. The path $\pi$ is 
 never moving to the right-hand side of a $\cond$,
-and therefore $\pi$ is infinite and never progressing.
+and therefore all paths in $\pi$ are never progressing.
 
 Instead, for any closed $t \in \GTC$ of type $\N$, safe-normalization on closed subterms in $t$
 produces a numeral. For reason of efficiency,
 we also proved that safe-normalization can be done only contracting 
-\emph{closed} redexes of $t$: {\bf no $\alpha$-renaming is required}.
+\emph{closed} redexes of $t$: therefore {\bf no $\alpha$-renaming is required}.
 As an intermediate step in this proof we need the notion of 
 \quotationMarks{sound} term.
 
 \begin{definition}[Sound terms]
-A term $t \in \CTlambda$ is sound if at least one of the following conditions holds.
+A term $t \in \CTlambda$ is sound if \emph{at least one} of the following conditions holds.
 \begin{enumerate}
 \item
 $t$ is open. 
 \item
 $t$ has some $0$-safe \emph{closed} redex. 
 \item
-$t=\lambda x.u$ or 
+$t$ has an arrow type and either $t=\lambda x.u$ or 
 $t = \cond(f,g)$ for some $u$, $f$, $g$. % and $t$ has an arrow type
 \item
 $t \in \Num$ ($t$ is a numeral). 
@@ -1079,7 +1089,7 @@ If $t \in \GTC$, $t$ is closed and $0$-safe-normal and $t:\N$ then $t \in \Num$ 
 \end{enumerate}
 \end{proposition}
 
-The first claim is shown by induction of the leftmost branch of $t$, 
+The first claim is shown by induction on the size of the $0$-safe part of $t$, 
 which is finite because $t \in \CTlambda$. The second claim is a corollary of the first one.
 
 %\begin{proof}
@@ -1125,6 +1135,8 @@ which is finite because $t \in \CTlambda$. The second claim is a corollary of th
 %a numeral.
 %\end{enumerate}
 %\end{proof}
+
+%19:25 15/07/2025
 
 \subsection{A Notion of Limit Normal Form}
 Normalization on some term $t \in \CTlambda$ can continue forever,

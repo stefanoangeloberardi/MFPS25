@@ -8,26 +8,26 @@ GTC was already defined for infinitary simply typed \emph{combinatorial} terms
 (\cite{2021-Anupam-Das}), 
 our contribution is to give an explicit formulation of GTC in the case of the binder $\lambda$.
 
-In this section we also define the set $\GTC$ of well-typed terms 
+We will write $\GTC$ for the set of well-typed terms 
 $t \in \LAMBDA$ satisfying the global trace condition, for some proof 
 $\Pi::\Gamma \vdash t:A$, some context $\Gamma$ and some type $A$. 
 We will prove that closed terms of $\GTC$ define a set of total functionals:
 they include all functionals of G\"{o}del's system $\systemT$,
 and we conjecture they define exactly this set of functionals.
 
-We are particulary interested in terms in the set $\CTlambda = \GTC \cap \Reg$, namely
+We are particulary interested to the set of terms  $\CTlambda = \GTC \cap \Reg$, namely
 regular terms that safisfies the global trace condition.
 The reason is that $\CTlambda$ is a decidable subset of $\Reg$
-and that its terms can be represented by finite graphs.
-For the terms of $\CTlambda$ we will prove that all reduction strategies
+(\cite{SCT}, Theorem 4)  and that its terms can be represented by finite graphs.
+We will prove that all reduction strategies
 %, church-rosser for the \quotationMarks{safe} part of a term, 
-on a closed term of type $\N$ strongly normalize to a numeral.
+on a closed term of type $\N$ of $\CTlambda$  strongly normalize to a numeral.
 As a consequence, all closed terms of $\CTlambda$ are total functionals. 
 
 By building over the notion of trace progressing in an index $i$,
-we now define the global trace condition and the set of terms $\GTC$  and $\CTlambda$.
-Informally, the global trace condition requires that all infinite branches have some trace of some argument
-$\N$ passing infinitely many times through the right-hand side of a $\cond$.
+we now define the global trace condition and the set of terms $\GTC$ and $\CTlambda$.
+Informally, the global trace condition requires that all infinite branches have some trace 
+of some argument $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 
 \begin{definition}[$\GTC$ and $\CTlambda$]\label{definition-global-trace-condition}
   Assume $\Pi::\Gamma \vdash t :A$ is a typing proof.
@@ -51,27 +51,29 @@ if there are infinitely many indexes $i \in \dom(\tau)$ such that $\tau$ is prog
 $t$ satisfies the global trace condition if $t \in \WTyped$
 and for all infinite paths $\pi$ of $\Pi$,
 there is some infinitely progressing trace $\tau$ of $\pi$.
+
+\item
 $\GTC$ is the set of 
 well-typed terms $t \in \LAMBDA$ satisfying the global trace condition.
 
 \item
-  The set $\CTlambda$ is defined by $\GTC \cap \Reg$, namely $\CTlambda$ is the set of regular terms
-  that satisfy the global trace condition. 
+  $\CTlambda = \GTC \cap \Reg$. 
 \end{enumerate}
 \end{definition}
 
 The global trace condition is decidable in polynomial space in the number of
-subterms of $t$, counted up to isomorphism, 
+subterms of $t$, %counted up to isomorphism, 
 because it is a particular case of the size change algorithm for program 
-termination (\cite{SCT}). 
-The global trace condition is decidable quite fast
-for infinitary $\lambda$-terms describing realistic programs 
-(\cite{10.1007/978-3-642-35182-2_25}, 
-Section 4.7 \quotationMarks{Experimental Results}). 
+termination (\cite{SCT}, Theorem 4). 
+But this is a worst case analysis: for instance, 
+we know that the global trace condition for proofs is decidable quite fast on realistic examples
+(\cite{10.1007/978-3-642-35182-2_25, 10.1145/3018610.3018623, 10.1145/3632888, 10.1007/978-3-031-90643-5_18, 10.1145/3453483.3454087, Brotherston2020, Stratulat_2021}). 
 
-Note that, for any $t\in\CTlambda$, the $0$-safe level of $t$ is finite, since
-any infinite path in $\Pi::\Gamma\vdash t:A$ for some $\Pi$ must pass through a $\cond$-rule
-by the global trace condition.
+Note that, for any $t\in\CTlambda$, the $n$-safe level of $t$ is finite for all $n \in \Nat$. 
+Indeed, by the global trace condition any infinite path $\pi$ in $\Pi::\Gamma\vdash t:A$ for some 
+$\Pi$ must have some infinitely progressing trace, therefore must pass through a $\cond$-rule
+infinitely many times, hence more than $n$ times. Thus, no infinite path can be included in the
+the $n$-safe level of any $t\in\CTlambda$.
 This fact is technically important to show properties of terms in $\CTlambda$. 
 
 %Another nice feature of the global trace condition is 
@@ -84,20 +86,20 @@ This fact is technically important to show properties of terms in $\CTlambda$.
 %finite.
 
 \begin{remark}
-  We now explain the effect of splitting the typing rule for $\ap$ into 
-  $\apvar$ and $\apnotvar$.
+We now explain the effect of splitting the typing rule for $\ap$ into $\apvar$ and $\apnotvar$.
 %$\apvar$ corresponds to an $\eta$-expansion and it introduces a global variable name $x^T$
 %for the first argument of $t$. 
 %As we said, 
 We need to consider apart the case $t(x)$ of application of $t$ to a variable
 $x$, because in this case we will also check, using GTC, 
-whether the first argument of $t$ is infinitely decreasing in any infinite 
-computation. If this is the case, then no infinite computation exists. $\apvar$ is like 
-a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
-it helps to automatically discover a part of the terminating functions.
-Remark that we introduced a unique \emph{term notation $\ap$} for application: 
-we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
-the typing rule for $\ap$ into two subcases. 
+whether the first argument $x$ of $t$ is infinitely decreasing in any infinite 
+computation. If this is the case, then no infinite computation exists. 
+%$\apvar$ is like 
+%a mark \quotationMarks{to be observed} for the argument $x$ of $t(x)$,
+%it helps to automatically discover a part of the terminating functions.
+%Remark that we introduced a unique \emph{term notation $\ap$} for application: 
+%we write $\ap(t,u)$ no matter if $u$ is a variable or not, while we split 
+%the typing rule for $\ap$ into two subcases. 
 \end{remark}
 
 We now give some examples of terms in $\CTlambda$. 
@@ -213,13 +215,14 @@ it computes
 \begin{center}
   $\Rec(a,f)(0) \reduces a$ \quad and \quad $\Rec(a,f)(\Succ(t)) \reduces f(\Rec(a,f)t)(t)$.
 \end{center}
-We define $\Rec(a,f) = g$, where $g$ is defined by the equation $g = \cond(a,\lambda x.f(g(x))(x))$.
-Note that $g$ is regular and is in $\GTC$ by the following proof with $\Gamma=(f:A,\N \rightarrow A,a:A)$.
+We abbreviate $r = \Rec(a,f)$. $r$ is defined by the equation $r = \cond(a,\lambda x.f(r(x))(x))$.
+Note that $r$ is regular and is in $\GTC$ by the following proof with $\Gamma=(f:A,\N \rightarrow A,a:A)$.
 The arrows specifies the unique infinitely progressing trace of the unique infinite path repeating from $(\dagger)$ on the bottom to
 $(\dagger)$ on the top. 
 If we want a finite cyclic graph notation we add a back edge between the judgments with $(\dagger)$ signs. 
 The red arrow is the progress point, which is cyclically repeated in the infinite trace.
 Hence $\Rec(a,f) \in \CTlambda$.
+\begin{figure}[t]
 \begin{prooftree}
   \AxiomC{}
   \RightLabel{$\var$}
@@ -229,29 +232,35 @@ Hence $\Rec(a,f) \in \CTlambda$.
   \UnaryInfC{$\Gamma,x:\N \vdash f: A \rightarrow \N \rightarrow A$}
   \AxiomC{$\vdots$}
   \noLine
-  \UnaryInfC{$\Gamma \vdash g:\vnode7{\N}\rightarrow A$}
+  \UnaryInfC{$\Gamma \vdash r:\vnode7{\N}\rightarrow A$
+   \quad $(\vnode8{\dagger})$}
   \RightLabel{$\weak$}  
-  \UnaryInfC{$\Gamma,x:\N \vdash g:\vnode6{\N}\rightarrow A$}
+  \UnaryInfC{$\Gamma,x:\N \vdash r:\vnode6{\N}\rightarrow A$}
   \RightLabel{$\apvar$}  
-  \UnaryInfC{$\Gamma,x:\vnode5{\N} \vdash g(x):A$}
-  \BinaryInfC{$\Gamma,x:\vnode4{\N} \vdash f(g(x)):\N \rightarrow A$}
+  \UnaryInfC{$\Gamma,x:\vnode5{\N} \vdash r(x):A$}
+  \BinaryInfC{$\Gamma,x:\vnode4{\N} \vdash f(r(x)):\N \rightarrow A$}
   \RightLabel{$\apvar$}
-  \UnaryInfC{$\Gamma,x:\vnode3{\N} \vdash f(g(x))(x):A$}
-  \UnaryInfC{$\Gamma \vdash \lambda x.f(g(x))(x):\vnode2{\N} \rightarrow A$}
+  \UnaryInfC{$\Gamma,x:\vnode3{\N} \vdash f(r(x))(x):A$}
+  \UnaryInfC{$\Gamma \vdash \lambda x.f(r(x))(x):\vnode2{\N} \rightarrow A$}
   \RightLabel{$\cond$}
-  \BinaryInfC{$\Gamma \vdash g: \vnode1{\N} \rightarrow A$\quad$(\dagger)$}
+  \BinaryInfC{$\Gamma \vdash r: \vnode1{\N} \rightarrow A$
+  \quad $(\vnode0{\dagger})$}
 \end{prooftree}
 $
 \dirflowrededges{node1/node2}
-\bentdirflowedges{node2/node3/0}
-\bentdirflowedges{node3/node4/0}
-\bentdirflowedges{node4/node5/0}
-\bentdirflowedges{node5/node6/0}
-\bentdirflowedges{node6/node7/0}
+\dirflowedges{node2/node3}
+\dirflowedges{node3/node4}
+\dirflowedges{node4/node5}
+\dirflowedges{node5/node6}
+\dirflowedges{node6/node7}
+\bentflowblackedges{node8/node0/60}
 $    
+\caption{Typing of $\Rec$}\label{fig:rec-proof}
+\end{figure}
 
 Note that $\CTlambda$ contains G\"{o}del's $\systemT$ since it has expressive power of the numerals and the recursor. 
-Moreover the computational properties of $\Rec(a,f)$ displayed above are satisfied only by the $0$-safe-reductions. 
+Moreover the computational properties of $\Rec(a,f)$ displayed in the figure \ref{fig:rec-proof} 
+are realized using the $0$-safe-reductions only. 
 \end{example}  
 
 
