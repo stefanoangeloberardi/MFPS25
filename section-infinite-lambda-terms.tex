@@ -194,8 +194,8 @@ We call the terms of $\Reg$ the \emph{regular terms}.
 \item
   When $t = \Succ^n(0)$, namely $\Succ(\cdots \Succ(0))$ ($n$-times of $\Succ$),
   for some natural number $n \in \Nat$, we say that $t$ is a numeral.
-  We write $\Num$ for the set of numerals.
-  By abuse of notation, we abbreviate $\Succ^n(0)$ by $n$.
+  $\Num$ is the set of numerals.
+  %By abuse of notation, we abbreviate $\Succ^n(0)$ by $n$.
 \end{enumerate}
  
 \end{definition}
@@ -268,7 +268,7 @@ preserving the regularity of a term.
 Let $t$ and $u$ be terms.
 \begin{enumerate}
 \item
-We say that $\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if and only if 
+$\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if  
 $\phi$ is a tree isomorphism between $t$ and $u$ such that:
 \begin{enumerate}
 \item
@@ -283,26 +283,25 @@ binding relation.
 \end{enumerate}
 
 \item
-  We say that an $\alpha$-conversion map $\phi$ is \emph{equality-preserving} if $\phi$ preserves
-  the equalities of labels. 
+  An $\alpha$-conversion map $\phi$ is \emph{equality-preserving} 
+  if $\phi$ preserves the equalities of labels. 
 \item
 We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
 $\alpha$-conversion $\phi:t \rightarrow u$.
 \end{enumerate}
 \end{definition}
 
-We remark that the equality-preserving $\alpha$-conversion $\sim_\alpha$ is
-a restriction of the usual $\alpha$-conversion, which is defined by an $\alpha$-conversion map.
-The equality-preserving condition says that if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
+Equality-preserving condition 
+says that if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
 all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$. 
-The condition is to avoid breaking regularity after the renaming of bound variables.
-For example, without the condition, some $\alpha$-conversion map sends
-a regular term $f$ defined by $f\sim \lambda x^\N.\cond(x,f0)$ into
-a non-regular term $\lambda x_1^\N.\cond(x_1,\lambda x_2^\N.\cond(x_2,(\lambda x_3^\N.\cond(...))0)0)$,
+With this condition, if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular.
+Without this condition, 
+$f = \lambda x^\N.\cond(x,f0)$ is $\alpha$-convertible to 
+a non-regular term 
+$\lambda x_1^\N.\cond(x_1,\lambda x_2^\N.\cond(x_2,(\lambda x_3^\N.\cond(...))0)0)$,
 with distinguished bound variables $x_1,x_2,\ldots$. 
 
-In order to define typing of our possibly infinite terms, we first 
-define contexts and typing judgments.
+In order to define typing of our terms, we first define contexts and typing judgments.
 
 %13:32 22/04/2024
 %11:17 29/04/2024
@@ -337,9 +336,9 @@ We write $\Ctxt$ for the set of contexts.
 
 \item
 \label{definition-context-lambda-07}
-The context $\Gamma\setminus\{x^T:T\}$ is the one obtained
-by removing $x^T:T$ from $\Gamma$ if the type assignment presents. 
-Otherwise it is $\Gamma$.
+The context $\Gamma\setminus\{x^T:T\}$ is obtained
+by removing $x^T:T$ from $\Gamma$ if the type assignment presents, 
+otherwise it is $\Gamma$.
 
 \item
 \label{definition-context-lambda-08}
@@ -347,8 +346,7 @@ Otherwise it is $\Gamma$.
 We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
 $\phi$ is an injection from $\{1,\ldots,n\}$ to $\{1,\ldots,n'\}$
 and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
-Note that we have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
-there is a unique $\phi:\Gamma \rightarrow \Gamma'$. 
+
 
 \item 
 \label{definition-context-lambda-04}
@@ -377,10 +375,11 @@ We write $\Judg$ for the set of all typing judgments.
 %As usual, we informally write a sequent $(\Gamma, A)$ for $t$ in the form $\Gamma \vdash t:A$.
 \end{definition}
 
-In fact a type assignment $x^T:T$ is a \emph{redundant information} for our
-variables (not for our terms), 
+We have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
+there is a unique $\phi:\Gamma \rightarrow \Gamma'$. 
+Note that a type assignment $x^T:T$ is \emph{redundant},
 since each variable already has its type superscript.
-However we write $x^T:T$ (or simply write $x:T$)
+We write $x^T:T$ (or simply $x:T$)
 for uniformity with the notation $x:T$ in use in type theory.
 
 %We have  $\Gamma \sim \Gamma'$ if and only if  $\Gamma \subseteqsim \Gamma'$
@@ -431,15 +430,15 @@ for uniformity with the notation $x:T$ in use in type theory.
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-Assume that terms $t$ and $u$ have finitely many free variables. 
-We define the term $t[u/x]$ obtained by substituting $u$ for all free occurrences of $x$ in $t$, 
+Assume that $t$, $u$ have finitely many free variables. 
+We define $t[u/x]$ by substituting $u$ for all free occurrences of $x$ in $t$, 
 by first replacing $t$ with some $t' \sim_\alpha t$
 in order to avoid that free occurrences in $u$ become bound after substitution. 
-This is always possible: if there are only finitely many free variabiles in $u$, we can
+If there are only finitely many free variabiles in $u$, we can always
 rename all bound variables in $t$ in order to make them different from the free variables
 in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
 
-The use of $\alpha$-convertibility for substitution is not relevant in this paper. Indeed,
+The use of $\alpha$-convertibility for substitution is not relevant for computation. Indeed,
 substitution of a closed term $u$ requires no renaming, and  in order to use 
 infinite $\lambda$-terms as a programming language we only need computations 
 involving substitution of closed terms. 
@@ -547,18 +546,18 @@ involving substitution of closed terms.
 %%%%%%%%%%%%%%%%
 
 \subsection{Typing rules}
-We define typing rules for terms of $\LAMBDA$ 
-and the subset $\WTyped$ of well-typed terms.
-The typing rules are similar to those of the usual simply typed $\lambda$-calculi
-with natural number types (though ours are for possibly infinite terms),
-except for the rules for $\cond$ and $\ap$. 
+We define typing rules for terms of $\LAMBDA$.
+%and the subset $\WTyped$ of well-typed terms.
+%The typing rules are similar to those of the usual simply typed $\lambda$-calculi
+%with natural number types (though ours are for possibly infinite terms),
+%except for the rules for $\cond$ and $\ap$. 
 The typing rule for $\cond(a,f)$ reflects the computational meaning of $\cond$,
 which is a function $\N\rightarrow A$ that returns $a$ for the input $0$,
 and returns $f(t)$ for an input $\Suc{t}$. 
 The typing rule for $\ap(t,u)$ is split into two sub-rules,
 $\apvar$ and $\apnotvar$ depending on whether $u$ is a variable or not. 
 This is for the traces and the global trace condition for $\LAMBDA$ that will be defined later. 
-We will explain the rules for $\ap$ in more detail after the definition of GTC. 
+%We will explain the rules for $\ap$ in more detail after the definition of GTC. 
 
 %% [The following part will be put in the later section]
 %% %the conditional binder $\cond$, and for 
@@ -688,7 +687,7 @@ The set $\Rule$ of rule instances for $\LAMBDA$ is defined by
 \]
 \end{definition}
 
-We note that, when $x^A \not \in \FV(\Gamma)$, the $\lambda$-rule becomes:
+When $x^A \not \in \FV(\Gamma)$, the $\lambda$-rule becomes:
 if $\Gamma, x^A:A \vdash t: B$
 then $ \Gamma  \vdash \lambda x^A.t :A \rightarrow B$.
 
@@ -718,7 +717,7 @@ and have the same conclusion $\Gamma \vdash t:A$.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % WE CANNO INCLUDE THE weak RULE
 % THE ASSUMPTIONS OF weak ARE NOT UNIQUE. 
-% This is why weak is taken as a derived rule
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 Then $r = r'$, and if the premises of $r$ are some 
 $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
 then the list of immediate subterms of $t$ is exactly $(t_1, \ldots, t_p)$.
@@ -770,16 +769,17 @@ From the typing rules we define the proofs that a term is well-typed.
 %%12:54 03/06/2024
 
 %DI QUI 17:35 11/06/2025 
+% 10:55 15/0/2025
 
 \begin{definition}[Proofs of $\LAMBDA$]
-Assume $\Pi=(T,\phi, \psi)$ is a binary tree $T$ with each node $l \in T$ 
-labeled by a judgment $\phi(l) \in \Judg$ and by a rule $\psi(l) \in \Rule$. 
-We denote the root of $T$ with $\nil$
-and the $i$-th child, if it exists, of the node $l \in T$ with $l \conc (i)$
-(appending $i$ after the last element of $l$).
+Assume $\Pi=(T,\phi, \psi)$, $T$ is a binary tree of lists of integers, and each node $l \in T$
+is labeled by a judgment $\phi(l) \in \Judg$ and a rule $\psi(l) \in \Rule$. 
+$\nil$ is the root of $T$ and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
+is $l \conc (i) = ( i_1, \ldots, i_n, i)$.
+%(appending $i$ after the last element of $l$).
 
 Let $J$ be a judgment. 
-Then we write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
+We write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 \begin{enumerate}
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
@@ -830,8 +830,8 @@ where its first node is $x$, and
 each other node in $\pi$ is a child of the previous one in $\pi$.
 
 \item
-A path is \emph{leftmost} if and only if all nodes of $\pi$
-are left-child, where a left-child node is the left child of its parent.
+A path is \emph{leftmost} if all nodes of $\pi$
+but the first are the left child of the previous one.
 
 \item
 A proof $\Pi$ is \emph{left-finite} if all leftmost paths $\pi$ in $\Pi$ 
@@ -839,7 +839,8 @@ from any node of $\Pi$ are finite.
 
 \item
 A term $t$ is \emph{well-typed} if and only if $\Pi :: \Gamma \vdash t:A$ 
-for some left-finite proof $\Pi$ with $\FV(\Gamma) \supseteq \FV(t)$.
+for some \emph{left-finite} proof $\Pi$.
+% with $\FV(\Gamma) \supseteq \FV(t)$.% this is necessarily true
 
 \item
 $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
@@ -869,13 +870,13 @@ then $\Pi::\Gamma \vdash t[u/x]:A$ for some left-finite proof $\Pi$.
 %no more true. However, 
 %
 
-We can prove the \emph{uniqueness} of type for a well-typed term. 
+Using \emph{left-finiteness}, we can prove the \emph{uniqueness} of type for a well-typed term. 
 
 %12:25 13/06/2025
 
 \begin{proposition}[Uniqueness of Typing]
 \label{proposition-left-finite-unique}
-If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two left-finite proofs,
+If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two \emph{left-finite} proofs,
 then $A = A'$.
 \end{proposition}
 
@@ -1008,6 +1009,8 @@ We give a typical example $\Sum$ of our system. It is regular and well-typed.
 Moreover, as we will see later, it satisfies the global trace condition,
 and hence is in $\CTlambda$ (see Example~\ref{example-sum}). 
 
+% 11:31 15/07/2025
+
 \begin{example}\label{example-sum-first}
 Let $\Sum$ be an infinite term that satisfies $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
 It is regular because the set $\SubTerm(\Sum)$ is finite: 
@@ -1057,6 +1060,7 @@ namely, without $\weak$, this particular proof would be incorrect.
   \bentdirflowedges{node5/node6/0}
   \bentdirflowedges{node6/node7/0}
   \bentdirflowedges{node7/node8/0}
+  \bentdirflowedges{node8/node1/-90}
   $    
   \caption{Typing of $\Sum$}\label{fig:sum-proof}
 \end{figure}
