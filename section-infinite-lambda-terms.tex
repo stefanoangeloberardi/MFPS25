@@ -816,16 +816,18 @@ condition, \emph{left-finiteness}, used to remove some non-sensical proofs like 
 \begin{enumerate}
 
 \item
-A path $\pi$ in a proof $\Pi=(T,\phi,\psi)$ is non-empty sequence of nodes for $T$,
-where its first node is the root of $T$, 
-and each other node is a child of the previous one in $\pi$.
+A path $\pi$ in a proof $\Pi=(T,\phi,\psi)$ from a node $x \in T$ 
+is any non-empty sequence of nodes for $T$,
+where its first node is $x$, and 
+each other node in $\pi$ is a child of the previous one in $\pi$.
 
 \item
-A path is \emph{left-finite} if only finitely many nodes of $\pi$
+A path is \emph{leftmost} if and only if all nodes of $\pi$
 are left-child, where a left-child node is the left child of its parent.
 
 \item
-A proof $\Pi$ is \emph{left-finite} if all paths $\pi$ in $\Pi$ are left-finite.
+A proof $\Pi$ is \emph{left-finite} if all leftmost paths $\pi$ in $\Pi$ 
+from any node of $\Pi$ are finite.
 
 \item
 A term $t$ is \emph{well-typed} if and only if $\Pi :: \Gamma \vdash t:A$ 
