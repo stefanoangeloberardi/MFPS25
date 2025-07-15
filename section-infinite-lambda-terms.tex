@@ -1012,14 +1012,16 @@ and hence is in $\CTlambda$ (see Example~\ref{example-sum}).
 % 11:31 15/07/2025
 
 \begin{example}\label{example-sum-first}
-Let $\Sum$ be an infinite term that satisfies $\Sum \sim \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
-It is regular because the set $\SubTerm(\Sum)$ is finite: 
+Let $\Sum$ be an infinite term that satisfies 
+$\Sum = \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
+$\Sum$ is regular because the set $\SubTerm(\Sum)$ is finite and equal to: 
 \begin{center}
   $\{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
 \end{center}
-It is well-typed by the derivation of Figure~\ref{fig:sum-proof} with a unique infinite path (say $\pi$).
-In $\pi$, we put arrows to specify a sequence of $\N$s for a reason we will explain later
-\footnote{The sequence of $\N$s passed through by arrows is an infinitely progressing trace (with progressing points specified by the red arrow), 
+$\Sum$ is well-typed by the derivation of Figure~\ref{fig:sum-proof}
+with a unique infinite path (say $\pi$).
+In $\pi$, we put arrows to specify a sequence of $\N$s for a reason we will explain later\footnote{
+The sequence of $\N$s passed through by arrows is an infinitely progressing trace (with progressing points specified by the red arrow), 
 which will be defined in Section~\ref{section-circular-system-CTlambda}, 
 following the path $\pi$.}.
 This infinite tree is represented by a finite cyclic graph
@@ -1068,9 +1070,10 @@ namely, without $\weak$, this particular proof would be incorrect.
 \end{example}
 
 Our goal is to provide a set of well-formed terms for $\LAMBDA$ and interpret 
-them as partial functionals, a semantics for circular $\lambda$-terms.
+them as total functionals. %, a semantics for circular $\lambda$-terms.
 The well-typedness condition is not enough for our purpose,
-since meaningless terms like $t \sim \Succ(t):\N$ are still included. 
+since terms like $t = \cond(0,\lambda x.t(\Succ(x)))$ and 
+denoting partial functionals  are still included. 
 The global trace condition (to be introduced later) will be a reasonable condition for our goal. 
 %to denote a subset of the total functionals. 
 
