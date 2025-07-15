@@ -1,12 +1,16 @@
+% !TEX root = main.tex
 \section{The trace of the infinite $\lambda$-terms}\label{section-trace-infinite-lambda-terms}
 
 %19:34 27/03/2024
+%12:02 15/07/2025
+
 We define a notion of trace for possibly infinite $\lambda$-terms, 
 describing how an input of type $\N$ is used when computing the output
-and when its value decreases. The notion of trace is useful to analyse termination.
+and when its value decreases. 
+%The notion of trace is useful to analyse termination.
 If, in all infinite computations of a term, we are able to find some infinitely
 decreasing value, then no infinite computation can exist for this term. 
-The first step toward the notion of trace is defining a notion of \emph{connection} 
+Trace is the transitive closure of a notion of \emph{connection} 
 between arguments in a proof that evidences the well-typedness of $t$. 
 There are two kind of connections: stationary and progressing.
 In the case of arguments of type $\N$, a stationary connection 
@@ -147,19 +151,19 @@ of $J$ is an index $k$ with $C_k = \N$, where $\vec{C} = \vec{A},\vec{B}$.
 
 Assume $\theta$ is a node of a proof decorated with a sequent $\Gamma \vdash t:A$
 and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ decorating
-$\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$decorating
+$\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$ decorating
 any premise $\theta'$ of $\theta$ we define
 the relations: ``there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$"
 and ``there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$". 
 The definition is by cases on $r$.
 We first list the connections for the rules: application, $\lambda$-abstraction, $\var$
-and weakening. They are all stationary.
+and weakening. Their connections are all stationary.
 
 \begin{definition}[Stationary connections for $\ap$, $\lambda$, $\var$, $\weak$]
 \label{definition-connection-lambda-calculus}
 Suppose $\Gamma = x_1^{A_1}:A_1, \ldots, x_n^{A_n}:A_n$ and
 $B = \vec{B} \rightarrow \Atom$, where $\vec{B} = B_1,\ldots,B_m$.
-We define the following \emph{stationary} connections.
+We define the following \emph{stationary} connections, where the arrow from $\vec{B}$ to $\vec{B}$ means that \emph{each lower $B_k\in\vec{B}$ is connected to upper $B_k$}. 
 \begin{enumerate}
 
 \item
@@ -198,7 +202,7 @@ $
 \DisplayProof,
 \quad
 \end{center}
-where the arrow from $\vec{B}$ to $\vec{B}$ means that each lower $B_k\in\vec{B}$ is connected to upper $B_k$. 
+
 \item
 Suppose $\Gamma \vdash f(b) : \vec{B}\rightarrow\Atom$ is obtained by the rule $\apnotvar$ from
 $\Gamma \vdash f: B,\vec{B}\rightarrow\Atom$ and $\Gamma \vdash b: B$. 
@@ -225,7 +229,7 @@ is connected to the $(k+1)$-th unnamed argument $B_k$ in the first assumption.
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
 \bentdirflowedges{node5/node1/30}   
-\bentdirflowedges{node5/node3/30}  
+\bentdirflowedges{node5/node3/10}  
 \bentdirflowedges{node6/node2/0}
 $    
 
@@ -331,7 +335,6 @@ is connected to the $k$-th unnamed argument $B_k$ in the assumption.
 \BinaryInfC{$ \ldots, \vnode3{x_{\phi(a)}^{A_{\phi(a)}}} \ldots \vdash t 
 : \vnode4{\vec{B}} \rightarrow \Atom$}
 \end{prooftree}
-
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
@@ -343,8 +346,9 @@ No connection is defined for the rule $\var$.
 \end{enumerate}
 \end{definition}
 
-Now we list the connections for $\cond, \Succ, 0$: \emph{one is progressing}, 
-all the others are stationary.
+Now we list the connections for $\cond, \Succ, 0$: \emph{the connection for the
+right-hand side of $\cond$ is progressing} and denoted in {\color{red} \bf red}, 
+all the others are stationary and {\color{blue} \bf blue}.
 
 \begin{definition}[Stationary and progressing connections for $\cond, \Succ, 0$]
 \label{definition-connection-cond}
@@ -396,7 +400,7 @@ Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by the rule $\Succ$ from
 $\Gamma \vdash \Succ(u):\N$.
 Then for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
-argument $x_j^{A_j}$ in the assumption. hoge
+argument $x_j^{A_j}$ in the assumption. 
 \begin{prooftree}
 \RightLabel{$\Succ$}
 \def\extraVskip{2pt}
@@ -476,7 +480,7 @@ The connection on $\N$-arguments in a proof $\Pi::\Gamma\vdash t:A$ defines a
 graph $\Graph(\Pi)$ whose nodes are all pairs $(k,\theta)$, with $\theta$ node of $\Pi$ and 
 $k$ index of some $\N$-argument of  the judgment labeling $\theta$. 
 A trace represents the movement of an input information through the 
-infinite unfolding of a tree. Formally, we define a trace as a (finite or infinite) path 
+infinite unfolding of a tree. Formally, we define a trace as a finite or infinite path 
 in $\Graph(\Pi)$.
 
 \begin{definition}[Trace for well-typed terms]
@@ -504,8 +508,9 @@ respectively.
 
 The starting point of a trace $\tau$ in a path  $\pi =(\theta_0, \ldots, \theta_n, \ldots)$
 in $\Pi$ could be $\theta_m$ for some $m \in \N$, 
-and therefore different from the starting point $\theta_0$ of the path $\pi$ to which the 
-trace belongs.
+and different from the starting point $\theta_0$ of the path $\pi$ to which the 
+trace belongs. 
+In the next section we introduce a condition on traces which implies are termination result.
 
 %20:50 15/04/2024
 %10:35 24/04/2024

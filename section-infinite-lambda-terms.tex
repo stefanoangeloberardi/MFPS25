@@ -1092,6 +1092,7 @@ This subsection provides reduction rules for $\LAMBDA$.
   $\cond(u,f)(0) \reduces_\cond u$ and 
   $\cond(u,f)(\Succ (t)) \reduces_\cond f(t)$.
 \end{description}
+\end{definition}
 
 A \emph{$\beta$-redex} or \emph{$\cond$-redex} is a term in the shape of the term at the left-hand side of $\reduces_\beta$ or $\reduces_\cond$, respectively. 
 The \emph{one-step reduction relation} $\reduces$
@@ -1106,10 +1107,16 @@ transitive closure of $\reduces$ (one or more reductions).
 %$a \sim b$ is the existence of a common reduct: 
 %$\exists c \in \LAMBDA. (a \reduces^* c) \wedge (b \reduces^* c)$.
 
-The $\cond$-depth of a subterm $u$ of $t$ is 
+\begin{definition}[$\cond$-depth]
+\begin{enumerate}
+\item
+The \emph{$\cond$-depth} of a subterm $u$ of a term $t$ is 
 the number of edges between a $\cond$ node and its right child on the path
-from the root of $t$ to the root of $u$. 
-The $n$-safe level of $t$ is the set of nodes of $t$ with $\cond$-depth $\le n$.
+from $t$ to $u$. 
+\item
+The \emph{$n$-safe level} of $t$ is the set of nodes of $t$ with $\cond$-depth $\le n$.
+\end{enumerate}
+\end{definition}
 
 We say that $t \nsafeReduces{n} u$, or that $t$ $n$-safely reduces to $u$,  
 if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $t$ 
@@ -1118,7 +1125,7 @@ if we reduce $t$ to $u$ by contracting a single redex in the $n$-safe level of $
 A term is $n$-safe-normal if all its redexes (if any) have $\cond$-depth $>n$.
 We abbreviate \quotationMarks{$t$ is $0$-safe-normal} 
 with just \quotationMarks{$t$ is safe-normal} and write $\safeReduces$ instead of $\nsafeReduces{0}$.
-\end{definition}
+
 
 %09:19 24/04/2024
 %14:00 29/04/2024
@@ -1160,7 +1167,7 @@ with just \quotationMarks{$t$ is safe-normal} and write $\safeReduces$ instead o
 For an example of safe-reductions from a term to a normal form, 
 assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$.
 $v$ is normal (it is no $\cond$-redex).
-There is a unique safe-reduction sequence
+There is a unique reduction sequence
 $v(n) \safeReduces v(n-1) \safeReduces \cdots \safeReduces v(0) \safeReduces 1$. 
 Thus, $v(n)$ strongly normalizes by $\safeReduces$ to $1$ in $(n+1)$ steps.
 %$v(n)$ has a unique reduction path,
