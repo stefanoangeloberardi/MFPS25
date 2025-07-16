@@ -1,6 +1,6 @@
 \section{Appendix}
-We include here all proofs for the statements of our paper and two more examples,
-the interval map and the Ackermann function.
+We include here some proofs for the statements of our paper and three more examples,
+the iterator, the interval map and the Ackermann function.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
 % SECTION 1
@@ -19,6 +19,8 @@ the interval map and the Ackermann function.
 %If $t \in \LAMBDA$, $\Pi::\Gamma \vdash t:A$ and  $\Pi'::\Gamma' \vdash t:A'$ are two left-finite
 %proofs then $A = A'$.
 %\end{proposition}
+
+\subsection{Proof of the uniqueness of typing}
 
 %08:56 19/06/2024
 \begin{proof}(Uniqueness of Typing, Prop. \ref{proposition-left-finite-unique})
@@ -84,72 +86,6 @@ $\Pi'_1$ we deduce that $A = A'$.
 % SECTION 4
 % CT-lambda
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-%\begin{proposition}(The iterator map $\Iter$ is a term of $\CTlambda$)
-%\label{proposition-iterator-in-CT-lambda}
-%$\Iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
-%\end{proposition}
-
-\begin{proof}
-(The iterator map $\Iter$ is a term of $\CTlambda$, 
-Prop. \ref{proposition-iterator-in-CT-lambda})
-The term $\Iter$ is well-typed and regular by definition. 
-We check the global trace condition. 
-
-We follow the unique infinite path $\pi$ of $\Iter$, looking for an
-infinitely progressing trace $\tau$. 
-The only way to obtain an infinite path $\pi$ is to loop
-from $\iter$ to $\iter$.
-So, $\pi$ moves from  $\Iter = \lambda f. \lambda a.\iter$
-to $\lambda a.\iter$, then to $\iter = \cond (a, \lambda x.f(\iter(x)))$.
-Then the infinite path $\pi$ moves in this order to:
- $\lambda x.f(\iter(x))$, $f(\iter(x))$, $ \iter(x)$, $\iter$, cyclically.
- 
-We choose the unique infinite trace $\tau$ of $\pi$ starting from the first unnamed argument of $\iter$. $\tau$, being infinite, must move
- from $\cond$ to the second argument 
-$\lambda x.f(\iter(x))$ of $\cond$, then moves to $x$ in the context of 
-$f(\iter(x))$, then to $x$ in the context $\iter(x)$. Eventually $x$ is erased
-by a $\weak$-rule, so $\tau$ must move from $x$ 
-to the first unnamed argument of $\iter$ again, looping from $\iter$ to $\iter$. 
-At each loop the trace $\tau$ 
-progresses once. We conclude that $\tau$ is an infinitely progressing 
-trace of $\pi$.
-\end{proof}
-
-
-%\begin{proposition}
-%(The interval map $\Interval$ is a term of $\CTlambda$, Prop. \ref{proposition-interval-in-CT-lambda})
-%$\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
-%\end{proposition}
-
-\begin{proof}(The interval map $\Interval$ is a term of $\CTlambda$, Prop. \ref{proposition-interval-in-CT-lambda})
-The term $\Interval$ is well-typed and regular by definition. We check the global trace condition.
-Any infinite path $\pi$ either moves to $\iter$, 
-for which we already checked the global trace condition,
-or cyclically moves from $\interval; \N,\N \rightarrow \alpha$ to $\interval$
-itself. We follow the unique infinite 
-trace $\tau$ from the last unnamed argument $\N$ of $\interval$ 
-inside the infinite path $\pi$ cyclically moving from $\interval$ to $\interval$.
-%19:53 01/04/2025
-The trace $\tau$ moves to the last unnamed argument $\N$ of  
-$\interval:\N,\N \rightarrow \alpha$, then to the last unnamed argument of
-$\cond (\ [\iter(x)],  \  \lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$.
-In this step $\tau$ progresses, and moves to 
-the first unnamed argument of $\lambda y.\iter(x) @ (\lambda x.\interval)(\Succ(x))(y) \ )$,
-then to $y:\N$ in the context of $\iter(x) @ (\lambda x.\interval)(\Succ(x))(y))$.
-After one $\apnotvar$ rule, the trace $\tau$ reaches $y:\N$ in the context of
-$(\lambda x.\interval)(\Succ(x))(y)$.
-Then after one $\apvar$ rule, 
-the trace $\tau$ moves from $y:\N$ to the unique unnamed argument of 
-$(\lambda x.\interval)(\Succ(x))$, 
-then to the last unnamed argument of $\interval$. 
-From $\interval$ the trace $\tau$ loops. 
-Each time $\tau$ moves from $\interval$ to $\interval$
-then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
-\end{proof}
-%14:27 24/04/2024
-
 
 
 %
@@ -804,7 +740,67 @@ then $\tau$ progresses once. We conclude that $\tau$ infinitely progresses.
 % checked 10:30 03/04/2025
 %%%%%%%%%%%%%%%%%%%
 
-\begin{proof}(The $\prec$-order, Lemma \ref{lemma-prec-order})
+\subsection{Proof of Main theorem}
+
+We show our main theorem (Theorem \ref{theorem-main-finite-safe-reduction}). 
+We first prepare some auxiliary notions.
+\begin{itemize}
+\item
+  A predecessor relation $\prec$ on terms of type $\N$ that is well-founded on total terms. 
+\item
+  Trace-compatible assignment for a path $\pi$ in a proof:
+  It is a sequence of total assignments that correspond to judgments of $\pi$,
+  and each line of total terms of type $\N$ that goes through the sequence corresponds to a trace in $\pi$.
+\end{itemize}
+The main theorem is shown by using proof by contradiction. Assuming that some $t\in\GTC$ is not total,
+we construct a sequence of non-total subterms of $t$ and their evidences (total assignments)
+that are compatible with traces and their progress points.
+Then, considering a trace taken by $t\in\GTC$, we will be able to define 
+an infinitely decreasing sequence for $\prec$, contradicting the well-foundedness of $\prec$. 
+
+% We define a well-founded relation predecessor relation on terms finite for safe-reductions and of type $\N$.
+% We recall that $\reduces$ denotes one reduction step (contraction of a single redex which is a subterm), 
+% $\reduces^{*}$ denotes zero or more reduction steps and 
+% $\reduces^{+}$ denotes one or more reduction steps.
+We define a predecessor relation on terms of type $\N$.
+The relation is well-founded on total terms. 
+%We recall that $\reduces$ denotes one reduction step (contraction of a single redex which is a subterm), 
+%$\reduces^{*}$ denotes zero or more reduction steps and 
+%$\reduces^{+}$ denotes one or more reduction steps.
+
+\begin{definition}[The $\Succ$-order]
+Assume $t, u \in \WTyped$ and $t, u :\N$ (possibly open terms).
+Then we define $u \prec t$ by $t \reduces^{*} \Succ(u)$. 
+\end{definition}
+
+\begin{example}
+If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
+If $t  = \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
+well-founded from $t$.
+\end{example}
+
+We do not include a proof of Church-Rosser in this paper. In principle, 
+a term of $\CTlambda$ could reduce to two distinct numerals, and two maximal
+sequences of $\prec$ from the same term of $\CTlambda$ 
+could have a different length. However, 
+we can easily prove a weaker statement: 
+if $t$ is a term finite for safe-reductions, 
+then any $\prec$-decreasing sequence from $t$ terminates.
+
+
+\begin{lemma}[The $\prec$-order]\label{lemma-prec-order}
+  We have the following claims.
+  \begin{enumerate}
+  \item\label{lemma-prec-order-01}
+    If $t$ is of type $\N$ and $t$ is \emph{finite for safe-reductions}
+    then there is no infinite sequence 
+    $t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$.
+
+  \item\label{lemma-prec-order-02}
+    $\prec$ is well-founded on total terms of type $\N$.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}%(The $\prec$-order, Lemma \ref{lemma-prec-order})
 Assume that $t \in \WTyped$ has type $\N$, and $t$ is finite for safe-reductions.
 \begin{enumerate}
 \item 
@@ -837,9 +833,6 @@ contradicting point \ref{lemma-prec-order-01} above.
 \end{enumerate}
 \end{proof}
 
-
-
-
 %\begin{proposition}[Trace assignment]
 %\label{prop:trace_assign-finiteness}
 %Assume $\Pi::\Gamma \vdash t:A$ and there is some infinite path $\pi$ of $\Pi$ 
@@ -855,9 +848,46 @@ contradicting point \ref{lemma-prec-order-01} above.
 %\end{enumerate}
 %\end{proposition}
 
+\begin{definition}[Trace-compatible assignment]\label{definition-trace-compatible}
+  Let $\pi  = (J_1,\ldots,J_n,\ldots)$ be a finite or infinite path of a proof $\Pi$,
+  where, for each $i$, $J_i$ is $\Gamma_i\vdash t_i:A_i$. 
+  Let $\rho = (\vec{q_1}, \ldots, \vec{q_n}, \ldots)$ be a sequence of total assignments,
+  where, for each $i$, $\vec{q_i}$ is a total assignment for $t_i$,
+  namely $\vec{q_i}$ has the form $(\vec{v},\vec{a})$ and $q_{i,k}$ is its $k$-th element. 
+  Then $\rho$ is \emph{trace-compatible in an index $i$ of $\pi$}
+  if and only if it satisfies the following condition:
+
+For all index $k$ of an $\N$-argument of $J_i$ and  
+all index $k'$ of an $\N$-argument of $J_{i+1}$, 
+if $k$ is connected to $k'$ then:
+\begin{enumerate}
+\item
+  if $k$ progresses to $k'$ then $r_{i+1,k'} \prec r_{i,k}$, and
+\item
+  if $k$ does not progress to $k'$ then $r_{i+1,k'} = r_{i,k}$.
+\end{enumerate}
+$\rho$ is \emph{trace-compatible to $\pi$} if it is trace-compatible in all $i$ of $\pi$.
+\end{definition}
 
 
-\begin{proof}(Trace assignment, Prop.\ref{prop:trace_assign-finiteness})
+Now we will prove that if an infinite path $\pi$ of a proof tree $\Pi::\Gamma \vdash t:A$ 
+has a trace-compatible total assignments, 
+then all traces of $\pi$ progress only finitely many times and the term 
+$t$ is not in $\GTC$
+($t$ does not satisfy the global trace condition).
+
+\begin{proposition}[Trace assignment]\label{prop:trace_assign-finiteness}
+Assume $\Pi::\Gamma \vdash t:A$ 
+and there is an infinite path $\pi$ of $\Pi$ for which we have
+some trace-compatible total assignments $\rho$ to $\pi$. Then we have the following clauses. 
+\begin{enumerate}
+\item\label{prop:trace_assign-finiteness1}
+Any trace in $\pi$ progresses only finitely many times.
+\item\label{prop:trace_assign-finiteness2}
+$t \not \in \GTC$.
+\end{enumerate}
+\end{proposition}
+\begin{proof}%(Trace assignment, Prop.\ref{prop:trace_assign-finiteness})
 %%%%%%%%%%%%%%%%%%%
 % checked 11:04 03/04/2025
 %%%%%%%%%%%%%%%%%%%
@@ -923,7 +953,34 @@ By definition of $\GTC$, we conclude that $t \not \in \GTC$.
 %
 %\end{lemma}
 
-\begin{proof}(Total terms and Finiteness for Safe-Reductions, Lemma \ref{lem:total_value-finiteness})
+We now continue with our Tait's-style proof of strong normalization.
+We check that the set of total terms is closed under reductions and under applications,
+and it contains all variables.
+Any total term is finite for safe-reductions.
+
+\begin{lemma}\label{lem:total_value-finiteness}
+  Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
+  \begin{enumerate}
+  \item
+    \label{lem:total_value-finiteness1}
+    Let $t:A$ and $t \safeReducesAst u$.
+    If $t$ is total, then $u$ is total.
+  \item
+    \label{lem:total_value-finiteness2}
+    If $f:A \rightarrow B$ and $a:A$ are total terms, then $f(a)$ is total.
+  \item
+    \label{lem:total_value-finiteness2bis}
+    $x^T:T$ is total. If $t:T$ is total, then $t$ is  finite for safe-reductions.
+  %% \item
+  %%   \label{lem:total_value-finiteness3}
+  %%   Let $\Atom$ be any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow \Atom$ be a term
+  %%   whose all free variables are $\vec{x}:\vec{B}$.
+  %%   If, for all total $\vec{u}:\vec{B}$ and $\vec{a}:\vec{A}$, the term 
+  %%   $t[\vec{u}]\vec{a}: \Atom$ is \emph{finite for safe-reductions}, then
+  %%   the term $t[\vec{x}]$ is \emph{total by substitution}.
+  \end{enumerate}
+\end{lemma}
+\begin{proof}%(Total terms and Finiteness for Safe-Reductions, Lemma \ref{lem:total_value-finiteness})
 \begin{enumerate}
 %%%%%%%%%%%%%%%%%%%%%
 % checked 11:49 03/04/2025
@@ -1063,8 +1120,57 @@ We conclude that $\sigma$ only includes finitely many safe-reductions.
 %\end{enumerate}
 %\end{lemma}
 
-\begin{proof}(Safety-preserving Simulation, 
-Lemma \ref{lemma-safety-preserving-simulation})
+ We want to prove that all terms of $\GTC$ are total by substitution.
+If we consider the substitution of a variable with itself 
+(a variable is a total term by 
+\ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}),
+we will deduce that all terms of $\GTC$ are total, 
+hence finite for safe-reductions, hence strongly normalizing for $0$-safe-reductions.
+
+One problem in the proof of the theorem 
+is that reduction does not commute with the second argument of substitution. 
+That is, if $b \safeReducesAst a$ we cannot deduce that $v[b] \safeReducesAst v[a]$. 
+The reason is that we could have infinitely many free occurrences of 
+$x$ in $v$, and it could take
+an infinite number of steps to reduce to $a$ 
+each $b$ which has been replaced to $x$ in $v$.
+However, we can prove a weaker property: 
+if there is some infinite reduction from $v[a]$, 
+then there is some infinite reduction from $v[b]$,
+such that if the first reduction has infinitely many safe-reduction steps,
+then the second reduction has infinitely many safe-reduction steps, too.
+
+To this aim, we first define a simulation relation from reductions
+from $v[a]$ to reductions from $v[b]$, mapping each reduction from $v[a]$ 
+in one or more from $v[b]$, and associating to each safe-reduction at least
+one safe-reduction.
+
+\begin{lemma}[Safety-preserving Simulation]
+ \label{lemma-safety-preserving-simulation}
+Define a binary relation $R \subseteq \LAMBDA \times \LAMBDA$ by:
+$t R u$ if and only if there are $v,a,b \in \LAMBDA$ and a variable $x$
+such that:
+\begin{center}
+$(b \safeReducesAst a)$
+  \ \ \  and  \ \ \ 
+$(t = v[a/x])$
+  \ \ \  and  \ \ \ 
+$(u = v[b/x])$
+\end{center}
+
+Then $ R$ 
+is a \emph{safety-preserving} simulation  on $\LAMBDA$
+between $\safeReduces$ and $\safeReducesPlus$, namely:
+\begin{enumerate}
+\item
+whenever $t,u,t' \in \LAMBDA$, $t R u$ and $t \safeReduces t'$ 
+then for some $u' \in \LAMBDA$ we have $t' R u'$ and $u \safeReducesPlus u'$.
+\item
+Besides, if $t \safeReduces t'$ is safe then the last step in
+$u \safeReducesPlus u'$ is safe, too.
+\end{enumerate}
+\end{lemma}
+\begin{proof}%(Safety-preserving Simulation, Lemma \ref{lemma-safety-preserving-simulation})
 %%%%%%%%%%%%%%%%%%%%%%%
 % checked 09:00 04/04/2025
 %%%%%%%%%%%%%%%%%%%%%%%
@@ -1281,6 +1387,7 @@ safe, too.
 %\end{proof}
 
 %
+
 %\begin{theorem}[Main Theorem]
 %\label{theorem-main-finite-safe-reduction}
 %  Assume $\Pi::\Gamma\vdash t : A$ (hence $t\in \WTyped$).
@@ -1337,7 +1444,7 @@ safe, too.
  if $i-1$ is a progress point, namely if $t_{i-1}=\cond(f,g)$ and $e_i=2$ 
  (we move to the right subterm) and $t_i=g$, then $\vec{a_{i-1}} = a',\vec{a'}$ 
  and $a'$, the first unnamed argument of $\cond(f,g) : \N \rightarrow A$, 
- reduces to $\Succ(a'')$w hile $\vec{a_i} = a'',\vec{a'}$.
+ reduces to $\Succ(a'')$ while $\vec{a_i} = a'',\vec{a'}$.
  In all other cases two corresponding arguments of $\rho(i-1)$ and $\rho(i)$ are equal.
 
   We first define $(l_1,\vec{d_1},\vec{a_1})$ for the root node $t$ of $\Pi$.
@@ -1534,7 +1641,7 @@ safe, too.
   $(\vec{d_i},\vec{a_i})$ to $(\vec{d_{i+1}},\vec{a_{i+1}}) = (\vec{d'_i},a, \ \vec{b})$ is
   trace compatible: all connected $\N$-argument of 
   $t_{i}=\lambda x^A.u[\vec{x},x]$ and $t_{i+1}=u[\vec{x},x]$ are 
-  the same, except for the first unnamend argument $a$ of $\vec{a_i}$ which is moved to
+  the same, except for the first unnamed argument $a$ of $\vec{a_i}$ which is moved to
   the last named argument of $u[\vec{x},x]$, the argument with name $x$.
  
   We have to prove that there is some infinite reduction from 
@@ -1680,7 +1787,7 @@ and a trace-compatible assignment, as we wished to show.
 
 \end{proof}
 
-
+\subsection{Proof of Closed safe-normal terms of type $\N$}
 
 %
 %\begin{proposition}[Closed Safe-Normal terms of Type $\N$]
@@ -1789,7 +1896,6 @@ is a term in the context $\Gamma = (f:\N \rightarrow \N, a:\N)$.
 $\iter \in \Reg \cap \WTyped \cap \GTC = \CTlambda$, 
 hence $\Iter \in \CTlambda$.
 \end{proposition}
-
 %\begin{proof}
 %The term $\Iter$ is well-typed and regular by definition. 
 %We check the global trace condition. 
@@ -1949,15 +2055,13 @@ under $\Gamma = (f:\N\rightarrow\N,a:\N)$ defined by
   \iter(x) :: \interval(\Succ(x))(y)$, 
 \end{center}
 with the base case $\base:\alpha$ and the inductive case $\inductive:\N\rightarrow\alpha$. 
-
-
 \end{example}
+
 
 \begin{proposition}[The interval map $\Interval$ is a term of $\CTlambda$]
  \label{proposition-interval-in-CT-lambda}
 $\Interval \in \Reg \cap \WTyped \cap \GTC = \CTlambda$.
 \end{proposition}
-
 %\begin{proof}
 %The term $\Interval$ is well-typed and regular by definition. We check the global trace condition.
 %Any infinite path $\pi$ either moves to $\iter$, for which we already checked the global trace condition,
@@ -2143,7 +2247,7 @@ $f^k(x)$ for all $k \in \N$, hence infinitely many pairwise different terms.
 The global trace condition is a \quotationMarks{fragile} property: two
 terms can be trivial variants each other, can compute the same function, yet
 one term can satisfy the global trace condition while the other term does not.
-As an example we consider Péter and Robinson version of Ackermann function. We can write it in two ways, as:
+As an example we consider P\'{e}ter and Robinson version of Ackermann function. We can write it in two ways, as:
   \[
   \AckA = \lambda \redm, \bluen.\Cond{\Suc{\bluen}}{\lambda m'.\Cond{\AckA(m',1)}{\lambda n'.\AckA(m',\AckA(\mathbf{\Suc{m'}},n'))}(\bluen)}(\redm)
   \]

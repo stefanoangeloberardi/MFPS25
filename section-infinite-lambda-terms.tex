@@ -103,7 +103,7 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
   The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
   are inductively defined by: 
   $\N$ of natural numbers, type variables, and $A \rightarrow B$, provided $A$ and $B$ are types.
-  We write $\Type$ for the set of simples types.
+  We write $\Type$ for the set of simple types.
 \item
   We abbreviate $A_1 \rightarrow (A_2 \rightarrow \cdots (A_n \rightarrow B))$
   with $A_1,A_2,\ldots,A_n \rightarrow B$ and 
@@ -241,7 +241,7 @@ An occurrence of a variable $x^T$ in $t$ is any node of $t$ labeled $x^T$.
 \item
 An occurrence of a variable $x^T$ in $t$ is said to be \emph{free} if there is no node labeled $\lambda x^T$
 in the path from the root of $t$ to the occurrence. 
-$\FV(t)$ is the set of variables having at least one free occurence in $t$.
+$\FV(t)$ is the set of variables having at least one free occurrence in $t$.
 \item
 An occurrence of $x^T$ in $t$ is said to be \emph{bound} if it is not free. If an occurrence is bound, then
 the node labeled $\lambda x^T$ closest to the occurrence is called the \emph{binder} of
@@ -296,7 +296,7 @@ says that (a) if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
 all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$,
 and (b) different $\lambda$-labels (those of the form $\lambda x^T$) cannot be sent to the same label.
 We remark that $\sim_\alpha$ is an equivalence relation (the symmetricity is shown by (b)),
-but is not a congruence relation, for exmaple,
+but is not a congruence relation, for example,
 $(\lambda x.x)(\lambda y.y) \not\sim_\alpha (\lambda x.x)(\lambda x.x)$ though $\lambda y.y \sim_\alpha \lambda x.x$.
 With this condition, if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular.
 Without this condition, 

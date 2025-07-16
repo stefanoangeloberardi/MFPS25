@@ -59,9 +59,7 @@ if and only if $t$ is finite for $0$-safe-reductions.
 
 \item
 $t$ is total of $A\rightarrow B$ if and only if for all total $a$ of type $A$ we have $t(a)$ total of type $B$.
-
 \end{enumerate}
-
 %A \emph{total assignment} $[\vec{v}/\vec{x}]$ is any assignment of total terms to variables of the same type.
 %
 % A term $t$ is \emph{total by substitution} if and only if:
@@ -76,49 +74,57 @@ The result of the assignment is  $t[\vec{v}](\vec{a})$.
 
 \end{definition}
 
-By definition, any total term is well-typed, and hence it has an exactly one type. 
+By definition, any total term is well-typed, and hence it has an exactly one type.
+
+%% We are preparing for our main theorem: any $t \in \GTC$ is total, 
+%% which is shown by using proof by contradiction. Assuming that some $t\in\GTC$ is not total,
+%% we construct a sequence of non-total subterms of $t$ and their evidences (total assignments)
+%% that are compatible with traces and their progress points.
+%% Then, considering a trace taken by $t\in\GTC$, we will be able to define 
+%% an infinitely decreasing sequence for $\prec$,
+%% contradicting Lemma \ref{lemma-prec-order}.
+
 % We define a well-founded relation predecessor relation on terms finite for safe-reductions and of type $\N$.
 % We recall that $\reduces$ denotes one reduction step (contraction of a single redex which is a subterm), 
 % $\reduces^{*}$ denotes zero or more reduction steps and 
 % $\reduces^{+}$ denotes one or more reduction steps.
-We define a predecessor relation on terms of type $\N$.
-The relation is well-founded on total terms. 
+%%We define a predecessor relation on terms of type $\N$.
+%%The relation is well-founded on total terms. 
 %We recall that $\reduces$ denotes one reduction step (contraction of a single redex which is a subterm), 
 %$\reduces^{*}$ denotes zero or more reduction steps and 
 %$\reduces^{+}$ denotes one or more reduction steps.
 
-\begin{definition}[The $\Succ$-order]
-Assume $t, u \in \WTyped$ and $t, u :\N$ (possibly open terms).
-Then we define $u \prec t$ by $t \reduces^{*} \Succ(u)$. 
-\end{definition}
+%% \begin{definition}[The $\Succ$-order]
+%% Assume $t, u \in \WTyped$ and $t, u :\N$ (possibly open terms).
+%% Then we define $u \prec t$ by $t \reduces^{*} \Succ(u)$. 
+%% \end{definition}
 
-\begin{example}
-If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
-If $t  = \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
-well-founded from $t$.
-\end{example}
+%% \begin{example}
+%% If $t = \Succ^2(x)$ then $x \prec \Succ(x) \prec t$. 
+%% If $t  = \Succ(t)$ then $t \prec t$ and the relation $\prec$ is \emph{not} 
+%% well-founded from $t$.
+%% \end{example}
 
-We do not include a proof of Church-Rosser in this paper. In principle, 
-a term of $\CTlambda$ could reduce to two distinct numerals, and two maximal
-sequences of $\prec$ from the same term of $\CTlambda$ 
-could have a different length. However, 
-we can easily prove a weaker statement: 
-if $t$ is a term finite for safe-reductions, 
-then any $\prec$-decreasing sequence from $t$ terminates.
+%% We do not include a proof of Church-Rosser in this paper. In principle, 
+%% a term of $\CTlambda$ could reduce to two distinct numerals, and two maximal
+%% sequences of $\prec$ from the same term of $\CTlambda$ 
+%% could have a different length. However, 
+%% we can easily prove a weaker statement: 
+%% if $t$ is a term finite for safe-reductions, 
+%% then any $\prec$-decreasing sequence from $t$ terminates.
 
+%% \begin{lemma}[The $\prec$-order]\label{lemma-prec-order}
+%%   We have the following claims.
+%%   \begin{enumerate}
+%%   \item\label{lemma-prec-order-01}
+%%     If $t$ is of type $\N$ and $t$ is \emph{finite for safe-reductions}
+%%     then there is no infinite sequence 
+%%     $t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$.
 
-\begin{lemma}[The $\prec$-order]\label{lemma-prec-order}
-  We have the following claims.
-  \begin{enumerate}
-  \item\label{lemma-prec-order-01}
-    If $t$ is of type $\N$ and $t$ is \emph{finite for safe-reductions}
-    then there is no infinite sequence 
-    $t = t_0 \reduces^{*} \Succ(t_1) \reduces^{*} \Succ^2(t_2) \reduces^{*} \ldots$.
-
-  \item\label{lemma-prec-order-02}
-    $\prec$ is well-founded on total terms of type $\N$.
-  \end{enumerate}
-\end{lemma}
+%%   \item\label{lemma-prec-order-02}
+%%     $\prec$ is well-founded on total terms of type $\N$.
+%%   \end{enumerate}
+%% \end{lemma}
 
 %
 %\begin{proof}
@@ -152,53 +158,54 @@ then any $\prec$-decreasing sequence from $t$ terminates.
 %\end{proof}
 
 
+%% MOVED TO APPENDIX (2025.07.16)
+%% We are preparing for our main theorem: any $t \in \GTC$ is total, 
+%% which is shown by using proof by contradiction. Assuming that some $t\in\GTC$ is not total,
+%% we construct a sequence of non-total subterms of $t$ and their evidences (total assignments)
+%% that are compatible with traces and their progress points.
+%% Then, considering a trace taken by $t\in\GTC$, we will be able to define 
+%% an infinitely decreasing sequence for $\prec$,
+%% contradicting Lemma \ref{lemma-prec-order}.
 
-We are preparing for our main theorem: any $t \in \GTC$ is total, 
-which is shown by using proof by contradiction. Assuming that some $t\in\GTC$ is not total,
-we construct a sequence of non-total subterms of $t$ and their evidences (total assignments)
-that are compatible with traces and their progress points.
-Then, considering a trace taken by $t\in\GTC$, we will be able to define 
-an infinitely decreasing sequence for $\prec$,
-contradicting Lemma \ref{lemma-prec-order}.
+%% \begin{definition}[Trace-compatible assignment]\label{definition-trace-compatible}
+%%   Let $\pi  = (J_1,\ldots,J_n,\ldots)$ be a finite or infinite path of a proof $\Pi$,
+%%   where, for each $i$, $J_i$ is $\Gamma_i\vdash t_i:A_i$. 
+%%   Let $\rho = (\vec{q_1}, \ldots, \vec{q_n}, \ldots)$ be a sequence of total assignments,
+%%   where, for each $i$, $\vec{q_i}$ is a total assignment for $t_i$,
+%%   namely $\vec{q_i}$ has the form $(\vec{v},\vec{a})$ and $q_{i,k}$ is its $k$-th element. 
+%%   Then $\rho$ is \emph{trace-compatible in an index $i$ of $\pi$}
+%%   if and only if it satisfies the following condition:
 
-\begin{definition}[Trace-compatible assignment]\label{definition-trace-compatible}
-  Let $\pi  = (J_1,\ldots,J_n,\ldots)$ be a finite or infinite path of a proof $\Pi$,
-  where, for each $i$, $J_i$ is $\Gamma_i\vdash t_i:A_i$. 
-  Let $\rho = (\vec{q_1}, \ldots, \vec{q_n}, \ldots)$ be a sequence of total assignments,
-  where, for each $i$, $\vec{q_i}$ is a total assignment for $t_i$,
-  namely $\vec{q_i}$ has the form $(\vec{v},\vec{a})$ and $q_{i,k}$ is its $k$-th element. 
-  Then $\rho$ is \emph{trace-compatible in an index $i$ of $\pi$}
-  if and only if it satisfies the following condition:
+%% For all index $k$ of an $\N$-argument of $J_i$ and  
+%% all index $k'$ of an $\N$-argument of $J_{i+1}$, 
+%% if $k$ is connected to $k'$ then:
+%% \begin{enumerate}
+%% \item
+%%   if $k$ progresses to $k'$ then $r_{i+1,k'} \prec r_{i,k}$, and
+%% \item
+%%   if $k$ does not progress to $k'$ then $r_{i+1,k'} = r_{i,k}$.
+%% \end{enumerate}
+%% $\rho$ is \emph{trace-compatible to $\pi$} if it is trace-compatible in all $i$ of $\pi$.
+%% \end{definition}
 
-For all index $k$ of an $\N$-argument of $J_i$ and  
-all index $k'$ of an $\N$-argument of $J_{i+1}$, 
-if $k$ is connected to $k'$ then:
-\begin{enumerate}
-\item
-  if $k$ progresses to $k'$ then $r_{i+1,k'} \prec r_{i,k}$, and
-\item
-  if $k$ does not progress to $k'$ then $r_{i+1,k'} = r_{i,k}$.
-\end{enumerate}
-$\rho$ is \emph{trace-compatible to $\pi$} if it is trace-compatible in all $i$ of $\pi$.
-\end{definition}
+%% MOVED TO APPENDIX (2025.07.16)
+%% Now we will prove that if an infinite path $\pi$ of a proof tree $\Pi::\Gamma \vdash t:A$ 
+%% has a trace-compatible total assignments, 
+%% then all traces of $\pi$ progress only finitely many times and the term 
+%% $t$ is not in $\GTC$
+%% ($t$ does not satisfy the global trace condition).
 
-Now we will prove that if an infinite path $\pi$ of a proof tree $\Pi::\Gamma \vdash t:A$ 
-has a trace-compatible total assignments, 
-then all traces of $\pi$ progress only finitely many times and the term 
-$t$ is not in $\GTC$
-($t$ does not satisfy the global trace condition).
-
-\begin{proposition}[Trace assignment]\label{prop:trace_assign-finiteness}
-Assume $\Pi::\Gamma \vdash t:A$ 
-and there is an infinite path $\pi$ of $\Pi$ for which we have
-some trace-compatible total assignments $\rho$ to $\pi$. Then we have the following clauses. 
-\begin{enumerate}
-\item\label{prop:trace_assign-finiteness1}
-Any trace in $\pi$ progresses only finitely many times.
-\item\label{prop:trace_assign-finiteness2}
-$t \not \in \GTC$.
-\end{enumerate}
-\end{proposition}
+%% \begin{proposition}[Trace assignment]\label{prop:trace_assign-finiteness}
+%% Assume $\Pi::\Gamma \vdash t:A$ 
+%% and there is an infinite path $\pi$ of $\Pi$ for which we have
+%% some trace-compatible total assignments $\rho$ to $\pi$. Then we have the following clauses. 
+%% \begin{enumerate}
+%% \item\label{prop:trace_assign-finiteness1}
+%% Any trace in $\pi$ progresses only finitely many times.
+%% \item\label{prop:trace_assign-finiteness2}
+%% $t \not \in \GTC$.
+%% \end{enumerate}
+%% \end{proposition}
 
 
 %
@@ -224,33 +231,34 @@ $t \not \in \GTC$.
 %
 %%16:46 04/09/2024
 
-We now continue with our Tait's-style proof of strong normalization.
-We check that the set of total terms is closed under reductions and under applications,
-and it contains all variables.
-Any total term is finite for safe-reductions.
+%% MOVED TO APPENDIX (2025.07.16)
+%% We now continue with our Tait's-style proof of strong normalization.
+%% We check that the set of total terms is closed under reductions and under applications,
+%% and it contains all variables.
+%% Any total term is finite for safe-reductions.
 
-\begin{lemma}\label{lem:total_value-finiteness}
-  Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
-  \begin{enumerate}
-  \item
-    \label{lem:total_value-finiteness1}
-    Let $t:A$ and $t \safeReducesAst u$.
-    If $t$ is total, then $u$ is total.
-  \item
-    \label{lem:total_value-finiteness2}
-    If $f:A \rightarrow B$ and $a:A$ are total terms, then $f(a)$ is total.
-  \item
-    \label{lem:total_value-finiteness2bis}
-    $x^T:T$ is total. If $t:T$ is total, then $t$ is  finite for safe-reductions.
-  %% \item
-  %%   \label{lem:total_value-finiteness3}
-  %%   Let $\Atom$ be any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow \Atom$ be a term
-  %%   whose all free variables are $\vec{x}:\vec{B}$.
-  %%   If, for all total $\vec{u}:\vec{B}$ and $\vec{a}:\vec{A}$, the term 
-  %%   $t[\vec{u}]\vec{a}: \Atom$ is \emph{finite for safe-reductions}, then
-  %%   the term $t[\vec{x}]$ is \emph{total by substitution}.
-  \end{enumerate}
-\end{lemma}
+%% \begin{lemma}\label{lem:total_value-finiteness}
+%%   Assume $t,u,f,a \in \WTyped$, $n \in \N$ and $A,B,T$ are types.
+%%   \begin{enumerate}
+%%   \item
+%%     \label{lem:total_value-finiteness1}
+%%     Let $t:A$ and $t \safeReducesAst u$.
+%%     If $t$ is total, then $u$ is total.
+%%   \item
+%%     \label{lem:total_value-finiteness2}
+%%     If $f:A \rightarrow B$ and $a:A$ are total terms, then $f(a)$ is total.
+%%   \item
+%%     \label{lem:total_value-finiteness2bis}
+%%     $x^T:T$ is total. If $t:T$ is total, then $t$ is  finite for safe-reductions.
+%%   %% \item
+%%   %%   \label{lem:total_value-finiteness3}
+%%   %%   Let $\Atom$ be any atomic type, and $t[\vec{x}]:\vec{A}\rightarrow \Atom$ be a term
+%%   %%   whose all free variables are $\vec{x}:\vec{B}$.
+%%   %%   If, for all total $\vec{u}:\vec{B}$ and $\vec{a}:\vec{A}$, the term 
+%%   %%   $t[\vec{u}]\vec{a}: \Atom$ is \emph{finite for safe-reductions}, then
+%%   %%   the term $t[\vec{x}]$ is \emph{total by substitution}.
+%%   \end{enumerate}
+%% \end{lemma}
 
 %
 %\begin{proof}
@@ -356,59 +364,60 @@ Any total term is finite for safe-reductions.
 %of integers $l_n=(e_1, \ldots, e_{n-1}) \in \universe{\Pi}$ for some $n \in \N$.
 %We write $\Gamma_{n}\vdash t_{n}:A_{n} = \Label(\Pi,l_n)$ for the sequent
 % labelling the node $l_n$. 
- We want to prove that all terms of $\GTC$ are total by substitution.
-If we consider the substitution of a variable with itself 
-(a variable is a total term by 
-\ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}),
-we will deduce that all terms of $\GTC$ are total, 
-hence finite for safe-reductions, hence strongly normalizing for $0$-safe-reductions.
+%%  We want to prove that all terms of $\GTC$ are total by substitution.
+%% If we consider the substitution of a variable with itself 
+%% (a variable is a total term by 
+%% \ref{lem:total_value-finiteness}.\ref{lem:total_value-finiteness2bis}),
+%% we will deduce that all terms of $\GTC$ are total, 
+%% hence finite for safe-reductions, hence strongly normalizing for $0$-safe-reductions.
 
-One problem in the proof of the theorem 
-is that reduction does not commute with the second argument of substitution. 
-That is, if $b \safeReducesAst a$ we cannot deduce that $v[b] \safeReducesAst v[a]$. 
-The reason is that we could have infinitely many free occurrences of 
-$x$ in $v$, and it could take
-an infinite number of steps to reduce to $a$ 
-each $b$ which has been replaced to $x$ in $v$.
-However, we can prove a weaker property: 
-if there is some infinite reduction from $v[a]$, 
-then there is some infinite reduction from $v[b]$,
-such that if the first reduction has infinitely many safe-reduction steps,
-then the second reduction has infinitely many safe-reduction steps, too.
+%% One problem in the proof of the theorem 
+%% is that reduction does not commute with the second argument of substitution. 
+%% That is, if $b \safeReducesAst a$ we cannot deduce that $v[b] \safeReducesAst v[a]$. 
+%% The reason is that we could have infinitely many free occurrences of 
+%% $x$ in $v$, and it could take
+%% an infinite number of steps to reduce to $a$ 
+%% each $b$ which has been replaced to $x$ in $v$.
+%% However, we can prove a weaker property: 
+%% if there is some infinite reduction from $v[a]$, 
+%% then there is some infinite reduction from $v[b]$,
+%% such that if the first reduction has infinitely many safe-reduction steps,
+%% then the second reduction has infinitely many safe-reduction steps, too.
 
-To this aim, we first define a simulation relation from reductions
-from $v[a]$ to reductions from $v[b]$, mapping each reduction from $v[a]$ 
-in one or more from $v[b]$, and associating to each safe-reduction at least
-one safe-reduction.
+%% To this aim, we first define a simulation relation from reductions
+%% from $v[a]$ to reductions from $v[b]$, mapping each reduction from $v[a]$ 
+%% in one or more from $v[b]$, and associating to each safe-reduction at least
+%% one safe-reduction.
 
 %We recall that  $\reduces$, $\reduces^{*}$, $\reduces^{+}$ denote
 %respectively one, zero or more, one or more reduction steps.
 
-\begin{lemma}[Safety-preserving Simulation]
- \label{lemma-safety-preserving-simulation}
-Define a binary relation $R \subseteq \LAMBDA \times \LAMBDA$ by:
-$t R u$ if and only if there are $v,a,b \in \LAMBDA$ and a variable $x$
-such that:
-\begin{center}
-$(b \safeReducesAst a)$
-  \ \ \  and  \ \ \ 
-$(t = v[a/x])$
-  \ \ \  and  \ \ \ 
-$(u = v[b/x])$
-\end{center}
+%% MOVED TO APPENDIX (2025.07.16)
+%% \begin{lemma}[Safety-preserving Simulation]
+%%  \label{lemma-safety-preserving-simulation}
+%% Define a binary relation $R \subseteq \LAMBDA \times \LAMBDA$ by:
+%% $t R u$ if and only if there are $v,a,b \in \LAMBDA$ and a variable $x$
+%% such that:
+%% \begin{center}
+%% $(b \safeReducesAst a)$
+%%   \ \ \  and  \ \ \ 
+%% $(t = v[a/x])$
+%%   \ \ \  and  \ \ \ 
+%% $(u = v[b/x])$
+%% \end{center}
 
-Then $ R$ 
-is a \emph{safety-preserving} simulation  on $\LAMBDA$
-between $\safeReduces$ and $\safeReducesPlus$, namely:
-\begin{enumerate}
-\item
-whenever $t,u,t' \in \LAMBDA$, $t R u$ and $t \safeReduces t'$ 
-then for some $u' \in \LAMBDA$ we have $t' R u'$ and $u \safeReducesPlus u'$.
-\item
-Besides, if $t \safeReduces t'$ is safe then the last step in
-$u \safeReducesPlus u'$ is safe, too.
-\end{enumerate}
-\end{lemma}
+%% Then $ R$ 
+%% is a \emph{safety-preserving} simulation  on $\LAMBDA$
+%% between $\safeReduces$ and $\safeReducesPlus$, namely:
+%% \begin{enumerate}
+%% \item
+%% whenever $t,u,t' \in \LAMBDA$, $t R u$ and $t \safeReduces t'$ 
+%% then for some $u' \in \LAMBDA$ we have $t' R u'$ and $u \safeReducesPlus u'$.
+%% \item
+%% Besides, if $t \safeReduces t'$ is safe then the last step in
+%% $u \safeReducesPlus u'$ is safe, too.
+%% \end{enumerate}
+%% \end{lemma}
 
 %\begin{proof}
 %%%%%%%%%%%%%%%%%%%%
@@ -644,7 +653,11 @@ $u \safeReducesPlus u'$ is safe, too.
 % FIXED 13:10 14/12/2024
 %%%%%%%%%%%%%%%%%%%%%%%%
 
-We now have all properties required to prove our Main Theorem.
+%We now have all properties required to prove our Main Theorem.
+
+The Tait-totality of all terms with GTC cannot be proved be induction on the term because the term can be infinite. We use instead a reason by contradiction, showing that if a term is not total then there is some infinite path in which all traces are definitively stationary, contradicting GTC.
+
+
 
 %08:13 05/09/2024
 
