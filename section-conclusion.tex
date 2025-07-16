@@ -1,3 +1,4 @@
+% !TEX root = main.tex
 \section{Conclusion and Future Works}
 \label{section-conclusion}
 
@@ -11,15 +12,18 @@ the set $\N$ of natural numbers.
 %``Fair'' reductions can reduce \emph{inside} the right-hand side of some $\cond$, 
 %but they never forget entirely the task of reducing \emph{outside} all such subterms.
 
-We did not consider the confluence problem for $\CTlambda$. As already remarked
+In the current paper 
+we did not consider the confluence problem for $\CTlambda$. As already remarked
 by Ariola and Klop for their infinitary $\lambda$-calculus (\cite{ARIOLA1997154}), 
 confluence in \emph{finite time} may fail, because in an infinite term 
 a reduction can multiply another redex infinitely many times. Yet, confluence
 can be restored in the limit. We plan to prove confluence in the limit for $\CTlambda$,
-and that  each term of $\CTlambda$ has exactly one limit normal form in $\LAMBDA$. 
+and as a corollary 
+that  each term of $\CTlambda$ has exactly one limit \emph{normal} form in $\LAMBDA$. 
 The difference with Ariola and Klop (or with B\"{o}hm trees, for that matter)
 is that our limits, being in $\LAMBDA$, are trees with no \quotationMarks{undefined} node.
-Confluence in the limit has been checked for the combinatorial version of cyclic $\systemT$ 
+Confluence in the limit has already 
+been checked for the combinatorial version of cyclic $\systemT$ 
 (\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
  
 As a corollary, we plan to prove that each closed term of type $\N$ in $\CTlambda$ 
@@ -31,5 +35,5 @@ $\systemT$ and the combinatorial version of cyclic $\systemT$.
 In a future work, we plan to prove a corresponding result for $\CTlambda$,
 that the closed terms $\CTlambda$ represent exactly the total computable functionals definable 
 in G\"{o}del system $\systemT$, by 
-adapting  Das' proof. 
+adapting  Das' proof for dealing with the $\lambda$ binder. 
 
