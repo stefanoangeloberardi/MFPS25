@@ -1,12 +1,12 @@
 % !TEX root = main.tex
 \section{The circular simply typed $\lambda$-calculus $\CTlambda$}\label{section-circular-system-CTlambda}
 
-We introduce a condition call \emph{global trace condition} (GTC) for any proof 
+We introduce a condition called \emph{global trace condition} (GTC) for any proof 
 $\Pi$ that the term $t$ is well-typed. GTC implies a termination result (see below). 
 As we explained in the introduction,
 GTC was already defined for infinitary simply typed \emph{combinatorial} terms
-(\cite{2021-Anupam-Das}), 
-our contribution is to give an explicit formulation of GTC in the case of the binder $\lambda$.
+(\cite{2021-Anupam-Das}). 
+Our contribution is to give an explicit formulation of GTC in the case of the binder $\lambda$.
 
 We will write $\GTC$ for the set of well-typed terms 
 $t \in \LAMBDA$ satisfying the global trace condition, for some proof 
@@ -241,6 +241,7 @@ Hence $\Rec(a,f) \in \CTlambda$.
   \BinaryInfC{$\Gamma,x:\vnode4{\N} \vdash f(r(x)):\N \rightarrow A$}
   \RightLabel{$\apvar$}
   \UnaryInfC{$\Gamma,x:\vnode3{\N} \vdash f(r(x))(x):A$}
+  \RightLabel{$\apnotvar$}
   \UnaryInfC{$\Gamma \vdash \lambda x.f(r(x))(x):\vnode2{\N} \rightarrow A$}
   \RightLabel{$\cond$}
   \BinaryInfC{$\Gamma \vdash r: \vnode1{\N} \rightarrow A$

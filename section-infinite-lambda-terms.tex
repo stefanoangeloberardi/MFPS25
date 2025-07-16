@@ -4,8 +4,8 @@
 
 In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
 the subset $\Reg$ of circular terms, namely regular trees, of $\LAMBDA$, 
-the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the next sections,
-we will prove that the regular well-typed terms of $\LAMBDA$ which satisfy
+the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the following sections,
+we will prove that the regular well-typed terms of $\LAMBDA$ that satisfy
 the global trace condition also satisfy a termination result.
 
 %They will be used to
@@ -119,7 +119,7 @@ some connective on $\lambda$-terms with its arity (number of children) $0$, $1$,
 We fix a countable set $\{x,y,\ldots\}$ of variable names. 
 \begin{enumerate}
 \item
-A \emph{variable} $x^T$ is a type name $x$ with a type superscript $T$. 
+A \emph{variable} $x^T$ is a variable name $x$ with a type superscript $T$. 
 \item  
 A \emph{term} is a labeled binary tree, denoted by $t,u,v,\ldots$, with labels 
 $x^T$, $\lambda x^T$, $\ap$, $0$, $\Succ$, and $\cond$, such that:
@@ -284,7 +284,7 @@ binding relation.
 
 \item
   An $\alpha$-conversion map $\phi$ is \emph{equality-preserving} 
-  if $\phi$ preserves the equalities of labels. 
+  if $\phi$ preserves the equalities and disequalities of labels. 
 \item
 We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
 $\alpha$-conversion $\phi:t \rightarrow u$.
@@ -292,8 +292,12 @@ $\alpha$-conversion $\phi:t \rightarrow u$.
 \end{definition}
 
 Equality-preserving condition 
-says that if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
-all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$. 
+says that (a) if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
+all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$,
+and (b) different $\lambda$-labels (those of the form $\lambda x^T$) cannot be sent to the same label.
+We remark that $\sim_\alpha$ is an equivalence relation (the symmetricity is shown by (b)),
+but is not a congruence relation, for exmaple,
+$(\lambda x.x)(\lambda y.y) \not\sim_\alpha (\lambda x.x)(\lambda x.x)$ though $\lambda y.y \sim_\alpha \lambda x.x$.
 With this condition, if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular.
 Without this condition, 
 $f = \lambda x^\N.\cond(x,f0)$ is $\alpha$-convertible to 
@@ -346,7 +350,6 @@ otherwise it is $\Gamma$.
 We write $\phi:\Gamma \rightarrow \Gamma'$ if and only if
 $\phi$ is an injection from $\{1,\ldots,n\}$ to $\{1,\ldots,n'\}$
 and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{dom}(\phi)$. 
-
 
 \item 
 \label{definition-context-lambda-04}
@@ -434,7 +437,7 @@ Assume that $t$, $u$ have finitely many free variables.
 We define $t[u/x]$ by substituting $u$ for all free occurrences of $x$ in $t$, 
 by first replacing $t$ with some $t' \sim_\alpha t$
 in order to avoid that free occurrences in $u$ become bound after substitution. 
-If there are only finitely many free variabiles in $u$, we can always
+If there are only finitely many free variables in $u$, we can always
 rename all bound variables in $t$ in order to make them different from the free variables
 in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
 
@@ -784,9 +787,9 @@ We write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
 \item
-  If the judgment labeling $l \in T$ is $\phi(l) = J_0$, if $l$ has $p$ children
+  If the judgment labeling $l \in T$ is $\phi(l) = J_0$, and $l$ has $p$ children
   and $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
-  then the rule instance $r = \psi(l) \in \Rule$ labeling $l$ is $(J_1,\ldots,J_p,J_0)$.
+  then $\psi(l) = (J_1,\ldots,J_p,J_0)$.
 \end{enumerate}
 \end{definition}
 
@@ -852,7 +855,7 @@ $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 %\item
 % either follow some $\lambda$-rule for a term $\lambda x^T.b$, and they introduce $x^T$ in the context,
 %\item
-%or follow some $\cond$-rule for a term $\cond(f,g)$, and and they introduce $x^\N$ in the context,
+%or follow some $\cond$-rule for a term $\cond(f,g)$, and they introduce $x^\N$ in the context,
 %\end{enumerate}
 
 \end{definition}

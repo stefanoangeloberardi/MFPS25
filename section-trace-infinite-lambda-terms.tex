@@ -43,9 +43,9 @@ In the following we use $\Atom$ for an atomic type, namely $\N$ or a type variab
 \begin{definition}[List of argument types]
 Let $J$ be a judgment.
 Then $J$ has the form $\Gamma \vdash t:B$,
-where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$ and 
-$B = \vec{B}\rightarrow \Atom$ and
-$\vec{B}=B_{1}, \ldots, B_{m}$ and $\vec{A} = A_1,\ldots,A_n$. 
+where $\Gamma = (x_1^{A_1}:A_1,\ldots, x_n^{A_n}:A_n)$, 
+$B = \vec{B}\rightarrow \Atom$,
+$\vec{B}=B_{1}, \ldots, B_{m}$, and $\vec{A} = A_1,\ldots,A_n$. 
 We define the following notions. 
 \begin{enumerate}
 \item
@@ -149,9 +149,9 @@ of $J$ is an index $k$ with $C_k = \N$, where $\vec{C} = \vec{A},\vec{B}$.
 %\rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
 %\rightarrow \N$ of $r$. 
 
-Assume $\theta$ is a node of a proof decorated with a sequent $\Gamma \vdash t:A$
-and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ decorating
-$\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$ decorating
+Assume $\theta$ is a node of a proof labeled with a sequent $\Gamma \vdash t:A$
+and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ labeling
+$\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$ labeling
 any premise $\theta'$ of $\theta$ we define
 the relations: ``there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$"
 and ``there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$". 
@@ -224,7 +224,6 @@ is connected to the $(k+1)$-th unnamed argument $B_k$ in the first assumption.
 \AxiomC{$\hspace{5ex} \ldots \vnode3{x_j^{A_j}} \ldots \vdash b: B$}
 \BinaryInfC{$ \ldots \vnode5{x_j^{A_j}} \ldots  \vdash f(b) 
 : \vnode6{\vec{B}} \rightarrow \Atom$}
-\end{prooftree}
 % DRAW EDGES
 %bent edges. Syntax: source/target/bending degree (can be negative)
 $
@@ -232,6 +231,7 @@ $
 \bentdirflowedges{node5/node3/10}  
 \bentdirflowedges{node6/node2/0}
 $    
+\end{prooftree}
 
 \item
 Suppose $\Gamma \vdash \lambda x^{A}.v:A,\vec{B}\rightarrow\Atom$ is obtained by the rule $\lambda$
@@ -259,9 +259,10 @@ named argument $x_b^{A_b}$ in the assumption, respectively.
 \RightLabel{$\lambda$}
 \def\extraVskip{2pt}
 \def\ScoreOverhang{0pt}
-\AxiomC{$ \ldots \vnode1{x_a^{A_a}} 
-\ldots \vnode3{x_{b-1}^{A_{b-1}}}  
-\ldots  \vnode4{x_i^{A_i} }
+\AxiomC{$ \ldots \vnode1{x_a^{A_a}}
+\ldots \phantom{x_i^{A_i}}
+\ldots \vnode3{x_{b}^{A_{b}}}
+\ldots \vnode4{x_i^{A_i} }
 \vdash
 v: \vnode5{\vec{B}} \rightarrow \Atom$}
 \AxiomC{}
@@ -366,7 +367,7 @@ argument $x_j^{A_j}$ in both assumptions.
 \item
 The first unnamed argument $\N$ in the conclusion is connected to the 
 the first unnamed argument $\N$ in the second assumption: \emph{this is the unique
-progressing connection}, in {\color{red} \bf red}.
+progressing connection}. %, in {\color{red} \bf red}.
 For $k=1, \ldots, m$, the $(k+1)$-th unnamed argument $B_k$ in the conclusion 
 is connected to the $k$-unnamed argument $B_k$ in the first assumption,
 and to the $(k+1)$-unnamed argument $B_k$ in the first assumption.
