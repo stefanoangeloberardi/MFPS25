@@ -26,35 +26,36 @@
     {0000-0001-5427-0020} % (Optional) orcid
     {} % (Optional) author-specific funding acknowledgements
 
-\author
-    {Ugo de' Liguoro}
-    {Computer Science Department, Turin University, Torino, Italy}
-    {} % (Optional) email address
-    {} % (Optional) orcid
-    {} % (Optional) author-specific funding acknowledgements
-
-\author
-    {Daisuke Kimura}
-    {Department of Information Science, Toho University, Japan}
-    {} % (Optional) email address
-    {} % (Optional) orcid
-    {} % (Optional) author-specific funding acknowledgements
-
-\author
-    {Koji Nakazawa}
-    {Graduate School of Informatics, Nagoya University, Japan}
-    {} % (Optional) email address
-    {} % (Optional) orcid
-    {} % (Optional) author-specific funding acknowledgements
-
-\author
-    {Makoto Tatsuta}
-    {National Institute of Informatics/Sokendai, Tokyo, Japan}
-    {} % (Optional) email address
-    {} % (Optional) orcid
-    {} % (Optional) author-specific funding acknowledgements
-
-    
+%%% FOR HAVING ANONYMOUS AUTHOR %%%%%%%%
+%\author
+%    {Ugo de' Liguoro}
+%    {Computer Science Department, Turin University, Torino, Italy}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Daisuke Kimura}
+%    {Department of Information Science, Toho University, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Koji Nakazawa}
+%    {Graduate School of Informatics, Nagoya University, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Makoto Tatsuta}
+%    {National Institute of Informatics/Sokendai, Tokyo, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%    
 \authorrunning{S.\,Berardi and U.\,de'\,Liguoro and D.\,Kimura and K.\,Nakazawa and M.\,Tatsuta}
 % First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
 
@@ -140,7 +141,7 @@ as recursive definitions of infinitary terms.
 %like the letrec or mu of Clemens Grabmayer, Jan Rochel.
 A sufficient, decidable and quite broad condition for reducing such 
 infinitary lambda-terms to a numeral can be obtained
-by adapting the global trace condition (GTC) to simply typed 
+by adapting the global trace condition (GTC) for cyclic proofs to simply typed 
 circular lambda-terms with conditional operator. 
 GTC was originally proposed by Brotherston and Simpson
 as a correctness condition for infinitary proofs.
@@ -149,7 +150,7 @@ proved that GTC implies normalization to a numeral:
 this result holds for a wide set of reductions and for closed circular lambda-terms 
 with the type N of natural numbers. 
 
-These papers considered a proper subset of infinitary lambda-terms, those
+However, all these papers considered a proper subset of infinitary lambda-terms, those
 obtained from variables and combinators using a possibly infinite number of application.
 Namely, these papers consider no \emph{explicit} clauses for lambda-abstraction,
 which is instead defined through combinators.
