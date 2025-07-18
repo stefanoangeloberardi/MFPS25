@@ -11,7 +11,7 @@ and when its value decreases.
 If, in all infinite computations of a term, we are able to find some infinitely
 decreasing value, then no infinite computation can exist for this term. 
 Trace is the transitive closure of a notion of \emph{connection} 
-between arguments in a proof that evidences the well-typedness of $t$. 
+between arguments in a pre-proof that evidences the well-typedness of $t$. 
 There are two kind of connections: stationary and progressing.
 In the case of arguments of type $\N$, a stationary connection 
 describe a case in which a value is stationary, and a progressing connection 
@@ -149,7 +149,7 @@ of $J$ is an index $k$ with $C_k = \N$, where $\vec{C} = \vec{A},\vec{B}$.
 %\rightarrow \N$ of $r$ and the argument of any premise $\Gamma' \vdash t':\vec{B'} 
 %\rightarrow \N$ of $r$. 
 
-Assume $\theta$ is a node of a proof labeled with a sequent $\Gamma \vdash t:A$
+Assume $\theta$ is a node of a pre-proof labeled with a sequent $\Gamma \vdash t:A$
 and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ labeling
 $\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$ labeling
 any premise $\theta'$ of $\theta$ we define
@@ -477,7 +477,7 @@ $
 %When  we move up in a $\lambda$-rule, the type of the first unnamend argument
 %corresponds to the type of the last free variable.
 
-The connection on $\N$-arguments in a proof $\Pi::\Gamma\vdash t:A$ defines a 
+The connection on $\N$-arguments in a pre-proof $\Pi::\Gamma\vdash t:A$ defines a 
 graph $\Graph(\Pi)$ whose nodes are all pairs $(k,\theta)$, with $\theta$ node of $\Pi$ and 
 $k$ index of some $\N$-argument of  the judgment labeling $\theta$. 
 A trace represents the movement of an input information through the 
@@ -486,7 +486,7 @@ in $\Graph(\Pi)$.
 
 \begin{definition}[Trace for well-typed terms]
 \label{definition-progressing-trace}
-Assume $\Pi$ is any typing proof of $t \in \WTyped$.
+Assume $\Pi$ is any pre-proof of $t \in \WTyped$.
 \begin{enumerate}
 \item
 A path of $\Pi$ is any finite or infinite branch $\pi =(\theta_0, \ldots, \theta_n, \ldots)$ of $\Pi$.

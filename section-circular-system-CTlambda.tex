@@ -1,7 +1,7 @@
 % !TEX root = main.tex
 \section{The circular simply typed $\lambda$-calculus $\CTlambda$}\label{section-circular-system-CTlambda}
 
-We introduce a condition called \emph{global trace condition} (GTC) for any proof 
+We introduce a condition called \emph{global trace condition} (GTC) for any pre-proof 
 $\Pi$ that the term $t$ is well-typed. GTC implies a termination result (see below). 
 As we explained in the introduction,
 GTC was already defined for infinitary simply typed \emph{combinatorial} terms
@@ -9,7 +9,7 @@ GTC was already defined for infinitary simply typed \emph{combinatorial} terms
 Our contribution is to give an explicit formulation of GTC in the case of the binder $\lambda$.
 
 We will write $\GTC$ for the set of well-typed terms 
-$t \in \LAMBDA$ satisfying the global trace condition, for some proof 
+$t \in \LAMBDA$ satisfying the global trace condition, for some pre-proof 
 $\Pi::\Gamma \vdash t:A$, some context $\Gamma$ and some type $A$. 
 We will prove that closed terms of $\GTC$ define a set of total functionals:
 they include all functionals of G\"{o}del's system $\systemT$,
@@ -30,7 +30,7 @@ Informally, the global trace condition requires that all infinite branches have 
 of some argument $\N$ passing infinitely many times through the right-hand side of a $\cond$.
 
 \begin{definition}[$\GTC$ and $\CTlambda$]\label{definition-global-trace-condition}
-  Assume $\Pi::\Gamma \vdash t :A$ is a typing proof.
+Assume $\Pi$ is a pre-proof.
 %% $\pi$ 
 %% is a possibly infinite path of $\Pi$ and $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ 
 %% is a possibly infinite trace of a path $\pi = (\theta_1, \ldots, \theta_n, \ldots)$. 
@@ -48,13 +48,18 @@ A trace $\tau$ of a path $\pi$ in $\Pi$ is \emph{infinitely progressing}
 if there are infinitely many indexes $i \in \dom(\tau)$ such that $\tau$ is progressing in $i$.
 
 \item
-$t$ satisfies the global trace condition if $t \in \WTyped$
-and for all infinite paths $\pi$ of $\Pi$,
+$\Pi$ satisfies \emph{the global trace condition} if 
+for all infinite paths $\pi$ of $\Pi$,
 there is some infinitely progressing trace $\tau$ of $\pi$.
+A pre-proof for a judment $J$ that satisfies the global trace condition is called a \emph{proof} for $J$.
+% $t$ satisfies the global trace condition if $t \in \WTyped$
+% and for all infinite paths $\pi$ of $\Pi$,
+% there is some infinitely progressing trace $\tau$ of $\pi$.
 
 \item
-$\GTC$ is the set of 
-well-typed terms $t \in \LAMBDA$ satisfying the global trace condition.
+$t \in \WTyped$ satifies the global trace condition if
+its pre-proof $\Pi::\Gamma \vdash t :A$ is a proof.
+$\GTC$ is the set of terms satisfying the global trace condition.
 
 \item
   $\CTlambda = \GTC \cap \Reg$. 
@@ -66,7 +71,7 @@ subterms of $t$, %counted up to isomorphism,
 because it is a particular case of the size change algorithm for program 
 termination (\cite{SCT}, Theorem 4). 
 But this is a worst case analysis: for instance, 
-we know that the global trace condition for proofs is decidable quite fast on realistic examples
+we know that the global trace condition for pre-proofs is decidable quite fast on realistic examples
 (\cite{10.1007/978-3-642-35182-2_25, 10.1145/3018610.3018623, 10.1145/3632888, 10.1007/978-3-031-90643-5_18, 10.1145/3453483.3454087, Brotherston2020, Stratulat_2021}). 
 
 Note that, for any $t\in\CTlambda$, the $n$-safe level of $t$ is finite for all $n \in \Nat$. 

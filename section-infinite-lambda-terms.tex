@@ -726,7 +726,7 @@ $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
 then the list of immediate subterms of $t$ is exactly $(t_1, \ldots, t_p)$.
 \end{proposition}
 
-From the typing rules we define the proofs that a term is well-typed. 
+From the typing rules we define the pre-proofs that a term is well-typed. 
 %Proofs are binary trees labeled on the set $\Rule$.
 %, each node is associated to a typing 
 %judgment which is a consequence of the typing judgments associated to the 
@@ -774,7 +774,7 @@ From the typing rules we define the proofs that a term is well-typed.
 %DI QUI 17:35 11/06/2025 
 % 10:55 15/0/2025
 
-\begin{definition}[Proofs of $\LAMBDA$]
+\begin{definition}[Pre-proofs of $\LAMBDA$]
 Assume $\Pi=(T,\phi, \psi)$, $T$ is a binary tree of lists of integers, and each node $l \in T$
 is labeled by a judgment $\phi(l) \in \Judg$ and a rule $\psi(l) \in \Rule$. 
 $\nil$ is the root of $T$ and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
@@ -782,7 +782,7 @@ is $l \conc (i) = ( i_1, \ldots, i_n, i)$.
 %(appending $i$ after the last element of $l$).
 
 Let $J$ be a judgment. 
-We write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
+We write $\Pi :: J$, and we say that $\Pi$ is a pre-proof of conclusion $J$ if:
 \begin{enumerate}
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
@@ -810,8 +810,8 @@ We write $\Pi :: J$, and we say that $\Pi$ is a proof of conclusion $J$ if:
 %and the total computation time to $O(n^2)$.
 %\\
 
-There are non-sensical typing proofs. For example, assume $t_n = t_{n+1}(0)$ is
-a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a proof family
+There are non-sensical pre-proofs. For example, assume $t_n = t_{n+1}(0)$ is
+a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a pre-proof family
 $\Pi_n ::\ (\vdash t_n : \N^n \rightarrow A)$ whose conclusion is obtained by
 $\Pi_{n+1} ::\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
 and $\Pi ::\ \vdash 0:\N$. 
@@ -819,7 +819,7 @@ There is no obvious interpretation for the term $t_0$,
 since it can have type $A$, which is arbitrary taken. 
 
 For this reason, we say that a term $t$
-is well-typed if $\Pi ::\Gamma \vdash t:A$ for some proof-tree $\Pi$ satisfying one extra 
+is well-typed if $\Pi ::\Gamma \vdash t:A$ for some pre-proof $\Pi$ satisfying one extra 
 condition, \emph{left-finiteness}, used to remove some non-sensical proofs like above.
 
 \begin{definition}[Well-typed term of $\LAMBDA$]
@@ -827,7 +827,7 @@ condition, \emph{left-finiteness}, used to remove some non-sensical proofs like 
 \begin{enumerate}
 
 \item
-A path $\pi$ in a proof $\Pi=(T,\phi,\psi)$ from a node $x \in T$ 
+A path $\pi$ in a pre-proof $\Pi=(T,\phi,\psi)$ from a node $x \in T$ 
 is any non-empty sequence of nodes for $T$,
 where its first node is $x$, and 
 each other node in $\pi$ is a child of the previous one in $\pi$.
@@ -837,12 +837,12 @@ A path is \emph{leftmost} if all nodes of $\pi$
 but the first are the left child of the previous one.
 
 \item
-A proof $\Pi$ is \emph{left-finite} if all leftmost paths $\pi$ in $\Pi$ 
+A pre-proof $\Pi$ is \emph{left-finite} if all leftmost paths $\pi$ in $\Pi$ 
 from any node of $\Pi$ are finite.
 
 \item
 A term $t$ is \emph{well-typed} if and only if $\Pi :: \Gamma \vdash t:A$ 
-for some \emph{left-finite} proof $\Pi$.
+for some \emph{left-finite} pre-proof $\Pi$.
 % with $\FV(\Gamma) \supseteq \FV(t)$.% this is necessarily true
 
 \item
@@ -864,7 +864,7 @@ $\WTyped \subseteq \LAMBDA$ is the set of well-typed terms.
 Well-typed terms are closed by well-typed substitution:
 if $\Pi_1:: x:U, \Gamma \vdash t:A$ and $\Pi_2:: \Gamma \vdash u:U$
 are left-finite,
-then $\Pi::\Gamma \vdash t[u/x]:A$ for some left-finite proof $\Pi$.
+then $\Pi::\Gamma \vdash t[u/x]:A$ for some left-finite pre-proof $\Pi$.
 \end{proposition}
 
 %
@@ -877,9 +877,9 @@ Using \emph{left-finiteness}, we can prove the \emph{uniqueness} of type for a w
 
 %12:25 13/06/2025
 
-\begin{proposition}[Uniqueness of Typing]
+\begin{proposition}[Uniqueness of typing]
 \label{proposition-left-finite-unique}
-If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two \emph{left-finite} proofs,
+If both $\Pi::\Gamma \vdash t:A$ and $\Pi'::\Gamma' \vdash t:A'$ are two \emph{left-finite} pre-proofs,
 then $A = A'$.
 \end{proposition}
 
@@ -1031,7 +1031,7 @@ This infinite tree is represented by a finite cyclic graph
 adding a back edge from the upper sequent with $(\dagger)$
 to the bottom sequent with $(\dagger)$.
 Note that the use of $\weak$-rule works for this cyclic graph representation,
-namely, without $\weak$, this particular proof would be incorrect.
+namely, without $\weak$, this particular pre-proof would be incorrect.
 %the context of the top $\golddagger$ would be $(x:\N, y:\N)$ 
 %while the context of the bottom $\golddagger$ is empty.
 
@@ -1170,7 +1170,7 @@ with just \quotationMarks{$t$ is safe-normal} and write $\safeReduces$ instead o
 
 \begin{example}
 For an example of safe-reductions from a term to a normal form, 
-assume $n \in \Num$ is any numeral and $v \sim \cond(1, v)$.
+assume $n \in \Num$ is any numeral and $v = \cond(1, v)$.
 $v$ is normal (it is no $\cond$-redex).
 There is a unique reduction sequence
 $v(n) \safeReduces v(n-1) \safeReduces \cdots \safeReduces v(0) \safeReduces 1$. 

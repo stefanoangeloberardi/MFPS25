@@ -1034,7 +1034,7 @@ and for all terms which satisfy the global trace condition.
 
 \begin{corollary}\label{cor:SN_GTC}
 \label{corollary-finite-safe-reduction}
-  Assume  $t \in \CTlambda$ and $n \in \N$. Then we have the following. 
+  Assume  $t \in \CTlambda$ and $n \in \Nat$. Then we have the following. 
   \begin {enumerate}
 %  \item
 %    $t$ is total and all reduction sequences
@@ -1059,7 +1059,7 @@ This property is not straightforward.
 There are regular closed normal terms of type $\N$ which are not numerals.
 An example is $t = \cond(0, \lambda x^N.1)(t)$ 
 (\cite{2021-Anupam-Das}, Remark 44). 
-There is a proof $\Pi::\ \vdash t: \N$, and $\N$ is the unique type of $t$. 
+There is a pre-proof $\Pi::\ \vdash t: \N$, and $\N$ is the unique type of $t$. 
 $t$ is regular: the subterms of $t$ are
 $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
 $t$ is normal, because $t$ is neither $0$ nor a successor, 
@@ -1173,7 +1173,7 @@ of $\Lim(t)$ we can prove that $\Lim(t)$ is a normal term.
 We include an example $f  = \lambda x^\N.\cond(x,f(\Succ x))$ 
 in $\CTlambda$ such that $\Lim(f(x))$ is not regular. 
 %We will prove that $f$ is the unary algorithm for addition. 
-$f$ is regular. There is a left-finite proof $\Pi::\Gamma \vdash f:\N,\N\rightarrow\N$,
+$f$ is regular. There is a left-finite pre-proof $\Pi::\Gamma \vdash f:\N,\N\rightarrow\N$,
 and we trace the second argument $\redN$ of $f$. 
 The unique infinite path of $\Pi$ is a sequence of judgments for terms 
 \[
