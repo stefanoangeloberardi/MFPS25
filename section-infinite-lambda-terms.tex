@@ -3,8 +3,9 @@
 \section{The set of infinite lambda-terms}\label{section-infinite-lambda}
 
 In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
-the subset $\Reg$ of circular terms, namely regular trees, of $\LAMBDA$, 
-the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the following sections,
+the subset $\Reg$ of of $\LAMBDA$ consisting of regular trees, which we call 
+\emph{circular terms}, 
+then the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the following sections,
 we will prove that the regular well-typed terms of $\LAMBDA$ that satisfy
 the global trace condition also satisfy a termination result.
 
@@ -97,7 +98,9 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 \begin{definition}[Types]
   We fix a countable set $\{\alpha,\beta,\ldots\}$ of type variables
   \footnote{Type variables play a minor role in this paper.
-  They are used to provide some examples of our terms in Section~\ref{section-circular-system-CTlambda}.}. 
+  They can used to provide some examples for our terms.
+  %in Section~\ref{section-circular-system-CTlambda}.
+  }. 
 \begin{enumerate}
 \item  
   The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
@@ -113,7 +116,7 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
 \end{definition}
 
 Terms of our system are possibly infinite binary trees, with each node labeled by 
-some connective on $\lambda$-terms with its arity (number of children) $0$, $1$, or $2$.
+some connective on $\lambda$-terms having arity (number of children) $0$, $1$, or $2$.
 
 \begin{definition}[Variables and terms]
 We fix a countable set $\{x,y,\ldots\}$ of variable names. 
@@ -139,7 +142,7 @@ The set of all terms is denoted by $\LAMBDA$.
 
 We say that $u$ is a subterm of $t$ if $u$ is a sub-tree of $t$,
 with labeling the restriction of the labeling of $t$ to the nodes of $u$.
-An immediate subterm is an immediate sub-tree.
+We say that $u$ is an \emph{immediate} subterm if $u$ is an immediate sub-tree.
 \end{definition}
 
 %%%%%%%%%%%%%%%%%
@@ -246,7 +249,8 @@ $\FV(t)$ is the set of variables having at least one free occurrence in $t$.
 An occurrence of $x^T$ in $t$ is said to be \emph{bound} if it is not free. If an occurrence is bound, then
 the node labeled $\lambda x^T$ closest to the occurrence is called the \emph{binder} of
 the occurrence.
-The binding relation is a binary relation from a node occurrence of a bound variable to the node of its binder. 
+The binding relation is a binary relation from a node with a 
+binder$\lambda x^T.$  to a node  which is an occurence of $x^T$ bound by it. 
 \end{enumerate}
 \end{definition}
 
@@ -262,48 +266,70 @@ we add the requirement that equal bound variables are renamed by equal bound var
 In this way, we only consider $\alpha$-conversions 
 preserving the regularity of a term.
 
+%%%%%%%%%%FIRST VERSION%%%%%%%%
+%\begin{definition}[Equality-preserving $\alpha$-conversion]
+%\label{definition-alpha-conversion}
+%Let $t$ and $u$ be terms.
+%\begin{enumerate}
+%\item
+%$\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if  
+%$\phi$ is a tree isomorphism between $t$ and $u$ such that:
+%\begin{enumerate}
+%\item
+%$\phi$ preserves all labels except for $\lambda x^T$ and $x^T$;
+%\item 
+%$\phi$ preserves all labels $x^T$
+%on a free variable occurrence, and the fact that it is free;
+%\item
+%$\phi$ sends each label $\lambda x^T$ to some label $\lambda y^T$, each label $x^T$
+%on a bound variable to some label $y^T$ on a bound variable, and preserves the
+%binding relation. 
+%\end{enumerate}
+%
+%\item
+%  An $\alpha$-conversion map $\phi$ is \emph{equality-preserving} 
+%  if $\phi$ preserves the equalities and disequalities of labels. 
+%\item
+%We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
+%$\alpha$-conversion $\phi:v \rightarrow w$ such that $u$ is obtained from $t$
+%by replacing $v$ with $w$.
+%\end{enumerate}
+%\end{definition}
 
 \begin{definition}[Equality-preserving $\alpha$-conversion]
 \label{definition-alpha-conversion}
 Let $t$ and $u$ be terms.
 \begin{enumerate}
 \item
-$\phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if  
-$\phi$ is a tree isomorphism between $t$ and $u$ such that:
-\begin{enumerate}
-\item
-$\phi$ preserves all labels except for $\lambda x^T$ and $x^T$;
-\item 
-$\phi$ preserves all labels $x^T$
-on a free variable occurrence, and the fact that it is free;
-\item
-$\phi$ sends each label $\lambda x^T$ to some label $\lambda y^T$, each label $x^T$
-on a bound variable to some label $y^T$ on a bound variable, and preserves the
-binding relation. 
-\end{enumerate}
+$\Phi:t \rightarrow u$ is an \emph{$\alpha$-conversion map} if  
+for some \emph{injection} $\phi$ on variables,
+$\Phi$ is a tree isomorphism between $t$ and $u$ such that:
+$\Phi$ is the identity on all labels except for $\lambda x^T$ and a bound $x^T$
+which are mapped to $\lambda \phi(x^T)$ and to $\phi(x^T)$
 
-\item
-  An $\alpha$-conversion map $\phi$ is \emph{equality-preserving} 
-  if $\phi$ preserves the equalities and disequalities of labels. 
 \item
 We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
-$\alpha$-conversion $\phi:t \rightarrow u$.
+$\alpha$-conversion map $\Phi:v \rightarrow w$ such that $u$ is obtained from $t$
+by replacing a single sub-term $v$ of $t$ with $w$.
 \end{enumerate}
 \end{definition}
-
-Equality-preserving condition 
-says that (a) if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
-all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$,
-and (b) different $\lambda$-labels (those of the form $\lambda x^T$) cannot be sent to the same label.
-We remark that $\sim_\alpha$ is an equivalence relation (the symmetricity is shown by (b)),
-but is not a congruence relation, for example,
-$(\lambda x.x)(\lambda y.y) \not\sim_\alpha (\lambda x.x)(\lambda x.x)$ though $\lambda y.y \sim_\alpha \lambda x.x$.
-With this condition, if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular.
-Without this condition, 
+% Equality-preserving condition 
+%implies that (a) if some occurrence of $\lambda x^T$ is sent to $\lambda y^T$, then
+%all other occurrences of $\lambda x^T$ must be sent to $\lambda y^T$,
+%and (b) different $\lambda$-labels (those of the form $\lambda x^T$) cannot be sent to the same label.
+%$\sim_\alpha$ is an equivalence relation (the symmetricity is shown by (b)),
+%The last clause is required for having 
+By definition, $\sim_\alpha$ is a congruence relation, for example, we have
+$t = (\lambda x.x)(\lambda y.y) \sim_\alpha (\lambda x.x)(\lambda x.x) = u$ 
+by replacing the subterm $\lambda y.y$ of $t$ with $\lambda x.x$.
+With this definition of $\sim_\alpha$, 
+if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular, because
+an $\alpha$-conversion map $\phi$ is a bijection on sub-terms.
+Using the generalmost notion of $\alpha$-conversion, instead,
 $f = \lambda x^\N.\cond(x,f0)$ is $\alpha$-convertible to 
 a non-regular term 
 $\lambda x_1^\N.\cond(x_1,\lambda x_2^\N.\cond(x_2,(\lambda x_3^\N.\cond(...))0)0)$,
-with distinguished bound variables $x_1,x_2,\ldots$. 
+with infinitely many distinguished bound variables $x_1,x_2,\ldots$. 
 
 In order to define typing of our terms, we first define contexts and typing judgments.
 
