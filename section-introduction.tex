@@ -13,7 +13,7 @@ The terms of $\LAMBDA$  are all possibly infinite trees representing expressions
 defined with $0$, $\Succ $, $\ap$ (application), 
 variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defining 
 maps), and $\cond$, the arithmetic conditional (i.e., the test on zero, with predecessor included). 
-We imagine that the infinite terms of $\LAMBDA$ describe
+We imagine that the infinite terms of $\LAMBDA$ describe the definition unfolding for
 a simplified functional language with fixed point, like the functional language considered by
  Clemens Grabmayer, Jan Rochel (\cite{Letrec,Letmu,JanRochelPhd2016}).
 As usual, we add reduction rules with the goal of transforming closed terms of type $\N$ 
@@ -33,7 +33,9 @@ The definition of $\CTlambda$ and a termination result for it is our contributio
 GTC has been introduced for infinitary proofs 
 by Brotherston and Simpson
 (\cite{BrotherstonPhd2006}, \cite{BrotherstonSimpson2011}), then adapted
-to algebraic terms of G\"{o}del system $\systemT$ by Das, Kuperberg, Pinault, Pous 
+to the terms
+of G\"{o}del system $\systemT$  defined through combinators
+by Das, Kuperberg, Pinault, Pous 
 (\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
 
 Our contribution is to extend these circular versions of G\"{o}del system $\systemT$ 
@@ -42,7 +44,7 @@ we hope to provide a circular syntax more familiar to researchers working in the
 field of Type Theory. % We call $\CTlambda$ our extended circular syntax.
 
 We will prove for $\CTlambda$ (with binders) a result which was only
-known for the \emph{algebraic} circular syntax for system $\systemT$:
+known for the circular syntax for system $\systemT$ which uses combinators:
 that reductions not in the second argument of any $\cond$ (conditional)
 strongly normalizes, and that they always reduce closed normal terms of type 
 $\N$ to a numeral.
@@ -59,7 +61,8 @@ the first symbol of the $\lambda$-term eventually stabilizes, then the
 first symbol of each immediate subterm eventually stabilizes, and so forth, recursively.
 
 The notion of limit reduction in $\CTlambda$
-could be considered similar to the notion of limit reduction for finite $\lambda$-terms obtained
+could be considered a particular case of
+ the notion of limit reduction for finite $\lambda$-terms obtained
 through B\"{o}hm trees (\cite{Barendregt1984}, Def. 10.1.4). 
 However, we stress that there is an important difference: 
 in $\CTlambda$ no \quotationMarks{undefined} subterm is required
