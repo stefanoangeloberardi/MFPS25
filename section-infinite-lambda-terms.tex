@@ -322,14 +322,20 @@ by replacing a single sub-term $v$ of $t$ with $w$.
 By definition, $\sim_\alpha$ is a congruence relation, for example, we have
 $t = (\lambda x.x)(\lambda y.y) \sim_\alpha (\lambda x.x)(\lambda x.x) = u$ 
 by replacing the subterm $\lambda y.y$ of $t$ with $\lambda x.x$.
-With this definition of $\sim_\alpha$, 
-if $f \sim_\alpha g$ and $f$ is regular then $g$ is regular, because
-an $\alpha$-conversion map $\phi$ is a bijection on sub-terms.
-Using the generalmost notion of $\alpha$-conversion, instead,
+Any $\alpha$-conversion map $\Phi$, being defined through an injection
+on binders and bound variables, is a bijection on sub-terms, therefore
+preserves regularity. 
+If $t \sim_\alpha u$ and $t$ is regular then $u$ is regular, because
+moving from $t$ to $u$ we replace some sub-term $v$ with some $\Phi:v \rightarrow w$,
+so, at most, we remove the sub-terms of $v$ and we add
+the subterms of $w$.
+
+We avoid using the generalmost notion of $\alpha$-conversion, instead, because it does
+not preserve regularity. For instance,
 $f = \lambda x^\N.\cond(x,f0)$ is $\alpha$-convertible to 
 a non-regular term 
 $\lambda x_1^\N.\cond(x_1,\lambda x_2^\N.\cond(x_2,(\lambda x_3^\N.\cond(...))0)0)$,
-with infinitely many distinguished bound variables $x_1,x_2,\ldots$. 
+with infinitely many distinguished bound variables $x_1,x_2,x_3,\ldots$. 
 
 In order to define typing of our terms, we first define contexts and typing judgments.
 
@@ -379,7 +385,7 @@ and we have $x_{i}=x'_{\phi(i)}$ and $A_{i}=A'_{\phi(i)}$ for all $i \in \hbox{d
 
 \item 
 \label{definition-context-lambda-04}
-A \emph{typing judgment} is $(\Gamma,t,A) \in \Ctxt \times \LAMBDA \times \Type$,
+A \emph{typing judgment} is a triple $(\Gamma,t,A) \in \Ctxt \times \LAMBDA \times \Type$,
 which is written in the form $\Gamma \vdash t:A$.
 When $\Gamma$ is the empty context $\nil$, we abbreviate $\nil\vdash t:A$ with $\vdash t:A$. 
 We write $\Judg$ for the set of all typing judgments.
@@ -467,7 +473,8 @@ If there are only finitely many free variables in $u$, we can always
 rename all bound variables in $t$ in order to make them different from the free variables
 in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
 
-The use of $\alpha$-convertibility for substitution is not relevant for computation. Indeed,
+The use of $\sim_\alpha$ for substitution is relevant for the theory but not
+for computation. Indeed,
 substitution of a closed term $u$ requires no renaming, and  in order to use 
 infinite $\lambda$-terms as a programming language we only need computations 
 involving substitution of closed terms. 
@@ -585,7 +592,8 @@ which is a function $\N\rightarrow A$ that returns $a$ for the input $0$,
 and returns $f(t)$ for an input $\Suc{t}$. 
 The typing rule for $\ap(t,u)$ is split into two sub-rules,
 $\apvar$ and $\apnotvar$ depending on whether $u$ is a variable or not. 
-This is for the traces and the global trace condition for $\LAMBDA$ that will be defined later. 
+This is for defining the trace relation and the global trace condition for $\LAMBDA$, 
+which will appear later. 
 %We will explain the rules for $\ap$ in more detail after the definition of GTC. 
 
 %% [The following part will be put in the later section]
@@ -738,7 +746,8 @@ to write examples of regular terms when we use typing rules with $\weak$
 %of $\LAMBDA$.
 
 We say that two rule instances are equal if they have the same list of judgments. 
-Any rule instance different from $\weak$ can be uniquely recovered from its conclusion.
+Any rule instance $r$ different from $\weak$ can be uniquely recovered from 
+the conclusion $\Gamma \vdash t:A$ of $r$.
 
 \begin{proposition}(Rules and subterms)\label{proposition-rules-subterms}
 Assume $r, r' \in \Rule$ are not instances of the $\weak$-rule 
@@ -752,7 +761,7 @@ $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
 then the list of immediate subterms of $t$ is exactly $(t_1, \ldots, t_p)$.
 \end{proposition}
 
-From the typing rules we define the pre-proofs that a term is well-typed. 
+From the typing rules we define the \emph{pre-proofs} that a term is well-typed. 
 %Proofs are binary trees labeled on the set $\Rule$.
 %, each node is associated to a typing 
 %judgment which is a consequence of the typing judgments associated to the 
@@ -801,21 +810,22 @@ From the typing rules we define the pre-proofs that a term is well-typed.
 % 10:55 15/0/2025
 
 \begin{definition}[Pre-proofs of $\LAMBDA$]
-Assume $\Pi=(T,\phi, \psi)$, $T$ is a binary tree of lists of integers, and each node $l \in T$
+Assume $\Pi=(T,\phi, \psi)$, that $T$ is a binary tree of lists of integers, and 
+that each node $l \in T$
 is labeled by a judgment $\phi(l) \in \Judg$ and a rule $\psi(l) \in \Rule$. 
-$\nil$ is the root of $T$ and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
+We call $\nil$ the root of $T$, and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
 is $l \conc (i) = ( i_1, \ldots, i_n, i)$.
 %(appending $i$ after the last element of $l$).
 
 Let $J$ be a judgment. 
-We write $\Pi :: J$, and we say that $\Pi$ is a pre-proof of conclusion $J$ if:
+We write $\Pi :: J$, and we say that $\Pi$ is a \emph{pre-proof} of conclusion $J$ if:
 \begin{enumerate}
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
 \item
   If the judgment labeling $l \in T$ is $\phi(l) = J_0$, and $l$ has $p$ children
-  and $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
-  then $\psi(l) = (J_1,\ldots,J_p,J_0)$.
+  such that $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
+  then $\psi(l)$ is the rule $(J_1,\ldots,J_p,J_0)$.
 \end{enumerate}
 \end{definition}
 
@@ -836,13 +846,14 @@ We write $\Pi :: J$, and we say that $\Pi$ is a pre-proof of conclusion $J$ if:
 %and the total computation time to $O(n^2)$.
 %\\
 
-There are non-sensical pre-proofs. For example, assume $t_n = t_{n+1}(0)$ is
+The notion of pre-proof is too wide, there are non-sensical pre-proofs. 
+For example, assume $t_n = t_{n+1}(0)$ is
 a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a pre-proof family
 $\Pi_n ::\ (\vdash t_n : \N^n \rightarrow A)$ whose conclusion is obtained by
 $\Pi_{n+1} ::\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
 and $\Pi ::\ \vdash 0:\N$. 
 There is no obvious interpretation for the term $t_0$, 
-since it can have type $A$, which is arbitrary taken. 
+and it can have type $A$, which is arbitrary taken. 
 
 For this reason, we say that a term $t$
 is well-typed if $\Pi ::\Gamma \vdash t:A$ for some pre-proof $\Pi$ satisfying one extra 
