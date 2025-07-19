@@ -256,17 +256,20 @@ binder$\lambda x^T.$  to a node  which is an occurence of $x^T$ bound by it.
 
 We also introduce an $\alpha$-conversion relation, in order to avoid variable capture
 during substitution. With respect to the $\alpha$-conversion
-relation for finite $\lambda$-terms 
+relation for finite $\lambda$-terms ,
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % I removed this quotation because I could not make it working Stefano 08/07/2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
 (\cite{Barendregt1984}, \S 2.1.11 p.26) 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-we add the requirement that equal bound variables are renamed by equal bound variables. 
-In this way, we only consider $\alpha$-conversions 
+%we add the requirement that equal/different bound variables are renamed by equal bound variables. 
+%In this way, 
+we only consider $\alpha$-conversions 
 preserving the regularity of a term.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%FIRST VERSION%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\begin{definition}[Equality-preserving $\alpha$-conversion]
 %\label{definition-alpha-conversion}
 %Let $t$ and $u$ be terms.
@@ -295,6 +298,7 @@ preserving the regularity of a term.
 %by replacing $v$ with $w$.
 %\end{enumerate}
 %\end{definition}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{definition}[Equality-preserving $\alpha$-conversion]
 \label{definition-alpha-conversion}
@@ -308,9 +312,9 @@ $\Phi$ is the identity on all labels except for $\lambda x^T$ and a bound $x^T$
 which are mapped to $\lambda \phi(x^T)$ and to $\phi(x^T)$
 
 \item
-We write $t \sim_\alpha u$ if there is some \emph{equality-preserving} 
-$\alpha$-conversion map $\Phi:v \rightarrow w$ such that $u$ is obtained from $t$
-by replacing a single sub-term $v$ of $t$ with $w$.
+We write $t \sim_\alpha u$ for the smallest transitive congruence relation
+such that $\Phi:t \rightarrow u$ for some $\alpha$-conversion map $\Phi$
+implies $t \sim_\alpha u$.
 \end{enumerate}
 \end{definition}
 % Equality-preserving condition 
@@ -319,15 +323,18 @@ by replacing a single sub-term $v$ of $t$ with $w$.
 %and (b) different $\lambda$-labels (those of the form $\lambda x^T$) cannot be sent to the same label.
 %$\sim_\alpha$ is an equivalence relation (the symmetricity is shown by (b)),
 %The last clause is required for having 
+For instance we have $\Phi:\lambda x.x \rightarrow \lambda y.y$ where
+$\Phi$ switches all bound occurrences of $x$ and of $y$.
 By definition, $\sim_\alpha$ is a congruence relation, for example, we have
 $t = (\lambda x.x)(\lambda y.y) \sim_\alpha (\lambda x.x)(\lambda x.x) = u$ 
-by replacing the subterm $\lambda y.y$ of $t$ with $\lambda x.x$.
+by replacing the subterm $\lambda y.y$ of $t$ with $\lambda x.x \sim_\alpha \lambda y.y$.
 Any $\alpha$-conversion map $\Phi$, being defined through an injection
 on binders and bound variables, is a bijection on sub-terms, therefore
 preserves regularity. 
-If $t \sim_\alpha u$ and $t$ is regular then $u$ is regular, because
+Thus, $t \sim_\alpha u$ and $t$ is regular then $u$ is regular: the proof is
+by induction on the definition of $\sim_\alpha$. For instance, if
 moving from $t$ to $u$ we replace some sub-term $v$ with some $\Phi:v \rightarrow w$,
-so, at most, we have all sub-terms of $t$ and we add the subterms of $w$.
+then in $u$, at most, we have all sub-terms of $t$ and we add all sub-terms of $w$.
 
 We avoid using the generalmost notion of $\alpha$-conversion, instead, because it does
 not preserve regularity. For instance,
