@@ -1054,7 +1054,7 @@ of type $\N$ produces a numeral.
 
 %18:58 15/07/2025
 
-\subsection{Closed safe-normal terms of $\CTlambda$ of type $\N$ are numeral}
+\subsection{Closed safe-normal terms of $\CTlambda$ of type $\N$ are numerals}
 This property is not straightforward. 
 There are regular closed normal terms of type $\N$ which are not numerals.
 An example is $t = \cond(0, \lambda x^N.1)(t)$ 
@@ -1065,7 +1065,7 @@ $t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
 $t$ is normal, because $t$ is neither $0$ nor a successor, 
 therefore $t$ cannot be reduced. However $t$ is not a numeral.
 We have $t \not \in \GTC$, hence $t \not \in \CTlambda$, because
-the rightmost path $\pi$ of $\Pi$ is infinite, cyclic, 
+the rightmost path $\pi = t,t,t,\ldots$ of $\Pi$ is infinite, cyclic, 
 %with all nodes labeled by the judgment $\vdash t: \N$. The path $\pi$ is 
 never moving to the right-hand side of a $\cond$,
 and therefore all paths in $\pi$ are never progressing.
@@ -1073,7 +1073,8 @@ and therefore all paths in $\pi$ are never progressing.
 Instead, for any closed $t \in \GTC$ of type $\N$, safe-normalization on closed subterms in $t$
 produces a numeral. For reason of efficiency,
 we also proved that safe-normalization can be done only contracting 
-\emph{closed} redexes of $t$: therefore {\bf no $\alpha$-renaming is required}.
+\emph{closed} redexes of $t$: therefore 
+{\bf no potentially expensive $\alpha$-renaming} is required.
 As an intermediate step in this proof we need the notion of 
 \quotationMarks{sound} term.
 
@@ -1156,8 +1157,9 @@ Normalization on some term $t \in \CTlambda$ can continue forever,
 however we can define a limit normal form $\Lim(t)$, which is sometimes
 not in $\CTlambda$ because it is often not regular. 
 
-Intuitively, $\Lim(t)$ is the limit of a sequence of $n$-safe-normal forms of $t$ ($n=0,1,2,\ldots$). 
-If continue reducing $0$-safe redexes then, by Corollary
+Intuitively, $\Lim(t)$ is the limit of a sequence of $n$-safe-normal forms of $t$ 
+($n=0,1,2,\ldots$). 
+If continue reducing the leftmost $0$-safe redex then, by Corollary
 \ref{corollary-finite-safe-reduction}, we reach some $0$-safe-normal form $u[\vec{v}]$,
 with $\vec{v}$ the vector of all right-hand side of all $\cond$ in $u[\vec{v}]$.
 $\vec{v}$ are the only subterms which still could include some redexes. 
@@ -1165,10 +1167,17 @@ Then we recursively define
 \[
 \Lim(t) = u[\overrightarrow{\Lim(v)}] \in \LAMBDA
 \]
-by repeating the operation $\Lim(\cdot)$ on each term in $\vec{v}$. $\Lim(t)$ is the
-recursive definition of a possibly infinite tree in $\LAMBDA$. 
-By induction on the depth of a subterm 
-of $\Lim(t)$ we can prove that $\Lim(t)$ is a normal term.
+by repeating the operation $\Lim(\cdot)$ on each term in $\vec{v}$. We define the label of 
+a sub-term $w$ of $\Lim(t)$ as the label 
+$w$ has from the first unfolding of $\Lim(t)$ in which $w$ 
+is defined, provided the label does not change in the next unfoldings, otherwise the label
+of $w$ is undefined.
+By induction on $n \in \N$, we can prove that for all $t \in \CTlambda$ if
+$w$ is a sub-term of depth $d$ in $\Lim(t)$ then the label of $w$ does
+not change between unfoldings and therefore it is defined in $\Lim(t)$. 
+We conclude that $\Lim(t)$ is the
+recursive definition of a (possibly infinite) tree in $\LAMBDA$. 
+We can prove that $\Lim(t)$ is normal.
 
 We include an example $f  = \lambda x^\N.\cond(x,f(\Succ x))$ 
 in $\CTlambda$ such that $\Lim(f(x))$ is not regular. 
