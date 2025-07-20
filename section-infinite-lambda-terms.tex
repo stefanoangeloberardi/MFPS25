@@ -3,7 +3,7 @@
 \section{The set of infinite lambda-terms}\label{section-infinite-lambda}
 
 In this section we define the set $\LAMBDA$ of infinite $\lambda$-terms given as possibly infinite trees,
-the subset $\Reg$ of of $\LAMBDA$ consisting of regular trees, which we call 
+the subset $\Reg$ of $\LAMBDA$ consisting of regular trees, which we call 
 \emph{circular terms}, 
 then the subset $\WTyped$ of well-typed terms of $\LAMBDA$ and a reduction relation for them. In the following sections,
 we will prove that the regular well-typed terms of $\LAMBDA$ that satisfy
@@ -103,7 +103,7 @@ and then give the set $\LAMBDA$ of terms and the contexts for $\LAMBDA$.
   }. 
 \begin{enumerate}
 \item  
-  The \emph{simple types} (or \emph{type} for short), denoted by $T,A,B,\ldots$,
+  The \emph{simple types} (or \emph{types} for short), denoted by $T,A,B,\ldots$,
   are inductively defined by: 
   $\N$ of natural numbers, type variables, and $A \rightarrow B$, provided $A$ and $B$ are types.
   We write $\Type$ for the set of simple types.
@@ -210,7 +210,7 @@ The set $\Num$ is the representation of the set $\Nat$ of natural numbers inside
 
 \begin{example}
 \label{example-regular-infinite}
-An example of a regular term and an infinite tree: the term defined by %the isomorphism
+An example of a regular term and an infinite tree: let $t$ be the term defined by %the isomorphism
 $t = \cond(0,\lambda x^N.t(x))$. 
 Then $\SubTerm(t) = \{t,0,\lambda x.t(x), t(x), x\}$. %, up to term isomorphism.
 Thus, $t$ is a regular term.
@@ -250,17 +250,17 @@ An occurrence of $x^T$ in $t$ is said to be \emph{bound} if it is not free. If a
 the node labeled $\lambda x^T$ closest to the occurrence is called the \emph{binder} of
 the occurrence.
 The binding relation is a binary relation from a node with a 
-binder$\lambda x^T.$  to a node  which is an occurence of $x^T$ bound by it. 
+binder $\lambda x^T.$  to a node  which is an occurence of $x^T$ bound by it. 
 \end{enumerate}
 \end{definition}
 
-We also introduce an $\alpha$-conversion relation, in order to avoid variable capture
+We also introduce an $\alpha$-conversion relation to avoid variable capture
 during substitution. With respect to the $\alpha$-conversion
-relation for finite $\lambda$-terms ,
+relation for finite $\lambda$-terms
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % I removed this quotation because I could not make it working Stefano 08/07/2025
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-(\cite{Barendregt1984}, \S 2.1.11 p.26) 
+(\cite{Barendregt1984}, \S 2.1.11 p.26),
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %we add the requirement that equal/different bound variables are renamed by equal bound variables. 
 %In this way, 
@@ -312,7 +312,8 @@ $\Phi$ is the identity on all labels except for $\lambda x^T$ and a bound $x^T$
 which are mapped to $\lambda \phi(x^T)$ and to $\phi(x^T)$
 
 \item
-We write $t \sim_\alpha u$ for the smallest transitive congruence relation
+We write $t \sim_\alpha u$ for the smallest congruence relation (i.e.,
+equivalence relation compatible with term formation)
 such that $\Phi:t \rightarrow u$ for some $\alpha$-conversion map $\Phi$
 implies $t \sim_\alpha u$.
 \end{enumerate}
@@ -767,7 +768,7 @@ $\Gamma_1 \vdash t_1:A_1, \ldots, \Gamma_p \vdash t_p:A_p$,
 then the list of immediate subterms of $t$ is exactly $(t_1, \ldots, t_p)$.
 \end{proposition}
 
-From the typing rules we define the \emph{pre-proofs} that a term is well-typed. 
+From the typing rules we define the notion of \emph{pre-proof}. 
 %Proofs are binary trees labeled on the set $\Rule$.
 %, each node is associated to a typing 
 %judgment which is a consequence of the typing judgments associated to the 
@@ -856,8 +857,7 @@ The notion of pre-proof is too wide, there are non-sensical pre-proofs.
 For example, assume $t_n = t_{n+1}(0)$ is
 a term family indexed on $n \in \Nat$. Then, for any type $A$, we can define a pre-proof family
 $\Pi_n ::\ (\vdash t_n : \N^n \rightarrow A)$ whose conclusion is obtained by
-$\Pi_{n+1} ::\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and
-and $\Pi ::\ \vdash 0:\N$. 
+$\Pi_{n+1} ::\ \vdash t_{n+1} : \N^{n+1} \rightarrow A$ and $\Pi ::\ \vdash 0:\N$. 
 There is no obvious interpretation for the term $t_0$, 
 and it can have type $A$, which is arbitrary taken. 
 
@@ -877,10 +877,10 @@ each other node in $\pi$ is a child of the previous one in $\pi$.
 
 \item
 A path is \emph{leftmost} if all nodes of $\pi$
-but the first are the left child of the previous one.
+but the first are the leftmost child of the previous one.
 
 \item
-A pre-proof $\Pi$ is \emph{left-finite} if all leftmost paths $\pi$ in $\Pi$ 
+A pre-proof $\Pi$ is \emph{left-finite} if all leftmost paths in $\Pi$ 
 from any node of $\Pi$ are finite.
 
 \item
@@ -1065,7 +1065,7 @@ and hence is in $\CTlambda$ (see Example~\ref{example-sum}).
 \begin{example}\label{example-sum-first}
 Let $\Sum$ be an infinite term that satisfies 
 $\Sum = \lambda x.\cond(x,\lambda y.\Succ(\Sum(x)(y)))$.
-$\Sum$ is regular because the set $\SubTerm(\Sum)$ is finite and equal to: 
+$\Sum$ is regular because the set $\SubTerm(\Sum)$ is finite and equals to: 
 \begin{center}
   $\{\Sum,\,\cond(x,\lambda y.\Succ(\Sum(x)(y))),\,x\,,\lambda y.\Succ(\Sum(x)(y)),\,\Succ(\Sum(x)(y)),\,\Sum(x)(y),\,\Sum(x),\,y\,\}$
 \end{center}
@@ -1128,8 +1128,8 @@ namely, without $\weak$, this particular pre-proof would be incorrect.
 Our goal is to provide a set of well-formed terms for $\LAMBDA$ and interpret 
 them as total functionals. %, a semantics for circular $\lambda$-terms.
 The well-typedness condition is not enough for our purpose,
-since terms like $t = \cond(0,\lambda x.t(\Succ(x)))$ and 
-denoting partial functionals  are still included. 
+since terms like $t = \cond(0,\lambda x.t(\Succ(x)))$ which
+denote partial functionals  are still included. 
 The global trace condition (to be introduced later) will be a reasonable condition for our goal. 
 %to denote a subset of the total functionals. 
 
@@ -1138,7 +1138,7 @@ This subsection provides reduction rules for $\LAMBDA$.
 %18:14 27/03/2024
 
 \begin{definition}[Reduction Rules for $\LAMBDA$]
-  Let $f$, $g$, $t$, and $u$ be terms in $\LAMBDA$.
+  Let $f$, $t$ and $u$ be terms in $\LAMBDA$.
   We define the $\beta$-reduction relation $\reduces_\beta$
   and the $\cond$-reduction relation $\reduces_\cond$ as follows.
 \begin{description}

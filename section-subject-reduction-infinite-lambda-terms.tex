@@ -5,7 +5,7 @@
  
 We quickly quote the subject reduction property for well-typed terms of $\LAMBDA$,
 and the fact that the global trace condition is preserved by subterms, substitution
-and reductions. We skip proofs for reason of space, but they are just an exercise.
+and reductions. We skip proofs for reason of space, but they are just exercises.
 %We first introduce some auxiliary notations for proofs of them.
 %
 %Let $X$ be a set of variables of the form $x^T$.
@@ -531,7 +531,7 @@ and reductions. We skip proofs for reason of space, but they are just an exercis
 %  that satisfies the global trace condition, as we wished. 
 %\end{proof}
 
-Variable renaming preserves GTC.
+Variable renaming preserves GTC and regularity.
 %The equality-preserving $\alpha$-conversion preserves regularity as we mentioned
 %after Def. \ref{definition-alpha-conversion}. 
 %Thus, the equality-preserving $\alpha$-conversion also preserves isomorphic relations of term trees, 
@@ -544,11 +544,11 @@ Variable renaming preserves GTC.
     Let $\theta$ be a renaming.
     If $\Pi::\Gamma\vdash t:A$ and $\Gamma[\theta]$ is a context, 
     then $\Pi'::\Gamma[\theta]\vdash t[\theta]:A$ for some $\Pi'$.
-    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition (regularity), so does $\Pi'$.
   \item\label{prop:renaming2}
     If $\Pi::\Gamma\vdash t:A$ and $t' \sim_\alpha t$,
     then $\Pi'::\Gamma\vdash t':A$ for some $\Pi'$.
-    Moreover, if $\Pi$ satisfies the global trace condition, so does $\Pi'$.
+    Moreover, if $\Pi$ satisfies the global trace condition (regularity), so does $\Pi'$.
   \end{enumerate}
 \end{proposition}
 

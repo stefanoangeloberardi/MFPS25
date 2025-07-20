@@ -2,12 +2,14 @@
 \section{Terms with the global trace condition are finite for safe-reductions}
 \label{section-finite-safe-reductions}
 
-In this section we prove that for all $n \in \N$, 
+In this section we prove that for all $n \in \Nat$, 
 every infinite reduction sequence $\pi$ 
 from some term of $\GTC$ includes
 only finitely many \quotationMarks{$0$-safe} (safe) reduction steps:
 from some point on, all reduction steps are \quotationMarks{unsafe},
-that is, they occur in the right-hand side of some $\cond$.
+that is, they occur in the right-hand side of some $\cond$. This result generalizes
+to for $n$-safe reductions:
+from some point on, all reduction steps have $\cond$-depth $> n$.
     
 From this, we will prove that for all $t \in \GTC$ the reduction sequences made of only \quotationMarks{$n$-safe} reductions stop from some point on,
 therefore are finite. Namely, this implies strong normalization for \quotationMarks{$n$-safe} reduction steps:
@@ -26,13 +28,14 @@ all infinite reduction paths from $t$ include only finitely many $n$-safe-reduct
 
 In other words, in all infinite reduction paths, from some point on all reductions
 are \emph{not} $n$-safe, they contract redexes occurring in the right-hand side of
-$n$ $\cond$-terms. In the following, we explicitly write $t[x_1,\ldots,x_n]$,
+$\cond$-terms with $\cond$-depth $\ge n$. 
+In the following, we explicitly write $t[x_1,\ldots,x_n]$,
 when each free variable in $t$ is some $x_i$, 
 and, under this notation, we also write $t[a_1,\ldots,a_n]$ for 
 $t[a_1/x_1,\ldots,a_n/x_n]$. 
 
 It is enough to consider the case of $0$-safe-reductions, 
-the general case will follow. 
+and the general case will follow. 
 As we previously said, 
 we abbreviate \quotationMarks{$0$-safe} with \quotationMarks{safe}.
 We have to prove that all terms in $\GTC$ are finite for safe-reductions. 
@@ -655,7 +658,7 @@ By definition, any total term is well-typed, and hence it has an exactly one typ
 
 %We now have all properties required to prove our Main Theorem.
 
-The Tait-totality of all terms with GTC cannot be proved be induction on the term because the term can be infinite. We use instead a reason by contradiction, showing that if a term is not total then there is some infinite path in which all traces are definitively stationary, contradicting GTC.
+The Tait-totality of all terms with GTC cannot be proved by induction on the term because the term can be infinite. We use instead a reason by contradiction, showing that if a term is not total then there is some infinite path in which all traces are definitively stationary, contradicting GTC.
 
 
 
@@ -1060,15 +1063,15 @@ There are regular closed normal terms of type $\N$ which are not numerals.
 An example is $t = \cond(0, \lambda x^N.1)(t)$ 
 (\cite{2021-Anupam-Das}, Remark 44). 
 There is a pre-proof $\Pi::\ \vdash t: \N$, and $\N$ is the unique type of $t$. 
-$t$ is regular: the subterms of $t$ are
-$t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$, $1$.
+$t$ is regular, since the subterms of $t$ are
+$t$ itself and $\cond(0, \lambda x^N.1)$, $0$, $\lambda x^N.1$ and $1$.
 $t$ is normal, because $t$ is neither $0$ nor a successor, 
 therefore $t$ cannot be reduced. However $t$ is not a numeral.
 We have $t \not \in \GTC$, hence $t \not \in \CTlambda$, because
 the rightmost path $\pi = t,t,t,\ldots$ of $\Pi$ is infinite, cyclic, 
 %with all nodes labeled by the judgment $\vdash t: \N$. The path $\pi$ is 
 never moving to the right-hand side of a $\cond$,
-and therefore all paths in $\pi$ are never progressing.
+and therefore all traces in $\pi$ are never progressing.
 
 Instead, for any closed $t \in \GTC$ of type $\N$, safe-normalization on closed subterms in $t$
 produces a numeral. For reason of efficiency,
@@ -1087,7 +1090,7 @@ $t$ is open.
 $t$ has some $0$-safe \emph{closed} redex. 
 \item
 $t$ has an arrow type and either $t=\lambda x.u$ or 
-$t = \cond(f,g)$ for some $u$, $f$, $g$. % and $t$ has an arrow type
+$t = \cond(f,g)$ for some $u$, $f$ and $g$. % and $t$ has an arrow type
 \item
 $t \in \Num$ ($t$ is a numeral). 
 \end{enumerate}
@@ -1097,9 +1100,10 @@ $t \in \Num$ ($t$ is a numeral).
 \label{proposition-closed-safe-normal-term-N}
 \begin{enumerate}
 \item
-All $t \in \GTC$ are sound
+All $t \in \GTC$ are sound.
 \item
-If $t \in \GTC$, $t$ is closed and $0$-safe-normal and $t:\N$ then $t \in \Num$ ($t$ is a numeral)
+If $t \in \GTC$, $t$ is closed and $0$-safe-normal and $t:\N$ then $t \in \Num$ 
+($t$ is a numeral).
 \end{enumerate}
 \end{proposition}
 
@@ -1180,7 +1184,7 @@ recursive definition of a (possibly infinite) tree in $\LAMBDA$.
 We can prove that $\Lim(t)$ is normal.
 
 We include an example $f  = \lambda x^\N.\cond(x,f(\Succ x))$ 
-in $\CTlambda$ such that $\Lim(f(x))$ is not regular. 
+in $\CTlambda$ such that $\Lim(f(x))$ is not regular, though
 %We will prove that $f$ is the unary algorithm for addition. 
 $f$ is regular. There is a left-finite pre-proof $\Pi::\Gamma \vdash f:\N,\N\rightarrow\N$,
 and we trace the second argument $\redN$ of $f$. 
@@ -1192,7 +1196,7 @@ f(\Succ x^\N): \redN \rightarrow\N, \quad
 f: \N,\redN \rightarrow\N,\quad
 \ldots.
 \]
-$f$ is in $\GTC$ because in this unique infinite branch of $\Pi$
+$f$ is in $\GTC$, since in this unique infinite branch of $\Pi$
 the trace of the second argument of $f$ crosses the right-hand side of a $\cond$
 infinitely many times.
 Hence $f\in\CTlambda$ and $f(x) \in \CTlambda$.

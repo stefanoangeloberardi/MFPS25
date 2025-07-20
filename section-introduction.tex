@@ -4,7 +4,7 @@
 
 We consider $\LAMBDA$, the set of infinitary simply typed $\lambda$-terms 
 with conditional on zero, in the style for instance of 
-Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries 
+Ariola, Bl\"{o}m, Klop, Kennaway, Sleep and de Vries 
 (\cite{ARIOLA1997154,10.1007/BFb0014548,KENNAWAY199793}).
 
 The types of $\LAMBDA$ are all simple types obtained from the atomic type $\N$
@@ -15,11 +15,11 @@ variables $x^T$ (with a type superscript $T$),  $\lambda$ (the binder for defini
 maps), and $\cond$, the arithmetic conditional (i.e., the test on zero, with predecessor included). 
 We imagine that the infinite terms of $\LAMBDA$ describe the definition unfolding for
 a simplified functional language with fixed point, like the functional language considered by
- Clemens Grabmayer, Jan Rochel (\cite{Letrec,Letmu,JanRochelPhd2016}).
+ Clemens Grabmayer and Jan Rochel (\cite{Letrec,Letmu,JanRochelPhd2016}).
 As usual, we add reduction rules with the goal of transforming closed terms of type $\N$ 
 into notations for natural numbers. Thus, 
 the closed terms of $\LAMBDA$ can be interpreted as partial functionals on $\N$.
-In the general case a reduction on a closed terms of type $\N$ can continue forever,
+In the general case a reduction on a closed term of type $\N$ can continue forever,
 this is why without further conditions we only obtain partial functionals.
 
 %19:42 19/04/2024
@@ -35,7 +35,7 @@ by Brotherston and Simpson
 (\cite{BrotherstonPhd2006}, \cite{BrotherstonSimpson2011}), then adapted
 to the terms
 of G\"{o}del system $\systemT$  defined through combinators
-by Das, Kuperberg, Pinault, Pous 
+by Das, Kuperberg, Pinault and Pous 
 (\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023}).
 
 Our contribution is to extend these circular versions of G\"{o}del system $\systemT$ 
@@ -47,11 +47,11 @@ We will prove for $\CTlambda$ (with binders) a result which was only
 known for the circular syntax for system $\systemT$ which uses combinators:
 that reductions not in the second argument of any $\cond$ (conditional)
 strongly normalizes, and that they always reduce closed normal terms of type 
-$\N$ to a numeral.
+$\N$ to numerals.
 
 We also quote a second contribution. We extend to the case of binder $\lambda$ the
 characterization of the limit reduction obtained 
-by Das, Kuperberg, Pinault, Pous 
+by Das, Kuperberg, Pinault and Pous 
 (\cite{2021-Anupam-Das,DBLP:conf/fscd/000221,DBLP:conf/lics/Curzi022,DBLP:conf/csl/Curzi023,DBLP:conf/lics/Curzi023})
 for the algebraic circular version of 
 G\"{o}del system $\systemT$. Namely, we prove that all infinite reductions on $\CTlambda$
@@ -82,7 +82,7 @@ and also shows that any closed $\CTlambda$ term of type $\N$ is reduced to a num
 by reducing in any way with $0$-safe-reductions. 
 Section~\ref{section-comparison} compares our work with some related work. 
 Section~\ref{section-conclusion} concludes the current paper, mentioning our plan 
-for further works. 
+for further work. 
 
 
 %14:57 17/04/2024

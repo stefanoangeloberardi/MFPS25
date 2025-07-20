@@ -221,12 +221,17 @@ it computes
   $\Rec(a,f)(0) \reduces a$ \quad and \quad $\Rec(a,f)(\Succ(t)) \reduces f(\Rec(a,f)t)(t)$.
 \end{center}
 We abbreviate $r = \Rec(a,f)$. $r$ is defined by the equation $r = \cond(a,\lambda x.f(r(x))(x))$.
-Note that $r$ is regular and is in $\GTC$ by the following proof with $\Gamma=(f:A,\N \rightarrow A,a:A)$.
+Note that $r$ is regular and is in $\GTC$ by the proof in Figure \ref{fig:rec-proof}, where 
+$\Gamma=(f:A,\N \rightarrow A,a:A)$.
 The arrows specifies the unique infinitely progressing trace of the unique infinite path repeating from $(\dagger)$ on the bottom to
 $(\dagger)$ on the top. 
-If we want a finite cyclic graph notation we add a back edge between the judgments with $(\dagger)$ signs. 
-The red arrow is the progress point, which is cyclically repeated in the infinite trace.
 Hence $\Rec(a,f) \in \CTlambda$.
+
+If we want a finite cyclic graph notation we add a back edge 
+(denoted in {\color{black} \bf black}) between the judgments with $(\dagger)$ signs. 
+The red arrow is the progress point, which is cyclically repeated in the infinite trace. The blue
+arrow from the top $\N$ to the bottom $\N$ expresses identification between the two
+occurrences.
 \begin{figure}[t]
 \begin{prooftree}
   \AxiomC{}
@@ -259,14 +264,16 @@ $
 \dirflowedges{node4/node5}
 \dirflowedges{node5/node6}
 \dirflowedges{node6/node7}
+\bentdirflowedges{node7/node1/-60}
 \bentflowblackedges{node8/node0/60}
 $    
-\caption{Typing of $\Rec$}\label{fig:rec-proof}
+\caption{Typing of $\Rec$}
+\label{fig:rec-proof}
 \end{figure}
 
-Note that $\CTlambda$ contains G\"{o}del's $\systemT$ since it has expressive power of the numerals and the recursor. 
+Note that $\CTlambda$ contains G\"{o}del's $\systemT$ since it has expressive power of the numerals and the recursor for all simple types. 
 Moreover the computational properties of $\Rec(a,f)$ displayed in the figure \ref{fig:rec-proof} 
-are realized using the $0$-safe-reductions only. 
+below are realized using the $0$-safe-reductions only. 
 \end{example}  
 
 

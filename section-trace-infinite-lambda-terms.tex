@@ -18,6 +18,7 @@ describe a case in which a value is stationary, and a progressing connection
 a case in which a value is strictly decreasing.
 In order to define connection, we need to define \emph{lists of argument types} 
 and \emph{indexes of atomic types} for a term.
+
 In the following we use $\Atom$ for an atomic type, namely $\N$ or a type variable. 
 
 %We sketch the notion of connection through an example.
@@ -153,8 +154,8 @@ Assume $\theta$ is a node of a pre-proof labeled with a sequent $\Gamma \vdash t
 and a rule $r$. For each argument $k$ in the sequent $\Gamma \vdash t:A$ labeling
 $\theta$, for each argument  $k'$ in a sequent $\Gamma' \vdash t':A'$ labeling
 any premise $\theta'$ of $\theta$ we define
-the relations: ``there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$"
-and ``there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$". 
+the relations: there is a \emph{stationary} connection from $k,\theta$ to $k',\theta'$
+and: there is a \emph{progressing} connection from $k,\theta$ to $k',\theta'$. 
 The definition is by cases on $r$.
 We first list the connections for the rules: application, $\lambda$-abstraction, $\var$
 and weakening. Their connections are all stationary.
@@ -251,7 +252,7 @@ ${x}^{A} \in \FV(\Gamma)$ or not.
 Suppose $x^A = {x_i}^{A_i}$ for some (unique) $i=1, \ldots, n$.
 In this case
 for $a=1, \ldots, i-1$, $b=i+1, \ldots, n$ 
-the $a$-th, $b$-th named argument $x_a^{A_a}$ in the conclusion are connected to 
+the $a$-th, $b$-th named argument $x_a^{A_a}$, $x_b^{A_b}$ in the conclusion are connected to 
 the $a$-th named 
 argument $x_a^{A_b}$ and to the $(b-1)$-th 
 named argument $x_b^{A_b}$ in the assumption, respectively.
@@ -348,8 +349,8 @@ No connection is defined for the rule $\var$.
 \end{definition}
 
 Now we list the connections for $\cond, \Succ, 0$: \emph{the connection for the
-right-hand side of $\cond$ is progressing} and denoted in {\color{red} \bf red}, 
-all the others are stationary and {\color{blue} \bf blue}.
+right-hand side of $\cond$ is progressing} and denoted in {\color{red} \bf red}, and 
+all the others are stationary and  denoted in {\color{blue} \bf blue}.
 
 \begin{definition}[Stationary and progressing connections for $\cond, \Succ, 0$]
 \label{definition-connection-cond}
@@ -398,7 +399,7 @@ $
 
 \item
 Suppose $\Gamma \vdash \Succ(u):\N$ is obtained by the rule $\Succ$ from
-$\Gamma \vdash \Succ(u):\N$.
+$\Gamma \vdash u:\N$.
 Then for $j=1, \ldots, n$ 
 the $j$-th named argument $x_j^{A_j}$ in the conclusion is connected to the $j$-th named 
 argument $x_j^{A_j}$ in the assumption. 
@@ -409,10 +410,10 @@ argument $x_j^{A_j}$ in the assumption.
 \AxiomC{$ \ldots \vnode1{x_j^{A_j}} 
 \ldots 
 \vdash
-t: {\tt N} $}
+u: {\tt N} $}
 \AxiomC{}
 \BinaryInfC{$ \ldots \vnode2{x_{j}^{A_{j}}}
-\vdash {\tt S}(t) : {\tt N}$}
+\vdash {\tt S}(u) : {\tt N}$}
 \end{prooftree}
 
 % DRAW EDGES
@@ -498,8 +499,8 @@ $\tau =( (k_m,\theta_m), \ldots, (k_n,\theta_n), \ldots)$ such that for all $i=m
 \item
 $k_i$ is an index of some $\N$-argument of $\theta_i$
 \item
-if $i$ and $i+1$ are indexes of $\tau$ then $(k_{i+1},\theta_{i+1})$ 
-is connected with $(k_i, \theta_i)$ in $\Pi$.
+if $i$ and $i+1$ are indexes of $\tau$ then  $(k_i, \theta_i)$
+is connected with $(k_{i+1},\theta_{i+1})$ in $\Pi$.
 \end{enumerate}
 $\tau$ is stationary (progressing) in the index $i \in \dom(\tau)$ if and only if the connection 
 between $(k_i,\theta_i)$ and $(k_{i+1},\theta_{i+1})$ is stationary (progressing),
