@@ -124,7 +124,7 @@ We fix a countable set $\{x,y,\ldots\}$ of variable names.
 \item
 A \emph{variable} $x^T$ is a variable name $x$ with a type superscript $T$. 
 \item  
-A \emph{term} is a labeled binary tree, denoted by $t,u,v,\ldots$, with labels 
+A \emph{term} is a possibly infinite labeled binary tree, denoted by $t,u,v,\ldots$, with labels 
 $x^T$, $\lambda x^T$, $\ap$, $0$, $\Succ$, and $\cond$, such that:
 \begin{enumerate}
 \item 
@@ -418,7 +418,7 @@ We write $\Judg$ for the set of all typing judgments.
 \end{definition}
 
 We have $\FV(\Gamma) \subseteq \FV(\Gamma')$ if and only if 
-there is a unique $\phi:\Gamma \rightarrow \Gamma'$. 
+there is a unique $\phi:\Gamma \rightarrow \Gamma'$, which can be a permutation. 
 Note that a type assignment $x^T:T$ is \emph{redundant},
 since each variable already has its type superscript.
 We write $x^T:T$ (or simply $x:T$)
@@ -472,13 +472,13 @@ for uniformity with the notation $x:T$ in use in type theory.
 %The scope of the binder $\lambda x^T.t$ is $t$.
 %The scope of the binder $\cond(f,g)$ is $g$ ($f$ is \emph{not} in the scope of $\cond(f,g)$).
 
-Assume that $t$, $u$ have finitely many free variables. 
+Assume that $\FV(t)$, $\FV(u)$ are finite. 
 We define $t[u/x]$ by substituting $u$ for all free occurrences of $x$ in $t$, 
 by first replacing $t$ with some $t' \sim_\alpha t$
 in order to avoid that free occurrences in $u$ become bound after substitution. 
-If there are only finitely many free variables in $u$, we can always
-rename all bound variables in $t$ in order to make them different from the free variables
-in $u$. The resulting term $t[u/x]$ still has finitely many free variables.
+If $\FV(u)$ is finite, we can always
+rename all bound variables in $t$ in order to make them different from the variables
+in $\FV(u)$. If $\FV(t)$, $\FV(u)$ are finite then is $\FV(t[u/x])$ finite.
 
 The use of $\sim_\alpha$ for substitution is relevant for the theory but not
 for computation. Indeed,
@@ -817,11 +817,11 @@ From the typing rules we define the notion of \emph{pre-proof}.
 % 10:55 15/0/2025
 
 \begin{definition}[Pre-proofs of $\LAMBDA$]
-Assume $\Pi=(T,\phi, \psi)$, that $T$ is a binary tree of lists of integers, and 
-that each node $l \in T$
-is labeled by a judgment $\phi(l) \in \Judg$ and a rule $\psi(l) \in \Rule$. 
-We call $\nil$ the root of $T$, and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
+Assume $\Pi=(T,\phi, \psi)$, that $T$ is a binary tree whose nodes are lists of integers, such
+that the root is $\nil$ and the $i$-th child of $l = ( i_1, \ldots, i_n ) \in T$, if any, 
 is $l \conc (i) = ( i_1, \ldots, i_n, i)$.
+Assume that each node $l \in T$
+is labeled by a judgment $\phi(l) \in \Judg$ and a rule $\psi(l) \in \Rule$. 
 %(appending $i$ after the last element of $l$).
 
 Let $J$ be a judgment. 
@@ -830,7 +830,7 @@ We write $\Pi :: J$, and we say that $\Pi$ is a \emph{pre-proof} of conclusion $
 \item 
   The judgment labeling the root $\nil$ of $T$ is the conclusion: $\phi(\nil) = J$.
 \item
-  If the judgment labeling $l \in T$ is $\phi(l) = J_0$, and $l$ has $p$ children
+  If the judgment labeling $l \in T$ is $\phi(l) = J_0$, and if $l$ has $p$ children
   such that $\phi(l \conc (i)) = J_i$ for $i=1, \ldots, p$,
   then $\psi(l)$ is the rule $(J_1,\ldots,J_p,J_0)$.
 \end{enumerate}
@@ -1056,9 +1056,10 @@ then $A = A'$.
 %13:49 29/04/2024
 %12:20 27/03/2025
 
-We give a typical example $\Sum$ of our system. It is regular and well-typed.
-Moreover, as we will see later, it satisfies the global trace condition,
-and hence is in $\CTlambda$ (see Example~\ref{example-sum}). 
+We give a typical example $\Sum$ of our system. $\Sum(x)(y)$ will be interpreted
+as the sum of $x$ and $y$. $\Sum$ is regular and well-typed.
+Moreover, as we will see later, $\Sum$ satisfies the global trace condition,
+and hence it is in $\CTlambda$ (see Example~\ref{example-sum}). 
 
 % 11:31 15/07/2025
 
@@ -1074,7 +1075,7 @@ with a unique infinite path (call it $\pi$).
 In $\pi$, we put {\color{blue} \bf blue}/{\color{red} \bf red}
 arrows to specify a sequence of $\N$s for a reason we will explain later\footnote{
 The sequence of $\N$s passed through by arrows is an infinitely progressing trace (with progressing points specified by the red arrow), 
-which will be defined in Section~\ref{section-circular-system-CTlambda}, 
+which will be defined in Section~\ref{section-circular-system-CTlambda}, g
 following the path $\pi$.}.
 This infinite tree is represented by a finite cyclic graph 
 adding a back edge (drawn in {\color{black} \bf black}) 

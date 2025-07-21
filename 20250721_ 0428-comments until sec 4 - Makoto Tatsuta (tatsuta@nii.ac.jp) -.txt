@@ -1,0 +1,91 @@
+﻿Dear Stefano,
+
+I read the draft dated on July 21 until Sec 4.
+I may continue.
+Here are my comments.
+
+p.3
+
+2. A term is a labeled binary tree, 
+-->
+2. A term is a possibly infinite labeled binary tree, 
+
+p.4
+
+if and only if there is a unique phi : Γ → Γ′. 
+-->
+if and only if phi=1.
+
+The resulting term t[u/x] still has finitely many free variables.
+-->
+If t is regular,
+the resulting term t[u/x] still has finitely many free variables.
+
+p.5
+
+Def 10:
+that T is a binary tree of lists
+-->
+that T is a binary tree represented by a set of lists
+
+If the judgment labeling l ∈ T is ϕ(l) = J0, and l has p children 
+such that ϕ(l⋆(i)) = Ji for i = 1, . . . , p, 
+then ψ(l) is the rule (J1, . . . , Jp, J0).
+-->
+If the judgment labeling l ∈ T is ϕ(l) = J0, then l has p children 
+such that ϕ(l⋆(i)) = Ji for i = 1, . . . , p, 
+and ψ(l) is the rule (J1, . . . , Jp, J0).
+
+
+p.6
+
+Example 14: It would be better to say
+Sum(x)(y)=x+y
+(It will help readers)
+
+p.9
+
+b = i+1, . . . , n the a-th, b-th named argument xAa a , xAb b
+in the conclusion are connected to the a-th named argument xAb a
+and to the (b − 1)-th named argument xAb b 
+in the assumption, respectively.
+-->
+b = i+1, . . . , n,  the a-th and b-th named arguments xAa a and xAb b
+in the conclusion are connected to the a-th named argument xAb a
+and the (b − 1)-th named argument xAb b 
+in the assumption, respectively.
+(When we use "respectively", we have to be more careful
+and insert "and" in right places.)
+
+Now we list the connections for
+-->
+Now we define the connections for
+
+There is a unique progressing condition which is explicitly stated, 
+all others are stationary.
+-->
+We define a unique progressing condition which is explicitly stated, 
+and all others are defined to be stationary.
+
+footnote 3: deleted (because of def 6)
+
+p.11
+
+satifies the global trace condition if its pre-proof
+-->
+satisfies the global trace condition if some pre-proof
+
+Remark 24. I did not understand the point. I think we can add:
+
+The difference between the rules ap_v and ap_{neg v} is that in the
+rule (ap_v), the type A_i of the variable x_i in the antecedent in the
+conclusion can be connected to the type A_i in the succedent in the
+premise.
+
+p.12
+
+Fig 2: the rule name ap¬v should be lambda
+
+Best,
+Makoto
+

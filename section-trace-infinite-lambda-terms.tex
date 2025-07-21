@@ -252,9 +252,10 @@ ${x}^{A} \in \FV(\Gamma)$ or not.
 Suppose $x^A = {x_i}^{A_i}$ for some (unique) $i=1, \ldots, n$.
 In this case
 for $a=1, \ldots, i-1$, $b=i+1, \ldots, n$ 
-the $a$-th, $b$-th named argument $x_a^{A_a}$, $x_b^{A_b}$ in the conclusion are connected to 
+the $a$-th and $b$-th named argument $x_a^{A_a}$, $x_b^{A_b}$ 
+in the conclusion are connected to 
 the $a$-th named 
-argument $x_a^{A_b}$ and to the $(b-1)$-th 
+argument $x_a^{A_b}$ and the $(b-1)$-th 
 named argument $x_b^{A_b}$ in the assumption, respectively.
 \begin{prooftree}
 \RightLabel{$\lambda$}
@@ -310,11 +311,13 @@ $
 Assume $\Gamma \vdash t : \vec{B}\rightarrow\Atom$ is obtained by the rule $\weak$
 from $\Gamma' \vdash t : \vec{B}\rightarrow\Atom$
 where $\Gamma' = {x'_1}^{A'_1}:A_1, \ldots, {x'_{n'}}^{A'_{n'}}:A'_{n'}$. Assume
-$\phi:\Gamma' \rightarrow \Gamma$ is the map associated to the rule\footnote{
-We recall that $\phi:[1,n'] \rightarrow [1,n]$, 
-and for all $a = 1, \ldots, n'$, the value $\phi(a) \in [1,n]$ is the unique value 
-such that ${x'_{a}}^{A'_{a}} = x_{\phi(a)}^{A_{\phi(a)}}$
-(Def. \ref{definition-context-lambda}.\ref{definition-context-lambda-08}).}.
+$\phi:\Gamma' \rightarrow \Gamma$ is the map associated to the rule
+by Def. \ref{definition-context-lambda}.\ref{definition-context-lambda-08}.
+%\footnote{
+%We recall that $\phi:[1,n'] \rightarrow [1,n]$, 
+%and for all $a = 1, \ldots, n'$, the value $\phi(a) \in [1,n]$ is the unique value 
+%such that ${x'_{a}}^{A'_{a}} = x_{\phi(a)}^{A_{\phi(a)}}$
+%(Def. \ref{definition-context-lambda}.\ref{definition-context-lambda-08}).}.
 Then:
 \begin{enumerate}
 \item
@@ -348,13 +351,14 @@ No connection is defined for the rule $\var$.
 \end{enumerate}
 \end{definition}
 
-Now we list the connections for $\cond, \Succ, 0$: \emph{the connection for the
+Now we define the connections for $\cond, \Succ, 0$: \emph{the connection for the
 right-hand side of $\cond$ is progressing} and denoted in {\color{red} \bf red}, and 
 all the others are stationary and  denoted in {\color{blue} \bf blue}.
 
 \begin{definition}[Stationary and progressing connections for $\cond, \Succ, 0$]
 \label{definition-connection-cond}
-There is a unique progressing condition which is explicitly stated, all others are stationary.
+We define a unique progressing condition which is explicitly stated, all others are 
+defined stationary.
 \begin{enumerate}
 \item
 Suppose $\Gamma \vdash \cond(f,g): \N,\vec{B} \rightarrow \Atom$ is obtained by the rule $\cond$ from

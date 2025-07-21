@@ -58,7 +58,7 @@ A pre-proof for a judment $J$ that satisfies the global trace condition is calle
 
 \item
 $t \in \WTyped$ satifies the global trace condition if
-its pre-proof $\Pi::\Gamma \vdash t :A$ is a proof.
+some pre-proof $\Pi::\Gamma \vdash t :A$ is a proof.
 $\GTC$ is the set of terms satisfying the global trace condition.
 
 \item
@@ -248,10 +248,11 @@ occurrences.
   \UnaryInfC{$\Gamma,x:\N \vdash r:\vnode6{\N}\rightarrow A$}
   \RightLabel{$\apvar$}  
   \UnaryInfC{$\Gamma,x:\vnode5{\N} \vdash r(x):A$}
+  \RightLabel{$\apnotvar$}
   \BinaryInfC{$\Gamma,x:\vnode4{\N} \vdash f(r(x)):\N \rightarrow A$}
   \RightLabel{$\apvar$}
   \UnaryInfC{$\Gamma,x:\vnode3{\N} \vdash f(r(x))(x):A$}
-  \RightLabel{$\apnotvar$}
+  \RightLabel{$\lambda$}
   \UnaryInfC{$\Gamma \vdash \lambda x.f(r(x))(x):\vnode2{\N} \rightarrow A$}
   \RightLabel{$\cond$}
   \BinaryInfC{$\Gamma \vdash r: \vnode1{\N} \rightarrow A$

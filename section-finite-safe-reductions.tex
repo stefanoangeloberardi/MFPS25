@@ -1189,20 +1189,20 @@ in $\CTlambda$ such that $\Lim(f(x))$ is not regular, though
 $f$ is regular. There is a left-finite pre-proof $\Pi::\Gamma \vdash f:\N,\N\rightarrow\N$,
 and we trace the second argument $\redN$ of $f$. 
 The unique infinite path of $\Pi$ is a sequence of judgments for terms 
-\[
+$
 f:\N,\redN \rightarrow\N, \quad
 \cond(x^\N,f(\Succ x^\N)): \redN \rightarrow\N, \quad
 f(\Succ x^\N): \redN \rightarrow\N, \quad
 f: \N,\redN \rightarrow\N,\quad
 \ldots.
-\]
+$
 $f$ is in $\GTC$, since in this unique infinite branch of $\Pi$
 the trace of the second argument of $f$ crosses the right-hand side of a $\cond$
 infinitely many times.
 Hence $f\in\CTlambda$ and $f(x) \in \CTlambda$.
 From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
  there is a infinite reduction reducing the unique $0$-safe redex, then
- the unique $1$-safe redex, the unique $2$-redex and so forth: \ \ 
+ the unique $1$-safe redex, the unique $2$-redex and so forth: 
  $
   f(x)\,\reduces\,\cond(x,f(\Succ(x))) \,
   \reduces\,
@@ -1214,9 +1214,9 @@ From $f(x) \reduces \cond(x,f(\Succ x))$ we deduce that
   since it has infinitely many different subterms $x,\Succ(x),\Succ^2(x),\ldots$. 
   Therefore $\Lim(f(x)) \not \in \CTlambda$, even though each reduct of 
   $f(x)$ is in $\CTlambda$, and $f$ is just the unary algorithm for the addition, because 
-  \[
+  $
   f(\Succ^n(0))(\Succ^m(0)) \reduces \cond(\Succ^n(0),\cond(\Succ^{n+1}(0),\cond(\Succ^{n+2}(0),\cdots)))(\Succ^m(0)) \reduces (\Succ^{n+m})(0).
-  \]
+  $
   
   This is an unfortunate but common situation for the limit of a sequence in a topology:
   a sequence of finitely represented elements
