@@ -1,0 +1,205 @@
+\documentclass[a4paper,anonymous]{lipics-v2021}
+%\documentclass[a4paper]{lipics-v2021}
+%%% Options
+% a4paper/letterpaper: for A4 paper format/for US-letter"
+% UKenglish/USenglish: for british hyphenation rules/for american hyphenation rules
+% numberwithinsect: for section-numbered lemmas etc.
+% cleveref: for enabling cleveref support
+% autoref: for enabling autoref support
+% anonymous: for anonymousing the authors (e.g. for double-blind review)
+% thm-restate: for enabling thm-restate support
+% authorcolumns: for enabling a two-column layout for the author/affilation part (only applicable for > 6 authors)
+% pdfa: for producing a PDF according the PDF/A standard
+
+\pdfoutput=1 %uncomment to ensure pdflatex processing (mandatatory e.g. to submit to arXiv)
+%\hideLIPIcs  %uncomment to remove references to LIPIcs series (logo, DOI, ...), e.g. when preparing a pre-final version to be uploaded to arXiv or another public repository
+
+\bibliographystyle{plainurl}% the mandatory bibstyle
+
+\title{Cyclic System T with Lambda Binder}
+%\titlerunning{Extending to Binders the GTC for Cyclic $\lambda$-Calculus} %TODO optional, please use if title is longer than one line
+
+\author
+    {Stefano Berardi}
+    {Computer Science Department, Turin University, Torino, Italy}
+    {} % (Optional) email address
+    {0000-0001-5427-0020} % (Optional) orcid
+    {} % (Optional) author-specific funding acknowledgements
+
+%%% FOR HAVING ANONYMOUS AUTHOR %%%%%%%%
+%\author
+%    {Ugo de' Liguoro}
+%    {Computer Science Department, Turin University, Torino, Italy}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Daisuke Kimura}
+%    {Department of Information Science, Toho University, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Koji Nakazawa}
+%    {Graduate School of Informatics, Nagoya University, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%\author
+%    {Makoto Tatsuta}
+%    {National Institute of Informatics/Sokendai, Tokyo, Japan}
+%    {} % (Optional) email address
+%    {} % (Optional) orcid
+%    {} % (Optional) author-specific funding acknowledgements
+%
+%    
+\authorrunning{S.\,Berardi and U.\,de'\,Liguoro and D.\,Kimura and K.\,Nakazawa and M.\,Tatsuta}
+% First: Use abbreviated first/middle names. Second (only in severe cases): Use first author plus 'et al.'
+
+\Copyright{Stefano\,Berardi and Ugo\,de'\,Liguoro and Daisuke\,Kimura and Koji\,Nakazawa and Makoto\,Tatsuta}
+% Please use full first names. LIPIcs license is "CC-BY";  http://creativecommons.org/licenses/by/3.0/
+
+\ccsdesc[100]{Theory of computation}
+% Please choose ACM 2012 classifications from https://dl.acm.org/ccs/ccs_flat.cfm 
+
+\keywords{Cyclic proofs, Cyclic terms, Fixed-point definition, global trace condition, Lambda calculus, Infinitary lambda calculus}
+
+\category{} %optional, e.g. invited paper
+
+\relatedversion{} %optional, e.g. full version hosted on arXiv, HAL, or other respository/website
+%\relatedversiondetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93]{Classification (e.g. Full Version, Extended Version, Previous Version}{URL to related version} %linktext and cite are optional
+
+%\supplement{} %optional, e.g. related research data, source code, ... hosted on a repository like zenodo, figshare, GitHub, ...
+%\supplementdetails[linktext={opt. text shown instead of the URL}, cite=DBLP:books/mk/GrayR93, subcategory={Description, Subcategory}, swhid={Software Heritage Identifier}]{General Classification (e.g. Software, Dataset, Model, ...)}{URL to related version} %linktext, cite, and subcategory are optional
+
+%\funding{(Optional) general funding statement \dots}%optional, to capture a funding statement, which applies to all authors. Please enter author specific funding statements as fifth argument of the \author macro.
+
+\acknowledgements{We thank Prof. Anupam Das for a valuable scientific correspondence about global trace condition for cyclic terms.} %optional
+
+%\nolinenumbers %uncomment to disable line numbering
+
+%Editor-only macros:: begin (do not touch as author)%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\EventEditors{John Q. Open and Joan R. Access}
+\EventNoEds{2}
+\EventLongTitle{42nd Conference on Very Important Topics (CVIT 2016)}
+\EventShortTitle{CVIT 2016}
+\EventAcronym{CVIT}
+\EventYear{2016}
+\EventDate{December 24--27, 2016}
+\EventLocation{Little Whinging, United Kingdom}
+\EventLogo{}
+\SeriesVolume{42}
+\ArticleNo{23}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%MY PACKAGES
+%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{graphicx}
+\usepackage[all]{xy}
+\usepackage{amssymb,amsmath,graphicx,color}
+\usepackage{mymath,proof,latexsym}
+\usepackage{xcolor}
+\usepackage[pdftex,outline]{contour}
+\usepackage{bussproofs}
+\usepackage{tikz} % Tikz is required to use proofzilla
+\usetikzlibrary{arrows.meta} % additional arrow styles
+\usepackage{proofzilla}
+%% PROOFZILLA SETTINGS %%%%%%%%%%%
+% Flow-related macros 
+% Define node style 
+\newemptyvertex{node}{}
+% Define edge styles: directed/undirected, color, arrow head etc
+\defedgetype{flow}{draw=blue}{}
+\defedgetype{dirflow}{-Latex,draw=blue}{}
+\defedgetype{flowtwo}{draw=red}{}
+\defedgetype{dirflowtwo}{-Latex,draw=red}{}
+%%%%% HERE CHANGE THE DEFINITION OF EDGES TO CHANGE THE COLOR  AND OTHER ATRIBUTES %%%%%%
+\defedgetype{dirflowblue}{-Latex,draw=blue}{}
+\defedgetype{dirflowred}{-Latex,draw=red}{}
+\definecolor{black}{gray}{0}
+\defedgetype{flowblack}{-Latex,draw=black}{}
+% Additional, unnecessary macros (terms etc)
+%\input{hobn_macros}  
+%% END PROOFZILLA SETTINGS %%%%%%%%%%%
+
+\begin{document}
+
+\maketitle
+
+\begin{abstract}
+%%%%%%%%%%%%%
+%% VERSION OF July, 18 2025
+%%%%%%%%%%%%%
+%Circular syntaxes for infinitary lambda-terms
+%were considered for instance by Ariola, Bl\"{o}m, Klop, Kennaway, Sleep, de Vries.
+%They allow to interpret lambda-terms written in fixed-point style 
+%as recursive definitions of infinitary terms. 
+%%In this way, circular syntax provides an 
+%%interpretation for basic constructions of functional programs, 
+%%like the letrec or mu of Clemens Grabmayer, Jan Rochel.
+%A sufficient, decidable and quite broad condition for reducing such 
+%infinitary lambda-terms to a numeral can be obtained
+%by adapting the global trace condition (GTC) for cyclic proofs to simply typed 
+%circular lambda-terms with conditional operator. 
+%GTC was originally proposed by Brotherston and Simpson
+%as a correctness condition for infinitary proofs.
+%Several people, including Das, Kuperberg, Pinault, Pous,
+%proved that GTC implies normalization to a numeral:
+%this result holds for a wide set of reductions and for closed circular lambda-terms 
+%with the type N of natural numbers. 
+%
+%However, all these papers considered a proper subset of infinitary lambda-terms, those
+%obtained from variables and combinators using a possibly infinite number of application.
+%Namely, these papers consider no \emph{explicit} clauses for lambda-abstraction,
+%which is instead defined through combinators.
+%Our contribution is to add explicit clauses for lambda-abstraction
+%to the definition of GTC, and to check that 
+%the extended GTC retains the termination properties of the original GTC. 
+%%Namely, we prove that the extended GTC implies normalization to some numeral, 
+%%for all closed infinitary terms of type N and
+%%for all reductions sequences not reducing inside the 
+%%predecessor clause for the conditional operator.  
+Circular syntax for infinitary lambda-terms allows to interpret lambda-terms written in fixed-point style as recursive definitions of infinitary terms. A sufficient, decidable, and quite broad condition for reducing such infinitary lambda-terms to numerals can be obtained by adapting the global trace condition (GTC) for cyclic proofs to simply typed circular lambda-terms with a conditional operator. 
+
+Existing systems include a proper subset of infinitary lambda-terms, obtained from variables and combinators using a possibly infinite number of applications, where no explicit clauses involving lambda-abstraction are considered. 
+
+Our contribution is to add explicit clauses for lambda-abstraction to the definition of GTC, and to prove that the extended GTC retains the termination properties with respect to the extended calculus.
+\end{abstract}
+
+\input{macro}
+
+%% Section 1
+%\input{section-introduction}
+%
+%% Section 2
+%\input{section-infinite-lambda-terms}
+%
+%% Section 3
+%\input{section-trace-infinite-lambda-terms}
+%
+%% Section 4
+%\input{section-circular-system-CTlambda}
+%
+%% Section 5
+%\input{section-subject-reduction-infinite-lambda-terms}
+%
+%% Section 6
+%\input{section-finite-safe-reductions}
+%
+%% Section 7
+%\input{section-comparison}
+%
+%% Section 8
+%\input{section-conclusion}
+
+\bibliography{cyclic}
+
+%\input{section-appendix}
+
+\end{document}
+
